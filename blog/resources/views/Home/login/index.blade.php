@@ -18,6 +18,11 @@
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
+	<style type="text/css">
+	    /*.form-group{padding-top: 10px}*/
+/*	    .my-name{border: 1px solid red;height: 25px;}*/
+	    span{font-size: 5px;color: #989898}
+	</style>
 
 
 
@@ -94,42 +99,90 @@
 
 
 					<div class="row row-mt-15em">
-						<div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+						<div class="col-md-5 mt-text animate-box " data-animate-effect="fadeInUp">
 							<span class="intro-text-small">Welcome to Splash</span>
 							<h1>Build website using this template.</h1>
 						</div>
-						<div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
-							<div class="form-wrap">
+						<div class="col-md-5  animate-box col-md-offset-2" data-animate-effect="fadeInRight">
+							<div class="form-wrap" >
 								<div class="tab">
 									<ul class="tab-menu">
-										<li class="active gtco-first"><a href="#" data-tab="signup">Sign up</a></li>
-										<li class="gtco-second"><a href="#" data-tab="login">Login</a></li>
+										<li class="active gtco-first"><a href="#" data-tab="signup">注册</a></li>
+										<li class="gtco-second"><a href="#" data-tab="login">登录</a></li>
 									</ul>
-									<div class="tab-content">
-										<div class="tab-content-inner active" data-content="signup">
+									<div class="tab-content" >
+										<div class="tab-content-inner active form-horizontal" data-content="signup">
 											<form action="#">
-												<div class="row form-group">
-													<div class="col-md-12">
-														<label for="username">Username or Email</label>
-														<input type="text" class="form-control" id="username">
-													</div>
+												<div class="form-group" >
+													    <div class="col-md-3">
+													        <label for="inputEmail3" class=" control-label">用户名</label>
+													    </div>
+													    <div class="col-md-9 ">
+													        <input type="text" name="uname" class="form-control" id="inputEmail3" placeholder="请输入你的用户名"  aria-describedby="inputSuccess2Status">
+													    </div>
+													    <div class="my-name col-md-12" >
+														   <span></span>
+														</div>					    
 												</div>
+																																															
+												<div class="form-group">
+													    <div class="col-md-3">
+													        <label for="inputEmail3" class=" control-label">密码</label>
+													    </div>
+													    <div class="col-md-9 ">
+													        <input type="password" name="upass" class="form-control" id="inputEmail3" placeholder="请输入密码">
+													    </div>
+													    <div class="my-pass col-md-12" >
+														   <span></span>
+														</div>	 				    
+												</div>													
+												<div class="form-group">
+													    <div class="col-md-3">
+													        <label for="inputEmail3" class=" control-label">确认密码</label>
+													    </div>
+													    <div class="col-md-9 ">
+													        <input type="password" name="unpass" class="form-control" id="inputEmail3" placeholder="请再次输入密码">
+													    </div>
+													    <div class="my-unpass col-md-12" >
+														   <span></span>
+														</div>					    
+												</div>													
+												<div class="form-group">
+													    <div class="col-md-3">
+													        <label for="inputEmail3" class=" control-label">手机号</label>
+													    </div>
+													    <div class="col-md-9 ">
+													        <input type="text" name="uphone" class="form-control" id="inputEmail3" placeholder="建议使用常用手机">
+													    </div>
+													    <div class="my-phone col-md-12" >
+														   <span></span>
+														</div>					    
+												</div>													
+												<div class="form-group">
+													    <div class="col-md-3">
+													        <label for="inputEmail3" class=" control-label">验证码</label>
+													    </div>
+													    <div class="col-md-9 ">
+													        <input type="text" name="ucode" class="form-control" id="inputEmail3" placeholder="请输入验证码">
+													    </div>
+													    <div class="my-code col-md-12" >
+														   <span></span>
+														</div>					    
+												</div>													
+												<div class="form-group">
+													    <div class="col-md-3">
+													        <label for="inputEmail3" class=" control-label">邮箱</label>
+													    </div>
+													    <div class="col-md-9 ">
+													        <input type="email" name="uemail" class="form-control" id="inputEmail3" placeholder="建议使用常用邮箱">
+													    </div>
+													    <div class="my-email col-md-12" >
+														   <span></span>
+														</div>					    
+												</div>												
 												<div class="row form-group">
 													<div class="col-md-12">
-														<label for="password">Password</label>
-														<input type="password" class="form-control" id="password">
-													</div>
-												</div>
-												<div class="row form-group">
-													<div class="col-md-12">
-														<label for="password2">Repeat Password</label>
-														<input type="password" class="form-control" id="password2">
-													</div>
-												</div>
-
-												<div class="row form-group">
-													<div class="col-md-12">
-														<input type="submit" class="btn btn-primary" value="Sign up">
+														<input type="submit" class="btn btn-primary col-md-12" value="注册">
 													</div>
 												</div>
 											</form>
@@ -139,20 +192,27 @@
 											<form action="#">
 												<div class="row form-group">
 													<div class="col-md-12">
-														<label for="username">Username or Email</label>
-														<input type="text" class="form-control" id="username">
+														<label for="username">用户名</label>
+														<input type="text" name="name" class="form-control" id="username" placeholder="请输入你的用户名">
 													</div>
-												</div>
+													<div class="my-uname col-md-12" >
+														   <span></span>
+													</div>														
+												</div>												
+
 												<div class="row form-group">
 													<div class="col-md-12">
-														<label for="password">Password</label>
-														<input type="password" class="form-control" id="password">
+														<label for="password">密码</label>
+														<input type="password" name="pass" class="form-control" id="password" placeholder="请输入你的密码">
+													</div>
+													<div class="my-upass col-md-12" >
+														   <span></span>
 													</div>
 												</div>
 
 												<div class="row form-group">
 													<div class="col-md-12">
-														<input type="submit" class="btn btn-primary" value="Login">
+														<input type="submit" class="btn btn-primary col-md-12" value="登录">
 													</div>
 												</div>
 											</form>
@@ -534,6 +594,90 @@
 	<script src="{{asset('/Home/login/js/magnific-popup-options.js')}}"></script>
 	<!-- Main -->
 	<script src="{{asset('/Home/login/js/main.js')}}"></script>
+
+	<script type="text/javascript">
+	    var name = $('input[name="uname"]').val();
+	    var pass = $('input[name="upass"]').val();
+	    var npass = $('input[name="unpass"]').val();
+	    var code = $('input[name="ucode"]').val();
+	    var email = $('input[name="uemail"]').val();
+	    var phone = $('input[name="uphone"]').val();
+        
+        //用户名判断
+        $('input[name="uname"]').on('focus',function () {
+        	$('.my-name').html('<span>支持中文、字母、数字、"_"组合，4-20个字符</span>');
+        }).on('blur',function (){
+            if(name == '') {
+            	$('.my-name').html('');
+            }
+            
+        })        
+
+        //密码判断判断
+        $('input[name="upass"]').on('focus',function () {
+        	$('.my-pass').html('<span>建议使用字母、数字2种组合，6-12个字符</span>');
+        }).on('blur',function (){
+            if(name == '') {
+            	$('.my-pass').html('');
+            }
+        })        
+
+        //确认密码判断
+        $('input[name="unpass"]').on('focus',function () {
+        	$('.my-unpass').html('<span>请再次输入密码</span>');
+        }).on('blur',function (){
+            if(name == '') {
+            	$('.my-unpass').html('');
+            }
+        })        
+
+        //手机号判断
+        $('input[name="uphone"]').on('focus',function () {
+        	$('.my-phone').html('<span>验证通过可以使用该手机找回密码和登录</span>');
+        }).on('blur',function (){
+            if(name == '') {
+            	$('.my-phone').html('');
+            }
+        })        
+
+        //验证码判断
+        $('input[name="ucode"]').on('focus',function () {
+        	$('.my-code').html('<span>?看不清，点击图片更换验证码</span>');
+        }).on('blur',function (){
+            if(name == '') {
+            	$('.my-code').html('');
+            }
+        })        
+
+        //邮箱判断
+        $('input[name="uemail"]').on('focus',function () {
+        	$('.my-email').html('<span>建议使用常用邮箱</span>');
+        }).on('blur',function (){
+            if(name == '') {
+            	$('.my-email').html('');
+            }
+        })        
+
+
+         //登录验证
+        //邮箱判断
+        $('input[name="name"]').on('focus',function () {
+        	$('.my-uname').html('<span>请输入用户名</span>');
+        }).on('blur',function (){
+            if(name == '') {
+            	$('.my-uname').html('');
+            }
+        })        
+
+        //邮箱判断
+        $('input[name="pass"]').on('focus',function () {
+        	$('.my-upass').html('<span>请输入密码</span>');
+        }).on('blur',function (){
+            if(name == '') {
+            	$('.my-upass').html('');
+            }
+        })
+	</script>
 
 	</body>
 </html>

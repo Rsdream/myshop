@@ -11,13 +11,18 @@
 |
 */
 
+//前台首页
 Route::get('/', function () {
     return view('index');
 });
 
+//登录，注册页面
 Route::get('/login', function () {
     return view('Home/login/index');
 });
+
+//处理登录，注册
+Route::post('doLogin','Api\LoginController@signIn');
 
 Route::get('/admin', function () {
     return view('Admin/index');
