@@ -147,12 +147,14 @@ $('td.td-manage').on('click', '#stop', function () {
 	var id = $(this).parent().parent().children().eq(0).html();
 	// alert(id);
 
+	var url = '{{url("/admin/adminlist/")}}';
+
 	$.get(
 
-		'{{url("admin/adminlist/{$v->id}/edit")}}',
+		url+'/'+id+'/edit/',
 		{status:1},
 		function (data) {
-			console.log(data);
+			// console.log(data);
 
 			if (data == 1) {
 
@@ -182,10 +184,11 @@ $('td.td-manage').on('click', '#start', function () {
 	var title = $(this).attr('title');
 
 	var id = $(this).parent().parent().children().eq(0).html();
+	var url = '{{url("admin/adminlist/")}}';
 
 	$.get(
 
-		'{{url("admin/adminlist/{$v->id}/edit")}}',
+		url+'/'+id+'/edit/',
 		{status:0},
 		function (data) {
 			console.log(data);

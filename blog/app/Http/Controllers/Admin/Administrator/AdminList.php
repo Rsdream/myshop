@@ -102,6 +102,7 @@ class AdminList extends Controller
      */
     public function edit($id)
     {
+
         
         $user = DB::table('admin_users')->where('id', $id)->first();
 
