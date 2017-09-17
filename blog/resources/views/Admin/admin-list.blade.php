@@ -49,6 +49,10 @@
 	        {{ session('msg') }}
 	    </div>
 	@endif
+
+
+	<div id="errorTip" class="alert alert-danger" style="display:none">无法禁用老大</div>
+
 	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a href="{{url('admin/adminlist/create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span>  </div>
 	<table class="table table-border table-bordered table-bg">
 		<thead>
@@ -59,11 +63,10 @@
 				<!-- <th width="25"><input type="checkbox" name="" value=""></th> -->
 				<th width="60">序号</th>
 				<th width="150">账号</th>
-				<th width="90">密码</th>
 				<th width="150">用户名</th>
-				<th width="150">性别</th>
+				<th width="50">性别</th>
 				<th width="130">电话</th>
-				<th width="100">邮箱</th>
+				<th width="160">邮箱</th>
 				<th width="100">地址</th>
 				<th width="100">权限</th>
 				<th width="100">状态</th>
@@ -80,7 +83,6 @@
 				<!-- <td><input type="checkbox" value="1" name=""></td> -->
 				<td>{{$v->id}}</td>
 				<td>{{$v->uid}}</td>
-				<td>{{$v->pass}}</td>
 				<td>{{$v->name}}</td>
 				<td>
 					@if ($v->sex == '0')
@@ -147,14 +149,24 @@ $('td.td-manage').on('click', '#stop', function () {
 
 	$.get(
 
-		"{{url('admin/adminlist/{$v->id}/edit')}}",
-		{status:1, id:id},
+		'{{url("admin/adminlist/{$v->id}/edit")}}',
+		{status:1},
 		function (data) {
 			console.log(data);
 
 			if (data == 1) {
 
 				that.parent().prev().children().html('禁用').css('color','red');
+
+			}
+			if (data == 66) {
+
+				$('#errorTip').css('display','block');
+
+				setTimeout(function () {
+
+					$('#errorTip').css('display','none');
+				},2000);
 
 			}
 		},
@@ -173,8 +185,8 @@ $('td.td-manage').on('click', '#start', function () {
 
 	$.get(
 
-		"{{url('admin/adminlist/{$v->id}/edit')}}",
-		{status:0, id:id},
+		'{{url("admin/adminlist/{$v->id}/edit")}}',
+		{status:0},
 		function (data) {
 			console.log(data);
 
@@ -195,6 +207,7 @@ setTimeout(function () {
 
 	$('#time').removeClass().html('');
 },2000);
+
 
 
 

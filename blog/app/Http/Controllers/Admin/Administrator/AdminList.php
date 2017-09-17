@@ -95,17 +95,28 @@ class AdminList extends Controller
 
     /**
      * 此方法用了修复管理员的状态：启用或禁用
+     * 只能禁用管理员和超级管理员，老大无法被禁
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return bool
      */
     public function edit($id)
     {
-        // var_dump($_GET);
+        
+        $user = DB::table('admin_users')->where('id', $id)->first();
 
-        $bool = DB::table('admin_users')->where('id', $_GET['id'])->update(['status' => $_GET['status'] ]);
+        // var_dump($user);
 
-        echo $bool;
+
+        if ($user->power == 2) {
+            echo 66;
+        }else{
+
+            $bool = DB::table('admin_users')->where('id', $id)->update(['status' => $_GET['status'] ]);
+            echo $bool;
+        }
+
+       
     }
 
     /**

@@ -34,7 +34,7 @@
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>账号</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="{{$user->uid}}" placeholder="" id="adminName" name="uid">
+			<input type="text" class="input-text" readonly value="{{$user->uid}}" placeholder="" id="adminName" name="uid">
 		</div>
 	</div>
 
@@ -55,11 +55,11 @@
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
 		<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 			<div class="radio-box">
-				<input name="sex" type="radio" id="sex-1" value="1" <?php echo ($user -> sex =='1')?"checked":""; ?>>
+				<input name="sex" type="radio" id="sex-1" value="1" {{$user->sex == 1?"checked":""}}>
 				<label for="sex-1">男</label>
 			</div>
 			<div class="radio-box">
-				<input type="radio" id="sex-2" value="0" name="sex" <?php echo ($user -> sex =='0')?"checked":""; ?>>
+				<input type="radio" id="sex-2" value="0" name="sex" {{$user->sex == 0?"checked":""}}>
 				<label for="sex-2">女</label>
 			</div>
 		</div>
@@ -80,9 +80,9 @@
 		<label class="form-label col-xs-4 col-sm-3">角色：</label>
 		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
 			<select class="select" name="power" size="1">
-				<option value="0" name="power" <?php echo ($user->power=='0')?"selected":"" ?>>普通管理员</option>
-				<option value="1" name="power" <?php echo ($user->power=='1')?"selected":"" ?>>超级管理员</option>
-				<option value="1" name="power" <?php echo ($user->power=='2')?"selected":"" ?>>老大</option>
+				<option value="0" name="power" {{$user->power == 0?"selected":""}} >普通管理员</option>
+				<option value="1" name="power" {{$user->power == 1?"selected":""}} >超级管理员</option>
+				<option value="1" name="power" {{$user->power == 2?"selected":""}} >老大</option>
 			</select>
 			</span> </div>
 	</div>

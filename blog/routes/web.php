@@ -24,6 +24,8 @@ Route::get('/login', function () {
 //处理登录，注册
 Route::post('doLogin','Api\LoginController@signIn');
 
+
+
 //后台路由
 Route::prefix('/admin')->group(function () {
     Route::prefix('/index')->group(function () {
