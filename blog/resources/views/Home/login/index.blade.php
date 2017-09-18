@@ -91,7 +91,7 @@
 		</div>
 	</nav>
 
-	<header id="gtco-header" class="gtco-cover" role="banner" style="background-image: url({{asset('/Home/login/images/img_4.jpg)')}}'">
+	<header id="gtco-header" class="gtco-cover" role="banner" style="background-image: url('{{asset('/Home/login/images/img_4.jpg')}}')">
 		<div class="overlay"></div>
 		<div class="gtco-container">
 			<div class="row">
@@ -122,9 +122,9 @@
 													    </div>
 													    <div class="my-name col-md-12" >
 														   <span></span>
-														</div>					    
+														</div>
 												</div>
-																																															
+
 												<div class="form-group">
 													    <div class="col-md-3">
 													        <label for="inputEmail3" class=" control-label">密码</label>
@@ -134,8 +134,8 @@
 													    </div>
 													    <div class="my-pass col-md-12" >
 														   <span></span>
-														</div>	 				    
-												</div>													
+														</div>
+												</div>
 												<div class="form-group">
 													    <div class="col-md-3">
 													        <label for="inputEmail3" class=" control-label">确认密码</label>
@@ -145,8 +145,8 @@
 													    </div>
 													    <div class="my-unpass col-md-12" >
 														   <span></span>
-														</div>					    
-												</div>													
+														</div>
+												</div>
 												<div class="form-group">
 													    <div class="col-md-3">
 													        <label for="inputEmail3" class=" control-label">手机号</label>
@@ -156,8 +156,8 @@
 													    </div>
 													    <div class="my-phone col-md-12" >
 														   <span></span>
-														</div>					    
-												</div>													
+														</div>
+												</div>
 												<div class="form-group">
 													    <div class="col-md-3">
 													        <label for="inputEmail3" class=" control-label">验证码</label>
@@ -167,8 +167,8 @@
 													    </div>
 													    <div class="my-code col-md-12" >
 														   <span></span>
-														</div>					    
-												</div>													
+														</div>
+												</div>
 												<div class="form-group">
 													    <div class="col-md-3">
 													        <label for="inputEmail3" class=" control-label">邮箱</label>
@@ -178,8 +178,8 @@
 													    </div>
 													    <div class="my-email col-md-12" >
 														   <span></span>
-														</div>					    
-												</div>												
+														</div>
+												</div>
 												<div class="row form-group">
 													<div class="col-md-12">
 														<input type="submit" class="btn btn-primary col-md-12" value="注册">
@@ -197,8 +197,8 @@
 													</div>
 													<div class="my-uname col-md-12" >
 														   <span></span>
-													</div>														
-												</div>												
+													</div>
+												</div>
 
 												<div class="row form-group">
 													<div class="col-md-12">
@@ -602,7 +602,7 @@
 	    var code = $('input[name="ucode"]').val();
 	    var email = $('input[name="uemail"]').val();
 	    var phone = $('input[name="uphone"]').val();
-        
+
         //用户名判断
         $('input[name="uname"]').on('focus',function () {
         	$('.my-name').html('<span>支持中文、字母、数字、"_"组合，4-20个字符</span>');
@@ -610,8 +610,8 @@
             if(name == '') {
             	$('.my-name').html('');
             }
-            
-        })        
+
+        })
 
         //密码判断判断
         $('input[name="upass"]').on('focus',function () {
@@ -620,7 +620,7 @@
             if(name == '') {
             	$('.my-pass').html('');
             }
-        })        
+        })
 
         //确认密码判断
         $('input[name="unpass"]').on('focus',function () {
@@ -629,7 +629,7 @@
             if(name == '') {
             	$('.my-unpass').html('');
             }
-        })        
+        })
 
         //手机号判断
         $('input[name="uphone"]').on('focus',function () {
@@ -638,7 +638,7 @@
             if(name == '') {
             	$('.my-phone').html('');
             }
-        })        
+        })
 
         //验证码判断
         $('input[name="ucode"]').on('focus',function () {
@@ -647,7 +647,7 @@
             if(name == '') {
             	$('.my-code').html('');
             }
-        })        
+        })
 
         //邮箱判断
         $('input[name="uemail"]').on('focus',function () {
@@ -656,7 +656,7 @@
             if(name == '') {
             	$('.my-email').html('');
             }
-        })        
+        })
 
 
          //登录验证
@@ -667,7 +667,7 @@
             if(name == '') {
             	$('.my-uname').html('');
             }
-        })        
+        })
 
         //邮箱判断
         $('input[name="pass"]').on('focus',function () {

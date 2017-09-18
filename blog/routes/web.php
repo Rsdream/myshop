@@ -33,8 +33,7 @@ Route::prefix('/admin')->group(function () {
     Route::get('/', function () {
         return view('Admin/index');
     });
-    
+
     Route::get('/welcome', 'Admin\IndexController@welCome');
 
 });
-
