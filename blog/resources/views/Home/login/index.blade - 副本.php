@@ -214,9 +214,9 @@
 													        <label for="inputEmail3" class=" control-label">手机验证</label>
 													    </div>
 													    <div class="col-md-9 ">
-													        <input type="email" name="phonecode" class="form-control" id="inputEmail3" placeholder="请输入手机验证码">
+													        <input type="email" name="uphone-code" class="form-control" id="inputEmail3" placeholder="请输入手机验证码">
 													    </div>
-													    <div class="my-phonecode col-md-12" >
+													    <div class="uphone-code col-md-12" >
 														   <span></span>
 														</div>
 												</div>
@@ -614,10 +614,8 @@
 	    var ucode = false;
 	    var uphone = false;
 	    var uphonecode = false;
-	    var pass = false;
-	    var name = false;
 
-         //注册
+
         //用户名判断
         $('input[name="uname"]').on('focus', function () {
            
@@ -694,8 +692,22 @@
             login(name, str, test)	
         });
        
-        
+
         //验证码判断
+        // $('input[name="ucode"]').on('focus', function () {
+
+        // 	//获得焦点给出提示
+        //     $('input[name="repeatpass"]').css('border','2px solid #E4E4E4');
+        // 	$('.my-ucode').html('<span>?看不清，点击图片更换验证码</span>');
+        // }).on('blur', function (){
+
+        // 	//失去焦点隐藏提示
+        // 	ucode = $('input[name="ucode"]').val();
+        //     if (ucode == '') {
+        //     	$('.my-ucode').html('');
+        //     }
+        // })
+        // 
         $('input[name="ucode"]').on('focus', function () {
         	str = '?看不清，点击图片更换验证码';
 
@@ -707,33 +719,52 @@
        
 
         //手机验证码判断
-        $('input[name="phonecode"]').on('focus', function () {
-        	str = '请输入手机验证码';
+        $('input[name="uphone-code"]').on('focus', function () {
 
-        	name = 'phonecode';
+        	//获得焦点给出提示
+            $('input[name="repeatpass"]').css('border','2px solid #E4E4E4');
+        	$('.uphone-code').html('<span>请输入验证码</span>');
+        }).on('blur', function (){
 
-        	dologin(name, str);
+        	//失去焦点隐藏提示
+        	uphonecode = $('input[name="uphone-code"]').val();
+            if (uphonecode == '') {
+            	$('.uphone-code').html('');
+            }
         })
 
 
-         //登录
-        //用户名判断
+
+        //登录验证
+        //验证码判断
         $('input[name="name"]').on('focus', function () {
-        	str = '请输入用户名';
 
-        	name = 'name';
+        	//获得焦点给出提示
+            $('input[name="name"]').css('border','2px solid #E4E4E4');
+        	$('.my-name').html('<span>请输入用户名</span>');
+        }).on('blur', function (){
 
-        	dologin(name, str);
-        })         
+        	//失去焦点隐藏提示
+        	name = $('input[name="name"]').val();
+            if (name == '') {
+            	$('.my-name').html('');
+            }
+        })
 
-        //密码判断
+        //验证码判断
         $('input[name="pass"]').on('focus', function () {
-        	str = '请输入密码';
 
-        	name = 'pass';
+        	//获得焦点给出提示
+            $('input[name="pass"]').css('border','2px solid #E4E4E4');
+        	$('.my-pass').html('<span>请输入密码</span>');
+        }).on('blur', function (){
 
-        	dologin(name, str);
-        }) 
+        	//失去焦点隐藏提示
+        	pass = $('input[name="my-pass"]').val();
+            if (pass == '') {
+            	$('.my-pass').html('');
+            }
+        })
 
 
         /**
