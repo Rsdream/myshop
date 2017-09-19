@@ -96,9 +96,9 @@
 			<dt><i class="Hui-iconfont">&#xe620;</i> 产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="product-brand.html" data-title="品牌管理" href="javascript:void(0)">品牌管理</a></li>
-					<li><a data-href="product-category.html" data-title="分类管理" href="javascript:void(0)">分类管理</a></li>
-					<li><a data-href="product-list.html" data-title="产品管理" href="javascript:void(0)">产品管理</a></li>
+					<li><a data-href="{{url('admin/product/brand')}}" data-title="品牌管理" href="javascript:void(0)">品牌管理</a></li>
+					<li><a data-href="{{url('admin/product/category')}}" data-title="分类管理" href="javascript:void(0)">分类管理</a></li>
+					<li><a data-href="{{url('admin/product/list')}}" data-title="产品管理" href="javascript:void(0)">产品管理</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -115,13 +115,8 @@
 			<dt><i class="Hui-iconfont">&#xe60d;</i> 会员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="member-list.html" data-title="会员列表" href="javascript:;">会员列表</a></li>
-					<li><a data-href="member-del.html" data-title="删除的会员" href="javascript:;">删除的会员</a></li>
-					<li><a data-href="member-level.html" data-title="等级管理" href="javascript:;">等级管理</a></li>
-					<li><a data-href="member-scoreoperation.html" data-title="积分管理" href="javascript:;">积分管理</a></li>
-					<li><a data-href="member-record-browse.html" data-title="浏览记录" href="javascript:void(0)">浏览记录</a></li>
-					<li><a data-href="member-record-download.html" data-title="下载记录" href="javascript:void(0)">下载记录</a></li>
-					<li><a data-href="member-record-share.html" data-title="分享记录" href="javascript:void(0)">分享记录</a></li>
+					<li><a data-href="{{url('/admin/homeusers/list')}}" data-title="会员列表" href="javascript:;">会员列表</a></li>
+					<li><a data-href="{{url('/admin/homeusers/level')}}" data-title="等级&积分" href="javascript:;">等级&积分</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -164,11 +159,24 @@
 	</div>
 
 	<div class="menu_dropdown bk_2" style="display:none">
-		<dl id="menu-aaaaa">
-			<dt><i class="Hui-iconfont">&#xe616;</i> 二级导航1<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+		<dl id="menu-picture">
+			<dt><i class="Hui-iconfont">&#xe616;</i> 首页<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">三级导航</a></li>
+					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">轮播图</a></li>
+					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">封面图</a></li>
+					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">秒杀商品</a></li>
+					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">新品推介</a></li>
+					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">热卖推介</a></li>
+					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">优惠推介</a></li>
+				</ul>
+			</dd>
+		</dl>
+		<dl id="menu-aaaaa">
+			<dt><i class="Hui-iconfont">&#xe616;</i> 二级分类<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">二级分类管理</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -203,7 +211,7 @@
 		<div class="Hui-tabNav-wp">
 			<ul id="min_title_list" class="acrossTab cl">
 				<li class="active">
-					<span title="我的桌面" data-href="{{url('/asd')}}">我的桌面</span>
+					<span title="我的桌面" data-href="{{url('admin/welcome')}}">我的桌面</span>
 					<em></em></li>
 		</ul>
 	</div>
