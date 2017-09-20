@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>	
-	<title>Home</title>
+	<title>商城首页</title>
 	<meta charset="utf-8" />
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -45,7 +45,7 @@
 							<div class="widget text-2 widget_text pull-left">
 								<div class="widget-inner">
 									<div class="textwidget">
-										<div class="call-us"><span>Call Us Now: </span>0123-444-666654123</div>
+										<div class="call-us"><span>联系我们: </span>0123-444-666654123</div>
 									</div>
 								</div>
 							</div>

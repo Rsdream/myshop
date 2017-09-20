@@ -24,10 +24,16 @@ Route::get('/login', function () {
 //处理登录，注册
 Route::post('doLogin','Api\LoginController@signIn');
 
-Route::get('/admin', function () {
-    return view('Admin/index');
-});
+//后台路由
+Route::prefix('/admin')->group(function () {
+    Route::prefix('/index')->group(function () {
+        Route::get('/rob', 'Admin\IndexController@rob');
+    });
 
-Route::get('/admin/list', function () {
-    return 'asdadsa';
+    Route::get('/', function () {
+        return view('Admin/index');
+    });
+
+    Route::get('/welcome', 'Admin\IndexController@welCome');
+
 });
