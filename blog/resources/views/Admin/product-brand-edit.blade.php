@@ -26,11 +26,11 @@
 <![endif]-->
 <!--/meta 作为公共模版分离出去-->
 
-<link href="lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+<link href="{{asset('Admin/lib/webuploader/0.1.5/webuploader.css')}}" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="page-container">
-	<form action="{{url('/admin/product/brand', ['id' => $brandinfo->id])}}" method="post" class="form form-horizontal" id="form-article-add">
+	<form onsubmit="return check()" action="{{url('/admin/product/brand', ['id' => $brandinfo->id])}}" enctype="multipart/form-data" method="post" class="form form-horizontal" id="form-article-add">
 		{{ method_field('PUT') }}
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>品牌名称：</label>
@@ -51,31 +51,19 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">logo图：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<div class="uploader-thum-container">
-					<div id="fileList" class="uploader-list"></div>
-					<div id="filePicker">选择图片</div>
-
+				<div id="fileList" class="uploader-list"></div>
+				<div id="filePicker">
+					<input id='img' type="file" name="logo">
 				</div>
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">图片修改：</label>
+			<label class="form-label col-xs-4 col-sm-2">图片：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<div class="uploader-list-container">
 					<div class="queueList">
-						<div id="dndArea" class="placeholder">
-							<div id="filePicker-2"></div>
-							<input type="file" name="" value="">
-							<button id="btn-star" class="btn btn-default btn-uploadstar radius ml-10">开始上传</button>
-						</div>
-					</div>
-					<div class="statusBar" style="display:none;">
-						<div class="progress"> <span class="text">0%</span> <span class="percentage"></span> </div>
-						<div class="info"></div>
-						<div class="btns">
-							<div id="filePicker2"></div>
-							<div class="uploadBtn">开始上传</div>
-						</div>
+						<img id='image' src="{{asset('upload/image/'.$brandinfo->blogo)}}" alt="">
+						<input type="hidden" name="filename" value="{{$brandinfo->blogo}}">
 					</div>
 				</div>
 			</div>
@@ -88,7 +76,7 @@
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 修改</button>
+				<button onClick="" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 修改</button>
 				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
 		</div>
@@ -111,7 +99,18 @@
 <script type="text/javascript" src="{{asset('Admin/lib/ueditor/1.4.3/ueditor.all.min.js')}}"> </script>
 <script type="text/javascript" src="{{asset('Admin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js')}}"></script>
 <script type="text/javascript">
-
+	function check(){
+		var name = $('input[name="bname"]').val();
+		var depict = $('textarea[name="depict"]').val();
+		if (!name) {
+			alert('品牌名不能为空');
+			return false;
+		}
+		if (!depict) {
+			alert('描述不能为空');
+			return false;
+		}
+	}
 </script>
 </body>
 </html>

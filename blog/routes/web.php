@@ -63,4 +63,5 @@ Route::prefix('/admin/product')->group(function () {
     Route::resource('/brand', 'Admin\Api\BrandApi');
     //产品管理列表路由
     Route::get('/list', 'Admin\ProductController@list');
+
 });

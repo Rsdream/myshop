@@ -25,18 +25,23 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 品牌管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<div class="text-c">
-		<form class="Huiform" method="post" action="" target="_self">
-			<input type="text" placeholder="分类名称" value="" class="input-text" style="width:120px">
-			<span class="btn-upload form-group">
-			<input class="input-text upload-url" type="text" name="uploadfile-2" id="uploadfile-2" readonly style="width:200px">
-			<a href="javascript:void();" class="btn btn-primary upload-btn"><i class="Hui-iconfont">&#xe642;</i> 上传logo</a>
-			<input type="file" multiple name="file-2" class="input-file">
-			</span> <span class="select-box" style="width:150px">
-			<select class="select" name="brandclass" size="1">
-				<option value="1" selected>国内品牌</option>
-				<option value="0">国外品牌</option>
+		<form class="Huiform" onsubmit="return check()" method="post" action="{{url('/admin/product/brand')}}" enctype="multipart/form-data" target="_self">
+			<input type="text" placeholder="品牌名称" value="" name='bname' class="input-text" style="width:120px">
+			<span class="select-box" style="width:150px">
+			<select class="select" name="categoryid" size="1">
+				@foreach($typelist as $k=>$v)
+				<option value="{{$k}}" selected>{{$v}}</option>
+				@endforeach
 			</select>
-			</span><button type="button" class="btn btn-success" id="" name="" onClick="picture_colume_add(this);"><i class="Hui-iconfont">&#xe600;</i> 添加</button>
+			</span>
+			<span class="btn-upload form-group">
+			<input class="input-text upload-url" type="text"  id="uploadfile-2" readonly style="width:200px">
+			<a href="javascript:void();" class="btn btn-primary upload-btn"><i class="Hui-iconfont">&#xe642;</i> 上传logo</a>
+			<input type="file" multiple name="blogo" class="input-file">
+			</span>
+
+			<input type="text" placeholder="描述" value="" name='depict' class="input-text" style="width:450px">
+			<button type="submit" class="btn btn-success" id="" name=""<i class="Hui-iconfont">&#xe600;</i> 添加</button>
 		</form>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
@@ -58,8 +63,8 @@
 					<tr class="text-c">
 						<td><input name="" type="checkbox" value=""></td>
 						<td>{{$v->id}}</td>
-						<td>{{$v->categoryid}}</td>
-						<td><img src="{{asset('/Admin/temp/brand/dongpeng.jpeg')}}"></td>
+						<td>{{$typelist[$v->categoryid]}}</td>
+						<td><img src="{{asset('upload/image/'.$v->blogo)}}"></td>
 						<td class="text-l"> {{$v->bname}}</td>
 						<td class="text-l">{{$v->depict}}</td>
 						<td class="f-14 product-brand-manage"><a style="text-decoration:none" onClick="product_edit('编辑品牌','{{url('admin/product/brand', ['id' => $v->id])}}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="active_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
@@ -170,6 +175,24 @@ function product_del(obj,id){
 			},
 		});
 	});
+}
+
+function check(){
+	var name = $('input[name="bname"]').val();
+	var depict = $('input[name="depict"]').val();
+	var file = $('#uploadfile-2').val();
+	if (!name) {
+		alert('品牌名不能为空');
+		return false;
+	}
+	if (!depict) {
+		alert('描述不能为空');
+		return false;
+	}
+	if (!file) {
+		alert('请选择图片');
+		return false;
+	}
 }
 </script>
 </body>
