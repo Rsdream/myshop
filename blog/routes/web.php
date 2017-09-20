@@ -61,6 +61,8 @@ Route::prefix('/admin/product')->group(function () {
     Route::resource('/category', 'Admin\Api\ProdectApi');
     //品牌管理资源控制器
     Route::resource('/brand', 'Admin\Api\BrandApi');
+    //删除品牌路由
+    Route::post('/delbrand', 'Admin\Api\BrandApi@destroy');
     //产品管理列表路由
     Route::get('/list', 'Admin\ProductController@list');
 

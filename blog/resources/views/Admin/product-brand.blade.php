@@ -67,7 +67,7 @@
 						<td><img src="{{asset('upload/image/'.$v->blogo)}}"></td>
 						<td class="text-l"> {{$v->bname}}</td>
 						<td class="text-l">{{$v->depict}}</td>
-						<td class="f-14 product-brand-manage"><a style="text-decoration:none" onClick="product_edit('编辑品牌','{{url('admin/product/brand', ['id' => $v->id])}}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="active_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+						<td class="f-14 product-brand-manage"><a style="text-decoration:none" onClick="product_edit('编辑品牌','{{url('admin/product/brand', ['id' => $v->id])}}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="active_del(this,{{$v->id}})" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 					</tr>
 				@endforeach
 			</tbody>
@@ -160,12 +160,13 @@ function product_edit(title,url,id){
 }
 
 /*产品-删除*/
-function product_del(obj,id){
+function active_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'POST',
-			url: '',
+			url: '{{url("/admin/product/delbrand")}}',
 			dataType: 'json',
+			data: 'id='+id,
 			success: function(data){
 				$(obj).parents("tr").remove();
 				layer.msg('已删除!',{icon:1,time:1000});

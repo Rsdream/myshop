@@ -197,9 +197,18 @@ class BrandApi extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->input('id');
+        $fileName = DB::table('brands')
+            ->select('blogo')
+            ->where('id', $id)
+            ->first();
+        $bool = DB::table('brands')->where('id', $id)->delete();
+        if ($bool) {
+            unlink('./upload/image/'.$fileName->blogo);
+        }
+        return $bool;
     }
 
     /**
