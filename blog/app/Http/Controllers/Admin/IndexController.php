@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Admin\AdminUser;
 
 /**
  * 后台首页控制类
@@ -16,4 +17,7 @@ class IndexController extends Controller
     {
         return view('Admin/welcome');
     }
+
+
+    
 }
