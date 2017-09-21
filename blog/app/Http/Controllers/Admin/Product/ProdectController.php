@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Api;
+namespace App\Http\Controllers\Admin\Product;
 
 use DB;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
  * @author rong <[<871513137@qq.com>]>
  *
  */
-class ProdectApi extends Controller
+class ProdectController extends Controller
 {
     /**
      * Display a listing of the resource.

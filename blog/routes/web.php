@@ -78,12 +78,12 @@ Route::prefix('/user')->group(function () {
 //产品管理路由组
 Route::prefix('/admin/product')->group(function () {
     //产品分类资源控制器
-    Route::resource('/category', 'Admin\Api\ProdectApi');
+    Route::resource('/category', 'Admin\Product\ProdectController');
     //品牌管理资源控制器
-    Route::resource('/brand', 'Admin\Api\BrandApi');
+    Route::resource('/brand', 'Admin\Product\BrandController');
     //删除品牌路由
-    Route::post('/delbrand', 'Admin\Api\BrandApi@destroy');
-    //产品管理列表路由
-    Route::get('/list', 'Admin\ProductController@list');
+    Route::post('/delbrand', 'Admin\Product\BrandController@destroy');
+    //商品管理资源控制器
+    Route::resource('/goods', 'Admin\Product\GoodsController');
 
 });

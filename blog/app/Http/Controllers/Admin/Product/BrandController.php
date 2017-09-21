@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Api;
+namespace App\Http\Controllers\Admin\Product;
 
 use DB;
 use Qiniu\Auth;
@@ -14,7 +14,7 @@ use Intervention\Image\ImageManager;
  * @author rong <[<871513137@qq.com>]>
  *
  */
-class BrandApi extends Controller
+class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -249,7 +249,7 @@ class BrandApi extends Controller
      * @param  string $width    图片的高
      * @param  string $height   图片的宽
      * @param  string $fileNmae 要保存的图片名
-     * @return string 处理成功返回图片的路径
+     * @return string $filePath 处理成功返回图片的路径
      */
     public function attrImg($filePath, $width, $height, $fileName)
     {

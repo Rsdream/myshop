@@ -98,7 +98,7 @@
 				<ul>
 					<li><a data-href="{{url('admin/product/brand')}}" data-title="品牌管理" href="javascript:void(0)">品牌管理</a></li>
 					<li><a data-href="{{url('admin/product/category')}}" data-title="分类管理" href="javascript:void(0)">分类管理</a></li>
-					<li><a data-href="{{url('admin/product/list')}}" data-title="产品管理" href="javascript:void(0)">产品管理</a></li>
+					<li><a data-href="{{url('admin/product/goods')}}" data-title="商品管理" href="javascript:void(0)">商品管理</a></li>
 				</ul>
 			</dd>
 		</dl>
