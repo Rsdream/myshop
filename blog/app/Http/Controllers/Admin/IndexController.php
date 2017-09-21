@@ -11,4 +11,8 @@ class IndexController extends Controller
     {
         return view('Admin/welcome');
     }
+    public function doLogin()
+    {
+        return view('Admin/login');
+    }
 }
