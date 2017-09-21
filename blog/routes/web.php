@@ -54,7 +54,7 @@ Route::prefix('/admin')->group(function () {
 
 
 
-   	// Route::get('product/delete/{gayquan}', 'Admin\ProductController@destroy')
+    // Route::get('product/delete/{gayquan}', 'Admin\ProductController@destroy')
     //     ->where(['gayquan' => '\d+']);
 
 

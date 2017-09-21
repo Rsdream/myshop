@@ -25,102 +25,102 @@
 <title>管理员列表</title>
 </head>
 <body>
-		
+        
 
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 管理员管理 <span class="c-gray en">&gt;</span> 管理员列表 </nav>
 
 <div class="page-container">
-	
-	<div class="text-c"> 日期
-		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
-		-
-		<input type="hidden" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;">
-		<form action="{{url('admin/adminlist')}}" method="get">
+    
+    <div class="text-c"> 日期
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
+        -
+        <input type="hidden" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;">
+        <form action="{{url('admin/adminlist')}}" method="get">
 
-			<input type="text" class="input-text" style="width:250px" placeholder="输入管理员名称" value="" name="name">
-			<button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+            <input type="text" class="input-text" style="width:250px" placeholder="输入管理员名称" value="" name="name">
+            <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
 
-		</form>
-	</div>
-	
+        </form>
+    </div>
+    
 
-	@if (session('msg'))
-	    <div id="time" class="alert alert-success">
-	        {{ session('msg') }}
-	    </div>
-	@endif
+    @if (session('msg'))
+        <div id="time" class="alert alert-success">
+            {{ session('msg') }}
+        </div>
+    @endif
 
 
-	<div id="errorTip" class="alert alert-danger" style="display:none">无法禁用老大</div>
+    <div id="errorTip" class="alert alert-danger" style="display:none">无法禁用老大</div>
 
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a href="{{url('admin/adminlist/create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span>  </div>
-	<table class="table table-border table-bordered table-bg">
-		<thead>
-			<tr>
-				<th scope="col" colspan="9">管理员列表</th>
-			</tr>
-			<tr class="text-c">
-				<!-- <th width="25"><input type="checkbox" name="" value=""></th> -->
-				<th width="60">序号</th>
-				<th width="150">账号</th>
-				<th width="150">用户名</th>
-				<th width="50">性别</th>
-				<th width="130">电话</th>
-				<th width="160">邮箱</th>
-				<th width="100">地址</th>
-				<th width="100">权限</th>
-				<th width="100">状态</th>
-				<th width="100">操作</th>
-			</tr>
-		</thead>
-		<tbody>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a href="{{url('admin/adminlist/create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span>  </div>
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+            <tr>
+                <th scope="col" colspan="9">管理员列表</th>
+            </tr>
+            <tr class="text-c">
+                <!-- <th width="25"><input type="checkbox" name="" value=""></th> -->
+                <th width="60">序号</th>
+                <th width="150">账号</th>
+                <th width="150">用户名</th>
+                <th width="50">性别</th>
+                <th width="130">电话</th>
+                <th width="160">邮箱</th>
+                <th width="100">地址</th>
+                <th width="100">权限</th>
+                <th width="100">状态</th>
+                <th width="100">操作</th>
+            </tr>
+        </thead>
+        <tbody>
 
-			@foreach($userinfo as $v)
+            @foreach($userinfo as $v)
 
-			
+            
 
-			<tr class="text-c">
-				<!-- <td><input type="checkbox" value="1" name=""></td> -->
-				<td>{{$v->id}}</td>
-				<td>{{$v->uid}}</td>
-				<td>{{$v->name}}</td>
-				<td>
-					@if ($v->sex == '0')
+            <tr class="text-c">
+                <!-- <td><input type="checkbox" value="1" name=""></td> -->
+                <td>{{$v->id}}</td>
+                <td>{{$v->uid}}</td>
+                <td>{{$v->name}}</td>
+                <td>
+                    @if ($v->sex == '0')
 
-						女
-					@else
-						男
-					@endif
-				</td>
-				<td>{{$v->phone}}</td>
-				<td>{{$v->email}}</td>
-				<td>{{$v->address}}</td>
-				<td>{{$v->power}}</td>
-				<td class="td-status"><span class="label label-success radius">
+                        女
+                    @else
+                        男
+                    @endif
+                </td>
+                <td>{{$v->phone}}</td>
+                <td>{{$v->email}}</td>
+                <td>{{$v->address}}</td>
+                <td>{{$v->power}}</td>
+                <td class="td-status"><span class="label label-success radius">
 
-					@if ($v->status == 0)
+                    @if ($v->status == 0)
 
-						<span style="color:white">启用</span>
-					@else
-						<span style="color:red">禁用</span>
-					
-		            @endif
-				</span></td>
+                        <span style="color:white">启用</span>
+                    @else
+                        <span style="color:red">禁用</span>
+                    
+                    @endif
+                </span></td>
 
-				<td class="td-manage">
+                <td class="td-manage">
 
-					<a style="text-decoration:none" id="stop"  title="禁用" href="javascript:;"><i class="Hui-iconfont">&#xe631;</i></a>
+                    <a style="text-decoration:none" id="stop"  title="禁用" href="javascript:;"><i class="Hui-iconfont">&#xe631;</i></a>
 
-					<a href="javascript:;" id="start" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>
+                    <a href="javascript:;" id="start" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>
 
-					<a title="编辑" href="{{url('admin/adminlist', ['id' => $v->id])}}"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-				</td>
-			</tr>
+                    <a title="编辑" href="{{url('admin/adminlist', ['id' => $v->id])}}"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                </td>
+            </tr>
 
-			@endforeach
-		</tbody>
-	</table>
-	{{$userinfo->appends(['name' => $name])->links()}}
+            @endforeach
+        </tbody>
+    </table>
+    {{$userinfo->appends(['name' => $name])->links()}}
 
 
 </div>
@@ -140,139 +140,139 @@
 //停用
 $('td.td-manage').on('click', '#stop', function () {
 
-	var that = $(this);
+    var that = $(this);
 
-	var title = $(this).attr('title');
+    var title = $(this).attr('title');
 
-	var id = $(this).parent().parent().children().eq(0).html();
-	// alert(id);
+    var id = $(this).parent().parent().children().eq(0).html();
+    // alert(id);
 
-	var url = '{{url("/admin/adminlist/")}}';
+    var url = '{{url("/admin/adminlist/")}}';
 
-	$.get(
+    $.get(
 
-		url+'/'+id+'/edit/',
-		{status:1},
-		function (data) {
-			// console.log(data);
+        url+'/'+id+'/edit/',
+        {status:1},
+        function (data) {
+            // console.log(data);
 
-			if (data == 1) {
+            if (data == 1) {
 
-				that.parent().prev().children().html('禁用').css('color','red');
+                that.parent().prev().children().html('禁用').css('color','red');
 
-			}
-			if (data == 66) {
+            }
+            if (data == 66) {
 
-				$('#errorTip').css('display','block');
+                $('#errorTip').css('display','block');
 
-				setTimeout(function () {
+                setTimeout(function () {
 
-					$('#errorTip').css('display','none');
-				},2000);
+                    $('#errorTip').css('display','none');
+                },2000);
 
-			}
-		},
-		'json'
-	);
+            }
+        },
+        'json'
+    );
 });
 
 //启用
 
 $('td.td-manage').on('click', '#start', function () {
 
-	var that = $(this);
-	var title = $(this).attr('title');
+    var that = $(this);
+    var title = $(this).attr('title');
 
-	var id = $(this).parent().parent().children().eq(0).html();
-	var url = '{{url("admin/adminlist/")}}';
+    var id = $(this).parent().parent().children().eq(0).html();
+    var url = '{{url("admin/adminlist/")}}';
 
-	$.get(
+    $.get(
 
-		url+'/'+id+'/edit/',
-		{status:0},
-		function (data) {
-			console.log(data);
+        url+'/'+id+'/edit/',
+        {status:0},
+        function (data) {
+            console.log(data);
 
-			if (data == 1) {
+            if (data == 1) {
 
 
-				that.parent().prev().children().html('启用').css('color','white');
+                that.parent().prev().children().html('启用').css('color','white');
 
-			}
-		},
-		'json'
-	);
+            }
+        },
+        'json'
+    );
 
 });
 
 
 setTimeout(function () {
 
-	$('#time').removeClass().html('');
+    $('#time').removeClass().html('');
 },2000);
 
 
 
 
 /*
-	参数解释：
-	title	标题
-	url		请求的url
-	id		需要操作的数据id
-	w		弹出层宽度（缺省调默认值）
-	h		弹出层高度（缺省调默认值）
+    参数解释：
+    title   标题
+    url     请求的url
+    id      需要操作的数据id
+    w       弹出层宽度（缺省调默认值）
+    h       弹出层高度（缺省调默认值）
 */
 /*管理员-增加*/
 // function admin_add(title,url,w,h){
-// 	layer_show(title,url,w,h);
+//  layer_show(title,url,w,h);
 // }
 // // /*管理员-删除*/
 // function admin_del(obj,id){
-// 	layer.confirm('确认要删除吗？',function(index){
-// 		$.ajax({
-// 			type: 'POST',
-// 			url: '',
-// 			dataType: 'json',
-// 			success: function(data){
-// 				$(obj).parents("tr").remove();
-// 				layer.msg('已删除!',{icon:1,time:1000});
-// 			},
-// 			error:function(data) {
-// 				console.log(data.msg);
-// 			},
-// 		});		
-// 	});
+//  layer.confirm('确认要删除吗？',function(index){
+//      $.ajax({
+//          type: 'POST',
+//          url: '',
+//          dataType: 'json',
+//          success: function(data){
+//              $(obj).parents("tr").remove();
+//              layer.msg('已删除!',{icon:1,time:1000});
+//          },
+//          error:function(data) {
+//              console.log(data.msg);
+//          },
+//      });     
+//  });
 // }
 
 // // /*管理员-编辑*/
 // function admin_edit(title,url,id,w,h){
-// 	layer_show(title,url,w,h);
+//  layer_show(title,url,w,h);
 // }
 // /*管理员-停用*/
 // function admin_stop(obj,id){
 
-// 	layer.confirm('确认要停用吗？',function(index){
-// // 		//此处请求后台程序，下方是成功后的前台处理……
-		
-// 		$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_start(this,id)" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
-// 		$(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">已禁用</span>');
-// 		$(obj).remove();
-// 		layer.msg('已停用!',{icon: 5,time:1000});
-// 	});
+//  layer.confirm('确认要停用吗？',function(index){
+// //       //此处请求后台程序，下方是成功后的前台处理……
+        
+//      $(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_start(this,id)" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
+//      $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">已禁用</span>');
+//      $(obj).remove();
+//      layer.msg('已停用!',{icon: 5,time:1000});
+//  });
 // }
 
 // // /*管理员-启用*/
 // function admin_start(obj,id){
 
-// 	layer.confirm('确认要启用吗？',function(index){
-// 		//此处请求后台程序，下方是成功后的前台处理……
-		
-		
-// 		$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_stop(this,id)" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
-// 		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-// 		$(obj).remove();
-// 		layer.msg('已启用!', {icon: 6,time:1000});
-// 	});
+//  layer.confirm('确认要启用吗？',function(index){
+//      //此处请求后台程序，下方是成功后的前台处理……
+        
+        
+//      $(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_stop(this,id)" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
+//      $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
+//      $(obj).remove();
+//      layer.msg('已启用!', {icon: 6,time:1000});
+//  });
 // }
 </script>
 </body>
