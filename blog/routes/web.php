@@ -24,18 +24,28 @@ Route::get('/login', function () {
 //处理登录，注册
 Route::post('doLogin','Api\LoginController@signIn');
 
-
-
-//后台路由
+//后台路由组
 Route::prefix('/admin')->group(function () {
+    //商城主页管理的路由组
     Route::prefix('/index')->group(function () {
         Route::get('/rob', 'Admin\IndexController@rob');
+    });
+
+    //会员管理路由组
+    Route::prefix('/homeusers')->group(function () {
+        //显示会员列表路由
+        Route::get('/list', 'Admin\HomeUsersController@homeUsersList');
+        //停用会员路由
+        Route::post('/stopandstart', 'Admin\HomeUsersController@stopAndStart');
+        //会员积分管理路由
+        Route::get('/level', 'Admin\HomeUsersController@level');
     });
 
     Route::get('/', function () {
         return view('Admin/index');
     });
 
+    //显示我的桌面路由
     Route::get('/welcome', 'Admin\IndexController@welCome');
 
     //角色权限
@@ -48,5 +58,23 @@ Route::prefix('/admin')->group(function () {
     Route::resource('/adminlist', 'Admin\Administrator\AdminList');
     Route::post('/update/{id}', 'Admin\Administrator\AdminList@update')->where('id','\d+');
 
+
+});
+
+//前台用户中心路由
+Route::prefix('/user')->group(function () {
+    Route::get('/myaccount', 'Home\IndexUserController@myAccount');
+});
+
+//产品管理路由组
+Route::prefix('/admin/product')->group(function () {
+    //产品分类资源控制器
+    Route::resource('/category', 'Admin\Product\ProdectController');
+    //品牌管理资源控制器
+    Route::resource('/brand', 'Admin\Product\BrandController');
+    //删除品牌路由
+    Route::post('/delbrand', 'Admin\Product\BrandController@destroy');
+    //商品管理资源控制器
+    Route::resource('/goods', 'Admin\Product\GoodsController');
 
 });
