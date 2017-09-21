@@ -69,6 +69,7 @@ class AdminList extends Controller
         ]);
 
         if ($bool) {
+
             return redirect('admin/adminlist')->with('msg', '添加成功');
         }
 
@@ -133,10 +134,11 @@ class AdminList extends Controller
 
         $bool = DB::table('admin_users')->where('id', $id)
         ->update([
-            'uid' => $request->input('uid'),
+            'name' => $request->input('name'),
             'pass' => $request->input('pass'),
             'sex' => $request->input('sex'),
             'phone' => $request->input('phone'),
+            'email' => $request->input('email'),
             'power' => $request->input('power')
         ]);
 
@@ -144,7 +146,7 @@ class AdminList extends Controller
             return redirect('admin/adminlist');
         }
 
-        return back();
+        return back()->with('msg', '修改失败');
     }
 
     /**

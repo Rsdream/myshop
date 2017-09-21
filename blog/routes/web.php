@@ -38,24 +38,15 @@ Route::prefix('/admin')->group(function () {
 
     Route::get('/welcome', 'Admin\IndexController@welCome');
 
-
-
     //角色权限
     Route::resource('/role', 'Admin\Administrator\Role');
 
     //权限管理
     Route::resource('/permission', 'Admin\Administrator\Permission');
 
-
     //管理员列表
     Route::resource('/adminlist', 'Admin\Administrator\AdminList');
-    Route::post('/update/{id}', 'Admin\Administrator\AdminList@update')->where('id','\d');
-
-
-
-
-    // Route::get('product/delete/{gayquan}', 'Admin\ProductController@destroy')
-    //     ->where(['gayquan' => '\d+']);
+    Route::post('/update/{id}', 'Admin\Administrator\AdminList@update')->where('id','\d+');
 
 
 });

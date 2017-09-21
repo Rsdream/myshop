@@ -14,14 +14,14 @@ class AdminUsers extends Seeder
         //
         DB::table('admin_users')->insert([
 
-        	'uid'   => 'huazai',
+        	'uid'   => str_random(10),
         	'pass'  => '123456',
         	'name'  => str_random(10),
         	'sex'   => '1',
         	'phone' => 186896864,
         	'email' => str_random(10).'@163.com',
         	'address' => '江西',
-        	'power' => '3',
+        	'power' => '2',
         	'status' => '0'
  
         ]);

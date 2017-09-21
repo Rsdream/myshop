@@ -10,6 +10,7 @@
 <script type="text/javascript" src="lib/html5shiv.js"></script>
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <![endif]-->
+<link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui/css/H-ui.min.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui.admin/css/H-ui.admin.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/lib/Hui-iconfont/1.0.8/iconfont.css')}}" />
@@ -25,6 +26,12 @@
 </head>
 <body>
 <article class="page-container">
+
+    @if (session('msg'))
+        <div id="time" class="alert alert-danger">
+            {{ session('msg') }}
+        </div>
+    @endif
     
     
     <form class="form form-horizontal" id="form-admin-add" action="{{url('/admin/update', ['id' => $user->id])}}" method="post">
@@ -82,7 +89,7 @@
             <select class="select" name="power" size="1">
                 <option value="0" name="power" {{$user->power == 0?"selected":""}} >普通管理员</option>
                 <option value="1" name="power" {{$user->power == 1?"selected":""}} >超级管理员</option>
-                <option value="1" name="power" {{$user->power == 2?"selected":""}} >老大</option>
+                <option value="2" name="power" {{$user->power == 2?"selected":""}} >老大</option>
             </select>
             </span> </div>
     </div>
@@ -105,6 +112,10 @@
 <script type="text/javascript" src="{{asset('/Admin/lib/jquery.validation/1.14.0/validate-methods.js')}}"></script> 
 <script type="text/javascript" src="{{asset('/Admin/lib/jquery.validation/1.14.0/messages_zh.js')}}"></script> 
 <script type="text/javascript">
+setTimeout(function () {
+
+    $('#time').removeClass().html('');
+},2000);
 // $(function(){
 //  $('.skin-minimal input').iCheck({
 //      checkboxClass: 'icheckbox-blue',
