@@ -45,7 +45,7 @@
 							<div class="widget text-2 widget_text pull-left">
 								<div class="widget-inner">
 									<div class="textwidget">
-										<div class="call-us"><span>联系我们: </span>0123-444-666654123</div>
+										<div class="call-us"><span>欢迎</span>xxx<span>来到ETRO商城</span></div>
 									</div>
 								</div>
 							</div>
@@ -57,9 +57,9 @@
 											<ul class="nav">
 												<li>
 													<a class="lang_sel_sel icl-en">
-														<img class="iclflag" title="English" alt="en" src="{{asset('Home/images/icons/en.png')}}" width="18" height="12" /> English
+														<!-- <img class="iclflag" title="English" alt="en" src="{{asset('Home/images/icons/en.png')}}" width="18" height="12" /> --> 会员登录
 													</a>
-													<ul>
+<!-- 													<ul>
 														<li class="icl-en">
 															<a href="#">
 																<img class="iclflag" title="English" alt="en" src="{{asset('Home/images/icons/en.png')}}" width="18" height="12" /> English
@@ -71,7 +71,7 @@
 																<img class="iclflag" title="Arabic" alt="ar" src="{{asset('Home/images/icons/ar.png')}}" width="18" height="12" /> Arabic
 															</a>
 														</li>
-													</ul>
+													</ul> -->
 												</li>
 											</ul>
 										</div>
@@ -84,11 +84,11 @@
 									<form method="post" class="currency_converter" action="">
 										<ul class="currency_w">
 											<li>
-												<a href="#" class="">USD</a>
-												<ul class="currency_switcher">
+												<a href="#" class="">会员注册</a>
+<!-- 												<ul class="currency_switcher">
 													<li><a href="#" class="reset default active" data-currencycode="USD">USD</a></li>
 													<li><a href="#" class="" data-currencycode="EUR">EUR</a></li>
-												</ul>
+												</ul> -->
 											</li>
 										</ul>
 									</form>
@@ -98,7 +98,7 @@
 
 						<div class="wrap-myacc pull-right">
 							<div class="sidebar-account pull-left">
-								<div class="account-title">My account</div>
+								<div class="account-title">我的管理</div>
 
 								<div id="my-account" class="my-account">
 									<div class="widget-1 widget-first widget nav_menu-4 widget_nav_menu">
@@ -106,25 +106,25 @@
 											<ul id="menu-my-account" class="menu">
 												<li class="menu-my-account">
 													<a class="item-link" href="{{url('user/myaccount')}}">
-														<span class="menu-title">My Account</span>
+														<span class="menu-title">个人中心</span>
 													</a>
 												</li>
 
 												<li class="menu-cart">
 													<a class="item-link" href="cart.html">
-														<span class="menu-title">Cart</span>
+														<span class="menu-title">购物车</span>
 													</a>
 												</li>
 
 												<li class="menu-checkout">
 													<a class="item-link" href="checkout.html">
-														<span class="menu-title">Checkout</span>
+														<span class="menu-title">我的订单</span>
 													</a>
 												</li>
 
 												<li class="menu-wishlist">
 													<a class="item-link" href="#">
-														<span class="menu-title">Wishlist</span>
+														<span class="menu-title">我的评价</span>
 													</a>
 												</li>
 											</ul>
@@ -138,7 +138,7 @@
 													<ul>
 														<li>
 															<a href="javascript:void(0);" data-toggle="modal" data-target="#login_form">
-																<span>Login</span>
+																<span>我的积分</span>
 															</a>
 															<span class="wg">Welcome Guest</span>
 														</li>
@@ -156,7 +156,7 @@
 										<ul id="menu-checkout" class="menu">
 											<li class="menu-checkout">
 												<a class="item-link" href="checkout.html">
-													<span class="menu-title">Checkout</span>
+													<span class="menu-title">收藏夹</span>
 												</a>
 											</li>
 										</ul>
@@ -185,12 +185,12 @@
 										<div class="topsearch-entry">
 											<form method="get" action="">
 												<div>
-												   <input type="text" value="" name="s" placeholder="Enter your keyword...">
+												   <input type="text" value="" name="s" placeholder="搜索...">
 													<div class="cat-wrapper">
 														<label class="label-search">
 															<select name="search_category" class="s1_option">
-																<option value="">All Categories</option>
-																<option value="8">Computers & Laptops</option>
+																<option value="">查找所有商品</option>
+																<option value="">Computers  Laptops</option>
 																<option value="13">Computers & Networking</option>
 																<option value="14">Smartphones & Tablet</option>
 																<option value="15">Home Furniture</option>
@@ -227,7 +227,7 @@
 										<div class="wrapp-minicart">
 											<div class="minicart-padding">
 												<div class="number-item">
-													There are <span>items</span> in your cart
+													购物车有 <span>2</span> 件商品
 												</div>
 
 												<ul class="minicart-content">
@@ -310,7 +310,7 @@
 
 												<div class="cart-checkout">
 													<div class="price-total">
-														<span class="label-price-total">Total</span>
+														<span class="label-price-total">总金额</span>
 
 														<span class="price-total-w">
 															<span class="price">
@@ -323,11 +323,11 @@
 
 													<div class="cart-links clearfix">
 														<div class="cart-link">
-															<a href="cart.html" title="Cart">View Cart</a>
+															<a href="cart.html" title="Cart">继续购物</a>
 														</div>
 
 														<div class="checkout-link">
-															<a href="checkout.html" title="Check Out">Check Out</a>
+															<a href="checkout.html" title="Check Out">结算</a>
 														</div>
 													</div>
 												</div>
@@ -376,27 +376,27 @@
 
 										<div id="ResMenuprimary_menu" class="collapse menu-responsive-wrapper">
 											<ul id="menu-primary-menu" class="etrostore_resmenu">
-												<li><a href="index.html">Home</a></li>
-												<li><a href="cart.html">Cart</a></li>
-												<li><a href="checkout.html">Checkout</a></li>
-												<li><a href="my_account.html">My Account</a></li>
-												<li><a href="shop.html">Shop</a></li>
-												<li><a href="simple_product.html">Simple Product</a></li>
+												<li><a href="index.html">商城</a></li>
+												<li><a href="cart.html">秒杀</a></li>
+												<li><a href="checkout.html">热销商品</a></li>
+												<li><a href="my_account.html">促销商品</a></li>
+												<li><a href="shop.html">联系我们</a></li>
+												<!-- <li><a href="simple_product.html">Simple Product</a></li>
 												<li><a href="about_us.html">About Us</a></li>
-												<li><a href="contact_us.html">Contact Us</a></li>
+												<li><a href="contact_us.html">Contact Us</a></li> -->
 											</ul>
 										</div>
 									</div>
 
 									<ul id="menu-primary-menu-1" class="nav nav-pills nav-mega etrostore-mega etrostore-menures">
-										<li><a href="index.html">Home</a></li>
-										<li><a href="cart.html">Cart</a></li>
-										<li><a href="checkout.html">Checkout</a></li>
-										<li><a href="my_account.html">My Account</a></li>
-										<li><a href="shop.html">Shop</a></li>
-										<li><a href="simple_product.html">Simple Product</a></li>
-										<li><a href="about_us.html">About Us</a></li>
-										<li><a href="contact_us.html">Contact Us</a></li>
+										<li><a href="index.html">商城</a></li>
+										<li><a href="cart.html">秒杀</a></li>
+										<li><a href="checkout.html">热销商品</a></li>
+										<li><a href="my_account.html">促销商品</a></li>
+										<li><a href="shop.html">联系我们</a></li>
+										<li><a href="simple_product.html">我的积分</a></li>
+										<!-- <li><a href="about_us.html">About Us</a></li>
+										<li><a href="contact_us.html">Contact Us</a></li> -->
 									</ul>
 								</div>
 							</nav>
@@ -585,7 +585,7 @@
 															<div class="wpb_wrapper">
 																<div class="vc_wp_custommenu wpb_content_element wrap-title">
 																	<div class="mega-left-title">
-																		<strong>Categories</strong>
+																		<strong>商品主题</strong>
 																	</div>
 
 																	<div class="wrapper_vertical_menu vertical_megamenu">

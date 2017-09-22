@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd7080f0f8b2c00ccd47899ae1d9ec2e",
+    "content-hash": "3c3affbca5502f7571076502ff0cfd84",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -433,7 +433,6 @@
             "time": "2017-04-19T08:10:55+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "guzzlehttp/guzzle",
             "version": "6.3.0",
             "source": {
@@ -459,35 +458,10 @@
             },
             "suggest": {
                 "psr/log": "Required for using the Log middleware"
-=======
-            "name": "guzzlehttp/psr7",
-            "version": "1.4.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/psr7.git",
-                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/guzzle/psr7/f5b8a8512e2b58b0071a7280e39f14f72e05d87c.zip",
-                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "psr/http-message": "~1.0"
-            },
-            "provide": {
-                "psr/http-message-implementation": "1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
->>>>>>> 739293e17ae56cd3d9075404a67a7e281dc662a3
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
                     "dev-master": "6.2-dev"
                 }
             },
@@ -498,18 +472,6 @@
                 "psr-4": {
                     "GuzzleHttp\\": "src/"
                 }
-=======
-                    "dev-master": "1.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Psr7\\": "src/"
-                },
-                "files": [
-                    "src/functions_include.php"
-                ]
->>>>>>> 739293e17ae56cd3d9075404a67a7e281dc662a3
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -520,7 +482,6 @@
                     "name": "Michael Dowling",
                     "email": "mtdowling@gmail.com",
                     "homepage": "https://github.com/mtdowling"
-<<<<<<< HEAD
                 }
             ],
             "description": "Guzzle is a PHP HTTP client library",
@@ -610,7 +571,30 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.0"
-=======
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Psr7\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
                 },
                 {
                     "name": "Tobias Schultze",
@@ -714,14 +698,10 @@
                 "ext-gd": "to use GD library based image processing.",
                 "ext-imagick": "to use Imagick based image processing.",
                 "intervention/imagecache": "Caching extension for the Intervention Image library"
->>>>>>> 739293e17ae56cd3d9075404a67a7e281dc662a3
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "1.4-dev"
-=======
                     "dev-master": "2.3-dev"
                 },
                 "laravel": {
@@ -731,21 +711,12 @@
                     "aliases": {
                         "Image": "Intervention\\Image\\Facades\\Image"
                     }
->>>>>>> 739293e17ae56cd3d9075404a67a7e281dc662a3
                 }
             },
             "autoload": {
                 "psr-4": {
-<<<<<<< HEAD
-                    "GuzzleHttp\\Psr7\\": "src/"
-                },
-                "files": [
-                    "src/functions_include.php"
-                ]
-=======
                     "Intervention\\Image\\": "src/Intervention/Image"
                 }
->>>>>>> 739293e17ae56cd3d9075404a67a7e281dc662a3
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -753,28 +724,6 @@
             ],
             "authors": [
                 {
-<<<<<<< HEAD
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                },
-                {
-                    "name": "Tobias Schultze",
-                    "homepage": "https://github.com/Tobion"
-                }
-            ],
-            "description": "PSR-7 message implementation that also provides common utility methods",
-            "keywords": [
-                "http",
-                "message",
-                "request",
-                "response",
-                "stream",
-                "uri",
-                "url"
-            ],
-            "time": "2017-03-20T17:10:46+00:00"
-=======
                     "name": "Oliver Vogel",
                     "email": "oliver@olivervogel.com",
                     "homepage": "http://olivervogel.com/"
@@ -791,7 +740,6 @@
                 "watermark"
             ],
             "time": "2017-09-21T16:29:17+00:00"
->>>>>>> 739293e17ae56cd3d9075404a67a7e281dc662a3
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -882,16 +830,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.11",
+            "version": "v5.5.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "56f1ffd0880255e9ebbf0dbf47024cc5c2941c7a"
+                "reference": "74f5831447817034838b3539c644303036df3d8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/laravel/framework/56f1ffd0880255e9ebbf0dbf47024cc5c2941c7a.zip",
-                "reference": "56f1ffd0880255e9ebbf0dbf47024cc5c2941c7a",
+                "url": "https://files.phpcomposer.com/files/laravel/framework/74f5831447817034838b3539c644303036df3d8e.zip",
+                "reference": "74f5831447817034838b3539c644303036df3d8e",
                 "shasum": ""
             },
             "require": {
@@ -1010,7 +958,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-09-21T18:59:13+00:00"
+            "time": "2017-09-22T13:33:35+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1903,16 +1851,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.7.0",
+            "version": "3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e"
+                "reference": "45cffe822057a09e05f7bd09ec5fb88eeecd2334"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/ramsey/uuid/0ef23d1b10cf1bc576e9d865a7e9c47982c5715e.zip",
-                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
+                "url": "https://files.phpcomposer.com/files/ramsey/uuid/45cffe822057a09e05f7bd09ec5fb88eeecd2334.zip",
+                "reference": "45cffe822057a09e05f7bd09ec5fb88eeecd2334",
                 "shasum": ""
             },
             "require": {
@@ -1981,7 +1929,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2017-08-04T13:39:04+00:00"
+            "time": "2017-09-22T20:46:04+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
