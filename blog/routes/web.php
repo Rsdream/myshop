@@ -21,7 +21,7 @@ Route::get('/login', function () {
     return view('Home/login/index');
 });
 //处理登录，注册
-Route::post('doLogin','Api\LoginController@signIn');
+// Route::post('doLogin','Api\LoginController@signIn');
 
 //后台路由组
 Route::prefix('/admin')->group(function () {
@@ -96,4 +96,21 @@ Route::prefix('/user')->group(function () {
     Route::get('/myaccount', 'Home\IndexUserController@myAccount');
 });
 
+
+
+
+//获取验证码
+Route::get('/makecode', 'Api\CommonApi@buildCode');
+
+//获取手机验证码
+Route::post('/phonecode', 'Api\CommonApi@phoneCode');
+
+//判断用户名是否存在
+Route::post('/existence', 'Home\RegisterController@isExistence');
+
+//处理登录
+Route::post('/dologin', 'Home\LoginController@doLogin');
+
+//处理注册
+Route::post('/doregister', 'Home\RegisterController@doregister');
 

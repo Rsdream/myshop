@@ -24,28 +24,23 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|alpha_dash|min:3|max:20',
-            'pass'=>'required|alpha_num|min:6',
-            'phone'=>'required',
-            'email'=>'required'
+            'username'=>'bail|required|alpha_dash|min:3|max:20',
+            'userpass'=>'bail|required|alpha_num|min:6',
         ];
     }
 
     public function messages()
     {
         return[
-            'name.required'=>'用户名为空',
-            'name.alpha_dash'=>'只能是字母、数字、破折号-以及下划线_ ',
-            'name.mix'=>'用户名过短',
-            'name.max'=>'用户名过长',
+            'username.required'=>'用户名为空',
+            'username.alpha_dash'=>'只能是字母、数字、破折号-以及下划线_ ',
+            'username.min'=>'用户名格式错误',
+            'username.max'=>'用户名格式错误',
 
-            'pass.required'=>'密码为空',
-            'pass.alpha_num'=>'字段必须完全是字母、数字',
-            'pass.mix'=>'密码过短',
 
-            'phone.required'=>'手机号为空',
-
-            'email.required'=>'邮箱为空'
+            'userpass.required'=>'密码为空',
+            'userpass.alpha_num'=>'字段必须完全是字母、数字',
+            'userpass.min'=>'格式错误',
 
         ];
     }
