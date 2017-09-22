@@ -72,6 +72,7 @@ class BrandController extends Controller
       if (!in_array($extension, $allowExt)) {
           return '上传文件类型错误';
       }
+
       //获取文件临时路径
       $filePath = $request->blogo->path();
       //保存图片，赋值文件名
@@ -253,7 +254,7 @@ class BrandController extends Controller
      */
     public function attrImg($filePath, $width, $height, $fileName)
     {
-        $manager = new ImageManager(array('driver' => 'imagick'));
+        $manager = new ImageManager(array('driver' => 'gd'));
 
         $image = $manager->make($filePath)->resize($width, $height);
 
