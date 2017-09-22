@@ -10,11 +10,11 @@
 <script type="text/javascript" src="lib/html5shiv.js"></script>
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui/css/H-ui.min.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/css/H-ui.admin.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('Admin/lib/Hui-iconfont/1.0.8/iconfont.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/skin/default/skin.css')}}" id="skin" />
+<link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/css/style.css')}}" />
 <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -32,63 +32,63 @@
 			<li class="item">
 				<div class="portfoliobox">
 					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="temp/big/keting.jpg" data-lightbox="gallery" data-title="客厅1"><img src="temp/Thumb/keting.jpg"></a></div>
+					<div class="picbox"><a href="{{asset('Admin/temp/big/keting.jpg')}}" data-lightbox="gallery" data-title="客厅1"><img src="{{asset('Admin/temp/Thumb/keting.jpg')}}"></a></div>
 					<div class="textbox">客厅 </div>
 				</div>
 			</li>
 			<li class="item">
 				<div class="portfoliobox">
 					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox "><a href="temp/big/keting2.jpg" data-lightbox="gallery" data-title="客厅2"><img src="temp/Thumb/keting2.jpg"></a></div>
+					<div class="picbox "><a href="{{asset('Admin/temp/big/keting2.jpg')}}" data-lightbox="gallery" data-title="客厅2"><img src="{{asset('Admin/temp/Thumb/keting2.jpg')}}"></a></div>
 					<div class="textbox">客厅 </div>
 				</div>
 			</li>
 			<li class="item">
 				<div class="portfoliobox">
 					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="temp/big/keting3.jpg" data-lightbox="gallery" data-title="客厅3"><img src="temp/Thumb/keting3.jpg"></a></div>
+					<div class="picbox"><a href="{{asset('Admin/temp/big/keting3.jpg')}}" data-lightbox="gallery" data-title="客厅3"><img src="{{asset('Admin/temp/Thumb/keting3.jpg')}}"></a></div>
 					<div class="textbox">客厅 </div>
 				</div>
 			</li>
 			<li class="item">
 				<div class="portfoliobox">
 					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="temp/big/keting4.jpg" data-lightbox="gallery" data-title="客厅4"><img src="temp/Thumb/keting4.jpg"></a></div>
+					<div class="picbox"><a href="{{asset('Admin/temp/big/keting4.jpg')}}" data-lightbox="gallery" data-title="客厅4"><img src="{{asset('Admin/temp/Thumb/keting4.jpg')}}"></a></div>
 					<div class="textbox">客厅 </div>
 				</div>
 			</li>
 			<li class="item">
 				<div class="portfoliobox">
 					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="temp/big/chufang.jpg" data-lightbox="gallery" data-title="厨房"><img src="temp/Thumb/chufang.jpg"></a></div>
+					<div class="picbox"><a href="{{asset('Admin/temp/big/chufang.jpg')}}" data-lightbox="gallery" data-title="厨房"><img src="{{asset('Admin/temp/Thumb/chufang.jpg')}}"></a></div>
 					<div class="textbox">厨房 </div>
 				</div>
 			</li>
 			<li class="item">
 				<div class="portfoliobox">
 					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="temp/big/shufang.jpg" data-lightbox="gallery" data-title="书房"><img src="temp/Thumb/shufang.jpg"></a></div>
+					<div class="picbox"><a href="{{asset('Admin/temp/big/shufang.jpg')}}" data-lightbox="gallery" data-title="书房"><img src="{{asset('Admin/temp/Thumb/shufang.jpg')}}"></a></div>
 					<div class="textbox">书房 </div>
 				</div>
 			</li>
 			<li class="item">
 				<div class="portfoliobox">
 					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="temp/big/woshi.jpg" data-lightbox="gallery" data-title="卧室"><img src="temp/Thumb/woshi.jpg"></a></div>
+					<div class="picbox"><a href="{{asset('Admin/temp/big/woshi.jpg')}}" data-lightbox="gallery" data-title="卧室"><img src="{{asset('Admin/temp/Thumb/woshi.jpg')}}"></a></div>
 					<div class="textbox">卧室 </div>
 				</div>
 			</li>
 			<li class="item">
 				<div class="portfoliobox">
 					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="temp/big/weishengjian.jpg" data-lightbox="gallery" data-title="卫生间1"><img src="temp/Thumb/weishengjian.jpg"></a></div>
+					<div class="picbox"><a href="{{asset('Admin/temp/big/weishengjian.jpg')}}" data-lightbox="gallery" data-title="卫生间1"><img src="{{asset('Admin/temp/Thumb/weishengjian.jpg')}}"></a></div>
 					<div class="textbox">卫生间1 </div>
 				</div>
 			</li>
 			<li class="item">
 				<div class="portfoliobox">
 					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="temp/big/weishengjian2.jpg" data-lightbox="gallery" data-title="卫生间2"><img src="temp/Thumb/weishengjian2.jpg"></a></div>
+					<div class="picbox"><a href="{{asset('Admin/temp/big/weishengjian2.jpg')}}" data-lightbox="gallery" data-title="卫生间2"><img src="{{asset('Admin/temp/Thumb/weishengjian2.jpg')}}"></a></div>
 					<div class="textbox">卫生间2 </div>
 				</div>
 			</li>
@@ -96,13 +96,13 @@
 	</div>
 </div>
 <!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
-<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="{{asset('Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('Admin/lib/layer/2.4/layer.js')}}"></script>
+<script type="text/javascript" src="{{asset('Admin/static/h-ui/js/H-ui.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('Admin/static/h-ui.admin/js/H-ui.admin.js')}}"></script> <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="lib/lightbox2/2.8.1/js/lightbox.min.js"></script> 
+<script type="text/javascript" src="{{asset('Admin/lib/lightbox2/2.8.1/js/lightbox.min.js')}}"></script>
 <script type="text/javascript">
 $(function(){
 	$(".portfolio-area li").Huihover();
