@@ -27,13 +27,7 @@ class LoginController extends Controller
         } elseif ($pass != $users->pass) {
             return $this->json(1401,'登陆失败,密码错误');
         } else {	 
-            $user_information = [
-            'name' => $users->name,
-            'pass' => $users->pass,
-            'phone' => $users->phone,
-            'power' => $users->power,
-            'status' => $users->status
-            ];  		
+            $user_information = $users;  		
             $request->session()->pull('admin_users',$user_information);
             $request->session()->push( 'admin_users',$user_information);
             return $this->json(1200,"登陆成功",session('admin_users'));

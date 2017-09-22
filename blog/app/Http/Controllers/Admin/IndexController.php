@@ -13,8 +13,11 @@ use App\Model\Admin\AdminUser;
  */
 class IndexController extends Controller
 {
-    public function welCome()
+    public function welCome(Request $request)
     {
+
+    	$data = $request->session()->get('admin_users');
+    	var_dump($data);
         return view('Admin/welcome');
     }
     public function doLogin()

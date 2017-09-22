@@ -52,6 +52,7 @@
 
 
     <div id="errorTip" class="alert alert-danger" style="display:none">无法禁用老大</div>
+    <div id="die" class="alert alert-danger" style="display:none">您没有权限</div>
 
     <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a href="{{url('admin/adminlist/create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span>  </div>
     <table class="table table-border table-bordered table-bg">
@@ -171,6 +172,16 @@ $('td.td-manage').on('click', '#stop', function () {
                 },2000);
 
             }
+
+            if (data == '4') {
+
+                $('#die').css('display','block');
+
+                setTimeout(function () {
+
+                    $('#die').css('display','none');
+                },2000);
+            }
         },
         'json'
     );
@@ -198,6 +209,16 @@ $('td.td-manage').on('click', '#start', function () {
 
                 that.parent().prev().children().html('启用').css('color','white');
 
+            }
+
+            if (data == '4') {
+
+                $('#die').css('display','block');
+
+                setTimeout(function () {
+
+                    $('#die').css('display','none');
+                },2000);
             }
         },
         'json'

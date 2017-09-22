@@ -27,13 +27,12 @@ class AdminList extends Controller
 
         $name = $request->input('name');
         
-
-
+        $session = $request->session()->get('admin_users');
         // $userinfo = AdminUser::get();
         $userinfo = DB::table('admin_users')->where('name', 'like', '%'.$name.'%')->paginate(3);
 
         // dd($userinfo);
-        return view('Admin/admin-list',['userinfo' => $userinfo, 'name' => $name]);
+        return view('Admin/admin-list',['userinfo' => $userinfo, 'name' => $name, 'session' => $session]);
     }
 
     /**
@@ -41,8 +40,15 @@ class AdminList extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $session = $request->session()->get('admin_users');
+        // dd($session);
+
+        // if ($session[0]['power'] == 0 || $session[0]['power'] == 1) {
+
+        //     return back()->with('errorTip', '没有权限');
+        // }
         return view('Admin/admin-insert');
     }
 
@@ -101,9 +107,19 @@ class AdminList extends Controller
      * @param  int  $id
      * @return bool
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
 
+        $data = $request->session()->get('admin_users');
+
+        // var_dump($data[0]->power);exit;
+
+        if ($data[0]->power == 0 || $data[0]->power == 1) {
+            echo '4';
+            die;
+        }
+        // echo 'pre';
+        // print_r($data);exit;
         
         $user = DB::table('admin_users')->where('id', $id)->first();
 
@@ -131,6 +147,11 @@ class AdminList extends Controller
     public function update(Request $request, $id)
     {
         
+        $data = $request->session()->get('admin_users');
+
+        if ($data[0]['power'] == 0 || $data[0]['power'] == 1) {
+            return back()->with('msg', '无权修改');
+        }
 
         $bool = DB::table('admin_users')->where('id', $id)
         ->update([
