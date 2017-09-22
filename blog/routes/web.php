@@ -20,7 +20,6 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('Home/login/index');
 });
-
 //处理登录，注册
 Route::post('doLogin','Api\LoginController@signIn');
 
@@ -31,6 +30,13 @@ Route::prefix('/admin')->group(function () {
         Route::get('/rob', 'Admin\IndexController@rob');
     });
 
+    Route::get('/', function () {
+        return view('Admin/index');
+    });
+    //提交用户登陆信息
+    Route::post('dologin','Admin\Api\LoginController@dologin');
+    Route::get('login','Admin\IndexController@doLogin');
+    Route::get('/makecode', 'Admin\Api\CommonController@buildCode');
     //会员管理路由组
     Route::prefix('/homeusers')->group(function () {
         //显示会员列表路由

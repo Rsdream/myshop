@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d595c753f047ace99ee53afba94d62d",
+    "content-hash": "cd7080f0f8b2c00ccd47899ae1d9ec2e",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -317,6 +317,54 @@
             "time": "2017-06-15T17:19:42+00:00"
         },
         {
+            "name": "gregwar/captcha",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gregwar/Captcha.git",
+                "reference": "2f704c8bc3f1bb5f58994af2729e77ac4e3172e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/Gregwar/Captcha/2f704c8bc3f1bb5f58994af2729e77ac4e3172e6.zip",
+                "reference": "2f704c8bc3f1bb5f58994af2729e77ac4e3172e6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "captcha",
+            "autoload": {
+                "psr-4": {
+                    "Gregwar\\Captcha\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Passault",
+                    "email": "g.passault@gmail.com",
+                    "homepage": "http://www.gregwar.com/"
+                },
+                {
+                    "name": "Jeremy Livingston",
+                    "email": "jeremy.j.livingston@gmail.com"
+                }
+            ],
+            "description": "Captcha generator",
+            "homepage": "https://github.com/Gregwar/Captcha",
+            "keywords": [
+                "bot",
+                "captcha",
+                "spam"
+            ],
+            "time": "2017-04-19T08:10:55+00:00"
+        },
+        {
             "name": "guzzlehttp/psr7",
             "version": "1.4.2",
             "source": {
@@ -382,7 +430,66 @@
             "time": "2017-03-20T17:10:46+00:00"
         },
         {
+            "name": "hightman/xunsearch",
+            "version": "1.4.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hightman/xs-sdk-php.git",
+                "reference": "20ecf25fd4281b8490594557d039ad1a5b3b16f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/hightman/xs-sdk-php/20ecf25fd4281b8490594557d039ad1a5b3b16f6.zip",
+                "reference": "20ecf25fd4281b8490594557d039ad1a5b3b16f6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "lib-pcre": "*",
+                "php": ">=5.3.0"
+            },
+            "bin": [
+                "util/xs"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib/",
+                    "wrapper/yii-ext/"
+                ],
+                "psr-4": {
+                    "hightman\\xunsearch\\": "wrapper/yii2-ext/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "hightman",
+                    "email": "hightman@twomice.net",
+                    "role": "Founder and project leader"
+                }
+            ],
+            "description": "xunsearch php sdk, include yii, yii2 supports",
+            "homepage": "http://www.xunsearch.com/",
+            "keywords": [
+                "search engine",
+                "xunsearch",
+                "yii",
+                "yii2"
+            ],
+            "time": "2016-03-23T15:34:06+00:00"
+        },
+        {
             "name": "intervention/image",
+<<<<<<< HEAD
 <<<<<<< HEAD
             "version": "2.4.1",
             "source": {
@@ -396,16 +503,24 @@
                 "reference": "3603dbcc9a17d307533473246a6c58c31cf17919",
 =======
             "version": "2.4.0",
+=======
+            "version": "2.4.1",
+>>>>>>> 739293e17ae56cd3d9075404a67a7e281dc662a3
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "322a4ade249467179c50a3e50eda8760ff3af2a3"
+                "reference": "3603dbcc9a17d307533473246a6c58c31cf17919"
             },
             "dist": {
                 "type": "zip",
+<<<<<<< HEAD
                 "url": "https://files.phpcomposer.com/files/Intervention/image/322a4ade249467179c50a3e50eda8760ff3af2a3.zip",
                 "reference": "322a4ade249467179c50a3e50eda8760ff3af2a3",
 >>>>>>> 238060fbf1363c33f7def5a244acd225eedc7621
+=======
+                "url": "https://files.phpcomposer.com/files/Intervention/image/3603dbcc9a17d307533473246a6c58c31cf17919.zip",
+                "reference": "3603dbcc9a17d307533473246a6c58c31cf17919",
+>>>>>>> 739293e17ae56cd3d9075404a67a7e281dc662a3
                 "shasum": ""
             },
             "require": {
@@ -463,10 +578,14 @@
                 "watermark"
             ],
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2017-09-21T16:29:17+00:00"
 =======
             "time": "2017-07-03T15:50:40+00:00"
 >>>>>>> 238060fbf1363c33f7def5a244acd225eedc7621
+=======
+            "time": "2017-09-21T16:29:17+00:00"
+>>>>>>> 739293e17ae56cd3d9075404a67a7e281dc662a3
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -557,16 +676,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.4",
+            "version": "v5.5.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "d3e0493bead126cf7fb9a005c64e6b58a9190e51"
+                "reference": "56f1ffd0880255e9ebbf0dbf47024cc5c2941c7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/laravel/framework/d3e0493bead126cf7fb9a005c64e6b58a9190e51.zip",
-                "reference": "d3e0493bead126cf7fb9a005c64e6b58a9190e51",
+                "url": "https://files.phpcomposer.com/files/laravel/framework/56f1ffd0880255e9ebbf0dbf47024cc5c2941c7a.zip",
+                "reference": "56f1ffd0880255e9ebbf0dbf47024cc5c2941c7a",
                 "shasum": ""
             },
             "require": {
@@ -685,7 +804,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-09-13T13:36:29+00:00"
+            "time": "2017-09-21T18:59:13+00:00"
         },
         {
             "name": "laravel/tinker",
