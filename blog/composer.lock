@@ -489,8 +489,6 @@
         },
         {
             "name": "intervention/image",
-<<<<<<< HEAD
-<<<<<<< HEAD
             "version": "2.4.1",
             "source": {
                 "type": "git",
@@ -501,26 +499,6 @@
                 "type": "zip",
                 "url": "https://files.phpcomposer.com/files/Intervention/image/3603dbcc9a17d307533473246a6c58c31cf17919.zip",
                 "reference": "3603dbcc9a17d307533473246a6c58c31cf17919",
-=======
-            "version": "2.4.0",
-=======
-            "version": "2.4.1",
->>>>>>> 739293e17ae56cd3d9075404a67a7e281dc662a3
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Intervention/image.git",
-                "reference": "3603dbcc9a17d307533473246a6c58c31cf17919"
-            },
-            "dist": {
-                "type": "zip",
-<<<<<<< HEAD
-                "url": "https://files.phpcomposer.com/files/Intervention/image/322a4ade249467179c50a3e50eda8760ff3af2a3.zip",
-                "reference": "322a4ade249467179c50a3e50eda8760ff3af2a3",
->>>>>>> 238060fbf1363c33f7def5a244acd225eedc7621
-=======
-                "url": "https://files.phpcomposer.com/files/Intervention/image/3603dbcc9a17d307533473246a6c58c31cf17919.zip",
-                "reference": "3603dbcc9a17d307533473246a6c58c31cf17919",
->>>>>>> 739293e17ae56cd3d9075404a67a7e281dc662a3
                 "shasum": ""
             },
             "require": {
@@ -577,15 +555,7 @@
                 "thumbnail",
                 "watermark"
             ],
-<<<<<<< HEAD
-<<<<<<< HEAD
             "time": "2017-09-21T16:29:17+00:00"
-=======
-            "time": "2017-07-03T15:50:40+00:00"
->>>>>>> 238060fbf1363c33f7def5a244acd225eedc7621
-=======
-            "time": "2017-09-21T16:29:17+00:00"
->>>>>>> 739293e17ae56cd3d9075404a67a7e281dc662a3
         },
         {
             "name": "jakub-onderka/php-console-color",
