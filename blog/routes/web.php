@@ -20,9 +20,8 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('Home/login/index');
 });
-
 //处理登录，注册
-Route::post('doLogin','Api\LoginController@signIn');
+// Route::post('doLogin','Api\LoginController@signIn');
 
 //后台路由组
 Route::prefix('/admin')->group(function () {
@@ -31,6 +30,13 @@ Route::prefix('/admin')->group(function () {
         Route::get('/rob', 'Admin\IndexController@rob');
     });
 
+    Route::get('/', function () {
+        return view('Admin/index');
+    });
+    //提交用户登陆信息
+    Route::post('dologin','Admin\Api\LoginController@dologin');
+    Route::get('login','Admin\IndexController@doLogin');
+    Route::get('/makecode', 'Admin\Api\CommonController@buildCode');
     //会员管理路由组
     Route::prefix('/homeusers')->group(function () {
         //显示会员列表路由
@@ -92,4 +98,19 @@ Route::prefix('/admin/product')->group(function () {
 
 });
 
+//获取验证码
+Route::get('/makecode', 'Api\CommonApi@buildCode');
+
+//获取手机验证码
+Route::post('/phonecode', 'Api\CommonApi@phoneCode');
+
+//判断用户名是否存在
+Route::post('/existence', 'Home\RegisterController@isExistence');
+
+//处理登录
+Route::post('/dologin', 'Home\LoginController@doLogin');
+
+//处理注册
+Route::post('/doregister', 'Home\RegisterController@doregister');
+//搜索
 Route::get('/search', 'Home\SearchController@search');

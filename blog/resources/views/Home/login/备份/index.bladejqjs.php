@@ -74,39 +74,20 @@
 		</div>
 	</nav>
 	<header id="gtco-header" class="gtco-cover" role="banner" style="background-image: url('{{asset('/Home/login/images/img_4.jpg')}}');">
-    
-    <!--判断用户名，手机号不存在，密码错误返回值，在页面显示错误提示-->
-    @if(!empty(session('erro')))
-        <div class="alert alert-danger alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align: center">     
-            {{session('erro')}}</div>
-    @endif
-    
-    <!--登录注册成功提示-->
-    @if(!empty(session('success')))
-        <div class="alert alert-success alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align:center">    
-        {{session('success')}}</div>
-            <script type="text/javascript">
-                    setTimeout(function () {
-        	            $('.alter-register-tip').remove();
-        	            window.location.replace("{{url('/')}}");
-                    },3000);
-            </script>
-    @endif
 
-    <!--表单验证-->
-    @if ($errors->any())
-        <div class="alert alert-danger" style="position: relative;z-index: 2;width: 100%;height: auto;text-align:center">
-            @foreach($errors->all() as $error)
-                <p>{{ $error }}</p>
-            @endforeach
-        </div>
-    @endif
-    <script type="text/javascript">
-        //提交后返回错误值提示，定时器3秒后清除
+@if(!empty(session('erro')))
+<div class="alert alert-danger alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align: center">{{session('erro')}}</div>
+@endif
+
+@if(!empty(session('success')))
+<div class="alert alert-success alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align: center">{{session('success')}}</div>
+<script type="text/javascript">
         setTimeout(function () {
-        	$('.alert-danger').remove();
-        },5000);
-    </script>
+        	$('.alter-register-tip').remove();
+        	window.location.replace("{{url('/')}}");
+        },3000);
+</script>
+@endif
 		<div class="overlay"></div>
 		<div class="gtco-container">
 			<div class="row">
@@ -517,6 +498,9 @@
 			</div>
 		</div>
 	</div>
+
+
+
 	<div id="gtco-subscribe" >
 		<div class="gtco-container">
 			<div class="row animate-box">
@@ -620,23 +604,21 @@
 	<script src="{{asset('/Home/login/js/jquery.countTo.js')}}"></script>
 	<!-- Magnific Popup -->
 	<script src="{{asset('/Home/login/js/jquery.magnific-popup.min.js')}}"></script>
-
 	<script src="{{asset('/Home/login/js/magnific-popup-options.js')}}"></script>
 	<!-- Main -->
 	<script src="{{asset('/Home/login/js/main.js')}}"></script>
 
 	<script type="text/javascript">
 
-	    //初始化字段值	    
-	    var username = false;
-	    var userpass = false	    
+	    //初始化字段值
 	    var uname = false;
 	    var upass = false;
-	    var repeatpass = false;	    
+	    var repeatpass = false;
+	    var ucode = false;
 	    var uphone = false;
 	    var phonecode = false;
-	    var ucode = false;
-
+	    var username = false;
+	    var userpass = false
 
 
         //用户名判断
@@ -660,7 +642,7 @@
 
         	var type = 'upass';
 
-        	var match = /^(?![0-9A-Za-z]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+        	var match = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
 
         	var array = [
         	    '建议字母、数字2种字符组合，6-20个字符',
@@ -865,12 +847,12 @@
         /**
          * 注册登录，提示，正则，ajax封装
          * @param  {string}  type   [字段名（input中name的名字）]
-         * @param  {array}   array  [0=>'格式提示内容',1=>'正则错误提示内容']
+         * @param  {array}   array  [0=>'提示内容',1=>'正则错误提示']
          * @param  {Boolean} test   [控制正则判断是否运行,true为禁用状态,反之]
          * @param  {Boolean} flat   [控制ajax是否运行,true为禁用状态,反之]
          * @param  {String}  match  [正则规则]
          * @param  {String}  status [错误类型状态码]
-         * @return {bool}           [全部验证通过返回ture,反之false]
+         * @return {bool}           [全部验证通过返回ture,反之]
          */
         function varildate (type, array, test=true, flat=true, match='', status='') {
 
@@ -898,7 +880,9 @@
 
 	        		//值为空把获取焦点时给出的格式提示和成功提示清除
 	        		$('.my-'+type).html('');
-	        		$('#'+type).css('display','none');   
+	        		$('#'+type).css('display','none');
+
+	            
 	        	} 
                 
                 //test=false并且字段值不为空执行正则判断
@@ -912,7 +896,8 @@
 	        			$('.my-'+type).html('<span class="red glyphicon glyphicon-minus-sign">'+array[1]+'</span>');
 	        			$('input[name="'+type+'"]').css('border','2px solid red');
 	        			return;
-	        		}	        		
+	        		}
+	        		
 	        	} 
 
 	            //flat=false并且字段值不为空执行ajax
@@ -961,6 +946,10 @@
 	        })
         }
 
+        //提交后返回错误值提示，定时器3秒后清除
+        setTimeout(function () {
+        	$('.alter-register-tip').remove();
+        },3000);
 
         //获取手机验证码时定时器
         function phoneTime (time) {
@@ -988,5 +977,5 @@
         	},1000);        	
         }
 	</script>
-</body>
+	</body>
 </html>

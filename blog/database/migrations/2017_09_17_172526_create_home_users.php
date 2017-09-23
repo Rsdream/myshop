@@ -21,7 +21,7 @@ class CreateHomeUsers extends Migration
             $table->smallInteger('sex')->nullable()->default(1);
             $table->integer('phone');
             $table->string('email');
-            $table->string('address')->nullable()->index('address');
+            $table->integer('addtime');
             $table->integer('score')->default(0);
             $table->smallInteger('status')->default(1);
             $table->integer('growth')->default(0);
