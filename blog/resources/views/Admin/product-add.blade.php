@@ -14,176 +14,110 @@
 <script type="text/javascript" src="lib/respond.min.js"></script>
 
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui/css/H-ui.min.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/css/H-ui.admin.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('Admin/lib/Hui-iconfont/1.0.8/iconfont.css')}}" />
 
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/skin/default/skin.css')}}" id="skin" />
+<link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/css/style.css')}}" />
 <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <!--/meta 作为公共模版分离出去-->
 
-<link href="lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+<link href="{{asset('Admin/lib/webuploader/0.1.5/webuploader.css')}}" rel="stylesheet" type="text/css" />
+<style media="screen">
+	#pic{
+		width:100px;
+		height:100px;
+		margin:20px auto;
+		cursor: pointer;
+	}
+</style>
 </head>
 <body>
 <div class="page-container">
-	<form action="" method="post" class="form form-horizontal" id="form-article-add">
+	<form onsubmit="return check()" action="{{url('/admin/product/goods')}}" method="post" enctype="multipart/form-data" class="form form-horizontal" id="form-article-add">
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品标题：</label>
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品名：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="">
+				<input title="商品名" type="text" class="input-text" value="" placeholder="" id="" name="gname">
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">简略标题：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类栏目：</label>
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择分类：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name="" class="select">
-					<option value="0">一级分类</option>
-					<option value="1">一级分类</option>
-					<option value="11">├二级分类</option>
-					<option value="12">├二级分类</option>
-					<option value="13">├二级分类</option>
+				<select name="category" class="select">
+					@foreach($categoryList as $k=>$v)
+						<option value="{{$v->id}}">{{$v->name}}</option>
+					@endforeach
 				</select>
 				</span> </div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">排序值：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="0" placeholder="" id="" name="">
-			</div>
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择品牌：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="brand" class="select">
+					@foreach($brandList as $k=>$v)
+						<option value="{{$k}}">{{$v}}</option>
+					@endforeach
+				</select>
+				</span> </div>
 		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">允许评论：</label>
-			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
-				<div class="check-box">
-					<input type="checkbox" id="checkbox-1">
-					<label for="checkbox-1">&nbsp;</label>
+		<div id='box' class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">填写配置1：</label>
+			<div class="formControls col-xs-2 col-sm-9">
+				<label class="form-label col-xs-1 col-sm-1">运行内存</label>
+				<div class="formControls col-xs-1 col-sm-1">
+					<input title="运行内存" type="text" name="ram1" id="" placeholder="" value="" class="input-text" style="width:90%">
+				</div>
+				<label class="form-label col-xs-1 col-sm-1">存储容量</label>
+				<div class="formControls col-xs-1 col-sm-1">
+					<input title="存储容量" type="text" name="rom1" id="" placeholder="" value="" class="input-text" style="width:90%">
+				</div>
+				<label class="form-label col-xs-1 col-sm-1">颜色</label>
+				<div class="formControls col-xs-1 col-sm-1">
+					<input title="颜色" type="text" name="color1" id="" placeholder="" value="" class="input-text" style="width:90%">
+				</div>
+				<label class="form-label col-xs-1 col-sm-1">价格</label>
+				<div class="formControls col-xs-1 col-sm-1">
+					<input title="价格" type="text" name="price1" id="" placeholder="" value="" class="input-text" style="width:90%">
+				</div>
+				<label class="form-label col-xs-1 col-sm-1">库存</label>
+				<div class="formControls col-xs-1 col-sm-1">
+					<input title="库存" type="text" name="stock1" id="" placeholder="" value="" class="input-text" style="width:90%">
 				</div>
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">产品规格：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="输入长度" value="" class="input-text" style=" width:25%">
-				MM
-				<input type="text" name="" id="" placeholder="输入宽度" value="" class="input-text" style=" width:25%">
-				MM
-				<input type="text" name="" id="" placeholder="输入高度" value="" class="input-text" style=" width:25%">
-				MM </div>
+			<label class="form-label col-xs-4 col-sm-2"><button id='add' type="button" name="button">追加配置</button>　</label>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">产地：</label>
+			<label class="form-label col-xs-4 col-sm-2">商品详细描述：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="" value="" class="input-text">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">材质：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="" value="" class="input-text">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">所属供应商：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="" value="" class="input-text">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">价格计算单位：</label>
-			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select class="select">
-					<option>请选择</option>
-					<option value="1">件</option>
-					<option value="2">斤</option>
-					<option value="3">KG</option>
-					<option value="4">吨</option>
-					<option value="5">套</option>
-				</select>
-				</span> </div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">产品重量：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-				kg</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">产品展示价格：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-				元</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">市场价格：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-				元</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">成本价格：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-				元</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">最低销售价格：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-				元</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">销售开始时间：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:180px;">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">销售结束时间：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'datemin\')}' })" id="datemax" class="input-text Wdate" style="width:180px;">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">产品关键字：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="多个关键字用英文逗号隔开，限10个关键字" value="" class="input-text">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">产品摘要：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<textarea name="" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,200)"></textarea>
+				<textarea name="detail" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" ></textarea>
 				<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">缩略图：</label>
+			<label class="form-label col-xs-4 col-sm-2">商品主图：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<div class="uploader-thum-container">
 					<div id="fileList" class="uploader-list"></div>
-					<div id="filePicker">选择图片</div>
-					<button id="btn-star" class="btn btn-default btn-uploadstar radius ml-10">开始上传</button>
+					<img style='border:1px solid ;' alt="点击选择图片" id="pic" src="" >
+					<input id="upload" name="img" accept="image/gif,image/jpeg,image/jpg,image/png" accept="image/*" type="file" style="display:none;" />
 				</div>
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">图片上传：</label>
+			<label class="form-label col-xs-4 col-sm-2">商品附图：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<div class="uploader-list-container">
 					<div class="queueList">
 						<div id="dndArea" class="placeholder">
 							<div id="filePicker-2"></div>
-							<p>或将照片拖到这里，单次最多可选300张</p>
+							<p>或将照片拖到这里</p>
 						</div>
 					</div>
 					<div class="statusBar" style="display:none;">
@@ -197,37 +131,110 @@
 				</div>
 			</div>
 		</div>
-		<div class="row cl">
+		<div style="display:none;" class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">详细内容：</label>
-			<div class="formControls col-xs-8 col-sm-9"> 
-				<script id="editor" type="text/plain" style="width:100%;height:400px;"></script> 
+			<div class="formControls col-xs-8 col-sm-9">
+				<script id="editor" type="text/detail" style="width:100%;height:400px;"></script>
 			</div>
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
-				<button onClick="article_save();" class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button>
+				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 添加</button>
 				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
 		</div>
+		<input type="hidden" name="sum" value="1">
 	</form>
 </div>
 
 <!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
-<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
-<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="{{asset('Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('Admin/lib/layer/2.4/layer.js')}}"></script>
+<script type="text/javascript" src="{{asset('Admin/static/h-ui/js/H-ui.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('Admin/static/h-ui.admin/js/H-ui.admin.js')}}"></script> <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script> 
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
-<script type="text/javascript" src="lib/webuploader/0.1.5/webuploader.min.js"></script> 
-<script type="text/javascript" src="lib/ueditor/1.4.3/ueditor.config.js"></script>
-<script type="text/javascript" src="lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
-<script type="text/javascript" src="lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="{{asset('Admin/lib/My97DatePicker/4.8/WdatePicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('Admin/lib/jquery.validation/1.14.0/jquery.validate.js')}}"></script>
+<script type="text/javascript" src="{{asset('Admin/lib/jquery.validation/1.14.0/validate-methods.js')}}"></script>
+<script type="text/javascript" src="{{asset('Admin/lib/jquery.validation/1.14.0/messages_zh.js')}}"></script>
+<script type="text/javascript" src="{{asset('Admin/lib/webuploader/0.1.5/webuploader.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('Admin/lib/ueditor/1.4.3/ueditor.config.js')}}"></script>
+<script type="text/javascript" src="{{asset('Admin/lib/ueditor/1.4.3/ueditor.all.min.js')}}"> </script>
+<script type="text/javascript" src="{{asset('Admin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js')}}"></script>
+@include('Admin/Common/tip')
+<script type="text/javascript">
+	$('select[name="category"]').on('change', function () {
+		var categoryId = $(this).val();
+		$.ajax({
+			type: 'post',
+			datetype: 'json',
+			url: '{{url("/admin/product/goodsbrand")}}',
+			data: 'categoryid='+categoryId,
+			success: function (data) {
+				var str = '';
+				$('select[name="brand"]').html('');
+				for(var i = 0; i < data.length; i++){
+					str += '<option value="'+data[i].id+'">'+data[i].bname+'</option>';
+				}
+				$('select[name="brand"]').append(str);
+			}
+		})
+	})
+	var sum = 1;
+	$('#add').on('click', function () {
+		sum++;
+		var str = `
+			<label class="form-label col-xs-4 col-sm-2">填写配置`+sum+`：</label>
+			<div class="formControls col-xs-2 col-sm-9">
+				<label class="form-label col-xs-1 col-sm-1">运行内存</label>
+				<div class="formControls col-xs-1 col-sm-1">
+					<input title="运行内存" type="text" name="ram`+sum+`" id="" placeholder="" value="" class="input-text" style="width:90%">
+				</div>
+				<label class="form-label col-xs-1 col-sm-1">存储容量</label>
+				<div class="formControls col-xs-1 col-sm-1">
+					<input title="存储容量" type="text" name="rom`+sum+`" id="" placeholder="" value="" class="input-text" style="width:90%">
+				</div>
+				<label class="form-label col-xs-1 col-sm-1">颜色</label>
+				<div class="formControls col-xs-1 col-sm-1">
+					<input title="颜色" type="text" name="color`+sum+`" id="" placeholder="" value="" class="input-text" style="width:90%">
+				</div>
+				<label class="form-label col-xs-1 col-sm-1">价格</label>
+				<div class="formControls col-xs-1 col-sm-1">
+					<input title="价格" type="text" name="pirce`+sum+`" id="" placeholder="" value="" class="input-text" style="width:90%">
+				</div>
+				<label class="form-label col-xs-1 col-sm-1">库存</label>
+				<div class="formControls col-xs-1 col-sm-1">
+					<input title="库存" type="text" name="stock`+sum+`" id="" placeholder="" value="" class="input-text" style="width:90%">
+				</div>
+			</div>`;
+		$('#box').append(str);
+		$('input[name="sum"]').val(sum);
+	})
+
+	function check() {
+		var gname = $('input[name="gname"]').val();
+		var brand = $('select[name="brand"]').val();
+		var bool;
+		$(":input[type=text]").each(function(){
+        if ($(this).val() == '') {
+					layer.msg($(this).attr('title')+'没有填写',{icon:0,time:1500});
+					return bool = false;
+				}
+    })
+		var detail = $('textarea[name="detail"]').val();
+		if (detail == '') {
+			layer.msg('商品详情没有填写',{icon:0,time:1500});
+			return false;
+		}
+		var img = $('img[id="pic"]').attr('src');
+		if (img == '') {
+			layer.msg('没有选择商品主图',{icon:0,time:1500});
+			return false;
+		}
+		return bool;
+	}
+</script>
 <script type="text/javascript">
 $(function(){
 	$('.skin-minimal input').iCheck({
@@ -235,7 +242,7 @@ $(function(){
 		radioClass: 'iradio-blue',
 		increaseArea: '20%'
 	});
-	
+
 	$list = $("#fileList"),
 	$btn = $("#btn-star"),
 	state = "pending",
@@ -244,14 +251,14 @@ $(function(){
 	var uploader = WebUploader.create({
 		auto: true,
 		swf: 'lib/webuploader/0.1.5/Uploader.swf',
-	
+
 		// 文件接收服务端。
-		server: 'lib/webuploader/0.1.5/server/fileupload.php',
-	
+		server: '{{url("/admin/product/goodsimg")}}',
+
 		// 选择文件的按钮。可选。
 		// 内部根据当前运行是创建，可能是input元素，也可能是flash.
 		pick: '#filePicker',
-	
+
 		// 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
 		resize: false,
 		// 只允许选择图片文件。
@@ -271,7 +278,7 @@ $(function(){
 		),
 		$img = $li.find('img');
 		$list.append( $li );
-	
+
 		// 创建缩略图
 		// 如果为非图片文件，可以不用调用此方法。
 		// thumbnailWidth x thumbnailHeight 为 100 x 100
@@ -280,7 +287,7 @@ $(function(){
 				$img.replaceWith('<span>不能预览</span>');
 				return;
 			}
-	
+
 			$img.attr( 'src', src );
 		}, thumbnailWidth, thumbnailHeight );
 	});
@@ -288,7 +295,7 @@ $(function(){
 	uploader.on( 'uploadProgress', function( file, percentage ) {
 		var $li = $( '#'+file.id ),
 			$percent = $li.find('.progress-box .sr-only');
-	
+
 		// 避免重复创建
 		if ( !$percent.length ) {
 			$percent = $('<div class="progress-box"><span class="progress-bar radius"><span class="sr-only" style="width:0%"></span></span></div>').appendTo( $li ).find('.sr-only');
@@ -296,17 +303,17 @@ $(function(){
 		$li.find(".state").text("上传中");
 		$percent.css( 'width', percentage * 100 + '%' );
 	});
-	
+
 	// 文件上传成功，给item添加成功class, 用样式标记上传成功。
 	uploader.on( 'uploadSuccess', function( file ) {
 		$( '#'+file.id ).addClass('upload-state-success').find(".state").text("已上传");
 	});
-	
+
 	// 文件上传失败，显示上传出错。
 	uploader.on( 'uploadError', function( file ) {
 		$( '#'+file.id ).addClass('upload-state-error').find(".state").text("上传出错");
 	});
-	
+
 	// 完成上传完了，成功或者失败，先删除进度条。
 	uploader.on( 'uploadComplete', function( file ) {
 		$( '#'+file.id ).find('.progress-box').fadeOut();
@@ -490,7 +497,7 @@ $(function(){
             swf: 'lib/webuploader/0.1.5/Uploader.swf',
             chunked: false,
             chunkSize: 512 * 1024,
-            server: 'lib/webuploader/0.1.5/server/fileupload.php',
+            server: '{{url("/admin/product/goodsimg")}}',
             // runtimeOrder: 'flash',
 
             // accept: {
@@ -914,6 +921,32 @@ $(function(){
 $(function(){
 	var ue = UE.getEditor('editor');
 });
+</script>
+<script type="text/javascript">
+	$(function() {
+		$("#pic").click(function () {
+			$("#upload").click(); //隐藏了input:file样式后，点击头像就可以本地上传
+			$("#upload").on("change",function(){
+				var objUrl = getObjectURL(this.files[0]) ; //获取图片的路径，该路径不是图片在本地的路径
+				if (objUrl) {
+					$("#pic").attr("src", objUrl) ; //将图片路径存入src中，显示出图片
+				}
+			});
+		});
+	});
+
+	//建立一個可存取到該file的url
+	function getObjectURL(file) {
+	var url = null ;
+	if (window.createObjectURL!=undefined) { // basic
+		url = window.createObjectURL(file) ;
+	} else if (window.URL!=undefined) { // mozilla(firefox)
+		url = window.URL.createObjectURL(file) ;
+	} else if (window.webkitURL!=undefined) { // webkit or chrome
+		url = window.webkitURL.createObjectURL(file) ;
+	}
+		return url ;
+	}
 </script>
 </body>
 </html>

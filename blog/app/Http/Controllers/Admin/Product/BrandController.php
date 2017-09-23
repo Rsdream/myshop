@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Qiniu\Storage\UploadManager;
 use Intervention\Image\ImageManager;
+use App\Http\Controllers\Admin\Api\ImageApi;
 
 /**
  * 品牌管理资源控制器
@@ -61,16 +62,17 @@ class BrandController extends Controller
 
       //允许的图片格式
       $allowExt = ['jpg', 'png', 'gif', 'jpeg'];
-      //判断 品牌名、品牌类别、描述是否为空 空返回修改失败，并刷新页面
+      //判断 品牌名、品牌类别、描述是否为空 返回失败
       if ( !$bName || !$categoryId || !$depict || !$request->hasFile('blogo')) {
-          return '<script>alert("添加失败");window.history.back(-1);</script>';
+          return redirect('/admin/product/brand')->with('errorTip', '添加失败');
       }
 
       //获取文件扩展名
       $extension = $request->blogo->extension();
       //判断是否合法图片类型
       if (!in_array($extension, $allowExt)) {
-          return '上传文件类型错误';
+
+          return redirect('/admin/product/brand')->with('errorTip', '上传文件类型错误');
       }
       //获取文件临时路径
       $filePath = $request->blogo->path();
@@ -78,9 +80,9 @@ class BrandController extends Controller
       // $fileName = $request->logo->store('image');
       $fileName = time().'_logo.jpg';
       //处理图片
-      $filePath = $this->attrImg($filePath, 180, 60, $fileName);
+      $filePath = ImageApi::attrImg($filePath, 180, 60, $fileName);
       //上传到七牛云
-      $ret = $this->logoUp($filePath, $fileName);
+      $ret = ImageApi::imgUp($filePath, $fileName);
       //上传成功的状态
       $bool =DB::table('brands')->insert(
           [
@@ -92,9 +94,9 @@ class BrandController extends Controller
       );
       //判断添加数据或图片是否成功
       if ( $bool ) {
-          return '<script>alert("添加成功");window.location.href="'.url('admin/product/brand').'";;</script>';
+          return redirect('/admin/product/brand')->with('msg', '添加成功');
       } else {
-          return '<script>parent.location.reload();</script>';
+          return redirect('/admin/product/brand')->with('errorTip', '添加失败');
       }
     }
 
@@ -143,7 +145,8 @@ class BrandController extends Controller
         $allowExt = ['jpg', 'png', 'gif', 'jpeg'];
         //判断 品牌名、品牌类别、描述是否为空 空返回修改失败，并刷新页面
         if ( !$bName || !$typeId || !$depict) {
-            return '<script>alert("修改失败");parent.location.reload();</script>';
+            redirect('/admin/product/brand')->with('errorTip', '修改失败');
+            return '<script>parent.location.reload();</script>';
         }
         //判断是否有上传文件
         if ($request->hasFile('logo')) {
@@ -151,7 +154,8 @@ class BrandController extends Controller
             $extension = $request->logo->extension();
             //判断是否合法图片类型
             if (!in_array($extension, $allowExt)) {
-                return '上传文件类型错误';
+                redirect('/admin/product/brand')->with('errorTip', '上传文件类型错误');
+                return '<script>parent.location.reload();</script>';
             }
             //获取文件临时路径
             $filePath = $request->logo->path();
@@ -159,9 +163,9 @@ class BrandController extends Controller
             // $fileName = $request->logo->store('image');
             $fileName = time().'_logo.jpg';
             //处理图片
-            $filePath = $this->attrImg($filePath, 180, 60, $fileName);
+            $filePath = ImageApi::attrImg($filePath, 180, 60, $fileName);
             //上传到七牛云
-            $ret = $this->logoUp($filePath, $fileName);
+            $ret = ImageApi::imgUp($filePath, $fileName);
             //上传成功的状态
             $bool =DB::table('brands')->where('id', $id)->update(
                 [
@@ -185,8 +189,10 @@ class BrandController extends Controller
         }
         //判断修改数据或图片是否成功
         if ( $bool || !empty($image) ) {
-            return '<script>alert("修改成功");parent.location.reload();</script>';
+            redirect('/admin/product/brand')->with('msg', '修改成功');
+            return '<script>parent.location.reload();</script>';
         } else {
+            redirect('/admin/product/brand')->with('errorTip', '未做修改');
             return '<script>parent.location.reload();</script>';
         }
     }
@@ -209,60 +215,5 @@ class BrandController extends Controller
             unlink('./upload/image/'.$fileName->blogo);
         }
         return $bool;
-    }
-
-    /**
-     * 品牌logo上传到七牛云
-     * @param  string $filePath 图片路径
-     * @param  string $fileName 图片名字
-     * @return string $ret 成功的状态 $err 错误的状态
-     */
-    public function logoUp($filePath, $fileNmae)
-    {
-
-        $bucket = 'images';
-        $secretKey = 'A8vb3UPGRXXfh5hvcvHfBGLVcRUSRVDuY4RbOy1q';
-        $accessKey = 'lWvvVGZpbDI85oxvvWcgJonVt3Py3rAL9zz0g5XV';
-        $auth = new Auth($accessKey, $secretKey);
-
-        $token = $auth->uploadToken($bucket);
-
-        // 要上传文件的本地路径
-        $filePath = $filePath;
-        // 上传到七牛后保存的文件名
-        $key = $fileNmae;
-        // 初始化 UploadManager 对象并进行文件的上传。
-        $uploadMgr = new UploadManager();
-        // 调用 UploadManager 的 putFile 方法进行文件的上传。
-        list($ret, $err) = $uploadMgr->putFile($token, $key, $filePath);
-
-        if ($err !== null) {
-            return $err;
-        } else {
-            return $ret;
-        }
-    }
-
-    /**
-     * 处理图片方法
-     * @param  string $filePath 图片路径
-     * @param  string $width    图片的高
-     * @param  string $height   图片的宽
-     * @param  string $fileNmae 要保存的图片名
-     * @return string $filePath 处理成功返回图片的路径
-     */
-    public function attrImg($filePath, $width, $height, $fileName)
-    {
-        $manager = new ImageManager(array('driver' => 'imagick'));
-
-        $image = $manager->make($filePath)->resize($width, $height);
-
-        $filePath = './upload/image/'.$fileName;
-
-        $bool = $image->save($filePath);
-
-        if ($bool) {
-            return $filePath;
-        }
     }
 }

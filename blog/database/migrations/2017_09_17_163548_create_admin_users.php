@@ -24,6 +24,7 @@ class CreateAdminUsers extends Migration
             $table->string('address');
             $table->smallInteger('power');
             $table->smallInteger('status');
+            $table->timestamps();
         });
     }
 

@@ -23,20 +23,17 @@
 <link rel="stylesheet" href="{{asset('Admin/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css')}}" type="text/css">
 </head>
 <body class="pos-r">
-<div class="pos-a" style="width:200px;left:0;top:0; bottom:0; height:100%; border-right:1px solid #e5e5e5; background-color:#f5f5f5; overflow:auto;">
-	<ul id="treeDemo" class="ztree"></ul>
-</div>
-<div style="margin-left:200px;">
-	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 产品列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div>
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 商品列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
 		<div class="text-c"> 日期范围：
 			<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
 			-
 			<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
 			<input type="text" name="" id="" placeholder=" 产品名称" style="width:250px" class="input-text">
-			<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜产品</button>
+			<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜商品</button>
 		</div>
-		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="product_add('添加产品','product-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <button class="btn radius" onclick="product_add('添加产品','{{url('/admin/product/goods/create')}}')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</button></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
 		<div class="mt-20">
 			<table class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
@@ -52,16 +49,18 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="text-c va-m">
-						<td><input name="" type="checkbox" value=""></td>
-						<td>001</td>
-						<td><a onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"><img width="60" class="product-thumb" src="{{asset('Admin/temp/product/Thumb/6204.jpg')}}"></a></td>
-						<td class="text-l"><a style="text-decoration:none" onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"><img title="国内品牌" src="{{asset('Admin/static/h-ui.admin/images/cn.gif')}}"> <b class="text-success">圣象</b> 哥本哈根橡木地板KS8373</a></td>
-						<td class="text-l">原木的外在,实木条形结构,色泽花纹自然,写意;款式设计吸取实木地板的天然去雕饰之美,在视觉上给人带来深邃联想.多款产品适合搭配不同的风格的室内装饰;功能流露出尊贵典雅的大气韵味。</td>
-						<td><span class="price">356.0</span> 元/平米</td>
-						<td class="td-status"><span class="label label-success radius">已发布</span></td>
-						<td class="td-manage"><a style="text-decoration:none" onClick="product_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_edit('产品编辑','product-add.html','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-					</tr>
+					@foreach($goodsList as $v)
+						<tr class="text-c va-m">
+							<td><input name="" type="checkbox" value=""></td>
+							<td>{{$v->id}}</td>
+							<td><a onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"><img width="60" class="product-thumb" src='{{asset(json_decode($v->gpic, true)[0])}}'></a></td>
+							<td class="text-2"><a style="text-decoration:none" onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"><img title="国内品牌" src="{{asset('Admin/static/h-ui.admin/images/cn.gif')}}"> <b class="text-success">{{$brandList[$v->brandid]}}</b> {{$v->gname}}</a></td>
+							<td class="text-l">{{$v->gdetail}}</td>
+							<td><span class="price">356.0</span> 元/平米</td>
+							<td class="td-status"><span class="{{$v->status==1?'label label-success radius':'label label-defaunt radius'}}">{{$v->status==1?'以上架':'未上架'}}</span></td>
+							<td class="td-manage"><a style="text-decoration:none" status='{{$v->status}}' data-id='{{$v->id}}' onClick="{{$v->status==0?'product_start(this,id)':'product_stop(this,\'10001\')'}}" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_edit('产品编辑','product-add.html','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+						</tr>
+					@endforeach
 				</tbody>
 			</table>
 		</div>
@@ -79,6 +78,7 @@
 <script type="text/javascript" src="{{asset('Admin/lib/My97DatePicker/4.8/WdatePicker.js')}}"></script>
 <script type="text/javascript" src="{{asset('Admin/lib/datatables/1.10.0/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('Admin/lib/laypage/1.2/laypage.js')}}"></script>
+@include('Admin/Common/tip')
 <script type="text/javascript">
 var setting = {
 	view: {
@@ -108,25 +108,13 @@ var setting = {
 	}
 };
 
-var zNodes =[
-	{ id:1, pId:0, name:"一级分类", open:true},
-	{ id:11, pId:1, name:"二级分类"},
-	{ id:111, pId:11, name:"三级分类"},
-	{ id:112, pId:11, name:"三级分类"},
-	{ id:113, pId:11, name:"三级分类"},
-	{ id:114, pId:11, name:"三级分类"},
-	{ id:115, pId:11, name:"三级分类"},
-	{ id:12, pId:1, name:"二级分类 1-2"},
-	{ id:121, pId:12, name:"三级分类 1-2-1"},
-	{ id:122, pId:12, name:"三级分类 1-2-2"},
-];
 
 
 
 $(document).ready(function(){
 	var t = $("#treeDemo");
-	t = $.fn.zTree.init(t, setting, zNodes);
-	//demoIframe = $("#testIframe");
+
+	//demoIframe = $("#testIframe")
 	//demoIframe.on("load", loadReady);
 	var zTree = $.fn.zTree.getZTreeObj("tree");
 	//zTree.selectNode(zTree.getNodeByParam("id",'11'));
@@ -141,6 +129,7 @@ $('.table-sort').dataTable({
 });
 /*产品-添加*/
 function product_add(title,url){
+	// $('.btn').css('display', 'none');
 	var index = layer.open({
 		type: 2,
 		title: title,

@@ -85,5 +85,11 @@ Route::prefix('/admin/product')->group(function () {
     Route::post('/delbrand', 'Admin\Product\BrandController@destroy');
     //商品管理资源控制器
     Route::resource('/goods', 'Admin\Product\GoodsController');
+    //添加商品的加载品牌路由
+    Route::post('/goodsbrand', 'Admin\Product\GoodsController@goodsBrand');
+    //添加商品的上传图片路由
+    Route::post('/goodsimg', 'Admin\Product\GoodsController@goodsImg');
 
 });
+
+Route::get('/search', 'Home\SearchController@search');

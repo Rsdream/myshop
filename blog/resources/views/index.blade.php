@@ -183,9 +183,10 @@
 								<div class="widget-inner">
 									<div class="top-form top-search">
 										<div class="topsearch-entry">
-											<form method="get" action="">
+											<form method="get" action="{{url('/search')}}">
+												 {{ csrf_field() }}
 												<div>
-												   <input type="text" value="" name="s" placeholder="Enter your keyword...">
+												   <input type="text" value="" name="key" placeholder="Enter your keyword...">
 													<div class="cat-wrapper">
 														<label class="label-search">
 															<select name="search_category" class="s1_option">
