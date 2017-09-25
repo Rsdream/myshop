@@ -52,18 +52,6 @@ Route::prefix('/admin')->group(function () {
         });
 
 
-        //产品管理路由组
-        Route::prefix('/product')->group(function () {
-            //产品分类资源控制器
-            Route::resource('/category', 'Admin\Product\ProdectController');
-            //品牌管理资源控制器
-            Route::resource('/brand', 'Admin\Product\BrandController');
-            //删除品牌路由
-            Route::post('/delbrand', 'Admin\Product\BrandController@destroy');
-            //商品管理资源控制器
-            Route::resource('/goods', 'Admin\Product\GoodsController');
-
-        });
 
         //显示我的桌面路由
         Route::get('/welcome', 'Admin\IndexController@welCome');
@@ -97,6 +85,18 @@ Route::prefix('/user')->group(function () {
 });
 
 
+//产品管理路由组
+Route::prefix('admin/product')->group(function () {
+    //产品分类资源控制器
+    Route::resource('/category', 'Admin\Product\ProdectController');
+    //品牌管理资源控制器
+    Route::resource('/brand', 'Admin\Product\BrandController');
+    //删除品牌路由
+    Route::post('/delbrand', 'Admin\Product\BrandController@destroy');
+    //商品管理资源控制器
+    Route::resource('/goods', 'Admin\Product\GoodsController');
+
+});
 
 
 //获取验证码
