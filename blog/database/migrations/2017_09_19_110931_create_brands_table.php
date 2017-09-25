@@ -19,6 +19,7 @@ class CreateBrandsTable extends Migration
             $table->string('bname', 120);
             $table->string('blogo');
             $table->string('depict');
+            $table->timestamps();
         });
     }
 

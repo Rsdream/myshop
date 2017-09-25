@@ -20,8 +20,35 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>品牌管理</title>
+<style media="screen">
+	.alert{
+		position:relative;
+	}
+</style>
+<style type="text/css">
+	.loading{
+	    width:160px;
+	    height:56px;
+	    position: absolute;
+	    top:30%;
+	    left:50%;
+	    line-height:56px;
+	    color:#fff;
+	    padding-left:60px;
+	    font-size:15px;
+	    background: #000 url('{{asset("images/1352886927_7549.gif")}}') no-repeat 10px 50%;
+	    opacity: 0.7;
+	    z-index:9999;
+	    -moz-border-radius:20px;
+	    -webkit-border-radius:20px;
+	    border-radius:20px;
+	    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);
+			display: none;
+	}
+</style>
 </head>
 <body>
+	<div id="loading" class="loading">上传图片中...</div>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 品牌管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<div class="text-c">
@@ -41,7 +68,7 @@
 			</span>
 
 			<input type="text" placeholder="描述" value="" name='depict' class="input-text" style="width:450px">
-			<button type="submit" class="btn btn-success" id="" name=""<i class="Hui-iconfont">&#xe600;</i> 添加</button>
+			<button type="submit" class="btn btn-success" id="btn1" name=""<i class="Hui-iconfont">&#xe600;</i> 添加</button>
 		</form>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
@@ -84,8 +111,14 @@
 <script type="text/javascript" src="{{asset('/Admin/lib/My97DatePicker/4.8/WdatePicker.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/lib/datatables/1.10.0/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/lib/laypage/1.2/laypage.js')}}"></script>
+@include('Admin/Common/tip')
 <script type="text/javascript">
+$('#btn1').on('click', function (){
+
+});
+
 /*产品-添加*/
+
 function product_add(title,url){
 	var index = layer.open({
 		type: 2,
@@ -194,6 +227,7 @@ function check(){
 		alert('请选择图片');
 		return false;
 	}
+	$('#loading').css('display', 'block');
 }
 </script>
 </body>

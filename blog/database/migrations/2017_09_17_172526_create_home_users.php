@@ -27,6 +27,7 @@ class CreateHomeUsers extends Migration
             $table->integer('growth')->default(0);
             $table->integer('addtime');
             $table->integer('lasttime');
+            $table->timestamps();
         });
     }
 

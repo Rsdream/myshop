@@ -49,9 +49,11 @@ class ProdectController extends Controller
             return 0;
         }
         $bool = DB::table('home_category')->insert(['name' => $typeName, 'addtime' => time()]);
-        if ($bool) {
-            return 1;
+        if (!$bool) {
+            redirect('/admin/product/category')->with('errorTip', '添加失败');
         }
+        redirect('/admin/product/category')->with('msg', '添加成功!');
+        return '<script>parent.location.reload();</script>';
     }
 
     /**
@@ -91,7 +93,8 @@ class ProdectController extends Controller
         $typeName = $request->input('product-category-name');
         $bool = DB::table('home_category')->where('id', $id)->update(['name' => $typeName]);
         if ($bool) {
-            echo '<script>alert("修改成功");parent.location.reload();</script>';
+            redirect('/admin/product/category')->with('msg', '修改成功');
+            return '<script>parent.location.reload();</script>';
         }
     }
 
@@ -107,9 +110,12 @@ class ProdectController extends Controller
         if (empty($id)) {
           return false;
         }
+
         $bool =  DB::table('home_category')->where('id', $id)->delete();
+
         if ($bool) {
-            echo '<script>alert("删除成功");parent.location.reload();</script>';
+          redirect('/admin/product/category')->with('msg', '删除成功');
+          return '<script>parent.location.reload();</script>';
         }
     }
 }

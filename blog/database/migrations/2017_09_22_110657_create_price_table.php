@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHomeCategoryTable extends Migration
+class CreatePriceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,15 @@ class CreateHomeCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('home_category', function (Blueprint $table) {
+        Schema::create('price', function (Blueprint $table) {
             $table->increments('id');
-            $table->String('name');
-            $table->integer('addtime');
+            $table->unsignedInteger('gid');
+            $table->unsignedInteger('price');
+            $table->unsignedInteger('stock');
+            $table->string('ram', 15);
+            $table->string('rom', 20);
+            $table->string('color');
+            $table->string('attr')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +33,6 @@ class CreateHomeCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category');
+        Schema::dropIfExists('price');
     }
 }

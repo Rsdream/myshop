@@ -65,10 +65,10 @@ $(function(){
 						success: function (msg)
 						{
 								if (msg>=1) {
-										alert('添加成功!');
-										parent.location.reload();
+										layer.msg('添加失败}}',{icon:2,time:1000});
 								} else {
-										alert('添加失败!');
+									parent.location.reload();
+
 								}
 						}
 				})

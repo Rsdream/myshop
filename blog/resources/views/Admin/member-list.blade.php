@@ -110,7 +110,7 @@ function member_stop(obj,id){
 				$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
 				$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
 				$(obj).remove();
-				layer.msg('已停用!',{icon: 5,time:1000});
+				layer.msg('已停用!',{icon: 0,time:1000});
 			},
 			error:function(data) {
 				console.log(data.msg);
@@ -133,7 +133,7 @@ function member_start(obj,id){
 				$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
 				$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
 				$(obj).remove();
-				layer.msg('已启用!',{icon: 6,time:1000});
+				layer.msg('已启用!',{icon: 1,time:1000});
 			},
 			error:function(data) {
 				console.log(data.msg);

@@ -10,6 +10,9 @@
 <script type="text/javascript" src="lib/html5shiv.js"></script>
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <![endif]-->
+
+
+<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui/css/H-ui.min.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/css/H-ui.admin.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('Admin/lib/Hui-iconfont/1.0.8/iconfont.css')}}" />
@@ -39,8 +42,11 @@
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="{{asset('Admin/lib/zTree/v3/js/jquery.ztree.all-3.5.min.js')}}"></script>
+@include('Admin/Common/tip')
 <script type="text/javascript">
-
+$(".alert").fadeTo(1600, 0.1, function (){
+	$(this).css('display', 'none');
+});
 var setting = {
 	view: {
 		dblClickExpand: false,
