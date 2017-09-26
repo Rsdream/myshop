@@ -50,7 +50,6 @@ class CommonApi extends Controller
 
     $phone = $request->input('uphone');
 
-    dd(123);
     // APP ID 需要到具体应用中找
     $sdk = new Yuntongxun('8a216da85e7e4bbd015e883ea62c0458', '8a216da85e7e4bbd015e883ea48f0451', '952caf1b769b44f8a0e928fb5a3c11da');
     

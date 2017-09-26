@@ -660,7 +660,7 @@
 
         	var type = 'upass';
 
-        	var match = /^(?![0-9A-Za-z]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+        	var match = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
 
         	var array = [
         	    '建议字母、数字2种字符组合，6-20个字符',
@@ -730,7 +730,7 @@
 
         //获取手机验证码
          function makePhoneCode() {
-         	// phoneTime(60);
+         	phoneTime(60);
         	var  uphone = $('input[name="uphone"]').val();
         	if (uphone == '') {
         		dotest('uphone', '请先输入手机号！', 'red');
@@ -963,30 +963,30 @@
 
 
         //获取手机验证码时定时器
-        // function phoneTime (time) {
+        function phoneTime (time) {
 
-        // 	//设置周期定时器
-        // 	var id = setInterval(function () {
+        	//设置周期定时器
+        	var id = setInterval(function () {
 
-        // 		//自减
-        // 		time--;
+        		//自减
+        		time--;
 
-        // 		//倒计时提示
-        // 		$('#my-phonecode').html('<span style="font-size: 17px;line-height: 40px">稍等('+time+')秒</spna>');
+        		//倒计时提示
+        		$('#my-phonecode').html('<span style="font-size: 17px;line-height: 40px">稍等('+time+')秒</spna>');
 
-        // 		//禁用click事件
-        // 		$('#my-phonecode').removeAttr("onclick");
-        // 		    if(time <= 0) {
+        		//禁用click事件
+        		$('#my-phonecode').removeAttr("onclick");
+        		    if(time <= 0) {
 
-        // 		    	//time = 0时清除定时器
-        // 		        clearInterval(id);
+        		    	//time = 0时清除定时器
+        		        clearInterval(id);
 
-        // 		        //还原样式和事件
-        // 		        $('#my-phonecode').html('<span style="font-size: 17px;line-height: 40px">获取验证码</spna>');
-        // 		        $('#my-phonecode').attr("onclick","makePhoneCode();");
-        // 	        } 
-        // 	},1000);        	
-        // }
+        		        //还原样式和事件
+        		        $('#my-phonecode').html('<span style="font-size: 17px;line-height: 40px">获取验证码</spna>');
+        		        $('#my-phonecode').attr("onclick","makePhoneCode();");
+        	        } 
+        	},1000);        	
+        }
 	</script>
 </body>
 </html>

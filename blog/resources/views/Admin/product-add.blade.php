@@ -38,7 +38,7 @@
 </head>
 <body>
 <div class="page-container">
-	<form onsubmit="return check()" action="{{url('/admin/product/goods')}}" method="post" enctype="multipart/form-data" class="form form-horizontal" id="form-article-add">
+	<form  action="{{url('/admin/product/goods')}}" method="post" enctype="multipart/form-data" class="form form-horizontal" id="form-article-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品名：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -212,28 +212,29 @@
 		$('input[name="sum"]').val(sum);
 	})
 
-	function check() {
-		var gname = $('input[name="gname"]').val();
-		var brand = $('select[name="brand"]').val();
-		var bool;
-		$(":input[type=text]").each(function(){
-        if ($(this).val() == '') {
-					layer.msg($(this).attr('title')+'没有填写',{icon:0,time:1500});
-					return bool = false;
-				}
-    })
-		var detail = $('textarea[name="detail"]').val();
-		if (detail == '') {
-			layer.msg('商品详情没有填写',{icon:0,time:1500});
-			return false;
-		}
-		var img = $('img[id="pic"]').attr('src');
-		if (img == '') {
-			layer.msg('没有选择商品主图',{icon:0,time:1500});
-			return false;
-		}
-		return bool;
-	}
+	// function check() {
+	// 	var gname = $('input[name="gname"]').val();
+	// 	var brand = $('select[name="brand"]').val();
+	// 	var bool;
+	// 	$(":input[type=text]").each(function(){
+ //        if ($(this).val() == '') {
+ //        			// console.log($(''))
+	// 				layer.msg($(this).attr('title')+'没有填写',{icon:0,time:1500});
+	// 				return bool = false;
+	// 			}
+ //    })
+	// 	var detail = $('textarea[name="detail"]').val();
+	// 	if (detail == '') {
+	// 		layer.msg('商品详情没有填写',{icon:0,time:1500});
+	// 		return false;
+	// 	}
+	// 	var img = $('img[id="pic"]').attr('src');
+	// 	if (img == '') {
+	// 		layer.msg('没有选择商品主图',{icon:0,time:1500});
+	// 		return false;
+	// 	}
+	// 	return bool;
+	// }
 </script>
 <script type="text/javascript">
 $(function(){

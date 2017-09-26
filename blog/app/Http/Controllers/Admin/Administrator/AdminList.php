@@ -149,7 +149,8 @@ class AdminList extends Controller
         
         $data = $request->session()->get('admin_users');
 
-        if ($data[0]['power'] == 0 || $data[0]['power'] == 1) {
+        // var_dump($data[0]);die;
+        if ($data[0]->power == 0 || $data[0]->power == 1) {
             return back()->with('msg', '无权修改');
         }
 

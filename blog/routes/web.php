@@ -12,9 +12,8 @@
 */
 
 //前台首页
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'Home\IndexController@index');
+Route::post('/hotsale', 'Home\IndexController@hotsale');
 
 //登录，注册页面
 Route::get('/login', function () {
