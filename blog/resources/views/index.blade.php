@@ -34,7 +34,7 @@
 			float: left;
 		}
 
-		#block{
+		.block{
 
 			display:block;
 		}
@@ -1780,7 +1780,7 @@
 															<div class="childcat-content pull-left" id="child_sw_woo_slider_widget_1" style="width:300px">
 																<ul id="fuul" style="width:300px">
 																@foreach($category as $v)
-																	<li style="width:60px" data-id="{{$v->id}}" id="relagood">{{$v->name}}</li>
+																	<li style="width:60px;background-color:#ccc;margin-left:8px;padding-left:15px" data-id="{{$v->id}}" id="relagood">{{$v->name}}</li>
 																@endforeach
 																</ul>
 															</div>
@@ -1801,13 +1801,12 @@
 
 
 
-													<div class="content-slider" id="old">
+													<div class="content-slider" >
 
-
-														<div class="childcat-slider-content clearfix" style="border:1px solid red;" id="block">
-															<div class="resp-slider-container" >
+														<div class="childcat-slider-content clearfix"  >
+															<div class="resp-slider-container" id="old">
 																@foreach($phone as $good)
-																<div id="b123" style="border-bottom:1px solid #ccc;border-left:1px solid #ccc;padding:3px">
+																<div id="b123" style="border-bottom:1px solid #ccc;border-left:1px solid #ccc;padding:3px;" class="block">
 																
 																	<div class="item product" >
 																		<div class="item-wrap">
@@ -1897,7 +1896,7 @@
 															<div class="wrap-content">
 
 															@foreach($salesvolume as $sales)
-																<div class="item" style="border:1px solid pink">
+																<div class="item" style="border:1px solid pink;margin-top:20px">
 																	<div class="item-inner">
 																		<div class="item-img">
 																			<a href="simple_product.html" title="Sony BRAVIA 4K">
@@ -4140,7 +4139,7 @@
    <!-- 热销商品的js -->
 	<script>
 		
-		$('#fuul').on('mouseover', 'li', function () {
+		$('#fuul').on('mouseenter', 'li', function () {
 
 			//获取到id
 			var id = $(this).attr('data-id');
@@ -4149,7 +4148,7 @@
 
 			var url = "{{url('/hotsale')}}";
 
-			$('#block').css('display','none');
+			$('.block').css('display','none');
 
 
         	$.ajax({
@@ -4159,93 +4158,85 @@
         		data:"id="+id+'&_token={{csrf_token()}}',
         		success:function (data) {
 
+        			var str = '';
+
         			for (var i=0; i<data.length; i++) {
 
-        				console.log($.parseJSON(data[i].gpic));
-
-        				str = `<div class="childcat-slider-content clearfix" style="border:1px solid red;" id="block">
-									<div class="resp-slider-container" >
+        				str += `<div id="b123" style="border-bottom:1px solid #ccc;border-left:1px solid #ccc;padding:3px;" class="block">
 										
-										<div id="b123" style="border-bottom:1px solid #ccc;border-left:1px solid #ccc;padding:3px">
-										
-											<div class="item product" >
-												<div class="item-wrap">
-													<div class="item-detail">
-														<div class="item-content">
+									<div class="item product" >
+										<div class="item-wrap">
+											<div class="item-detail">
+												<div class="item-content">
 
-															<h4>
-																<a href="simple_product.html" title="nisi ball tip">`+data[i].gname+`</a>
-															</h4>
+													<h4>
+														<a href="simple_product.html" title="nisi ball tip">`+data[i].gname+`</a>
+													</h4>
 
-															<!-- Price -->
-															
-															<div class="item-price">
-																<span>
-																	<ins>
-																		<span class="woocommerce-Price-amount amount">
-																			<span class="woocommerce-Price-currencySymbol">$</span>666
-																		</span>
-																	</ins>
+													<!-- Price -->
+													
+													<div class="item-price">
+														<span>
+															<ins>
+																<span class="woocommerce-Price-amount amount">
+																	<span class="woocommerce-Price-currencySymbol">$</span>666
 																</span>
+															</ins>
+														</span>
+													</div>
+													
+													
+													<div class="sale-off">-10%</div>
+												</div>
+
+												<div class="item-img products-thumb">
+													<span class="onsale">Sale!</span>
+
+													<a href="simple_product.html">
+														<div class="product-thumb-hover">
+															<img 	width="300" height="300" src="`+$.parseJSON(data[i].gpic)[0]+`" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
+																	srcset="`+$.parseJSON(data[i].gpic)[0]+` 300w, `+$.parseJSON(data[i].gpic)[0]+` 150w, `+$.parseJSON(data[i].gpic)[0]+` 180w, `+$.parseJSON(data[i].gpic)[0]+` 500w"
+																	sizes="(max-width: 300px) 100vw, 300px" />
+														</div>
+													</a>
+
+													<!-- add to cart, wishlist, compare -->
+													<div class="item-bottom clearfix">
+														<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
+
+														<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
+
+														<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
+															<div class="yith-wcwl-add-button show" style="display:block">
+																<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+																<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
 															</div>
-															
-															
-															<div class="sale-off">-10%</div>
+
+															<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+																<span class="feedback">Product added!</span>
+																<a href="#" rel="nofollow">Browse Wishlist</a>
+															</div>
+
+															<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
+																<span class="feedback">The product is already in the wishlist!</span>
+																<a href="#" rel="nofollow">Browse Wishlist</a>
+															</div>
+
+															<div style="clear:both"></div>
+															<div class="yith-wcwl-wishlistaddresponse"></div>
 														</div>
 
-														<div class="item-img products-thumb">
-															<span class="onsale">Sale!</span>
-
-															<a href="simple_product.html">
-																<div class="product-thumb-hover">
-																	<img 	width="300" height="300" src="`+$.parseJSON(data[i].gpic)[0]+`" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																			srcset="`+$.parseJSON(data[i].gpic)[0]+` 300w, `+$.parseJSON(data[i].gpic)[0]+` 150w, `+$.parseJSON(data[i].gpic)[0]+` 180w, `+$.parseJSON(data[i].gpic)[0]+` 500w"
-																			sizes="(max-width: 300px) 100vw, 300px" />
-																</div>
-															</a>
-
-															<!-- add to cart, wishlist, compare -->
-															<div class="item-bottom clearfix">
-																<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																	<div class="yith-wcwl-add-button show" style="display:block">
-																		<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																		<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																	</div>
-
-																	<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																		<span class="feedback">Product added!</span>
-																		<a href="#" rel="nofollow">Browse Wishlist</a>
-																	</div>
-
-																	<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																		<span class="feedback">The product is already in the wishlist!</span>
-																		<a href="#" rel="nofollow">Browse Wishlist</a>
-																	</div>
-
-																	<div style="clear:both"></div>
-																	<div class="yith-wcwl-wishlistaddresponse"></div>
-																</div>
-
-																<div class="clear"></div>
-																<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-															</div>
-														</div>
+														<div class="clear"></div>
+														<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
 													</div>
 												</div>
 											</div>
 										</div>
-
 									</div>
-								</div>`;
-
-						$('#old').append(str);
+								</div>`;	
         			}
         			
-	
+					$('#old').append(str);
         		},
         		dataType:'json'
         	});

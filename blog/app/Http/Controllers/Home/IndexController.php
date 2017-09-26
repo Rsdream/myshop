@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Cache;
 
 class IndexController extends Controller
 {
@@ -41,6 +42,7 @@ class IndexController extends Controller
 	}
 
 
+	//接收ajax传过来的id，查出对应类别的商品
 	public function hotSale()
 	{
 
@@ -51,18 +53,25 @@ class IndexController extends Controller
 		//得到类别
 		$class = DB::table('home_category')->select('id', 'name')->where('id', '=', $id)->first();
 
-		//根据类别得到对应的商品
-		$phone = DB::table('goods')
-            ->leftJoin('brands', 'brands.id', '=', 'goods.brandid')
-            ->select('goods.id', 'goods.brandid', 'goods.gname', 'goods.gpic', 'goods.workoff', 'brands.categoryid', 'bname')
-            ->where('brands.categoryid', '=', $class->id)
-            ->orderBy('workoff', 'desc')
-            ->limit(6)
-            ->get()
-            ->toArray();
+        //先查缓存中有无商品
+		$hotProduct = Cache::get('Hgoods'.$id);
+        if (!$hotProduct) {
+            //根据类别得到对应的商品
+            $hotProduct = DB::table('goods')
+                ->leftJoin('brands', 'brands.id', '=', 'goods.brandid')
+                ->select('goods.id', 'goods.brandid', 'goods.gname', 'goods.gpic', 'goods.workoff', 'brands.categoryid', 'bname')
+                ->where('brands.categoryid', '=', $class->id)
+                ->orderBy('workoff', 'desc')
+                ->limit(6)
+                ->get()
+                ->toArray();
+            //将商品放入缓存中
+            Cache::put('Hgoods'.$id, $hotProduct,1);
 
-		if ($phone) {
-			echo json_encode($phone);
+        }
+		
+		if ($hotProduct) {
+			echo json_encode($hotProduct);
 		}
 
 	}
