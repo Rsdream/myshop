@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
 <head>
 <meta charset="utf-8">
@@ -23,17 +23,8 @@
 <link rel="stylesheet" href="{{asset('Admin/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css')}}" type="text/css">
 </head>
 <body class="pos-r">
-<div>
-	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 商品列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div style="margin-left:0px;">
 	<div class="page-container">
-		<div class="text-c"> 日期范围：
-			<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
-			-
-			<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
-			<input type="text" name="" id="" placeholder=" 产品名称" style="width:250px" class="input-text">
-			<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜商品</button>
-		</div>
-		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <button class="btn radius" onclick="product_add('添加产品','{{url('/admin/product/goods/create')}}')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</button></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
 		<div class="mt-20">
 			<table class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
@@ -44,7 +35,7 @@
 						<th width="100">产品名称</th>
 						<th>描述</th>
 						<th width="100">单价</th>
-						<th width="60">发布状态</th>
+						<th width="60">说明</th>
 						<th width="100">操作</th>
 					</tr>
 				</thead>
@@ -54,11 +45,11 @@
 							<td><input name="" type="checkbox" value=""></td>
 							<td>{{$v->id}}</td>
 							<td><a onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"><img width="60" class="product-thumb" src='{{asset(json_decode($v->gpic, true)[0])}}'></a></td>
-							<td class="text-2"><a style="text-decoration:none" onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"><img title="国内品牌" src="{{asset('Admin/static/h-ui.admin/images/cn.gif')}}"> <b class="text-success">{{$brandList[$v->brandid]}}</b> {{$v->gname}}</a></td>
-							<td class="text-l">{{$v->gdetail}}</td>
-							<td><span class="price">356.0</span> 元/平米</td>
-							<td class="td-status"><span class="{{$v->status==0?'label label-defaunt radius':'label label-success radius'}}">{{$v->status==0?'未上架':'已上架'}}</span></td>
-							<td class="td-manage"><a style="text-decoration:none" status='{{$v->status}}' data-id='{{$v->id}}' onClick="{{$v->status==0?'product_start(this,id)':'product_stop(this,\'10001\')'}}" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_edit('产品编辑','{{url('/admin/product/goods', ['id' => $v->id])}}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+							<td class="text-2"><a style="text-decoration:none" onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"> <b class="text-success">{{$brandList[$v->brandid]}}</b> {{$v->gname}}</a></td>
+							<td class="text-l">{{$v->gdetail}} 内存：{{$v->ram}}G  容量：{{$v->rom}}G</td>
+							<td><span class="price">{{$v->price}}</span> 元</td>
+							<td class="td-status"><span class="label label-success radius">默认配置</span></td>
+							<td class="td-manage"><a href="{{url('admin/seckill/'.$v->id)}}">添加到秒杀列表</a></td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -78,7 +69,6 @@
 <script type="text/javascript" src="{{asset('Admin/lib/My97DatePicker/4.8/WdatePicker.js')}}"></script>
 <script type="text/javascript" src="{{asset('Admin/lib/datatables/1.10.0/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('Admin/lib/laypage/1.2/laypage.js')}}"></script>
-@include('Admin/Common/tip')
 <script type="text/javascript">
 var setting = {
 	view: {
@@ -109,17 +99,6 @@ var setting = {
 };
 
 
-
-
-$(document).ready(function(){
-	var t = $("#treeDemo");
-
-	//demoIframe = $("#testIframe")
-	//demoIframe.on("load", loadReady);
-	var zTree = $.fn.zTree.getZTreeObj("tree");
-	//zTree.selectNode(zTree.getNodeByParam("id",'11'));
-});
-
 $('.table-sort').dataTable({
 	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
 	"bStateSave": true,//状态保存
@@ -129,7 +108,6 @@ $('.table-sort').dataTable({
 });
 /*产品-添加*/
 function product_add(title,url){
-	// $('.btn').css('display', 'none');
 	var index = layer.open({
 		type: 2,
 		title: title,
@@ -168,47 +146,20 @@ function product_shenhe(obj,id){
 /*产品-下架*/
 function product_stop(obj,id){
 	layer.confirm('确认要下架吗？',function(index){
-		id = $(obj).attr('data-id');
-		status = $(obj).attr('status');
-		$.ajax({
-			type: 'POST',
-			url: "{{url('/admin/product/goods/status')}}",
-			data: 'id='+id+'&status='+status,
-			dataType: 'json',
-			success: function(data){
-				$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="product_start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
-				$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
-				$(obj).remove();
-				layer.msg('已下架!',{icon: 5,time:1000});
-			},
-			error:function(data) {
-				console.log(data.msg);
-			},
-		});
+		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="product_start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
+		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
+		$(obj).remove();
+		layer.msg('已下架!',{icon: 5,time:1000});
 	});
 }
 
 /*产品-发布*/
 function product_start(obj,id){
-	layer.confirm('确认要上架吗？',function(index){
-		id = $(obj).attr('data-id');
-		status = $(obj).attr('status');
-		$.ajax({
-			type: 'POST',
-			url: "{{url('/admin/product/goods/status')}}",
-			data: 'id='+id+'&status='+status,
-			dataType: 'json',
-			success: function(data){
-				$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="product_stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
-				$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已上架</span>');
-				$(obj).remove();
-				layer.msg('已上架!',{icon: 6,time:1000});
-			},
-			error:function(data) {
-				console.log(data.msg);
-			},
-		});
-
+	layer.confirm('确认要发布吗？',function(index){
+		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="product_stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
+		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
+		$(obj).remove();
+		layer.msg('已发布!',{icon: 6,time:1000});
 	});
 }
 

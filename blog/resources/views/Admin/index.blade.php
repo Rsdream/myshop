@@ -165,7 +165,7 @@
 				<ul>
 					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">轮播图</a></li>
 					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">封面图</a></li>
-					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">秒杀商品</a></li>
+					<li><a data-href="{{url('admin/seckill')}}" data-title="秒杀商品" href="javascript:void(0)">秒杀商品</a></li>
 					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">新品推介</a></li>
 					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">热卖推介</a></li>
 					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">优惠推介</a></li>
@@ -311,16 +311,5 @@ function member_add(title,url,w,h){
 
 </script>
 
-<!--此乃百度统计代码，请自行删除-->
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?080836300300be57b7f34f4b3e97d911";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-<!--/此乃百度统计代码，请自行删除-->
 </body>
 </html>

@@ -66,24 +66,24 @@
 		<div class="gtco-container" >
 
 			<div class="row" style="position:absolute; z-index:1">
-				<div class="col-sm-4 col-xs-12">
-					<div id="gtco-logo"><a href="index.html">Splash <em>.</em></a></div>
-				</div>
+
+					<div id="gtco-logo"><a href="{{url('')}}">商 城 首 页 <em>.</em></a></div>
+
 			</div>
 
 		</div>
 	</nav>
 	<header id="gtco-header" class="gtco-cover" role="banner" style="background-image: url('{{asset('/Home/login/images/img_4.jpg')}}');">
-    
+
     <!--判断用户名，手机号不存在，密码错误返回值，在页面显示错误提示-->
     @if(!empty(session('erro')))
-        <div class="alert alert-danger alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align: center">     
+        <div class="alert alert-danger alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align: center">
             {{session('erro')}}</div>
     @endif
-    
+
     <!--登录注册成功提示-->
     @if(!empty(session('success')))
-        <div class="alert alert-success alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align:center">    
+        <div class="alert alert-success alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align:center">
         {{session('success')}}</div>
             <script type="text/javascript">
                     setTimeout(function () {
@@ -627,12 +627,12 @@
 
 	<script type="text/javascript">
 
-	    //初始化字段值	    
+	    //初始化字段值
 	    var username = false;
-	    var userpass = false	    
+	    var userpass = false
 	    var uname = false;
 	    var upass = false;
-	    var repeatpass = false;	    
+	    var repeatpass = false;
 	    var uphone = false;
 	    var phonecode = false;
 	    var ucode = false;
@@ -650,7 +650,7 @@
         	var test = false;
         	var flat = false;
         	var status = 1000;
-        	
+
         	varildate (type, array, test, flat, match, status);
 
         });
@@ -660,7 +660,7 @@
 
         	var type = 'upass';
 
-        	var match = /^(?![0-9A-Za-z]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+        	var match = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
 
         	var array = [
         	    '建议字母、数字2种字符组合，6-20个字符',
@@ -670,7 +670,7 @@
         	var test = false;
         	var flat = true;
         	varildate (type, array, test, flat, match);
-        });        
+        });
 
        //确认密码判断
         $('input[name="repeatpass"]').on('focus', function () {
@@ -713,7 +713,7 @@
         	var flat = false;
         	var status = 1001;
         	varildate (type, array, test, flat, match, status);
-        });        
+        });
 
         //手机验证码判断
         $('input[name="phonecode"]').on('focus', function () {
@@ -742,7 +742,7 @@
         			success:function(data) {
         				if (data.status == 1200) {
         					dotest('phonecode',data.msg,'red');
-        				} 
+        				}
         			},
         			dataType: 'json'
         		});
@@ -761,7 +761,7 @@
         	var test = false;
         	var flat = true;
         	varildate (type, array, test, flat, match);
-        });        
+        });
 
 
 
@@ -778,7 +778,7 @@
         	var test = false;
         	var status = 1002;
         	varildate (type, array, test, flat, match, status);
-        });         
+        });
 
         //密碼判斷
         $('input[name="userpass"]').on('focus', function () {
@@ -791,7 +791,7 @@
         	var test = false;
         	var flat = true;
         	varildate (type, array, test, flat, match);
-        }); 
+        });
 
         //注册提交时验证
         $("#doregister").submit(function(){
@@ -816,10 +816,10 @@
         	} else {
         		return true;
         	}
-		    
+
 		});
 
-        
+
         //登录时验证值
         $("#dologin").submit(function(){
         	if(!username) {
@@ -832,7 +832,7 @@
         		return true;
         	}
 		});
-        
+
         /**
          * 提示封装
          * @param  {string} name   [字段名]
@@ -898,9 +898,9 @@
 
 	        		//值为空把获取焦点时给出的格式提示和成功提示清除
 	        		$('.my-'+type).html('');
-	        		$('#'+type).css('display','none');   
-	        	} 
-                
+	        		$('#'+type).css('display','none');
+	        	}
+
                 //test=false并且字段值不为空执行正则判断
 	        	if (!test && myname != '') {
 
@@ -912,8 +912,8 @@
 	        			$('.my-'+type).html('<span class="red glyphicon glyphicon-minus-sign">'+array[1]+'</span>');
 	        			$('input[name="'+type+'"]').css('border','2px solid red');
 	        			return;
-	        		}	        		
-	        	} 
+	        		}
+	        	}
 
 	            //flat=false并且字段值不为空执行ajax
 	        	if(!flat && myname != ''){
@@ -943,8 +943,8 @@
 		        				return;
 		        			}
 		        		}
-		        	});	
-	        	} 
+		        	});
+	        	}
 
 	        	//input 值不为空 同时禁用ajax才运行
 	        	if (myname != '' && flat == true) {
@@ -956,7 +956,7 @@
 
 	                //改变字段名初始化的值
 	                eval(type +'='+ true);
-	                return;	
+	                return;
 	        	}
 	        })
         }
@@ -984,8 +984,8 @@
         		        //还原样式和事件
         		        $('#my-phonecode').html('<span style="font-size: 17px;line-height: 40px">获取验证码</spna>');
         		        $('#my-phonecode').attr("onclick","makePhoneCode();");
-        	        } 
-        	},1000);        	
+        	        }
+        	},1000);
         }
 	</script>
 </body>

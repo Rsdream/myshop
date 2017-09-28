@@ -12,14 +12,10 @@
 */
 
 //前台首页
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'Home\IndexController@index');
 
 //登录，注册页面
-Route::get('/login', function () {
-    return view('Home/login/index');
-});
+Route::get('/login', 'Home\LoginController@login');
 //处理登录，注册
 // Route::post('doLogin','Api\LoginController@signIn');
 
@@ -72,13 +68,15 @@ Route::prefix('/admin')->group(function () {
 
    	// Route::get('product/delete/{gayquan}', 'Admin\ProductController@destroy')
     //     ->where(['gayquan' => '\d+']);
-
-
+    //秒杀商品列表路由
+    Route::resource('/seckill', 'Admin\SeckillController');
 });
 
 //前台用户中心路由
 Route::prefix('/user')->group(function () {
-    Route::get('/myaccount', 'Home\IndexUserController@myAccount');
+    Route::middleware(['home.auth'])->group(function () {
+        Route::get('/myaccount', 'Home\IndexUserController@myAccount');
+    });
 });
 
 //产品管理路由组
@@ -94,7 +92,9 @@ Route::prefix('/admin/product')->group(function () {
     //添加商品的加载品牌路由
     Route::post('/goodsbrand', 'Admin\Product\GoodsController@goodsBrand');
     //添加商品的上传图片路由
-    Route::post('/goodsimg', 'Admin\Product\GoodsController@goodsImg');
+    Route::post('/goodsimg/{id}', 'Admin\Product\GoodsController@goodsImg');
+    //商品的上架和下架路由
+    Route::post('/goods/status', 'Admin\Product\GoodsController@stopAndStart');
 
 });
 
@@ -114,3 +114,13 @@ Route::post('/dologin', 'Home\LoginController@doLogin');
 Route::post('/doregister', 'Home\RegisterController@doregister');
 //搜索
 Route::get('/search', 'Home\SearchController@search');
+//加载秒杀商品路由
+Route::get('/seckill', 'Home\IndexController@seckill');
+//加载新品推介路由
+Route::get('/newgoods/{id}', 'Home\IndexController@newGoods');
+//商品列表路由
+Route::get('/goods/list/{type}/{id}', 'Home\GoodsListController@list');
+//商品详情页路由
+Route::get('/goods/detail/{id}', 'Home\GoodsListController@goodsDetail');
+//home用户退出
+Route::get('/queit', 'Home\LoginController@queit');

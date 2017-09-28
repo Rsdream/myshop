@@ -1,35 +1,35 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>My Account</title>
+	<title>Products Archive</title>
 	<meta charset="utf-8" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<!-- GOOGLE WEB FONTS -->
-	<link rel="stylesheet" href="{{asset('/Home/css/font-awesome.min.css')}}">
+	<link rel="stylesheet" href="{{asset('Home/css/font-awesome.min.css')}}">
 
 	<!-- BOOTSTRAP 3.3.7 CSS -->
-	<link rel="stylesheet" href="{{asset('/Home/css/bootstrap.min.css')}}" />
+	<link rel="stylesheet" href="{{asset('Home/css/bootstrap.min.css')}}" />
 
 	<!-- SLICK v1.6.0 CSS -->
-	<link rel="stylesheet" href="{{asset('/Home/css/slick-1.6.0/slick.css')}}" />
+	<link rel="stylesheet" href="{{asset('Home/css/slick-1.6.0/slick.css')}}" />
 
-	<link rel="stylesheet" href="{{asset('/Home/css/jquery.fancybox.css')}}" />
-	<link rel="stylesheet" href="{{asset('/Home/css/yith-woocommerce-compare/colorbox.css')}}" />
-	<link rel="stylesheet" href="{{asset('/Home/css/owl-carousel/owl.carousel.min.css')}}" />
-	<link rel="stylesheet" href="{{asset('/Home/css/owl-carousel/owl.theme.default.min.css')}}" />
-	<link rel="stylesheet" href="{{asset('/Home/css/js_composer/js_composer.min.css')}}" />
-	<link rel="stylesheet" href="{{asset('/Home/css/woocommerce/woocommerce.css')}}" />
-	<link rel="stylesheet" href="{{asset('/Home/css/yith-woocommerce-wishlist/style.css')}}" />
+	<link rel="stylesheet" href="{{asset('Home/css/jquery.fancybox.css')}}" />
+	<link rel="stylesheet" href="{{asset('Home/css/yith-woocommerce-compare/colorbox.css')}}" />
+	<link rel="stylesheet" href="{{asset('Home/css/owl-carousel/owl.carousel.min.css')}}" />
+	<link rel="stylesheet" href="{{asset('Home/css/owl-carousel/owl.theme.default.min.css')}}" />
+	<link rel="stylesheet" href="{{asset('Home/css/js_composer/js_composer.min.css')}}" />
+	<link rel="stylesheet" href="{{asset('Home/css/woocommerce/woocommerce.css')}}" />
+	<link rel="stylesheet" href="{{asset('Home/css/yith-woocommerce-wishlist/style.css')}}" />
 
 
-	<link rel="stylesheet" href="{{asset('/Home/css/custom.css')}}" />
-	<link rel="stylesheet" href="{{asset('/Home/css/app-orange.css')}}" id="theme_color" />
+	<link rel="stylesheet" href="{{asset('Home/css/custom.css')}}" />
+	<link rel="stylesheet" href="{{asset('Home/css/app-orange.css')}}" id="theme_color" />
 	<link rel="stylesheet" href="" id="rtl" />
-	<link rel="stylesheet" href="{{asset('/Home/css/app-responsive.css')}}" />
+	<link rel="stylesheet" href="{{asset('Home/css/app-responsive.css')}}" />
 </head>
 
-<body class="page woocommerce-account woocommerce-page">
+<body class="archive post-type-archive woocommerce post-type-archive-product">
 
 
 
@@ -56,18 +56,18 @@
 											<ul class="nav">
 												<li>
 													<a class="lang_sel_sel icl-en">
-														<img class="iclflag" title="English" alt="en" src="{{asset('/Home/images/icons/en.png')}}" width="18" height="12" /> English
+														<img class="iclflag" title="English" alt="en" src="{{asset('Home/images/icons/en.png')}}" width="18" height="12" /> English
 													</a>
 													<ul>
 														<li class="icl-en">
 															<a href="#">
-																<img class="iclflag" title="English" alt="en" src="{{asset('/Home/images/icons/en.png')}}" width="18" height="12" /> English
+																<img class="iclflag" title="English" alt="en" src="{{asset('Home/images/icons/en.png')}}" width="18" height="12" /> English
 															</a>
 														</li>
 
 														<li class="icl-ar">
 															<a href="#">
-																<img class="iclflag" title="Arabic" alt="ar" src="{{asset('/Home/images/icons/ar.png')}}" width="18" height="12" /> Arabic
+																<img class="iclflag" title="Arabic" alt="ar" src="{{asset('Home/images/icons/ar.png')}}" width="18" height="12" /> Arabic
 															</a>
 														</li>
 													</ul>
@@ -173,7 +173,7 @@
 						<!-- LOGO -->
 						<div class="etrostore-logo pull-left">
 							<a href="#">
-								<img src="{{asset('/Home/images/icons/logo-orange.png')}}" alt="Shoopy">
+								<img src="{{asset('Home/images/icons/logo-orange.png')}}" alt="Shoopy">
 							</a>
 						</div>
 
@@ -232,8 +232,8 @@
 												<ul class="minicart-content">
 													<li>
 														<a href="simple_product.html" class="product-image">
-															<img 	width="100" height="100" src="{{asset('/Home/images/1903/45-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
-																	srcset="{{asset('/Home/images/1903/45-150x150.jpg')}} 150w, images/1903/45-300x300.jpg')}} 300w, {{asset('/Home/images/1903/45-180x180.jpg')}} 180w, {{asset('/Home/images/1903/45.jpg')}} 600w"
+															<img 	width="100" height="100" src="{{asset('Home/images/1903/45-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
+																	srcset="{{asset('Home/images/1903/45-150x150.jpg')}} 150w, images/1903/45-300x300.jpg')}} 300w, images/1903/45-180x180.jpg')}} 180w, images/1903/45.jpg 600w"
 																	sizes="(max-width: 100px) 100vw, 100px" />
 														</a>
 
@@ -270,8 +270,8 @@
 
 													<li>
 														<a href="simple_product.html" class="product-image">
-															<img 	width="100" height="100" src="{{asset('/Home/images/1903/22-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
-																	srcset="{{asset('/Home/images/1903/22-150x150.jpg')}} 150w, {{asset('/Home/images/1903/22-300x300.jpg')}} 300w, {{asset('/Home/images/1903/22-180x180.jpg')}} 180w, {{asset('/Home/images/1903/22.jpg')}} 600w"
+															<img 	width="100" height="100" src="{{asset('Home/images/1903/22-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
+																	srcset="{{asset('Home/images/1903/22-150x150.jpg')}} 150w, images/1903/22-300x300.jpg')}} 300w, images/1903/22-180x180.jpg')}} 180w, images/1903/22.jpg 600w"
 																	sizes="(max-width: 100px) 100vw, 100px" />
 														</a>
 
@@ -419,8 +419,8 @@
 									<ul class="minicart-content">
 										<li>
 											<a href="simple_product.html" class="product-image">
-												<img 	width="100" height="100" src="{{asset('/Home/images/1903/45-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
-														srcset="{{asset('/Home/images/1903/45-150x150.jpg')}} 150w, {{asset('/Home/images/1903/45-300x300.jpg')}} 300w, {{asset('/Home/images/1903/45-180x180.jpg')}} 180w, {{asset('/Home/images/1903/45.jpg')}} 600w"
+												<img 	width="100" height="100" src="{{asset('Home/images/1903/45-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
+														srcset="{{asset('Home/images/1903/45-150x150.jpg')}} 150w, images/1903/45-300x300.jpg')}} 300w, images/1903/45-180x180.jpg')}} 180w, images/1903/45.jpg 600w"
 														sizes="(max-width: 100px) 100vw, 100px" />
 											</a>
 
@@ -457,8 +457,8 @@
 
 										<li>
 											<a href="simple_product.html" class="product-image">
-												<img	 width="100" height="100" src="{{asset('/Home/images/1903/22-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
-														srcset="{{asset('/Home/images/1903/22-150x150.jpg')}} 150w, {{asset('/Home/images/1903/22-300x300.jpg')}} 300w, {{asset('/Home/images/1903/22-180x180.jpg')}} 180w, {{asset('/Home/images/1903/22.jpg')}} 600w"
+												<img	 width="100" height="100" src="{{asset('Home/images/1903/22-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
+														srcset="{{asset('Home/images/1903/22-150x150.jpg')}} 150w, images/1903/22-300x300.jpg')}} 300w, images/1903/22-180x180.jpg')}} 180w, images/1903/22.jpg 600w"
 														sizes="(max-width: 100px) 100vw, 100px" />
 											</a>
 
@@ -546,18 +546,19 @@
 		<div class="listings-title">
 			<div class="container">
 				<div class="wrap-title">
-					<h1>我的信息中心</h1>
+					<h1>Products</h1>
+
 					<div class="bread">
 						<div class="breadcrumbs theme-clearfix">
 							<div class="container">
 								<ul class="breadcrumb">
 									<li>
-										<a href="#">首页</a>
+										<a href="#">Home</a>
 										<span class="go-page"></span>
 									</li>
 
 									<li class="active">
-										<span>用户中心</span>
+										<span>Products</span>
 									</li>
 								</ul>
 							</div>
@@ -569,66 +570,388 @@
 
 		<div class="container">
 			<div class="row">
-				<div id="contents" role="main" class="main-page  col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<div class="post-6 page type-page status-publish hentry">
-						<div class="entry">
-							<div class="entry-content">
-								<header>
-									<h2 class="entry-title">用户中心</h2>
-								</header>
+				<div id="contents" class="content col-lg-9 col-md-8 col-sm-8" role="main">
+					<div class="listing-top">
+						<div class="widget-1 widget-first widget rev-slider-widget-2 widget_revslider">
+							<div class="widget-inner">
+								<!-- OWL SLIDER -->
+								<div class="wpb_revslider_element wpb_content_element no-margin">
+									<div class="vc_column-inner ">
+										<div class="wpb_wrapper">
+											<div class="wpb_revslider_element wpb_content_element">
+												<div id="main-slider" class="fullwidthbanner-container" style="position:relative; width:100%; height:auto; margin-top:0px; margin-bottom:0px">
+													<div class="module slideshow no-margin">
+														<div class="item">
+															<a href="simple_product.html"><img src="{{asset('Home/images/1903/slider-shop.jpg')}}" alt="slider1" class="img-responsive" height="559"></a>
+														</div>
+														<div class="item">
+															<a href="simple_product.html"><img src="{{asset('Home/images/1903/slider-shop.jpg')}}" alt="slider2" class="img-responsive" height="559"></a>
+														</div>
+													</div>
+													<div class="loadeding"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- OWL LIGHT SLIDER -->
+							</div>
+						</div>
 
-								<div class="entry-content">
-									<div class="woocommerce">
-										<nav class="woocommerce-MyAccount-navigation">
-											<ul>
-												<li class="is-active">
-													<a>用户中心</a>
-												</li>
+						<div class="widget-2 widget-last widget sw_brand-2 sw_brand">
+							<div class="widget-inner">
+								<div id="sw_brand_01" class="responsive-slider sw-brand-container-slider clearfix" data-lg="5" data-md="4" data-sm="3" data-xs="2" data-mobile="1" data-speed="1000" data-scroll="1" data-interval="5000" data-autoplay="false">
+									<div class="resp-slider-container">
+										<div class="slider responsive">
+											<div class="item item-brand-cat">
+												<div class="item-image">
+													<a href="shop.html"><img width="134" height="70" src="{{asset('Home/images/1903/Brand_1.jpg')}}" class="attachment-173x91 size-173x91" alt=""></a>
+												</div>
+											</div>
 
-												<li >
-												   <a href="http://demo.smartaddons.com/templates/html/etrostore/order.html">我的订单</a>
-												</li>
+											<div class="item item-brand-cat">
+												<div class="item-image">
+													<a href="http://demo.smartaddons.com/templates/html/etrostore/shop.html-books"><img width="134" height="70" src="{{asset('Home/images/1903/br1.jpg')}}" class="attachment-173x91 size-173x91" alt=""></a>
+												</div>
+											</div>
 
-												<li>
-													<a href="http://demo.smartaddons.com/templates/html/etrostore/addresses.html">我的收货地址</a>
-												</li>
+											<div class="item item-brand-cat">
+												<div class="item-image">
+													<a href="shop.html"><img width="134" height="70" src="{{asset('Home/images/1903/br2.jpg')}}" class="attachment-173x91 size-173x91" alt=""></a>
+												</div>
+											</div>
 
-												<li>
-												   <a href="http://demo.smartaddons.com/templates/html/etrostore/account_details.html">信息&积分</a>
-												</li>
+											<div class="item item-brand-cat">
+												<div class="item-image">
+													<a href="shop.html"><img width="134" height="70" src="{{asset('Home/images/1903/Brand_1.jpg')}}" class="attachment-173x91 size-173x91" alt=""></a>
+												</div>
+											</div>
 
-												<li >
-												   <a href="http://demo.smartaddons.com/templates/html/etrostore/order.html">我的收藏</a>
-												</li>
+											<div class="item item-brand-cat">
+												<div class="item-image">
+													<a href="shop.html"><img width="134" height="70" src="{{asset('Home/images/1903/Brand_10.jpg')}}" class="attachment-173x91 size-173x91" alt=""></a>
+												</div>
+											</div>
 
-												<li>
-													<a href="{{url('/queit')}}">退出</a>
-												</li>
-											</ul>
-										</nav>
-
-										<div class="woocommerce-MyAccount-content">
-											<p>
-												你好!
-												@if (session()->has('userinfo') && isset(session('userinfo')['name']))
-													{{session('userinfo')['name']}}
-												@elseif (session()->has('userinfo') && isset(session('userinfo')['uid']))
-													{{session('userinfo')['uid']}}
-												@endif
-											</p>
-											<p>
-												从你的账户指示板，你可以查看你
-												<a href="http://demo.smartaddons.com/templates/html/etrostore/order.html">最近的订单</a>,
-												管理你 <a href="http://demo.smartaddons.com/templates/html/etrostore/addresses.html">发货和账单地址</a>
-												并编辑你的 <a href="http://demo.smartaddons.com/templates/html/etrostore/account_details.html">账户信息</a>.
-											</p>
+											<div class="item item-brand-cat">
+												<div class="item-image">
+													<a href="shop.html"><img width="134" height="70" src="{{asset('Home/images/1903/Brand_1.jpg')}}" class="attachment-173x91 size-173x91" alt=""></a>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+
+					<div id="container">
+						<div id="content" role="main">
+							<!--  Shop Title -->
+							<div class="products-wrapper">
+
+								<div class="products-nav clearfix">
+									<div class="view-mode-wrap pull-left clearfix">
+										<div class="view-mode">
+											<a href="javascript:void(0)" class="grid-view active" title="Grid view"><span>Grid view</span></a>
+											<a href="javascript:void(0)" class="list-view" title="List view"><span>List view</span></a>
+										</div>
+									</div>
+
+
+
+									{{$goodsData->links()}}
+								</div>
+
+								<div class="clear"></div>
+
+								<ul class="products-loop row grid clearfix">
+									@foreach($goodsData as $v)
+										<li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 post-255 product type-product status-publish has-post-thumbnail product_cat-electronics product_cat-home-appliances product_cat-vacuum-cleaner product_brand-apoteket first instock sale featured shipping-taxable purchasable product-type-simple">
+											<div class="products-entry item-wrap clearfix">
+												<div class="item-detail">
+													<div class="item-img products-thumb">
+														<span class="onsale">Sale!</span>
+														<a href="{{url('/goods/detail', ['id' => $v->id])}}">
+															<div class="product-thumb-hover">
+																<img src="{{asset('Home/images/wpspin_light.gif')}}" data-original="{{asset('').json_decode($v->gpic, true)[2]}}" class="attachment-shop_catalog size-shop_catalog wp-post-image img" alt=""  sizes="(max-width: 300px) 100vw, 300px">
+															</div>
+														</a>
+
+														<!-- add to cart, wishlist, compare -->
+														<div class="item-bottom clearfix">
+															<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
+
+															<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
+
+															<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
+																<div class="yith-wcwl-add-button show" style="display:block">
+																	<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+																	<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+																</div>
+
+																<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+																	<span class="feedback">Product added!</span>
+																	<a href="#" rel="nofollow">Browse Wishlist</a>
+																</div>
+
+																<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
+																	<span class="feedback">The product is already in the wishlist!</span>
+																	<a href="#" rel="nofollow">Browse Wishlist</a>
+																</div>
+
+																<div style="clear:both"></div>
+																<div class="yith-wcwl-wishlistaddresponse"></div>
+															</div>
+
+															<div class="clear"></div>
+															<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
+														</div>
+													</div>
+
+													<div class="item-content products-content">
+														<div class="reviews-content">
+															<div class="star"><span style="width: 63px"></span></div>
+														</div>
+
+														<h4><a href="simple_product.html" title="Cleaner with bag">{{$v->gname}}</a></h4>
+
+														<span class="item-price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol"></span></span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{$v->price}}.00</span></ins></span>
+
+														<div class="item-description">Proin nunc nibh, adipiscing eu nisi id, ultrices suscipit augue. Sed rhoncus hendrerit lacus, et venenatis felis. Donec ut fringilla magna ultrices suscipit augue. Proin nunc nibh, adipiscing eu nisi id, ultrices suscipit augue. Sed rhoncus hendrerit lacus, et venenatis felis. Donec ut fringilla magna ultrices suscipit augue.</div>
+
+														<!-- add to cart, wishlist, compare -->
+														<div class="item-bottom clearfix">
+															<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
+
+															<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
+
+															<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
+																<div class="yith-wcwl-add-button show" style="display:block">
+																	<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+																	<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+																</div>
+
+																<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+																	<span class="feedback">Product added!</span>
+																	<a href="#" rel="nofollow">Browse Wishlist</a>
+																</div>
+
+																<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
+																	<span class="feedback">The product is already in the wishlist!</span>
+																	<a href="#" rel="nofollow">Browse Wishlist</a>
+																</div>
+
+																<div style="clear:both"></div>
+																<div class="yith-wcwl-wishlistaddresponse"></div>
+															</div>
+
+															<div class="clear"></div>
+															<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+									@endforeach
+								</ul>
+
+								<div class="clear"></div>
+
+								<div class="products-nav clearfix">
+									<div class="view-mode-wrap pull-left clearfix">
+										<div class="view-mode">
+											<a href="javascript:void(0)" class="grid-view active" title="Grid view"><span>Grid view</span></a>
+											<a href="javascript:void(0)" class="list-view" title="List view"><span>List view</span></a>
+										</div>
+									</div>
+
+
+									{{$goodsData->links()}}
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
+
+				<aside id="right" class="sidebar col-lg-3 col-md-4 col-sm-4">
+					<div class="widget-1 widget-first widget woocommerce_product_categories-3 woocommerce widget_product_categories">
+						<div class="widget-inner">
+							<div class="block-title-widget">
+								<h2><span>所有分类</span></h2>
+							</div>
+
+							<ul class="product-categories">
+								@foreach ($category as $v)
+								<li class="cat-item"><a href="{{url('/goods/list/category/'.$v->id)}}">{{$v->name}}</a> <span class="count">({{$v->sum}})</span></li>
+								@endforeach
+							</ul>
+						</div>
+					</div>
+
+					<div class="widget-2 widget woocommerce_layered_nav-4 woocommerce widget_layered_nav">
+						<div class="widget-inner">
+							<div class="block-title-widget">
+								<h2><span>Colors</span></h2>
+							</div>
+
+							<ul>
+								<li class="wc-layered-nav-term "><a href="shop.html">Black</a> <span class="count">(3)</span></li>
+								<li class="wc-layered-nav-term "><a href="shop.html">Blue</a> <span class="count">(2)</span></li>
+								<li class="wc-layered-nav-term "><a href="shop.html">Orange</a> <span class="count">(1)</span></li>
+								<li class="wc-layered-nav-term "><a href="shop.html">White</a> <span class="count">(3)</span></li>
+								<li class="wc-layered-nav-term "><a href="shop.html">Yellow</a> <span class="count">(1)</span></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="widget-3 widget woocommerce_layered_nav-5 woocommerce widget_layered_nav">
+						<div class="widget-inner">
+							<div class="block-title-widget">
+								<h2><span>Size</span></h2>
+							</div>
+
+							<ul>
+								<li class="wc-layered-nav-term "><a href="shop.html">L</a> <span class="count">(3)</span></li>
+								<li class="wc-layered-nav-term "><a href="shop.html">M</a> <span class="count">(1)</span></li>
+								<li class="wc-layered-nav-term "><a href="shop.html">S</a> <span class="count">(2)</span></li>
+								<li class="wc-layered-nav-term "><a href="shop.html">XL</a> <span class="count">(3)</span></li>
+								<li class="wc-layered-nav-term "><a href="shop.html">XS</a> <span class="count">(1)</span></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="widget-4 widget woocommerce_price_filter-3 woocommerce widget_price_filter">
+						<div class="widget-inner">
+							<div class="block-title-widget">
+								<h2><span>price</span></h2>
+							</div>
+
+							<form method="get" action="">
+								<div class="price_slider_wrapper">
+									<div class="price_slider" style="display:none;"></div>
+									<div class="price_slider_amount">
+										<input type="text" id="min_price" name="min_price" value="100" data-min="150" placeholder="Min price">
+										<input type="text" id="max_price" name="max_price" value="650" data-max="700" placeholder="Max price">
+
+										<button type="submit" class="button">Filter</button>
+
+										<div class="price_label" style="display:none;">
+											Price: <span class="from"></span> - <span class="to"></span>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div class="widget-5 widget etrostore_best_seller_product-3 etrostore_best_seller_product">
+						<div class="widget-inner">
+							<div class="block-title-widget">
+								<h2><span>Best Sellers</span></h2>
+							</div>
+
+							<div id="best-seller-01" class="sw-best-seller-product">
+								<ul class="list-unstyled">
+									<li class="clearfix">
+										<div class="item-img">
+											<a href="simple_product.html" title="corned beef enim">
+												<img width="180" height="180" src="{{asset('Home/images/1903/65-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" srcset="{{asset('Home/images/1903/65-180x180.jpg')}} 180w, images/1903/65-150x150.jpg')}} 150w, images/1903/65-300x300.jpg')}} 300w, images/1903/65.jpg 600w" sizes="(max-width: 180px) 100vw, 180px">
+											</a>
+										</div>
+
+										<div class="item-content">
+											<div class="reviews-content">
+												<div class="star"></div>
+												<div class="item-number-rating">
+													0 Review(s)
+												</div>
+											</div>
+
+											<h4><a href="simple_product.html" title="corned beef enim">Corned beef enim</a></h4>
+
+											<div class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>400.00</span></div>
+										</div>
+									</li>
+
+									<li class="clearfix">
+										<div class="item-img">
+											<a href="simple_product.html" title="philips stand">
+												<img width="180" height="180" src="{{asset('Home/images/1903/62-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" srcset="{{asset('Home/images/1903/62-180x180.jpg')}} 180w, images/1903/62-150x150.jpg')}} 150w, images/1903/62-300x300.jpg')}} 300w, images/1903/62.jpg 600w" sizes="(max-width: 180px) 100vw, 180px">
+											</a>
+										</div>
+
+										<div class="item-content">
+											<div class="reviews-content">
+												<div class="star"></div>
+												<div class="item-number-rating">
+													0 Review(s)
+												</div>
+											</div>
+
+											<h4><a href="simple_product.html" title="philips stand">Philips stand</a></h4>
+
+											<div class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>300.00</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>250.00</span></ins></div>
+										</div>
+									</li>
+
+									<li class="clearfix">
+										<div class="item-img">
+											<a href="simple_product.html" title="Vacuum cleaner">
+												<img width="180" height="180" src="{{asset('Home/images/1903/26-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" srcset="{{asset('Home/images/1903/26-180x180.jpg')}} 180w, images/1903/26-150x150.jpg')}} 150w, images/1903/26-300x300.jpg')}} 300w, images/1903/26.jpg 600w" sizes="(max-width: 180px) 100vw, 180px">
+											</a>
+										</div>
+
+										<div class="item-content">
+											<div class="reviews-content">
+												<div class="star"><span style="width:52.5px"></span></div>
+												<div class="item-number-rating">
+													4 Review(s)
+												</div>
+											</div>
+
+											<h4><a href="simple_product.html" title="Vacuum cleaner">Vacuum cleaner</a></h4>
+
+											<div class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>350.00</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>260.00</span></ins></div>
+										</div>
+									</li>
+
+									<li class="clearfix">
+										<div class="item-img">
+											<a href="simple_product.html" title="veniam dolore">
+												<img width="180" height="180" src="{{asset('Home/images/1903/45-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" srcset="{{asset('Home/images/1903/45-180x180.jpg')}} 180w, images/1903/45-150x150.jpg')}} 150w, images/1903/45-300x300.jpg')}} 300w, images/1903/45.jpg 600w" sizes="(max-width: 180px) 100vw, 180px">
+											</a>
+										</div>
+
+										<div class="item-content">
+											<div class="reviews-content">
+												<div class="star"><span style="width:35px"></span></div>
+												<div class="item-number-rating">
+													2 Review(s)
+												</div>
+											</div>
+
+											<h4><a href="simple_product.html" title="veniam dolore">Veniam dolore</a></h4>
+
+											<div class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>250.00</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>190.00</span></ins></div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="widget-6 widget-last widget text-6 widget_text">
+						<div class="widget-inner">
+							<div class="textwidget">
+								<div class="banner-sidebar">
+									<img src="{{asset('Home/images/1903/banner-detail.jpg')}}" title="banner" alt="banner">
+								</div>
+							</div>
+						</div>
+					</div>
+				</aside>
 			</div>
 		</div>
 
@@ -650,13 +973,13 @@
 											<div class="item-inner">
 												<div class="image-client pull-left">
 													<a href="#" title="">
-														<img width="127" height="127" src="{{asset('/Home/images/1903/tm3.jpg')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
+														<img width="127" height="127" src="{{asset('Home/images/1903/tm3.jpg')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
 													</a>
 												</div>
 
 												<div class="client-say-info">
 													<div class="client-comment">
-														In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit....
+														In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 													</div>
 
 													<div class="name-client">
@@ -669,13 +992,13 @@
 											<div class="item-inner">
 												<div class="image-client pull-left">
 													<a href="#" title="">
-														<img width="127" height="127" src="{{asset('/Home/images/1903/tm1.png')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
+														<img width="127" height="127" src="{{asset('Home/images/1903/tm1.png')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
 													</a>
 												</div>
 
 												<div class="client-say-info">
 													<div class="client-comment">
-														In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit....
+														In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 													</div>
 
 													<div class="name-client">
@@ -693,13 +1016,13 @@
 											<div class="item-inner">
 												<div class="image-client pull-left">
 													<a href="#" title="">
-														<img width="127" height="127" src="{{asset('/Home/images/1903/tm2.png')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
+														<img width="127" height="127" src="{{asset('Home/images/1903/tm2.png')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
 													</a>
 												</div>
 
 												<div class="client-say-info">
 													<div class="client-comment">
-														In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit....
+														In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 													</div>
 
 													<div class="name-client">
@@ -715,13 +1038,13 @@
 											<div class="item-inner">
 												<div class="image-client pull-left">
 													<a href="#" title="">
-														<img width="127" height="127" src="{{asset('/Home/images/1903/tm3.jpg')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
+														<img width="127" height="127" src="{{asset('Home/images/1903/tm3.jpg')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
 													</a>
 												</div>
 
 												<div class="client-say-info">
 													<div class="client-comment">
-														In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit....
+														In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 													</div>
 
 													<div class="name-client">
@@ -823,7 +1146,7 @@
 													<div class="wpb_wrapper">
 														<div class="ya-logo">
 															<a href="#">
-																<img src="{{asset('/Home/images/icons/logo-footer.png')}}" alt="logo" />
+																<img src="{{asset('Home/images/icons/logo-footer.png')}}" alt="logo" />
 															</a>
 														</div>
 													</div>
@@ -846,11 +1169,11 @@
 
 															<div class="store">
 																<a href="#">
-																	<img src="{{asset('/Home/images/1903/app-store.png')}}" alt="store" title="store" />
+																	<img src="{{asset('Home/images/1903/app-store.png')}}" alt="store" title="store" />
 																</a>
 
 																<a href="#">
-																	<img src="{{asset('/Home/images/1903/google-store.png')}}" alt="store" title="store" />
+																	<img src="{{asset('Home/images/1903/google-store.png')}}" alt="store" title="store" />
 																</a>
 															</div>
 														</div>
@@ -982,7 +1305,7 @@
 																<h2>find a store</h2>
 															</div>
 
-															<img src="{{asset('/Home/images/1903/map.jpg')}}" alt="map" title="map" />
+															<img src="{{asset('Home/images/1903/map.jpg')}}" alt="map" title="map" />
 
 															<a href="#" class="link-map">Store locator</a>
 														</div>
@@ -1054,7 +1377,7 @@
 								<div class="textwidget">
 									<div class="payment">
 										<a href="#">
-											<img src="{{asset('/Home/images/1903/paypal.png')}}" alt="payment" title="payment" />
+											<img src="{{asset('Home/images/1903/paypal.png')}}" alt="payment" title="payment" />
 										</a>
 									</div>
 								</div>
@@ -1132,7 +1455,7 @@
 
 	<a id="etrostore-totop" href="#"></a>
 
-	<div id="subscribe_popup" class="subscribe-popup" style="background: url(images/icons/bg_newsletter.jpg')}})">
+	<div id="subscribe_popup" class="subscribe-popup" style="background: url({{asset('Home/images/icons/bg_newsletter.jpg')}})">
 		<div class="subscribe-popup-container">
 			<h2>Join our newsletter</h2>
 			<div class="description">Subscribe now to get 40% of on any product!</div>
@@ -1180,26 +1503,45 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="{{asset('/Home/js/jquery/jquery.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('/Home/js/jquery/jquery-migrate.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('/Home/js/bootstrap.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('/Home/js/jquery/js.cookie.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/jquery/jquery.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/jquery/jquery-migrate.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/bootstrap.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/jquery/js.cookie.min.js')}}"></script>
 
 	<!-- OPEN LIBS JS -->
-	<script type="text/javascript" src="{{asset('/Home/js/owl-carousel/owl.carousel.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('/Home/js/slick-1.6.0/slick.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/owl-carousel/owl.carousel.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/slick-1.6.0/slick.min.js')}}"></script>
 
-	<script type="text/javascript" src="{{asset('/Home/js/yith-woocommerce-compare/jquery.colorbox-min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('/Home/js/sw_core/isotope.js')}}"></script>
-	<script type="text/javascript" src="{{asset('/Home/js/sw_core/jquery.fancybox.pack.js')}}"></script>
-	<script type="text/javascript" src="{{asset('/Home/js/sw_woocommerce/category-ajax.js')}}"></script>
-	<script type="text/javascript" src="{{asset('/Home/js/sw_woocommerce/jquery.countdown.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('/Home/js/js_composer/js_composer_front.min.js')}}"></script>
+	<script type="text/javascript">
+		/* <![CDATA[ */
+			var woocommerce_price_slider_params = {"currency_symbol":"$","currency_pos":"left","min_price":"100","max_price":"500"};
+		/* ]]> */
+	</script>
 
-	<script type="text/javascript" src="{{asset('/Home/js/plugins.js')}}"></script>
-	<script type="text/javascript" src="{{asset('/Home/js/megamenu.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('/Home/js/main.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/widget.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/mouse.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/slider.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/js_composer/js_composer_front.min.js')}}"></script>
 
+	<script type="text/javascript" src="{{asset('Home/js/yith-woocommerce-compare/jquery.colorbox-min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/sw_core/isotope.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/sw_core/jquery.fancybox.pack.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/sw_woocommerce/category-ajax.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/sw_woocommerce/jquery.countdown.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/woocommerce/price-slider.min.js')}}"></script>
+
+	<script type="text/javascript" src="{{asset('Home/js/plugins.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/megamenu.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/main.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/jquery.lazyload.min.js')}}">	</script>
+	<script type="text/javascript">
+		img = $('.img')
+		$(function(){
+      $("img.img").lazyload({
+				effect: "fadeIn"
+			});
+    })
+	</script>
 	<script type="text/javascript">
 		var sticky_navigation_offset_top = $("#header .header-bottom").offset().top;
 		var sticky_navigation = function(){

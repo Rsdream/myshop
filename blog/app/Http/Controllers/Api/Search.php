@@ -30,13 +30,12 @@ class Search extends Controller
     {
 
 
-        // define ('XS_APP_ROOT', '/usr/local/xunsearch/sdk/php/app');
+        define ('XS_APP_ROOT', '/usr/local/xunsearch/sdk/php/app');
 
 
         $this->xs = new \XS($configFile);
         $this->fuzzy = $fuzzy;
         $this->synonyms = $synonyms;
-
         //获取搜索对象
         $this->search = $this->xs->search;
     }
