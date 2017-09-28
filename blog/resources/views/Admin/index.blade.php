@@ -107,7 +107,7 @@
 			<dd>
 				<ul>
 					<li><a data-href="http://h-ui.duoshuo.com/admin/" data-title="评论列表" href="javascript:;">评论列表</a></li>
-					<li><a data-href="feedback-list.html" data-title="意见反馈" href="javascript:void(0)">意见反馈</a></li>
+					
 				</ul>
 			</dd>
 		</dl>
@@ -149,8 +149,9 @@
 			<dd>
 				<ul>
 					<li><a data-href="system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li>
-					<li><a data-href="system-category.html" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
-					<li><a data-href="system-data.html" data-title="数据字典" href="javascript:void(0)">数据字典</a></li>
+					<li><a data-href="{{url('admin/logo')}}" data-title="Logo管理" href="javascript:void(0)">Logo管理</a></li>
+					<li><a data-href="{{url('admin/url')}}" data-title="友情链接" href="javascript:void(0)">友情链接</a></li>
+					<li><a data-href="{{url('admin/feedback')}}" data-title="意见反馈" href="javascript:void(0)">意见反馈</a></li>
 					<li><a data-href="system-shielding.html" data-title="屏蔽词" href="javascript:void(0)">屏蔽词</a></li>
 					<li><a data-href="system-log.html" data-title="系统日志" href="javascript:void(0)">系统日志</a></li>
 				</ul>

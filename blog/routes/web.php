@@ -65,6 +65,18 @@ Route::prefix('/admin')->group(function () {
         Route::resource('/adminlist', 'Admin\Administrator\AdminList');
         Route::post('/update/{id}', 'Admin\Administrator\AdminList@update')->where('id','\d+');
 
+        //后台系统管理->友情链接
+        Route::resource('/url', 'Admin\Systron\Url');
+        Route::get('/disable', 'Admin\Systron\Url@disable');
+
+        //网站logo的路由
+        Route::get('logo', 'Admin\Systron\Logo@index');
+        Route::get('editlogo/{id}', 'Admin\Systron\Logo@edit');
+        Route::post('update', 'Admin\Systron\Logo@update');
+
+        //后台意见反馈路由
+        Route::get('feedback','Admin\Systron\Feedback@index');
+
         //后台退出路由组
         route::get('/out','Admin\Api\CommonController@Out');
 
@@ -82,6 +94,10 @@ Route::prefix('/admin')->group(function () {
 Route::prefix('/user')->group(function () {
     Route::get('/myaccount', 'Home\IndexUserController@myAccount');
 });
+
+//前台意见反馈路由
+Route::get('feedback','Home\Feedback@index');
+Route::post('in-feedback', 'Home\Feedback@insert');
 
 
 //产品管理路由组

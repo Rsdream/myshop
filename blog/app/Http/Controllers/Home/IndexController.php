@@ -38,7 +38,14 @@ class IndexController extends Controller
         $salesVolume = DB::table('goods')->select('brandid', 'gname', 'id', 'gpic', 'workoff')->orderBy('workoff', 'desc')->limit(5)->get();
 
 
-		return view('index', ['category' => $category, 'phone' => $phone, 'salesvolume' => $salesVolume]);
+        //查出友情链接
+        $url = DB::table('url')->select('id', 'name', 'logo', 'url', 'status')->where('status', 0)->limit(5)->get();
+
+
+        //网站Logo
+        $logo = DB::table('logo')->select('id', 'name', 'logo')->where('id', '=', '1')->first();
+
+		return view('index', ['category' => $category, 'phone' => $phone, 'salesvolume' => $salesVolume, 'url' => $url, 'logo' => $logo]);
 	}
 
 
@@ -56,6 +63,7 @@ class IndexController extends Controller
         //先查缓存中有无商品
 		$hotProduct = Cache::get('Hgoods'.$id);
         if (!$hotProduct) {
+            // echo '没有缓存';
             //根据类别得到对应的商品
             $hotProduct = DB::table('goods')
                 ->leftJoin('brands', 'brands.id', '=', 'goods.brandid')

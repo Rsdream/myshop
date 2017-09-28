@@ -28,6 +28,7 @@
 	<link rel="stylesheet" href="{{asset('Home/css/app-orange.css')}}" id="theme_color" />
 	<link rel="stylesheet" href="" id="rtl" />
 	<link rel="stylesheet" href="{{asset('Home/css/app-responsive.css')}}" />
+	<link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
 	<style>
 		#b123{
 			width: 33%;
@@ -51,12 +52,18 @@
 			<div class="header-top clearfix">
 				<div class="container">
 					<div class="rows">
+
+					@if (session('msg'))
+				        <div id="time" class="alert alert-success">
+				            {{ session('msg') }}
+				        </div>
+				    @endif
 						<!-- SIDEBAR TOP MENU -->
 						<div class="pull-left top1">
 							<div class="widget text-2 widget_text pull-left">
 								<div class="widget-inner">
 									<div class="textwidget">
-										<div class="call-us"><span>欢迎</span>xxx<span>来到ETRO商城</span></div>
+										<div class="call-us"><span>欢迎</span>xxx<span>来到{{$logo->name}}</span></div>
 									</div>
 								</div>
 							</div>
@@ -183,9 +190,11 @@
 				<div class="container">
 					<div class="rows">
 						<!-- LOGO -->
-						<div class="etrostore-logo pull-left">
-							<a href="#">
-								<img src="{{asset('Home/images/icons/logo-orange.png')}}" alt="Shoopy">
+						<div class="etrostore-logo pull-left" >
+
+							<a href="#" >
+								<img src="{{asset($logo->logo)}}" alt="Shoopy" >
+								
 							</a>
 						</div>
 
@@ -1777,14 +1786,18 @@
 														
 														<div class="box-title-right clearfix">
 														
-															<div class="childcat-content pull-left" id="child_sw_woo_slider_widget_1" style="width:300px">
-																<ul id="fuul" style="width:300px">
-																@foreach($category as $v)
-																	<li style="width:60px;background-color:#ccc;margin-left:8px;padding-left:15px" data-id="{{$v->id}}" id="relagood">{{$v->name}}</li>
-																@endforeach
+															<div class="childcat-content pull-left" id="child_sw_woo_slider_widget_2" >
+																<ul id="fuul" >
+																
+																	<li   id="relagood">
+																	@foreach($category as $v)
+																	<a data-id="{{$v->id}}">{{$v->name}}</a>
+																	@endforeach
+																	</li>
+																
 																</ul>
 															</div>
-														
+
 
 															<div class="view-all">
 																<a href="#">查看更多<i class="fa  fa-caret-right"></i></a>
@@ -1804,7 +1817,7 @@
 													<div class="content-slider" >
 
 														<div class="childcat-slider-content clearfix"  >
-															<div class="resp-slider-container" id="old">
+															<div class="resp-slider-container" id="old" style="border:1px solid #ccc">
 																@foreach($phone as $good)
 																<div id="b123" style="border-bottom:1px solid #ccc;border-left:1px solid #ccc;padding:3px;" class="block">
 																
@@ -3719,8 +3732,8 @@
 												<div class="wpb_text_column wpb_content_element ">
 													<div class="wpb_wrapper">
 														<div class="ya-logo">
-															<a href="#">
-																<img src="{{asset('Home/images/icons/logo-footer.png')}}" alt="logo" />
+															<a href="{{url('feedback')}}" style="color:white">
+																意见反馈
 															</a>
 														</div>
 													</div>
@@ -3949,15 +3962,22 @@
 						<div class="widget-1 widget-first widget text-4 widget_text">
 							<div class="widget-inner">
 								<div class="textwidget">
-									<div class="payment">
-										<a href="#">
-											<img src="{{asset('Home/images/1903/paypal.png')}}" alt="payment" title="payment" />
+
+									<div class="payment" id="tiaozhuan">
+									@foreach($url as $v)
+
+										<a href="javascript:;" type-url="{{$v->url}}" style="display:block;float:left;margin-left:5px" target="_black">
+											<img src="{{($v->logo)}}" alt="payment" title="payment" style="width:50px;height:30px"/>
 										</a>
+									@endforeach
 									</div>
+
 								</div>
 							</div>
 						</div>
 					</div>
+
+
 				</div>
 			</div>
 		</footer>
@@ -4098,6 +4118,11 @@
 	<script type="text/javascript" src="{{asset('Home/js/main.min.js')}}"></script>
 
 	<script type="text/javascript">
+
+	setTimeout(function () {
+
+	    $('#time').removeClass().html('');
+	},2000);
 		var sticky_navigation_offset_top = $("#header .header-bottom").offset().top;
 		var sticky_navigation = function(){
 									var scroll_top = $(window).scrollTop();
@@ -4139,12 +4164,12 @@
    <!-- 热销商品的js -->
 	<script>
 		
-		$('#fuul').on('mouseenter', 'li', function () {
+		$('#relagood').on('mouseenter', 'a', function () {
 
 			//获取到id
 			var id = $(this).attr('data-id');
 
-			var that = $(this);
+			$(this).attr('data-ajax');
 
 			var url = "{{url('/hotsale')}}";
 
@@ -4157,6 +4182,7 @@
         		url:url,
         		data:"id="+id+'&_token={{csrf_token()}}',
         		success:function (data) {
+
 
         			var str = '';
 
@@ -4243,6 +4269,13 @@
 		});
 
 
+		//实现url跳转
+		$('#tiaozhuan').on('click', 'a', function () {
+
+			var url = $(this).attr('type-url');
+
+			window.location.href='http://' + url;
+		})
 	</script>
    </body>
 </html>
