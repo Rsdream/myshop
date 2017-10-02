@@ -222,7 +222,7 @@
 		var brand = $('select[name="brand"]').val();
 		var bool;
 		$("input[type='text']").each(function(){
-        if ($(this).val() == ' ') {
+        if ($(this).val() == '') {
 					layer.msg($(this).attr('title')+'没有填写',{icon:0,time:1500});
 					return bool = false;
 				}
@@ -230,12 +230,12 @@
 		var detail = $('textarea[name="detail"]').val();
 		if (detail == '') {
 			layer.msg('商品详情没有填写',{icon:0,time:1500});
-			return false;
+			return bool = false;
 		}
 		var img = $('img[id="pic"]').attr('src');
 		if (img == '') {
 			layer.msg('没有选择商品主图',{icon:0,time:1500});
-			return false;
+			return bool = false;
 		}
 		return bool;
 	}

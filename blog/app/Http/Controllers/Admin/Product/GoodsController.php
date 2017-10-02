@@ -124,6 +124,14 @@ class GoodsController extends Controller
             'price' => $request->input('price1'),
         ];
         $goodsId = DB::table('goods')->insertGetId($goods);
+        //获取到品牌和类别
+        $typeInfo = DB::table('brands')
+            ->leftJoin('home_category', 'home_category.id' , '=', 'brands.categoryid')
+            ->select('bname', 'categoryid', 'name')
+            ->where('brands.id', $request->input('brand'))
+            ->first();
+        //new 迅搜对象
+        $search = new Search('shop');
         //根据数量添加商品配置和价格
         for ($i = 1; $i<=$sum; $i++) {
             $arr = [
@@ -134,24 +142,25 @@ class GoodsController extends Controller
                 'rom' => $request->input('rom'.$i),
                 'color' => $request->input('color'.$i),
             ];
-            DB::table('price')->insert($arr);
+            $id = DB::table('price')->insertGetId($arr);
+            //搜索数据
+            $searchArr = [
+                'id' => $id,
+                'gname' => $request->input('gname'),
+                'brandname' => $typeInfo->bname,
+                'typename' => $typeInfo->name,
+                'gpic' => $filePathArr['2'],
+                'price' => $request->input('price'.$i),
+                'ram' => $request->input('ram'.$i),
+                'rom' => $request->input('rom'.$i),
+                'color' => $request->input('color'.$i),
+            ];
+            //添加搜索商品数据到迅搜
+            $search->addDocumentData($searchArr);
         }
         //添加商品描述
         DB::table('goodsdetail')->insert(['gid' => $goodsId, 'gdetail' => $detail]);
-        //new 迅搜对象
-        $search = new Search('shop');
-        //搜索数据
 
-        $searchArr = [
-            'gname' => $request->input('gname'),
-            'id' => $goodsId,
-            'brand' => $request->input('brand'),
-            'gpic' => $filePathArr['2'],
-            'price' => $request->input('price1'),
-
-        ];
-        //添加搜索商品数据到迅搜
-        $search->addDocumentData($searchArr);
         redirect('/admin/product/goods')->with('msg', '添加商品成功');
         return '<script>parent.location.reload();</script>';
     }
@@ -172,7 +181,7 @@ class GoodsController extends Controller
       //查询被编辑的商品
       $goodsData = DB::table('goods')
           ->leftJoin('price', 'goods.id', '=', 'price.gid')
-          ->select('goods.id', 'brandid', 'gpic', 'gname', 'ram', 'rom', 'color', 'goods.price', 'stock')
+          ->select('goods.id', 'brandid', 'gpic', 'gname', 'ram', 'rom', 'color', 'price.price', 'stock')
           ->where('goods.id', $id)
           ->get()
           ->toArray();
@@ -225,7 +234,104 @@ class GoodsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $goodsPriceList = DB::table('price')->select('id')->where('gid', $id)->get();
+        //输入配置的数量
+        $sum = $request->input('sum');
+        $detail = $request->input('detail');
+        //允许的图片格式
+        $allowExt = ['jpg', 'png', 'gif', 'jpeg'];
+        //查询当前商品的图片
+        $goodsImg = DB::table('goods')->select('gpic')->where('id', $id)->first();
+        $filePathArr = json_decode($goodsImg->gpic, true);
 
+        //判断是否有图片上传
+        if( $request->hasFile('img') ){
+          //获取文件扩展名
+          $extension = $request->img->extension();
+          //判断是否合法图片类型
+          if (!in_array($extension, $allowExt)) {
+
+              return redirect('/admin/product/goods/create')->with('errorTip', '上传文件类型错误');
+          }
+
+          //删除旧的图片
+          foreach ($filePathArr as $v) {
+              unlink('./'.$v);
+          }
+          //获取文件临时路径
+          $filePath = $request->img->path();
+          //生成文件名
+          $fileName = rand(0, 1000).time();
+          //清空图片数组
+          $filePathArr = [];
+          //处理图片
+          $filePathArr [] = trim(ImageApi::attrImg($filePath, 150, 150, $fileName.'_150_150.'.$extension), './');
+          $filePathArr [] = trim(ImageApi::attrImg($filePath, 180, 180, $fileName.'_180_180.'.$extension), './');
+          $filePathArr [] = trim(ImageApi::attrImg($filePath, 300, 300, $fileName.'_300_300.'.$extension), './');
+          $filePathArr [] = trim(ImageApi::attrImg($filePath, 600, 600, $fileName.'_600_600.'.$extension), './');
+          //json图片名数组
+          $gpicJson = json_encode($filePathArr);
+          //商品的数据
+          $goods = [
+              'gname' => $request->input('gname'),
+              'brandid' => $request->input('brand'),
+              'gpic' => $gpicJson,
+              'price' => $request->input('price1'),
+          ];
+          DB::table('goods')->where('id', $id)->update($goods);
+      } else {
+          //商品的数据
+          $goods = [
+              'gname' => $request->input('gname'),
+              'brandid' => $request->input('brand'),
+              'price' => $request->input('price1'),
+          ];
+          //修改商品数据
+          DB::table('goods')->where('id', $id)->update($goods);
+      }
+      //获取到品牌和类别
+      $typeInfo = DB::table('brands')
+          ->leftJoin('home_category', 'home_category.id' , '=', 'brands.categoryid')
+          ->select('bname', 'categoryid', 'name')
+          ->where('brands.id', $request->input('brand'))
+          ->first();
+      //new 迅搜对象
+      $search = new Search('shop');
+      //查询当前商品的所有配置
+
+      //根据数量添加商品配置和价格
+      $i = 1;
+      foreach ($goodsPriceList as $v) {
+          $arr = [
+              'stock' => $request->input('stock'.$i),
+              'price' => $request->input('price'.$i),
+              'ram' => $request->input('ram'.$i),
+              'rom' => $request->input('rom'.$i),
+              'color' => $request->input('color'.$i),
+          ];
+          DB::table('price')->where('id', $v->id)->update($arr);
+          //搜索数据
+          $searchArr = [
+              'id' => $v->id,
+              'gname' => $request->input('gname'),
+              'brandname' => $typeInfo->bname,
+              'typename' => $typeInfo->name,
+              'gpic' => $filePathArr['2'],
+              'price' => $request->input('price'.$i),
+              'ram' => $request->input('ram'.$i),
+              'rom' => $request->input('rom'.$i),
+              'color' => $request->input('color'.$i),
+          ];
+          //修改搜索商品数据到迅搜
+          $search->updateDocumentData($searchArr);
+          $i++;
+      }
+      //修改商品描述
+      DB::table('goodsdetail')->where('gid', $id)->update(['gdetail' => $detail]);
+
+
+      redirect('/admin/product/goods')->with('msg', '修改商品成功');
+      return '<script>parent.location.reload();</script>';
     }
 
     /**
@@ -298,7 +404,7 @@ class GoodsController extends Controller
 
     /**
      * 执行商品上架、下架
-     * @return bool 真假
+     * @return bool 成功、失败的状态
      */
     public function stopAndStart(Request $request)
     {
@@ -311,4 +417,25 @@ class GoodsController extends Controller
             ->update(['status' => $goodsStatus] );
         return $bool;
     }
+
+    /**
+     * 查看商品图片
+     * @author $id 商品的id
+     */
+     public function goodsImgShow($id)
+     {
+          $goodsImgs = DB::table('goodsimg')->select('id', 'gimg')->where('gid', $id)->get();
+
+          return view('Admin/picture-show', ['goodsImgs' => $goodsImgs, 'id' => $id]);
+     }
+
+     /**
+      * 删除商品图片
+      * @author $id 商品的id
+      */
+      public function goodsImgdel($id)
+      {
+          $bool = DB::table('goodsimg')->where('id', $id)->delete();
+          return $bool;
+      }
 }

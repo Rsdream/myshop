@@ -10,6 +10,11 @@ use Carbon\Carbon;
 
 class IndexController extends Controller
 {
+  /**
+   * 加载首页数据
+   * @author rong <[<871513137@qq.com>]>
+   *
+   */
     public function index()
     {
         $seckillList = DB::table('goods')
@@ -27,6 +32,7 @@ class IndexController extends Controller
             'type' => $type
         ]);
     }
+    
     /**
      * 新商品加载
      * @author rong <[<871513137@qq.com>]>

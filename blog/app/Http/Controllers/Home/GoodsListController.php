@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * 商品列表控制器
@@ -24,18 +25,43 @@ class GoodsListController extends Controller
             case 'category':
                 $goodsData = $this->category($id);
                 // dd($goodsData);
+                $brand = DB::table('brands')
+                    ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
+                    ->leftJoin('price', 'goods.id', '=', 'price.gid')
+                    ->select('brands.id', 'blogo', 'bname', DB::raw('COUNT(goods.id) as sum'))
+                    ->where([
+                        ['categoryid', $id],
+                        ['goods.status', '>', 0],
+                    ])
+                    ->groupBy('brands.id', 'blogo', 'bname')
+                    ->get()
+                    ->toArray();
                 break;
             case 'brand':
                 $goodsData = $this->brand($id);
+                $categoryId = DB::table('brands')->select('categoryid')->where('id', $id)->first();
+                $brand = DB::table('brands')
+                    ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
+                    ->leftJoin('price', 'goods.id', '=', 'price.gid')
+                    ->select('brands.id', 'blogo', 'bname', DB::raw('COUNT(goods.id) as sum'))
+                    ->where([
+                        ['categoryid', $categoryId->categoryid],
+                        ['goods.status', '>', 0],
+                    ])
+                    ->groupBy('brands.id', 'blogo', 'bname')
+                    ->get()
+                    ->toArray();
                 break;
             default:
                 dd(3);
                 break;
         }
+
         $category = $this->type();
         return view('Home/goods/shop', [
             'goodsData' => $goodsData,
             'category' => $category,
+            'brand' => $brand,
         ]);
     }
 
@@ -50,7 +76,7 @@ class GoodsListController extends Controller
         ->leftJoin('brands', 'home_category.id', '=', 'brands.categoryid')
         ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
         ->leftJoin('price', 'goods.id', '=', 'price.gid')
-        ->select('price.id', 'gname', 'gpic', 'workoff', 'price.price')
+        ->select('price.id', 'gname', 'gpic', 'workoff', 'price.price', 'ram', 'rom', 'color')
         ->orderBy('goods.addtime', 'desc')
         ->limit(12)
         ->where([['goods.status', '>', 0], ['home_category.id', '=', $id]])
@@ -67,7 +93,7 @@ class GoodsListController extends Controller
     {
         $goodsData = DB::table('goods')
             ->leftJoin('price', 'goods.id', '=', 'price.gid')
-            ->select('price.id', 'gname', 'gpic', 'workoff', 'price.price')
+            ->select('price.id', 'gname', 'gpic', 'workoff', 'price.price', 'ram', 'rom', 'color')
             ->orderBy('goods.addtime', 'desc')
             ->limit(12)
             ->where([['goods.status', '>', 0], ['brandid', '=', $id]])
@@ -84,7 +110,9 @@ class GoodsListController extends Controller
         $type = DB::table('home_category')
             ->leftJoin('brands', 'brands.categoryid', '=', 'home_category.id')
             ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
+            ->leftJoin('price', 'goods.id', '=', 'price.gid')
             ->select('home_category.id', 'home_category.name', DB::raw('COUNT(goods.id) as sum'))
+            ->where('goods.status', '>', 0)
             ->groupBy('home_category.id', 'home_category.name')
             ->get();
         return $type;
@@ -99,6 +127,47 @@ class GoodsListController extends Controller
       */
       public function goodsDetail($id)
       {
+          $workoff = DB::table('goods')
+              ->leftJoin('price', 'goods.id', '=', 'price.gid')
+              ->select('workoff')
+              ->where('price.id', '=', $id)
+              ->first();
+          if ($workoff->workoff >= 1000) {
+              if ( Cache::has('goods:price:'.$id) ) {
+                  $goodsDetail = Cache::get('goods:price:'.$id);
+                  $goodsImg = Cache::get('goods:img:'.$id);
+                  $goodsList = Cache::get('goods:list:'.$id);
+              } else {
+                //查询指定id商品
+                $goodsDetail = DB::table('goods')
+                    ->leftJoin('price', 'goods.id', '=', 'price.gid')
+                    ->select('goods.id', 'price.id as pid', 'gname', 'gpic', 'addtime', 'workoff', 'price.price', 'stock', 'ram', 'rom', 'color', 'attr')
+                    ->where('price.id', '=', $id)
+                    ->get()
+                    ->toArray();
+                //查询此商品的其他版本
+                $goodsList = DB::table('goods')
+                    ->leftJoin('price', 'goods.id', '=', 'price.gid')
+                    ->select('price.id', 'gname', 'ram', 'rom', 'color')
+                    ->where('goods.id', '=', $goodsDetail[0]->id)
+                    ->get()
+                    ->toArray();
+                //查询此商品的图片
+                $goodsImg = DB::table('goodsimg')
+                    ->select('gimg')
+                    ->where('gid', $goodsDetail[0]->id)
+                    ->get();
+                Cache::add('goods:price:'.$id, $goodsDetail, 10080);
+                Cache::add('goods:img:'.$id, $goodsImg, 10080);
+                Cache::add('goods:list:'.$id, $goodsList, 10080);
+
+              }
+              return view('Home/goods/simple_product', [
+                  'goodsDetail' => $goodsDetail,
+                  'goodsImg' => $goodsImg,
+                  'goodsList' => $goodsList,
+              ]);
+          }
           //查询指定id商品
           $goodsDetail = DB::table('goods')
               ->leftJoin('price', 'goods.id', '=', 'price.gid')

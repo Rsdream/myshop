@@ -53,8 +53,8 @@
 						<tr class="text-c va-m">
 							<td><input name="" type="checkbox" value=""></td>
 							<td>{{$v->id}}</td>
-							<td><a onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"><img width="60" class="product-thumb" src='{{asset(json_decode($v->gpic, true)[0])}}'></a></td>
-							<td class="text-2"><a style="text-decoration:none" onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"><img title="国内品牌" src="{{asset('Admin/static/h-ui.admin/images/cn.gif')}}"> <b class="text-success">{{$brandList[$v->brandid]}}</b> {{$v->gname}}</a></td>
+							<td><a onClick="product_show('{{$v->gname}}','{{url('/admin/product/goods/imglist/'.$v->id)}}','10001')" href="javascript:;"><img width="60" class="product-thumb" src='{{asset(json_decode($v->gpic, true)[0])}}'></a></td>
+							<td class="text-2"><a style="text-decoration:none"  href="javascript:;"><img title="国内品牌" src="{{asset('Admin/static/h-ui.admin/images/cn.gif')}}"> <b class="text-success">{{$brandList[$v->brandid]}}</b> {{$v->gname}}</a></td>
 							<td class="text-l">{{$v->gdetail}}</td>
 							<td><span class="price">356.0</span> 元/平米</td>
 							<td class="td-status"><span class="{{$v->status==0?'label label-defaunt radius':'label label-success radius'}}">{{$v->status==0?'未上架':'已上架'}}</span></td>

@@ -21,77 +21,26 @@
 <![endif]-->
 
 <title>图片展示</title>
-<link href="lib/lightbox2/2.8.1/css/lightbox.css" rel="stylesheet" type="text/css" >
+<link href="{{asset('Admin/lib/lightbox2/2.8.1/css/lightbox.css')}}" rel="stylesheet" type="text/css" >
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 图片管理 <span class="c-gray en">&gt;</span> 图片展示 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a href="javascript:;" onclick="edit()" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe6df;</i> 编辑</a> <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> </span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a href="{{url('/admin/product/goods/'.$id)}}" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe6df;</i> 添加图片</a>  </span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
 	<div class="portfolio-content">
 		<ul class="cl portfolio-area">
+			@foreach($goodsImgs as $v)
 			<li class="item">
 				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="{{asset('Admin/temp/big/keting.jpg')}}" data-lightbox="gallery" data-title="客厅1"><img src="{{asset('Admin/temp/Thumb/keting.jpg')}}"></a></div>
-					<div class="textbox">客厅 </div>
+					<div class="picbox"><a href="{{asset(json_decode($v->gimg)[3])}}" data-lightbox="gallery"><img src="{{asset(json_decode($v->gimg)[0])}}"></a></div>
+					<div style="margin-top:10px;">
+						<center>
+							<a onClick="product_stop(this,'{{$v->id}}')"  href="javascript:;">删除</a>
+						</center>
+					</div>
 				</div>
 			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox "><a href="{{asset('Admin/temp/big/keting2.jpg')}}" data-lightbox="gallery" data-title="客厅2"><img src="{{asset('Admin/temp/Thumb/keting2.jpg')}}"></a></div>
-					<div class="textbox">客厅 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="{{asset('Admin/temp/big/keting3.jpg')}}" data-lightbox="gallery" data-title="客厅3"><img src="{{asset('Admin/temp/Thumb/keting3.jpg')}}"></a></div>
-					<div class="textbox">客厅 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="{{asset('Admin/temp/big/keting4.jpg')}}" data-lightbox="gallery" data-title="客厅4"><img src="{{asset('Admin/temp/Thumb/keting4.jpg')}}"></a></div>
-					<div class="textbox">客厅 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="{{asset('Admin/temp/big/chufang.jpg')}}" data-lightbox="gallery" data-title="厨房"><img src="{{asset('Admin/temp/Thumb/chufang.jpg')}}"></a></div>
-					<div class="textbox">厨房 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="{{asset('Admin/temp/big/shufang.jpg')}}" data-lightbox="gallery" data-title="书房"><img src="{{asset('Admin/temp/Thumb/shufang.jpg')}}"></a></div>
-					<div class="textbox">书房 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="{{asset('Admin/temp/big/woshi.jpg')}}" data-lightbox="gallery" data-title="卧室"><img src="{{asset('Admin/temp/Thumb/woshi.jpg')}}"></a></div>
-					<div class="textbox">卧室 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="{{asset('Admin/temp/big/weishengjian.jpg')}}" data-lightbox="gallery" data-title="卫生间1"><img src="{{asset('Admin/temp/Thumb/weishengjian.jpg')}}"></a></div>
-					<div class="textbox">卫生间1 </div>
-				</div>
-			</li>
-			<li class="item">
-				<div class="portfoliobox">
-					<input class="checkbox" name="" type="checkbox" value="">
-					<div class="picbox"><a href="{{asset('Admin/temp/big/weishengjian2.jpg')}}" data-lightbox="gallery" data-title="卫生间2"><img src="{{asset('Admin/temp/Thumb/weishengjian2.jpg')}}"></a></div>
-					<div class="textbox">卫生间2 </div>
-				</div>
-			</li>
+			@endforeach
 		</ul>
 	</div>
 </div>
@@ -107,6 +56,22 @@
 $(function(){
 	$(".portfolio-area li").Huihover();
 });
+function product_stop(obj,id){
+	layer.confirm('确认要删除吗？',function(index){
+		$.ajax({
+			type: 'get',
+			url: "{{url('/admin/product/goods/imgdel')}}"+'/'+id,
+			dataType: 'json',
+			success: function(data){
+				$(obj).parent().parent().parent().parent().remove();
+				layer.msg('已删除!',{icon: 5,time:1000});
+			},
+			error:function(data) {
+				console.log(data.msg);
+			},
+		});
+	});
+}
 </script>
 </body>
 </html>

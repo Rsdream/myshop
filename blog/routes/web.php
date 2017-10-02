@@ -115,6 +115,10 @@ Route::prefix('/admin/product')->group(function () {
     Route::post('/goodsimg/{id}', 'Admin\Product\GoodsController@goodsImg');
     //商品的上架和下架路由
     Route::post('/goods/status', 'Admin\Product\GoodsController@stopAndStart');
+    //商品图片列表路由
+    Route::get('/goods/imglist/{id}', 'Admin\Product\GoodsController@goodsImgShow');
+    //删除商品图片路由
+    Route::get('/goods/imgdel/{id}', 'Admin\Product\GoodsController@goodsImgdel');
 
 });
 

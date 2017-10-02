@@ -603,41 +603,13 @@
 								<div id="sw_brand_01" class="responsive-slider sw-brand-container-slider clearfix" data-lg="5" data-md="4" data-sm="3" data-xs="2" data-mobile="1" data-speed="1000" data-scroll="1" data-interval="5000" data-autoplay="false">
 									<div class="resp-slider-container">
 										<div class="slider responsive">
+											@foreach($brand as $v)
 											<div class="item item-brand-cat">
 												<div class="item-image">
-													<a href="shop.html"><img width="134" height="70" src="{{asset('Home/images/1903/Brand_1.jpg')}}" class="attachment-173x91 size-173x91" alt=""></a>
+													<a href="{{url('/goods/list/brand/'.$v->id)}}"><img width="134" title="{{$v->bname}}" height="70" src="{{asset('upload/image/'.$v->blogo)}}" class="attachment-173x91 size-173x91" alt=""></a>
 												</div>
 											</div>
-
-											<div class="item item-brand-cat">
-												<div class="item-image">
-													<a href="http://demo.smartaddons.com/templates/html/etrostore/shop.html-books"><img width="134" height="70" src="{{asset('Home/images/1903/br1.jpg')}}" class="attachment-173x91 size-173x91" alt=""></a>
-												</div>
-											</div>
-
-											<div class="item item-brand-cat">
-												<div class="item-image">
-													<a href="shop.html"><img width="134" height="70" src="{{asset('Home/images/1903/br2.jpg')}}" class="attachment-173x91 size-173x91" alt=""></a>
-												</div>
-											</div>
-
-											<div class="item item-brand-cat">
-												<div class="item-image">
-													<a href="shop.html"><img width="134" height="70" src="{{asset('Home/images/1903/Brand_1.jpg')}}" class="attachment-173x91 size-173x91" alt=""></a>
-												</div>
-											</div>
-
-											<div class="item item-brand-cat">
-												<div class="item-image">
-													<a href="shop.html"><img width="134" height="70" src="{{asset('Home/images/1903/Brand_10.jpg')}}" class="attachment-173x91 size-173x91" alt=""></a>
-												</div>
-											</div>
-
-											<div class="item item-brand-cat">
-												<div class="item-image">
-													<a href="shop.html"><img width="134" height="70" src="{{asset('Home/images/1903/Brand_1.jpg')}}" class="attachment-173x91 size-173x91" alt=""></a>
-												</div>
-											</div>
+											@endforeach
 										</div>
 									</div>
 								</div>
@@ -714,7 +686,7 @@
 															<div class="star"><span style="width: 63px"></span></div>
 														</div>
 
-														<h4><a href="simple_product.html" title="Cleaner with bag">{{$v->gname}}</a></h4>
+														<h4><a href="simple_product.html" title="Cleaner with bag">{{$v->gname}}：{{$v->ram}}+{{$v->rom}}　{{$v->color}}</a></h4>
 
 														<span class="item-price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol"></span></span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{$v->price}}.00</span></ins></span>
 
@@ -792,15 +764,13 @@
 					<div class="widget-2 widget woocommerce_layered_nav-4 woocommerce widget_layered_nav">
 						<div class="widget-inner">
 							<div class="block-title-widget">
-								<h2><span>Colors</span></h2>
+								<h2><span>品牌</span></h2>
 							</div>
 
 							<ul>
-								<li class="wc-layered-nav-term "><a href="shop.html">Black</a> <span class="count">(3)</span></li>
-								<li class="wc-layered-nav-term "><a href="shop.html">Blue</a> <span class="count">(2)</span></li>
-								<li class="wc-layered-nav-term "><a href="shop.html">Orange</a> <span class="count">(1)</span></li>
-								<li class="wc-layered-nav-term "><a href="shop.html">White</a> <span class="count">(3)</span></li>
-								<li class="wc-layered-nav-term "><a href="shop.html">Yellow</a> <span class="count">(1)</span></li>
+								@foreach($brand as $v)
+								<li class="wc-layered-nav-term "><a href="{{url('/goods/list/brand/'.$v->id)}}">{{$v->bname}}</a> <span class="count">({{$v->sum}})</span></li>
+								@endforeach
 							</ul>
 						</div>
 					</div>
