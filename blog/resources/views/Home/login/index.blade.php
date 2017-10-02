@@ -794,7 +794,7 @@
         });
 
         //注册提交时验证
-        $("#doregister").submit(function(){
+        $("#doregister").submit(function() {
         	if(!uname) {
         		dotest('uname', '请输入用户名！', 'red');
         		return false;

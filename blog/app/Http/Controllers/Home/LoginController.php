@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Home_users;
+use App\Model\Home\HomeUsers;
 use App\Http\Requests\LoginRequest;
 use Hash;
 use Illuminate\Support\Facades\Redis;
@@ -72,5 +72,9 @@ class LoginController extends Controller
 		{
 				$request->session()->pull('userinfo');
 				return redirect('/login');
+		}
+		public function outLogin()
+		{		session()->flush();
+			return redirect('/');
 		}
 }

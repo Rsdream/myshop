@@ -38,7 +38,7 @@
 </head>
 <body>
 <div class="page-container">
-	<form onsubmit="return check()" action="{{url('/admin/product/goods')}}" method="post" enctype="multipart/form-data" class="form form-horizontal" id="form-article-add">
+	<form  action="{{url('/admin/product/goods')}}" method="post" enctype="multipart/form-data" class="form form-horizontal" id="form-article-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品名：</label>
 			<div class="formControls col-xs-8 col-sm-9">

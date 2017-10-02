@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Home_users;
+use App\Model\Home\HomeUsers;
 use App\Http\Controllers\Api\CommonApi;
 use DB;
 use App\Http\Requests\RegisterRequest;
@@ -27,7 +27,7 @@ class RegisterController extends Controller
         $uname = $request->input('uname');
 
         //查询数据库
-        $user = Home_users::select(['id','uid'])->where('uid',$uname)->first();
+        $user = HomeUsers::select(['id','uid'])->where('uid',$uname)->first();
 
         //用户名不存在
         if($user) {
@@ -39,7 +39,7 @@ class RegisterController extends Controller
         $uphone = $request->input('uphone');
 
         //查询数据库
-        $userphone = Home_users::select(['id','phone'])->where('phone',$uphone)->first();
+        $userphone = HomeUsers::select(['id','phone'])->where('phone',$uphone)->first();
 
         //手机号不存在
         if($userphone) {
@@ -51,7 +51,7 @@ class RegisterController extends Controller
         $name = $request->input('username');
 
         //查询数据库
-        $username = Home_users::select(['id','uid'])->where('uid',$name)->first();
+        $username = HomeUsers::select(['id','uid'])->where('uid',$name)->first();
 
         //登录用户名不存在
         if(!$username) {
