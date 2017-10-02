@@ -649,7 +649,7 @@
 											<br>
 											<div class="quantity buttons_added" style="width:107px;">
 													<input type="button" value="-" class="minus">
-													<input type="number" step="1" min="1" max="" name="" value="1" title="Qty" class="input-text qty text" size="4" pattern="[1-9]*" inputmode="numeric">
+													<input type="number" step="1" min="1" max="10" name="" value="1" title="Qty" class="input-text qty text" size="4" pattern="[1-9]*" inputmode="numeric">
 													<input type="button" value="+" class="plus">
 											</div>
 											<br>

@@ -590,11 +590,11 @@
 												</li>
 
 												<li>
-													<a href="http://demo.smartaddons.com/templates/html/etrostore/addresses.html">我的收货地址</a>
+													<a href="{{url('/user/address')}}">我的收货地址</a>
 												</li>
 
 												<li>
-												   <a href="http://demo.smartaddons.com/templates/html/etrostore/account_details.html">信息&积分</a>
+												   <a href="{{url('/user/information')}}">信息&积分&会员等级</a>
 												</li>
 
 												<li >

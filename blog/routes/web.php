@@ -74,8 +74,28 @@ Route::prefix('/admin')->group(function () {
 
 //前台用户中心路由
 Route::prefix('/user')->group(function () {
+    //验证是否有登录
     Route::middleware(['home.auth'])->group(function () {
+        //个人中心首页
         Route::get('/myaccount', 'Home\IndexUserController@myAccount');
+        //个人资料
+        Route::get('/information', 'Home\IndexUserController@information');
+        //收货地址
+        Route::get('/address', 'Home\IndexUserController@address');
+        //添加地址
+        Route::get('/address/add', 'Home\IndexUserController@add');
+        //编辑
+        Route::get('/address/edit/{id}', 'Home\IndexUserController@edit');
+        //执行添加地址
+        Route::post('/address/exadd', 'Home\Api\AddressApi@exAdd');
+        //获取省市区地址
+        Route::get('/select', 'Home\Api\AddressApi@select');
+        //执行修改
+        Route::post('/address/exedit/{id}', 'Home\Api\AddressApi@exEdit');
+        //执行删除地址
+        Route::get('/address/delete/{id}', 'Home\Api\AddressApi@delete');
+        //修改用户信息
+        Route::post('/userinfo/update', 'Home\IndexUserController@infoUpdate');
     });
 });
 
