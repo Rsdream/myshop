@@ -25,6 +25,9 @@ class GoodsListController extends Controller
             case 'category':
                 $goodsData = $this->category($id);
                 // dd($goodsData);
+                if (empty($goodsData[0]->id)) {
+                    return view('errors/404');
+                }
                 $brand = DB::table('brands')
                     ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
                     ->leftJoin('price', 'goods.id', '=', 'price.gid')
@@ -39,6 +42,9 @@ class GoodsListController extends Controller
                 break;
             case 'brand':
                 $goodsData = $this->brand($id);
+                if (empty($goodsData[0]->id)) {
+                    return view('errors/404');
+                }
                 $categoryId = DB::table('brands')->select('categoryid')->where('id', $id)->first();
                 $brand = DB::table('brands')
                     ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
@@ -53,15 +59,16 @@ class GoodsListController extends Controller
                     ->toArray();
                 break;
             default:
-                dd(3);
+                return view('errors/404');
                 break;
         }
-
+        $coverImg = DB::table('cover')->select('id', 'name', 'price')->get();
         $category = $this->type();
         return view('Home/goods/shop', [
             'goodsData' => $goodsData,
             'category' => $category,
             'brand' => $brand,
+            'coverImg' => $coverImg,
         ]);
     }
 
@@ -132,6 +139,9 @@ class GoodsListController extends Controller
               ->select('workoff')
               ->where('price.id', '=', $id)
               ->first();
+          if (empty($workoff)) {
+              return view('errors/404');
+          }
           if ($workoff->workoff >= 1000) {
               if ( Cache::has('goods:price:'.$id) ) {
                   $goodsDetail = Cache::get('goods:price:'.$id);
@@ -193,4 +203,84 @@ class GoodsListController extends Controller
               'goodsList' => $goodsList,
           ]);
       }
+
+      /**
+       * 商品详细页
+       * @author $id   商品的id
+       * @return array $goodsDetail 指定id商品信息
+       * @return array $goodsImg    商品的图片
+       * @return array $goodsList   商品的其他版本
+       */
+       public function goodsDetailTwo($id)
+       {
+           $workoff = DB::table('goods')
+               ->leftJoin('price', 'goods.id', '=', 'price.gid')
+               ->select('workoff', 'price.id')
+               ->where('goods.id', '=', $id)
+               ->first();
+           if (empty($workoff)) {
+               return view('errors/404');
+           }
+           $id = $workoff->id;
+           if ($workoff->workoff >= 1000) {
+               if ( Cache::has('goods:price:'.$id) ) {
+                   $goodsDetail = Cache::get('goods:price:'.$id);
+                   $goodsImg = Cache::get('goods:img:'.$id);
+                   $goodsList = Cache::get('goods:list:'.$id);
+               } else {
+                 //查询指定id商品
+                 $goodsDetail = DB::table('goods')
+                     ->leftJoin('price', 'goods.id', '=', 'price.gid')
+                     ->select('goods.id', 'price.id as pid', 'gname', 'gpic', 'addtime', 'workoff', 'price.price', 'stock', 'ram', 'rom', 'color', 'attr')
+                     ->where('price.id', '=', $id)
+                     ->get()
+                     ->toArray();
+                 //查询此商品的其他版本
+                 $goodsList = DB::table('goods')
+                     ->leftJoin('price', 'goods.id', '=', 'price.gid')
+                     ->select('price.id', 'gname', 'ram', 'rom', 'color')
+                     ->where('goods.id', '=', $goodsDetail[0]->id)
+                     ->get()
+                     ->toArray();
+                 //查询此商品的图片
+                 $goodsImg = DB::table('goodsimg')
+                     ->select('gimg')
+                     ->where('gid', $goodsDetail[0]->id)
+                     ->get();
+                 Cache::add('goods:price:'.$id, $goodsDetail, 10080);
+                 Cache::add('goods:img:'.$id, $goodsImg, 10080);
+                 Cache::add('goods:list:'.$id, $goodsList, 10080);
+
+               }
+               return view('Home/goods/simple_product', [
+                   'goodsDetail' => $goodsDetail,
+                   'goodsImg' => $goodsImg,
+                   'goodsList' => $goodsList,
+               ]);
+           }
+           //查询指定id商品
+           $goodsDetail = DB::table('goods')
+               ->leftJoin('price', 'goods.id', '=', 'price.gid')
+               ->select('goods.id', 'price.id as pid', 'gname', 'gpic', 'addtime', 'workoff', 'price.price', 'stock', 'ram', 'rom', 'color', 'attr')
+               ->where('price.id', '=', $id)
+               ->get()
+               ->toArray();
+           //查询此商品的其他版本
+           $goodsList = DB::table('goods')
+               ->leftJoin('price', 'goods.id', '=', 'price.gid')
+               ->select('price.id', 'gname', 'ram', 'rom', 'color')
+               ->where('goods.id', '=', $goodsDetail[0]->id)
+               ->get()
+               ->toArray();
+           //查询此商品的图片
+           $goodsImg = DB::table('goodsimg')
+               ->select('gimg')
+               ->where('gid', $goodsDetail[0]->id)
+               ->get();
+           return view('Home/goods/simple_product', [
+               'goodsDetail' => $goodsDetail,
+               'goodsImg' => $goodsImg,
+               'goodsList' => $goodsList,
+           ]);
+       }
 }

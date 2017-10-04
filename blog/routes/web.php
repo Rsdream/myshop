@@ -94,7 +94,10 @@ Route::prefix('/admin')->group(function () {
 
         //后台退出路由组
         route::get('/out','Admin\Api\CommonController@Out');
-
+        //轮播图资源控制器
+        Route::resource('/coverplan', 'Admin\CoverPlanController');
+        //轮播图的删除
+        Route::get('cover/del/{id}', 'Admin\CoverPlanController@del');
     });
 
 
@@ -250,11 +253,14 @@ Route::prefix('/address')->group(function () {
 //加载秒杀商品路由
 Route::get('/seckill', 'Home\IndexController@seckill');
 //加载新品推介路由
-Route::get('/newgoods/{id}', 'Home\IndexController@newGoods');
+Route::get('/newgoods/{id}', 'Home\IndexController@newGoods')->where('id', '\d+');
 //商品列表路由
-Route::get('/goods/list/{type}/{id}', 'Home\GoodsListController@list');
+Route::get('/goods/list/{type}/{id}', 'Home\GoodsListController@list')->where('id', '\d+');
 //商品详情页路由
-Route::get('/goods/detail/{id}', 'Home\GoodsListController@goodsDetail');
+Route::get('/goods/detail/{id}', 'Home\GoodsListController@goodsDetail')->where('id', '\d+');
 //home用户退出
 Route::get('/queit', 'Home\LoginController@queit');
-
+//异步加载二级菜单
+Route::get('/menu/{id}', 'Home\IndexController@menu')->where('id', '\d+');
+//加载商品详情页第二章路由
+Route::get('/goods/detailtwo/{id}', 'Home\GoodsListController@goodsDetailTwo')->where('id', '\d+');

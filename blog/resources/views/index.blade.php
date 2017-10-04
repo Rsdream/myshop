@@ -52,528 +52,9 @@
 	</style>
 </head>
 
-<body class="page page-id-6 home-style1" >
-	<div class="body-wrapper theme-clearfix">
-		<header id="header" class="header header-style1">
-			<div class="header-top clearfix">
-				<div class="container">
-					<div class="rows">
-
-					@if (session('msg'))
-				        <div id="time" class="alert alert-success">
-				            {{ session('msg') }}
-				        </div>
-				    @endif
-						<!-- SIDEBAR TOP MENU -->
-						<div class="pull-left top1">
-							<div class="widget text-2 widget_text pull-left">
-								<div class="widget-inner">
-									<div class="textwidget">
-
-										<div class="call-us">
-											<span>欢迎</span><span>来到ETRO商城</span>
-											@if (session()->has('userinfo') && isset(session('userinfo')['name']))
-												{{session('userinfo')['name']}}
-												<a href="{{url('/queit')}}">退出</a>
-											@elseif (session()->has('userinfo') && isset(session('userinfo')['uid']))
-												{{session('userinfo')['uid']}}
-												<a href="{{url('/queit')}}">退出</a>
-											@endif
-										</div>
-
-									</div>
-								</div>
-							</div>
-
-							<div class="widget text-3 widget_text pull-left">
-								<div class="widget-inner">
-									<div class="textwidget">
-										<div id="lang_sel">
-											<ul class="nav">
-												<li>
-													@if (!session()->has('userinfo'))
-													<a href="{{url('/login')}}" class="lang_sel_sel icl-en">会员登录</a>
-													@endif
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="widget woocommerce_currency_converter-2 widget_currency_converter pull-left">
-								<div class="widget-inner">
-									<form method="post" class="currency_converter" action="">
-										<ul class="currency_w">
-											<li>
-												@if (!session()->has('userinfo'))
-												<a href="{{url('/login')}}" class="">会员注册</a>
-												@endif
-<!-- 												<ul class="currency_switcher">
-													<li><a href="#" class="reset default active" data-currencycode="USD">USD</a></li>
-													<li><a href="#" class="" data-currencycode="EUR">EUR</a></li>
-												</ul> -->
-											</li>
-										</ul>
-									</form>
-								</div>
-							</div>
-						</div>
-						<div class="wrap-myacc pull-right">
-							<div class="sidebar-account pull-left">
-								<div class="account-title">我的管理</div>
-
-								<div id="my-account" class="my-account">
-									<div class="widget-1 widget-first widget nav_menu-4 widget_nav_menu">
-										<div class="widget-inner">
-											<ul id="menu-my-account" class="menu">
-												<li class="menu-my-account">
-													<a class="item-link" href="{{url('user/myaccount')}}">
-														<span class="menu-title">个人中心</span>
-													</a>
-												</li>
-
-												<li class="menu-cart">
-													<a class="item-link" href="cart.html">
-														<span class="menu-title">购物车</span>
-													</a>
-												</li>
-
-												<li class="menu-checkout">
-													<a class="item-link" href="checkout.html">
-														<span class="menu-title">我的订单</span>
-													</a>
-												</li>
-
-												<li class="menu-wishlist">
-													<a class="item-link" href="#">
-														<span class="menu-title">我的评价</span>
-													</a>
-												</li>
-											</ul>
-										</div>
-									</div>
-
-									<div class="widget-2 widget-last widget sw_top-4 sw_top">
-										<div class="widget-inner">
-											<div class="top-login">
-												<div class="div-logined">
-													<ul>
-														<li>
-															<a href="javascript:void(0);" data-toggle="modal" data-target="#login_form">
-																<span>我的积分</span>
-															</a>
-															<span class="wg">Welcome Guest</span>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="pull-left top2">
-								<div class="widget-1 widget-first widget nav_menu-2 widget_nav_menu">
-									<div class="widget-inner">
-										<ul id="menu-checkout" class="menu">
-											<li class="menu-checkout">
-												<a class="item-link" href="checkout.html">
-													<span class="menu-title">收藏夹</span>
-												</a>
-											</li>											
-											<li class="menu-checkout">
-												<a class="item-link" href="{{url('/outlogin')}}">
-													<span class="menu-title">退出</span>
-												</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="header-mid clearfix">
-				<div class="container">
-					<div class="rows">
-						<!-- LOGO -->
-						<div class="etrostore-logo pull-left" >
-
-							<a href="#" >
-								<img src="{{asset($logo->logo)}}" alt="Shoopy" >
-								
-							</a>
-						</div>
-
-						<div class="mid-header pull-right">
-							<div class="widget-1 widget-first widget sw_top-2 sw_top">
-								<div class="widget-inner">
-									<div class="top-form top-search">
-										<div class="topsearch-entry">
-											<form method="get" action="{{url('/search')}}">
-												 {{ csrf_field() }}
-												<div>
-												   <input type="text" value="" name="key" placeholder="Enter your keyword...">
-													<div class="cat-wrapper">
-														<label class="label-search">
-															<select name="search_category" class="s1_option">
-																<option value="">查找所有商品</option>
-																<option value="">Computers  Laptops</option>
-																<option value="13">Computers & Networking</option>
-																<option value="14">Smartphones & Tablet</option>
-																<option value="15">Home Furniture</option>
-																<option value="16">Home Appliances</option>
-																<option value="17">Electronic Component</option>
-																<option value="18">Household Goods</option>
-																<option value="32">Appliances</option>
-																<option value="49">Accessories</option>
-																<option value="51">Electronics</option>
-																<option value="78">Televisions</option>
-																<option value="80">Cameras & Accessories</option>
-															</select>
-														</label>
-													</div>
-
-													<button type="submit" title="Search" class="fa fa-search button-search-pro form-button"></button>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="widget sw_top-3 sw_top pull-left">
-								<div class="widget-inner">
-									<div class="top-form top-form-minicart etrostore-minicart pull-right">
-										<div class="top-minicart-icon pull-right">
-											<i class="fa fa-shopping-cart"></i>
-											<a class="cart-contents" href="cart.html" title="View your shopping cart">
-												<span class="minicart-number">2</span>
-											</a>
-										</div>
-
-										<div class="wrapp-minicart">
-											<div class="minicart-padding">
-												<div class="number-item">
-													购物车有 <span>2</span> 件商品
-												</div>
-
-												<ul class="minicart-content">
-													<li>
-														<a href="simple_product.html" class="product-image">
-															<img 	width="100" height="100" src="{{asset('Home/images/1903/45-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
-																	srcset="{{asset('Home/images/1903/45-150x150.jpg')}} 150w, {{asset('Home/images/1903/45-300x300.jpg')}} 300w, {{asset('Home/images/1903/45-180x180.jpg')}} 180w, {{asset('Home/images/1903/45.jpg')}} 600w"
-																	sizes="(max-width: 100px) 100vw, 100px" />
-														</a>
-
-														<div class="detail-item">
-															<div class="product-details">
-																<h4>
-																	<a class="title-item" href="simple_product.html">Veniam Dolore</a>
-																</h4>
-
-																<div class="product-price">
-																	<span class="price">
-																		<span class="woocommerce-Price-amount amount">
-																			<span class="woocommerce-Price-currencySymbol">$</span>190.00
-																		</span>
-																	</span>
-
-																	<div class="qty">
-																		<span class="qty-number">1</span>
-																	</div>
-																</div>
-
-																<div class="product-action clearfix">
-																	<a href="#" class="btn-remove" title="Remove this item">
-																		<span class="fa fa-trash-o"></span>
-																	</a>
-
-																	<a class="btn-edit" href="cart.html" title="View your shopping cart">
-																		<span class="fa fa-pencil"></span>
-																	</a>
-																</div>
-															</div>
-														</div>
-													</li>
-
-													<li>
-														<a href="simple_product.html" class="product-image">
-															<img 	width="100" height="100" src="{{asset('Home/images/1903/22-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
-																	srcset="{{asset('Home/images/1903/22-150x150.jpg')}} 150w, {{asset('Home/images/1903/22-300x300.jpg')}} 300w, {{asset('Home/images/1903/22-180x180.jpg')}} 180w, {{asset('Home/images/1903/22.jpg')}} 600w"
-																	sizes="(max-width: 100px) 100vw, 100px" />
-														</a>
-
-														<div class="detail-item">
-															<div class="product-details">
-																<h4>
-																	<a class="title-item" href="simple_product.html">Cleaner with bag</a>
-																</h4>
-
-																<div class="product-price">
-																	<span class="price">
-																		<span class="woocommerce-Price-amount amount">
-																			<span class="woocommerce-Price-currencySymbol">$</span>350.00
-																		</span>
-																	</span>
-
-																	<div class="qty">
-																		<span class="qty-number">1</span>
-																	</div>
-																</div>
-
-																<div class="product-action clearfix">
-																	<a href="#" class="btn-remove" title="Remove this item">
-																		<span class="fa fa-trash-o"></span>
-																	</a>
-
-																	<a class="btn-edit" href="cart.html" title="View your shopping cart">
-																		<span class="fa fa-pencil"></span>
-																	</a>
-																</div>
-															</div>
-														</div>
-													</li>
-												</ul>
-
-												<div class="cart-checkout">
-													<div class="price-total">
-														<span class="label-price-total">总金额</span>
-
-														<span class="price-total-w">
-															<span class="price">
-																<span class="woocommerce-Price-amount amount">
-																	<span class="woocommerce-Price-currencySymbol">$</span>540.00
-																</span>
-															</span>
-														</span>
-													</div>
-
-													<div class="cart-links clearfix">
-														<div class="cart-link">
-															<a href="cart.html" title="Cart">继续购物</a>
-														</div>
-
-														<div class="checkout-link">
-															<a href="checkout.html" title="Check Out">结算</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="widget nav_menu-3 widget_nav_menu pull-left">
-								<div class="widget-inner">
-									<ul id="menu-wishlist" class="menu">
-										<li class="menu-wishlist">
-											<a class="item-link" href="#">
-												<span class="menu-title">Wishlist</span>
-											</a>
-										</li>
-
-										<li class="yith-woocompare-open menu-compare">
-											<a class="item-link compare" href="#">
-												<span class="menu-title">Compare</span>
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="header-bottom clearfix">
-				<div class="container">
-					<div class="rows">
-						<!-- Primary navbar -->
-						<div id="main-menu" class="main-menu">
-							<nav id="primary-menu" class="primary-menu">
-								<div class="navbar-inner navbar-inverse">
-									<div class="resmenu-container">
-										<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#ResMenuprimary_menu">
-											<span class="sr-only">Categories</span>
-											<span class="icon-bar"></span>
-											<span class="icon-bar"></span>
-											<span class="icon-bar"></span>
-										</button>
-
-										<div id="ResMenuprimary_menu" class="collapse menu-responsive-wrapper">
-											<ul id="menu-primary-menu" class="etrostore_resmenu">
-												<li><a href="index.html">商城</a></li>
-												<li><a href="cart.html">秒杀</a></li>
-												<li><a href="checkout.html">热销商品</a></li>
-												<li><a href="my_account.html">促销商品</a></li>
-												<li><a href="shop.html">联系我们</a></li>
-												<!-- <li><a href="simple_product.html">Simple Product</a></li>
-												<li><a href="about_us.html">About Us</a></li>
-												<li><a href="contact_us.html">Contact Us</a></li> -->
-											</ul>
-										</div>
-									</div>
-
-									<ul id="menu-primary-menu-1" class="nav nav-pills nav-mega etrostore-mega etrostore-menures">
-										<li><a href="index.html">商城</a></li>
-										<li><a href="cart.html">秒杀</a></li>
-										<li><a href="checkout.html">热销商品</a></li>
-										<li><a href="my_account.html">促销商品</a></li>
-										<li><a href="shop.html">联系我们</a></li>
-										<li><a href="simple_product.html">我的积分</a></li>
-										<!-- <li><a href="about_us.html">About Us</a></li>
-										<li><a href="contact_us.html">Contact Us</a></li> -->
-									</ul>
-								</div>
-							</nav>
-						</div>
-						<!-- /Primary navbar -->
-
-						<div class="top-form top-form-minicart etrostore-minicart pull-right">
-							<div class="top-minicart-icon pull-right">
-								<i class="fa fa-shopping-cart"></i>
-								<a class="cart-contents" href="cart.html" title="View your shopping cart">
-									<span class="minicart-number">2</span>
-								</a>
-							</div>
-
-							<div class="wrapp-minicart">
-								<div class="minicart-padding">
-									<div class="number-item">
-										There are <span>items</span> in your cart
-									</div>
-
-									<ul class="minicart-content">
-										<li>
-											<a href="simple_product.html" class="product-image">
-												<img 	width="100" height="100" src="{{asset('Home/images/1903/45-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
-														srcset="{{asset('Home/images/1903/45-150x150.jpg')}} 150w, {{asset('Home/images/1903/45-300x300.jpg')}} 300w, {{asset('Home/images/1903/45-180x180.jpg')}} 180w, {{asset('Home/images/1903/45.jpg')}} 600w"
-														sizes="(max-width: 100px) 100vw, 100px" />
-											</a>
-
-											<div class="detail-item">
-												<div class="product-details">
-													<h4>
-														<a class="title-item" href="simple_product.html">Veniam Dolore</a>
-													</h4>
-
-													<div class="product-price">
-														<span class="price">
-															<span class="woocommerce-Price-amount amount">
-																<span class="woocommerce-Price-currencySymbol">$</span>190.00
-															</span>
-														</span>
-
-														<div class="qty">
-															<span class="qty-number">1</span>
-														</div>
-													</div>
-
-													<div class="product-action clearfix">
-														<a href="#" class="btn-remove" title="Remove this item">
-															<span class="fa fa-trash-o"></span>
-														</a>
-
-														<a class="btn-edit" href="cart.html" title="View your shopping cart">
-															<span class="fa fa-pencil"></span>
-														</a>
-													</div>
-												</div>
-											</div>
-										</li>
-
-										<li>
-											<a href="simple_product.html" class="product-image">
-												<img	 width="100" height="100" src="{{asset('Home/images/1903/22-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
-														srcset="{{asset('Home/images/1903/22-150x150.jpg')}} 150w, {{asset('Home/images/1903/22-300x300.jpg')}} 300w, {{asset('Home/images/1903/22-180x180.jpg')}} 180w, {{asset('Home/images/1903/22.jpg')}} 600w"
-														sizes="(max-width: 100px) 100vw, 100px" />
-											</a>
-
-											<div class="detail-item">
-												<div class="product-details">
-													<h4>
-														<a class="title-item" href="simple_product.html">Cleaner with bag</a>
-													</h4>
-
-													<div class="product-price">
-														<span class="price">
-															<span class="woocommerce-Price-amount amount">
-																<span class="woocommerce-Price-currencySymbol">$</span>350.00
-															</span>
-														</span>
-
-														<div class="qty">
-															<span class="qty-number">1</span>
-														</div>
-													</div>
-
-													<div class="product-action clearfix">
-														<a href="#" class="btn-remove" title="Remove this item">
-															<span class="fa fa-trash-o"></span>
-														</a>
-
-														<a class="btn-edit" href="cart.html" title="View your shopping cart">
-															<span class="fa fa-pencil"></span>
-														</a>
-													</div>
-												</div>
-											</div>
-										</li>
-									</ul>
-
-									<div class="cart-checkout">
-										<div class="price-total">
-											<span class="label-price-total">Total</span>
-
-											<span class="price-total-w">
-												<span class="price">
-													<span class="woocommerce-Price-amount amount">
-														<span class="woocommerce-Price-currencySymbol">$</span>540.00
-													</span>
-												</span>
-											</span>
-										</div>
-
-										<div class="cart-links clearfix">
-											<div class="cart-link">
-												<a href="cart.html" title="Cart">View Cart</a>
-											</div>
-
-											<div class="checkout-link">
-												<a href="checkout.html" title="Check Out">Check Out</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="mid-header pull-right">
-							<div class="widget sw_top">
-								<span class="stick-sr">
-									<i class="fa fa-search" aria-hidden="true"></i>
-								</span>
-
-								<div class="top-form top-search">
-									<div class="topsearch-entry">
-										<form role="search" method="get" class="form-search searchform" action="">
-											<label class="hide"></label>
-											<input type="text" value="" name="s" class="search-query" placeholder="Keyword here..." />
-											<button type="submit" class="button-search-pro form-button">Search</button>
-										</form>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</header>
+<body class="page page-id-6 home-style1" onload="gain()">
+	@include('Layouts/head')
+						
 
 
 		<div class="container">
@@ -608,7 +89,7 @@
 																				<ul id="menu-vertical-menu" class="etrostore_resmenu">
 																					<li class="menu-computers-laptops">
 																						<a class="item-link" href="simple_product.html">Computers  Laptops</a>
-																						
+
 																					</li>
 
 																					<li class="fix-menu res-dropdown menu-smartphones-tablet">
@@ -771,486 +252,17 @@
 																		</div>
 
 																		<ul id="menu-vertical-menu-1" class="nav vertical-megamenu etrostore-mega etrostore-menures">
-
-																			<li class="fix-menu dropdown menu-smartphones-tablet etrostore-mega-menu level">
-																				<a href="simple_product.html" class="item-link">
+																			@foreach($type as $v)
+																			<li class="dropdown menu-electronic-component etrostore-mega-menu level1">
+																				<a href="{{url('goods/list/category/'.$v->id)}}" link-id='{{$v->id}}' class="item-link typelink" >
 																					<span class="have-title">
-																						<span class="menu-color" data-color="#7ac143"></span>
+																						<span class="menu-color" data-color="#f03442"></span>
 
-																						<span class="menu-title">Computers & Laptops</span>
+																						<span class="menu-title">{{$v->name}}</span>
 																					</span>
 																				</a>
-
-																				<ul class="dropdown-menu nav-level1 column-3">
-																					<li class="dropdown-submenu column-3 menu-electronics">
-																						<a href="#">
-																							<span class="have-title">
-																								<span class="menu-title">Electronics</span>
-																							</span>
-																						</a>
-
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-laptop-desktop-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Laptop & Desktop Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-storage-external-drives">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Storage & External Drives</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-networking-wireless">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Networking & Wireless</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-motherboards-cpus-psus">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Motherboards, CPUs & PSUs</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-webcams">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Webcams</span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-
-																					<li class="dropdown-submenu column-3 menu-smartphone">
-																						<a href="#">
-																							<span class="have-title">
-																								<span class="menu-title">Smartphone</span>
-																							</span>
-																						</a>
-
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-mobile-phones">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Mobile Phones</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-smart-watches-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Smart Watches & Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-mobile-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Mobile Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-cases-covers">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Cases & Covers</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-power-banks">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Power Banks</span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-
-																					<li class="dropdown-submenu column-3 menu-tablets">
-																						<a href="#">
-																							<span class="have-title">
-																								<span class="menu-title">Tablets</span>
-																							</span>
-																						</a>
-
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-tablet-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Tablet Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-cases-covers">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Cases & Covers</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-power-banks">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Power Banks</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-memory-cards">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Memory Cards</span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-
-																					<li class="dropdown-submenu column-3 menu-computer">
-																						<a href="#">
-																							<span class="have-title">
-																								<span class="menu-title">Computer</span>
-																							</span>
-																						</a>
-
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-macbooks-imacs">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Macbooks & iMacs</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-computers-desktops">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Computers & Desktops</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-printers-scanners-faxs">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Printers, Scanners, & Faxs</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-laptop-desktop-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Laptop & Desktop Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-storage-external-drives">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Storage & External Drives</span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-
-																					<li class="fix-position dropdown-submenu column-3 menu-image">
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-image-1 etrostore-menu-img">
-																								<a href="#">
-																									<span class="">
-																										<span class="menu-img">
-																											<img src="{{asset('Home/images/1903/menu-bn7.jpg')}}" alt="Menu Image" /></span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-image-2 etrostore-menu-img">
-																								<a href="#">
-																									<span class="">
-																										<span class="menu-img">
-																											<img src="{{asset('Home/images/1903/menu-bn8.jpg')}}" alt="Menu Image" /></span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-image-3 etrostore-menu-img">
-																								<a href="#">
-																									<span class="">
-																										<span class="menu-img">
-																											<img src="{{asset('Home/images/1903/menu-bn9.jpg')}}" alt="Menu Image" /></span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-																				</ul>
 																			</li>
-
-																			<li class="fix-menu dropdown menu-smartphones-tablet etrostore-mega-menu level1">
-																				<a href="simple_product.html" class="item-link dropdown-toggle">
-																					<span class="have-title">
-																						<span class="menu-color" data-color="#efc73a"></span>
-
-																						<span class="menu-title">Smartphones & Tablet</span>
-																					</span>
-
-																				</a>
-
-																				<ul class="dropdown-menu nav-level1 column-3">
-																					<li class="dropdown-submenu column-3 menu-electronics">
-																						<a href="#">
-																							<span class="have-title">
-																								<span class="menu-title">Electronics</span>
-																							</span>
-																						</a>
-
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-laptop-desktop-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Laptop & Desktop Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-laptop-desktop-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Laptop & Desktop Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-storage-external-drives">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Storage & External Drives</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-networking-wireless">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Networking & Wireless</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-motherboards-cpus-psus">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Motherboards, CPUs & PSUs</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-webcams">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Webcams</span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-
-																					<li class="dropdown-submenu column-3 menu-smartphone">
-																						<a href="#">
-																							<span class="have-title">
-																								<span class="menu-title">Smartphone</span>
-																							</span>
-																						</a>
-
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-mobile-phones">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Mobile Phones</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-smart-watches-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Smart Watches & Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-mobile-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Mobile Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-cases-covers">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Cases & Covers</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-power-banks">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Power Banks</span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-
-																					<li class="dropdown-submenu column-3 menu-tablets">
-																						<a href="#">
-																							<span class="have-title">
-																								<span class="menu-title">Tablets</span>
-																							</span>
-																						</a>
-
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-tablet-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Tablet Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-cases-covers">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Cases & Covers</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-power-banks">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Power Banks</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-memory-cards">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Memory Cards</span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-
-																					<li class="dropdown-submenu column-3 menu-computer">
-																						<a href="#">
-																							<span class="have-title">
-																								<span class="menu-title">Computer</span>
-																							</span>
-																						</a>
-
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-macbooks-imacs">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Macbooks & iMacs</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-computers-desktops">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Computers & Desktops</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-printers-scanners-faxs">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Printers, Scanners, & Faxs</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-laptop-desktop-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Laptop & Desktop Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-storage-external-drives">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Storage & External Drives</span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-
-																					<li class="fix-position dropdown-submenu column-3 menu-image">
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-image-1 etrostore-menu-img">
-																								<a href="#">
-																									<span class="">
-																										<span class="menu-img">
-																											<img src="{{asset('Home/images/1903/menu-bn7.jpg')}}" alt="Menu Image" /></span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-image-2 etrostore-menu-img">
-																								<a href="#">
-																									<span class="">
-																										<span class="menu-img">
-																											<img src="{{asset('Home/images/1903/menu-bn8.jpg')}}" alt="Menu Image" /></span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-image-3 etrostore-menu-img">
-																								<a href="#">
-																									<span class="">
-																										<span class="menu-img">
-																											<img src="{{asset('Home/images/1903/menu-bn9.jpg')}}" alt="Menu Image" /></span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-																				</ul>
-																			</li>
-
+																			@endforeach
 																			<li class="menu-cameras-camcorders etrostore-menu-custom level1">
 																				<a href="simple_product.html" class="item-link">
 																					<span class="have-title">
@@ -1265,7 +277,7 @@
 
 
 
-																			
+
 
 																			<li class="menu-blender etrostore-menu-custom level1" style="display: none;">
 																				<a href="simple_product.html" class="item-link">
@@ -1303,15 +315,11 @@
 																			<div class="wpb_revslider_element wpb_content_element">
 																				<div id="main-slider" class="fullwidthbanner-container" style="position:relative; width:100%; height:auto; margin-top:0px; margin-bottom:0px">
 																					<div class="module slideshow no-margin">
+																						@foreach($coverImg as $v)
 																						<div class="item">
-																							<a href="simple_product.html"><img src="{{asset('Home/images/1903/slider2.jpg')}}" alt="slider1" class="img-responsive" height="559"></a>
+																							<a href="simple_product.html"><img data-original="{{asset('').json_decode($v->price, true)[1]}}" src="{{asset('Home/images/wpspin_light1.gif')}}" alt="slider1" class="img-responsive img"></a>
 																						</div>
-																						<div class="item">
-																							<a href="simple_product.html"><img src="{{asset('Home/images/1903/01_index_v1.jpg')}}" alt="slider2" class="img-responsive" height="559"></a>
-																						</div>
-																						<div class="item">
-																							<a href="simple_product.html"><img src="{{asset('Home/images/1903/slider3.jpg')}}" alt="slider3" class="img-responsive" height="559"></a>
-																						</div>
+																						@endforeach
 																					</div>
 																					<div class="loadeding"></div>
 																				</div>
@@ -1466,7 +474,7 @@
 																					<span>
 																						<del>
 																							<span class="woocommerce-Price-amount amount">
-																								<span class="woocommerce-Price-currencySymbol">$</span>
+																								<span class="woocommerce-Price-currencySymbol">$</span>{{$v->price}}
 																							</span>
 																						</del>
 
@@ -1587,18 +595,18 @@
 															</button>
 														</div>
 
-														
+
 														<div class="box-title-right clearfix">
-														
+
 															<div class="childcat-content pull-left" id="child_sw_woo_slider_widget_2" >
 																<ul id="fuul" >
-																
+
 																	<li   id="relagood">
 																	@foreach($category as $v)
 																	<a data-id="{{$v->id}}">{{$v->name}}</a>
 																	@endforeach
 																	</li>
-																
+
 																</ul>
 															</div>
 
@@ -1624,7 +632,7 @@
 															<div class="resp-slider-container" id="old" style="border:1px solid #ccc">
 																@foreach($phone as $good)
 																<div id="b123" style="border-bottom:1px solid #ccc;border-left:1px solid #ccc;padding:3px;" class="block">
-																
+
 																	<div class="item product" >
 																		<div class="item-wrap">
 																			<div class="item-detail">
@@ -1635,7 +643,7 @@
 																					</h4>
 
 																					<!-- Price -->
-																					
+
 																					<div class="item-price">
 																						<span>
 																							<ins>
@@ -1645,8 +653,8 @@
 																							</ins>
 																						</span>
 																					</div>
-																					
-																					
+
+
 																					<div class="sale-off">-10%</div>
 																				</div>
 
@@ -1696,7 +704,7 @@
 																	</div>
 																</div>
 
-															@endforeach	
+															@endforeach
 															</div>
 														</div>
 
@@ -1795,7 +803,7 @@
 									</div>
 								</div>
 
-							
+
 
 								<div class="vc_row wpb_row vc_row-fluid margin-bottom-60">
 									<div class="wpb_column vc_column_container vc_col-sm-12">
@@ -1848,198 +856,45 @@
 
 														<div class="best-seller-product">
 															<div class="box-slider-title">
-																<h2 class="page-title-slider">Best sellers</h2>
+																<h2 class="page-title-slider">最新上架的商品</h2>
 															</div>
 
 															<div class="wrap-content">
+																<?php $i = 1; ?>
+																@foreach($new as $v)
 																<div class="item">
 																	<div class="item-inner">
 																		<div class="item-img">
-																			<a href="simple_product.html" title="corned beef enim">
-																				<img 	width="180" height="180" src="{{asset('Home/images/1903/65-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
-																						srcset="{{asset('Home/images/1903/65-180x180.jpg')}} 180w, {{asset('Home/images/1903/65-150x150.jpg')}} 150w, {{asset('Home/images/1903/65-300x300.jpg')}} 300w, {{asset('Home/images/1903/65.jpg')}} 600w"
+																			<a href="{{url('goods/detailtwo/'.$v->id)}}" title="corned beef enim">
+																				<img 	width="180" height="180" src="{{asset(json_decode($v->gpic)[0])}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
+																						srcset="{{asset(json_decode($v->gpic)[1])}} 180w, {{asset(json_decode($v->gpic)[0])}} 150w, {{asset(json_decode($v->gpic)[2])}} 300w, {{asset(json_decode($v->gpic)[3])}} 600w"
 																						sizes="(max-width: 180px) 100vw, 180px" />
 																			</a>
 																		</div>
 
-																		<div class="item-sl pull-left">1</div>
+																		<div class="item-sl pull-left">{{$i++}}</div>
 
 																		<div class="item-content">
 																			<!-- rating  -->
 																			<div class="reviews-content">
-																				<div class="star"></div>
-																				<div class="item-number-rating">0 Review(s)</div>
+																				<div class="star"></div><br>
+																				<div class="item-number-rating">{{$v->workoff}} 人已购买</div>
 																			</div>
 																			<!-- end rating  -->
 
 																			<h4>
-																				<a href="simple_product.html" title="corned beef enim">corned beef enim</a>
+																				<a href="simple_product.html" title="corned beef enim">{{$v->gname}}</a>
 																			</h4>
 
 																			<div class="item-price">
 																				<span class="woocommerce-Price-amount amount">
-																					<span class="woocommerce-Price-currencySymbol">$</span>400.00
+																					<span class="woocommerce-Price-currencySymbol">$</span>{{$v->price}}
 																				</span>
 																			</div>
 																		</div>
 																	</div>
 																</div>
-
-																<div class="item">
-																	<div class="item-inner">
-																		<div class="item-img">
-																			<a href="simple_product.html" title="veniam dolore">
-																				<img 	width="180" height="180" src="{{asset('Home/images/1903/45-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
-																						srcset="{{asset('Home/images/1903/45-180x180.jpg')}} 180w, {{asset('Home/images/1903/45-150x150.jpg')}} 150w, {{asset('Home/images/1903/45-300x300.jpg')}} 300w, {{asset('Home/images/1903/45.jpg')}} 600w"
-																						sizes="(max-width: 180px) 100vw, 180px" />
-																			</a>
-																		</div>
-
-																		<div class="item-sl pull-left">2</div>
-
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star"></div>
-																				<div class="item-number-rating">0 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="veniam dolore">veniam dolore</a>
-																			</h4>
-
-																			<div class="item-price">
-																				<del>
-																					<span class="woocommerce-Price-amount amount">
-																						<span class="woocommerce-Price-currencySymbol">$</span>250.00
-																					</span>
-																				</del>
-
-																				<ins>
-																					<span class="woocommerce-Price-amount amount">
-																						<span class="woocommerce-Price-currencySymbol">$</span>190.00
-																					</span>
-																				</ins>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<div class="item">
-																	<div class="item-inner">
-																		<div class="item-img">
-																			<a href="simple_product.html" title="MacBook Air">
-																				<img 	width="180" height="180" src="{{asset('Home/images/1903/50-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
-																						srcset="{{asset('Home/images/1903/50-180x180.jpg')}} 180w, {{asset('Home/images/1903/50-150x150.jpg')}} 150w, {{asset('Home/images/1903/50-300x300.jpg')}} 300w, {{asset('Home/images/1903/50.jpg')}} 600w"
-																						sizes="(max-width: 180px) 100vw, 180px" />
-																			</a>
-																		</div>
-
-																		<div class="item-sl pull-left">3</div>
-
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star"></div>
-																				<div class="item-number-rating">0 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="MacBook Air">MacBook Air</a>
-																			</h4>
-
-																			<div class="item-price">
-																				<del>
-																					<span class="woocommerce-Price-amount amount">
-																						<span class="woocommerce-Price-currencySymbol">$</span>800.00
-																					</span>
-																				</del>
-
-																				<ins>
-																					<span class="woocommerce-Price-amount amount">
-																						<span class="woocommerce-Price-currencySymbol">$</span>700.00
-																					</span>
-																				</ins>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<div class="item">
-																	<div class="item-inner">
-																		<div class="item-img">
-																			<a href="simple_product.html" title="ipsum esse nisi">
-																				<img 	width="180" height="180" src="{{asset('Home/images/1903/51-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
-																						srcset="{{asset('Home/images/1903/51-180x180.jpg')}} 180w, {{asset('Home/images/1903/51-150x150.jpg')}} 150w, {{asset('Home/images/1903/51-300x300.jpg')}} 300w, {{asset('Home/images/1903/51.jpg')}} 600w"
-																						sizes="(max-width: 180px) 100vw, 180px" />
-																			</a>
-																		</div>
-
-																		<div class="item-sl pull-left">4</div>
-
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star"></div>
-																				<div class="item-number-rating">0 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="ipsum esse nisi">ipsum esse nisi</a>
-																			</h4>
-
-																			<div class="item-price">
-																				<del>
-																					<span class="woocommerce-Price-amount amount">
-																						<span class="woocommerce-Price-currencySymbol">$</span>600.00
-																					</span>
-																				</del>
-
-																				<ins>
-																					<span class="woocommerce-Price-amount amount">
-																						<span class="woocommerce-Price-currencySymbol">$</span>550.00
-																					</span>
-																				</ins>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<div class="item">
-																	<div class="item-inner">
-																		<div class="item-img">
-																			<a href="simple_product.html" title="turkey qui">
-																				<img 	width="180" height="180" src="{{asset('Home/images/1903/49-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
-																						srcset="{{asset('Home/images/1903/49-180x180.jpg')}} 180w, {{asset('Home/images/1903/49-150x150.jpg')}} 150w, {{asset('Home/images/1903/49-300x300.jpg')}} 300w, {{asset('Home/images/1903/49.jpg')}} 600w"
-																						sizes="(max-width: 180px) 100vw, 180px" />
-																			</a>
-																		</div>
-
-																		<div class="item-sl pull-left">5</div>
-
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star"></div>
-																				<div class="item-number-rating">0 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="turkey qui">turkey qui</a>
-																			</h4>
-
-																			<div class="item-price">
-																				<span class="woocommerce-Price-amount amount">
-																					<span class="woocommerce-Price-currencySymbol">$</span>300.00
-																				</span>
-																			</div>
-																		</div>
-																	</div>
-																</div>
+																@endforeach
 															</div>
 														</div>
 													</div>
@@ -2870,445 +1725,7 @@
 			</div>
 		</div>
 
-		<footer id="footer" class="footer default theme-clearfix">
-			<!-- Content footer -->
-			<div class="container">
-				<div class="vc_row wpb_row vc_row-fluid">
-					<div class="wpb_column vc_column_container vc_col-sm-12">
-						<div class="vc_column-inner ">
-							<div class="wpb_wrapper">
-								<div id="sw_testimonial01" class="testimonial-slider client-wrapper-b carousel slide " data-interval="0">
-									<div class="carousel-cl nav-custom">
-										<a class="prev-test fa fa-angle-left" href="#sw_testimonial01" role="button" data-slide="prev"><span></span></a>
-										<a class="next-test fa fa-angle-right" href="#sw_testimonial01" role="button" data-slide="next"><span></span></a>
-									</div>
-
-									<div class="carousel-inner">
-										<div class="item active">
-											<div class="item-inner">
-												<div class="image-client pull-left">
-													<a href="#" title="">
-														<img width="127" height="127" src="{{asset('Home/images/1903/tm3.jpg')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
-													</a>
-												</div>
-
-												<div class="client-say-info">
-													<div class="client-comment">
-														In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit....
-													</div>
-
-													<div class="name-client">
-														<h2><a href="#" title="">Jerry</a></h2>
-														<p>Web Developer</p>
-													</div>
-												</div>
-											</div>
-
-											<div class="item-inner">
-												<div class="image-client pull-left">
-													<a href="#" title="">
-														<img width="127" height="127" src="{{asset('Home/images/1903/tm1.png')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
-													</a>
-												</div>
-
-												<div class="client-say-info">
-													<div class="client-comment">
-														In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit....
-													</div>
-
-													<div class="name-client">
-														<h2>
-															<a href="#" title="">David Gand</a>
-														</h2>
-
-														<p>Designer</p>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="item ">
-											<div class="item-inner">
-												<div class="image-client pull-left">
-													<a href="#" title="">
-														<img width="127" height="127" src="{{asset('Home/images/1903/tm2.png')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
-													</a>
-												</div>
-
-												<div class="client-say-info">
-													<div class="client-comment">
-														In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit....
-													</div>
-
-													<div class="name-client">
-														<h2>
-															<a href="#" title="">Taylor Hill</a>
-														</h2>
-
-														<p>Developer</p>
-													</div>
-												</div>
-											</div>
-
-											<div class="item-inner">
-												<div class="image-client pull-left">
-													<a href="#" title="">
-														<img width="127" height="127" src="{{asset('Home/images/1903/tm3.jpg')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
-													</a>
-												</div>
-
-												<div class="client-say-info">
-													<div class="client-comment">
-														In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit....
-													</div>
-
-													<div class="name-client">
-														<h2>
-															<a href="#" title="">JOHN DOE</a>
-														</h2>
-
-														<p>Designer</p>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div data-vc-full-width="true" data-vc-full-width-init="false" data-vc-stretch-content="true" class="vc_row wpb_row vc_row-fluid footer-style1 vc_row-no-padding">
-					<div class="container float wpb_column vc_column_container vc_col-sm-12">
-						<div class="vc_column-inner ">
-							<div class="wpb_wrapper">
-								<div class="vc_row wpb_row vc_inner vc_row-fluid footer-top">
-									<div class="wpb_column vc_column_container vc_col-sm-8">
-										<div class="vc_column-inner ">
-											<div class="wpb_wrapper">
-												<div class="wpb_text_column wpb_content_element ">
-													<div class="wpb_wrapper">
-														<div class="wrap-newletter">
-															<h3>NEWSLETTER SIGNUP</h3>
-
-															<form id="mc4wp-form-1" class="mc4wp-form mc4wp-form-275" method="post" data-id="275" data-name="">
-																<div class="mc4wp-form-fields">
-																	<div class="newsletter-content">
-																		<input type="email" class="newsletter-email" name="EMAIL" placeholder="Your email" required="" />
-																		<input class="newsletter-submit" type="submit" value="Subscribe" />
-																	</div>
-																</div>
-																<div class="mc4wp-response"></div>
-															</form>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="wpb_column vc_column_container vc_col-sm-4">
-										<div class="vc_column-inner ">
-											<div class="wpb_wrapper">
-												<div class="wpb_raw_code wpb_content_element wpb_raw_html">
-													<div class="wpb_wrapper">
-														<div class="shop-social">
-															<ul>
-																<li>
-																	<a href="#">
-																		<i class="fa fa-facebook"></i>
-																	</a>
-																</li>
-
-																<li>
-																	<a href="#">
-																		<i class="fa fa-twitter"></i>
-																	</a>
-																</li>
-
-																<li>
-																	<a href="#">
-																		<i class="fa fa-google-plus"></i>
-																	</a>
-																</li>
-
-																<li>
-																	<a href="#">
-																		<i class="fa fa-linkedin"></i>
-																	</a>
-																</li>
-
-																<li>
-																	<a href="#">
-																		<i class="fa fa-pinterest-p"></i>
-																	</a>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="vc_row wpb_row vc_inner vc_row-fluid footer-bottom">
-									<div class="item-res wpb_column vc_column_container vc_col-sm-6 vc_col-lg-4 vc_col-md-4 vc_col-xs-12">
-										<div class="vc_column-inner ">
-											<div class="wpb_wrapper">
-												<div class="wpb_text_column wpb_content_element ">
-													<div class="wpb_wrapper">
-														<div class="ya-logo">
-															<a href="{{url('feedback')}}" style="color:white">
-																意见反馈
-															</a>
-														</div>
-													</div>
-												</div>
-
-												<div class="wpb_raw_code wpb_content_element wpb_raw_html">
-													<div class="wpb_wrapper">
-														<div class="infomation">
-															<p>
-																Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-															</p>
-
-															<div class="info-support">
-																<ul>
-																   <li>No 1123, Marmora Road, Glasgow, D04 89GR.</li>
-																   <li>(801) 2345 - 6788 / (801) 2345 - 6789</li>
-																   <li><a href="mailto:contact@etrostore.com">support@etrostore.com</a></li>
-																</ul>
-															</div>
-
-															<div class="store">
-																<a href="#">
-																	<img src="{{asset('Home/images/1903/app-store.png')}}" alt="store" title="store" />
-																</a>
-
-																<a href="#">
-																	<img src="{{asset('Home/images/1903/google-store.png')}}" alt="store" title="store" />
-																</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="item-res wpb_column vc_column_container vc_col-sm-6 vc_col-lg-2 vc_col-md-2 vc_col-xs-12">
-										<div class="vc_column-inner ">
-											<div class="wpb_wrapper">
-												<div class="vc_wp_custommenu wpb_content_element">
-													<div class="widget widget_nav_menu">
-														<h2 class="widgettitle">Support</h2>
-
-														<ul id="menu-support" class="menu">
-															<li class="menu-product-support">
-																<a class="item-link" href="#">
-																	<span class="menu-title">Product Support</span>
-																</a>
-															</li>
-
-															<li class="menu-pc-setup-support-services">
-																<a class="item-link" href="#">
-																	<span class="menu-title">PC Setup & Support Services</span>
-																</a>
-															</li>
-
-															<li class="menu-extended-service-plans">
-																<a class="item-link" href="#">
-																	<span class="menu-title">Extended Service Plans</span>
-																</a>
-															</li>
-
-															<li class="menu-community">
-																<a class="item-link" href="#">
-																	<span class="menu-title">Community</span>
-																</a>
-															</li>
-
-															<li class="menu-product-manuals">
-																<a class="item-link" href="#">
-																	<span class="menu-title">Product Manuals</span>
-																</a>
-															</li>
-
-															<li class="menu-product-registration">
-																<a class="item-link" href="#">
-																	<span class="menu-title">Product Registration</span>
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="item-res wpb_column vc_column_container vc_col-sm-6 vc_col-lg-2 vc_col-md-2 vc_col-xs-12">
-										<div class="vc_column-inner ">
-											<div class="wpb_wrapper">
-												<div class="vc_wp_custommenu wpb_content_element">
-													<div class="widget widget_nav_menu">
-														<h2 class="widgettitle">Your Links</h2>
-
-														<ul id="menu-your-links" class="menu">
-															<li class="menu-my-account">
-																<a class="item-link" href="my_account.html">
-																	<span class="menu-title">My Account</span>
-																</a>
-															</li>
-
-															<li class="menu-order-tracking">
-																<a class="item-link" href="#">
-																	<span class="menu-title">Order Tracking</span>
-																</a>
-															</li>
-
-															<li class="menu-watch-list">
-																<a class="item-link" href="#">
-																	<span class="menu-title">Watch List</span>
-																</a>
-															</li>
-
-															<li class="menu-customer-service">
-																<a class="item-link" href="#">
-																	<span class="menu-title">Customer Service</span>
-																</a>
-															</li>
-
-															<li class="menu-returns-exchanges">
-																<a class="item-link" href="#">
-																	<span class="menu-title">Returns / Exchanges</span>
-																</a>
-															</li>
-
-															<li class="menu-faqs">
-																<a class="item-link" href="#">
-																	<span class="menu-title">FAQs</span>
-																</a>
-															</li>
-
-															<li class="menu-financing">
-																<a class="item-link" href="#">
-																	<span class="menu-title">Financing</span>
-																</a>
-															</li>
-
-															<li class="menu-card">
-																<a class="item-link" href="#">
-																	<span class="menu-title">Card</span>
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="item-res wpb_column vc_column_container vc_col-sm-6 vc_col-lg-4 vc_col-md-4 vc_col-xs-12">
-										<div class="vc_column-inner ">
-											<div class="wpb_wrapper">
-												<div class="wpb_raw_code wpb_content_element wpb_raw_html">
-													<div class="wpb_wrapper">
-														<div class="sp-map">
-															<div class="title">
-																<h2>find a store</h2>
-															</div>
-
-															<img src="{{asset('Home/images/1903/map.jpg')}}" alt="map" title="map" />
-
-															<a href="#" class="link-map">Store locator</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="vc_wp_custommenu wpb_content_element wrap-cus">
-									<div class="widget widget_nav_menu">
-										<ul id="menu-infomation" class="menu">
-											<li class="menu-about-us">
-												<a class="item-link" href="about_us.html">
-													<span class="menu-title">About Us</span>
-												</a>
-											</li>
-
-											<li class="menu-customer-service">
-												<a class="item-link" href="#">
-													<span class="menu-title">Customer Service</span>
-												</a>
-											</li>
-
-											<li class="menu-privacy-policy">
-												<a class="item-link" href="#">
-													<span class="menu-title">Privacy Policy</span>
-												</a>
-											</li>
-
-											<li class="menu-site-map">
-												<a class="item-link" href="#">
-													<span class="menu-title">Site Map</span>
-												</a>
-											</li>
-
-											<li class="menu-orders-and-returns">
-												<a class="item-link" href="#">
-													<span class="menu-title">Orders and Returns</span>
-												</a>
-											</li>
-
-											<li class="menu-contact-us">
-												<a class="item-link" href="contact_us.html">
-													<span class="menu-title">Contact Us</span>
-												</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="vc_row-full-width vc_clearfix"></div>
-			</div>
-
-			<div class="footer-copyright style1">
-				<div class="container">
-					<!-- Copyright text -->
-					<div class="copyright-text pull-left">
-						<p>Copyright &copy; 2017.Company name All rights reserved.<a target="_blank" href="http://www.htmlsucai.com/">&#72;&#84;&#77;&#76;&#32032;&#26448;&#32593;</a></p>
-					</div>
-
-					<div class="sidebar-copyright pull-right">
-						<div class="widget-1 widget-first widget text-4 widget_text">
-							<div class="widget-inner">
-								<div class="textwidget">
-
-									<div class="payment" id="tiaozhuan">
-									@foreach($url as $v)
-
-										<a href="javascript:;" type-url="{{$v->url}}" style="display:block;float:left;margin-left:5px" target="_black">
-											<img src="{{($v->logo)}}" alt="payment" title="payment" style="width:50px;height:30px"/>
-										</a>
-									@endforeach
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-				</div>
-			</div>
-		</footer>
+		@include('Layouts/footer')
 	</div>
 
 	<!-- DIALOGS -->
@@ -3446,6 +1863,19 @@
 	<script type="text/javascript" src="{{asset('Home/js/main.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/jquery.lazyload.min.js')}}">	</script>
 	<script type="text/javascript">
+		img = $('.img')
+		$(function(){
+			$(".img").lazyload({
+				effect: "fadeIn",
+				skip_invisible : false,
+				threshold :3000
+			});
+		});
+		$(window).bind("load", function() {
+			var timeout = setTimeout(function() {$(".img").trigger("sporty")}, 1000);
+		});
+	</script>
+	<script type="text/javascript">
 		// img = $('.img')
 		// $(function(){
     //   $("img.img").lazyload({
@@ -3490,7 +1920,7 @@
 									<!-- end rating  -->
 
 									<h4>
-										<a href="simple_product.html" title="voluptate ipsum">`+goods[i].gname+`</a>
+										<a href="{{url('goods/detailtwo')}}`+'/'+goods[i].id+`" title="voluptate ipsum">`+goods[i].gname+`</a>
 									</h4>
 
 									<!-- Price -->
@@ -3504,7 +1934,7 @@
 								</div>
 
 								<div class="item-img products-thumb">
-									<a href="simple_product.html">
+									<a href="{{url('goods/detailtwo')}}`+'/'+goods[i].id+`">
 										<div class="product-thumb-hover">
 											<img 	width="300" height="300" src="{{asset('/')}}`+obj[2]+`" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
 													srcset="{{asset('/')}}`+obj[2]+` 300w, {{asset('/')}}`+obj[2]+` 150w, {{asset('/')}}`+obj[2]+` 180w, {{asset('Home/images/1903/52.jpg')}} 600w"
@@ -3561,7 +1991,6 @@
 						`;
 					}
 					$('#brand').append(str);
-					console.log(str);
 				}
 			})
 		};
@@ -3612,7 +2041,7 @@
 
    <!-- 热销商品的js -->
 	<script>
-		
+
 		$('#relagood').on('mouseenter', 'a', function () {
 
 			//获取到id
@@ -3638,7 +2067,7 @@
         			for (var i=0; i<data.length; i++) {
 
         				str += `<div id="b123" style="border-bottom:1px solid #ccc;border-left:1px solid #ccc;padding:3px;" class="block">
-										
+
 									<div class="item product" >
 										<div class="item-wrap">
 											<div class="item-detail">
@@ -3649,7 +2078,7 @@
 													</h4>
 
 													<!-- Price -->
-													
+
 													<div class="item-price">
 														<span>
 															<ins>
@@ -3659,8 +2088,8 @@
 															</ins>
 														</span>
 													</div>
-													
-													
+
+
 													<div class="sale-off">-10%</div>
 												</div>
 
@@ -3708,9 +2137,9 @@
 											</div>
 										</div>
 									</div>
-								</div>`;	
+								</div>`;
         			}
-        			
+
 					$('#old').append(str);
         		},
         		dataType:'json'
@@ -3724,6 +2153,55 @@
 			var url = $(this).attr('type-url');
 
 			window.location.href='http://' + url;
+		})
+	</script>
+
+	<script type="text/javascript">
+		$('.typelink').on('mouseenter', function (){
+			var obj = $(this);
+			if (obj.attr('msg')) {
+				return;
+			}
+			var id = $(this).attr('link-id');
+			var str = '<ul class="dropdown-menu nav-level1 column-3">';
+			$.ajax({
+				type: 'get',
+				url: '{{url("menu")}}'+'/'+id,
+				success: function (msg){
+					for (var i=0; i<msg.length; i++) {
+						str += `
+							<li class="dropdown-submenu column-3 menu-electronics etrostore-menu-img">
+								<a href="`+`{{url('goods/list/brand')}}`+'/'+msg[i].id+`">
+									<span class="have-title">
+										<span class="menu-img">
+											<img width='220' height='146' src="`+`{{asset('upload/image')}}`+`/`+msg[i].blogo+`" alt="Menu Image">
+										</span>
+
+										<span class="menu-title">`+msg[i].bname+`</span>
+									</span>
+								</a>
+						`;
+						str += '<ul class="dropdown-sub nav-level2">';
+						for(var j=0; j<msg[i].menuinfo.length; j++) {
+							str+=`
+								<li class="menu-leds">
+									<a href="{{url('goods/detailtwo')}}`+`/`+msg[i].menuinfo[j].id+`">
+										<span class="have-title">
+											<span class="menu-title">`+msg[i].menuinfo[j].gname+`</span>
+										</span>
+									</a>
+								</li>
+							`;
+						}
+						str+=`
+								</ul>
+							</li>
+						`;
+					}
+					obj.attr('msg', 'true');
+					obj.parent().append(str);
+				}
+			})
 		})
 	</script>
    </body>

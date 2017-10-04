@@ -10,9 +10,9 @@ use Carbon\Carbon;
 
 class IndexController extends Controller
 {
-    
-	public function index()
-	{
+
+  	public function index()
+  	{
 
         //查询所有类别
         $category = DB::table('home_category')->select('name', 'id')->get()->toArray();
@@ -39,41 +39,35 @@ class IndexController extends Controller
         $salesVolume = DB::table('goods')->select('brandid', 'gname', 'id', 'gpic', 'workoff')->orderBy('workoff', 'desc')->limit(5)->get();
 
 
-        //查出友情链接
-        $url = DB::table('url')->select('id', 'name', 'logo', 'url', 'status')->where('status', 0)->limit(5)->get();
-
-
-        //网站Logo
-        $logo = DB::table('logo')->select('id', 'name', 'logo')->where('id', '=', '1')->first();
-
         $seckillList = DB::table('goods')
             ->leftJoin('price', 'goods.id', '=', 'price.gid')
-            ->select('price.id', 'brandid', 'gname', 'workoff', 'gpic', 'workoff')
-            // ->where('attr', 2)
+            ->select('price.id', 'brandid', 'gname', 'workoff', 'goods.price', 'gpic', 'workoff')
+            ->where('attr', 2)
             ->get()
             ->toArray();
 
         $type = DB::table('home_category')
             ->select('id', 'name')
             ->get();
+        $coverImg = DB::table('cover')->select('id', 'name', 'price')->get();
+        $new = DB::table('goods')->select('id', 'price', 'gpic', 'workoff', 'gname')->orderBy('addtime', 'desc')->limit(6)->get();
+  		  return view('index', ['category' => $category, 'phone' => $phone, 'salesvolume' => $salesVolume, 'seckillList' => $seckillList, 'type' => $type, 'new' => $new, 'coverImg' => $coverImg]);
+  	}
 
-		return view('index', ['category' => $category, 'phone' => $phone, 'salesvolume' => $salesVolume, 'url' => $url, 'logo' => $logo, 'seckillList' => $seckillList, 'type' => $type]);
-	}
 
+  	//接收ajax传过来的id，查出对应类别的商品
+  	public function hotSale()
+  	{
 
-	//接收ajax传过来的id，查出对应类别的商品
-	public function hotSale()
-	{
+    		// var_dump($_POST);
+    		$id = $_POST['id'];
 
-		// var_dump($_POST);
-		$id = $_POST['id'];
-		// var_dump($id);
+        // var_dump($id);
+    		//得到类别
+    		$class = DB::table('home_category')->select('id', 'name')->where('id', '=', $id)->first();
 
-		//得到类别
-		$class = DB::table('home_category')->select('id', 'name')->where('id', '=', $id)->first();
-
-        //先查缓存中有无商品
-		$hotProduct = Cache::get('Hgoods'.$id);
+          //先查缓存中有无商品
+    		$hotProduct = Cache::get('Hgoods'.$id);
         if (!$hotProduct) {
             // echo '没有缓存';
             //根据类别得到对应的商品
@@ -89,14 +83,14 @@ class IndexController extends Controller
             Cache::put('Hgoods'.$id, $hotProduct,1);
 
         }
-		
-		if ($hotProduct) {
-			echo json_encode($hotProduct);
-		}
 
-	}
-    
-    
+    		if ($hotProduct) {
+    			echo json_encode($hotProduct);
+    		}
+
+  	}
+
+
     /**
      * 新商品加载
      * @author rong <[<871513137@qq.com>]>
@@ -104,10 +98,10 @@ class IndexController extends Controller
     public function newGoods(Request $request, $id)
     {
 
-        // if (Cache::has('newgoods:'.$id)){
-        //     $newGoodsData = Cache::get('newgoods:'.$id);
-        //     return $newGoodsData;
-        // }
+        if (Cache::has('newgoods:'.$id)){
+            $newGoodsData = Cache::get('newgoods:'.$id);
+            return $newGoodsData;
+        }
         $newGoodsData = DB::table('home_category')
         ->leftJoin('brands', 'home_category.id', '=', 'brands.categoryid')
         ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
@@ -118,8 +112,10 @@ class IndexController extends Controller
         ->get()
         ->toArray();
         $logoImg = DB::table('brands')
+        ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
         ->select('blogo')
-        ->where('categoryid', '=', $id)
+        ->where([['goods.status', '>', 0], ['categoryid', '=', $id]])
+        ->groupBy('blogo')
         ->limit(7)
         ->get()
         ->toArray();
@@ -127,8 +123,63 @@ class IndexController extends Controller
             'newgoods' => $newGoodsData,
             'logoimg' => $logoImg
         ];
-        // $expiresAt = Carbon::now()->addMinutes(1440);
-        // Cache::put('newgoods:'.$id, $newGoodsData, $expiresAt);
+        $expiresAt = Carbon::now()->addMinutes(1440);
+        Cache::put('newgoods:'.$id, $goodsData, $expiresAt);
         return $goodsData;
-   }
+    }
+
+    /**
+     * ajax二级菜单
+     * @author rong <[871513137@qq.com]>
+     */
+     public function menu($id)
+     {
+        $menu = DB::table('brands')
+            ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
+            ->select('bname', 'brands.id', 'blogo')
+            ->where([['brands.categoryid', $id], ['goods.status', '>', 0]])
+            ->groupBy('brands.id', 'bname', 'blogo')
+            ->get();
+        $menuInfo = DB::table('brands')
+            ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
+            ->select('gname', 'goods.id', 'brandid')
+            ->where([['brands.categoryid', $id], ['goods.status', '>', 0]])
+            ->orderBy('goods.addtime', 'desc')
+            ->get();
+        foreach($menu as $k=>$v) {
+            $x = 1;
+            foreach($menuInfo as $val) {
+                if ($v->id == $val->brandid && $x <= 5) {
+                    $menu[$k]->menuinfo[] = $val;
+                    $x++;
+                }
+            }
+        }
+
+        return $menu;
+
+     }
+
+     /**
+      * 模板友情链接数据共享
+      * @author rong <[871513137@qq.com]>
+      * @return object $url
+      */
+      public function urlShareData()
+      {
+          //查出友情链接
+          return $url = DB::table('url')->select('id', 'name', 'logo', 'url', 'status')->where('status', 0)->limit(5)->get();
+
+      }
+
+      /**
+       * 模板站点logo数据共享
+       * @author rong <[871513137@qq.com]>
+       * @return object $logo
+       */
+       public function logoShareData()
+       {
+           //网站Logo
+           return $logo = DB::table('logo')->select('id', 'name', 'logo')->where('id', '=', '1')->first();
+       }
 }
