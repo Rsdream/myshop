@@ -660,7 +660,7 @@
 
         	var type = 'upass';
 
-        	var match = /^(?![0-9A-Za-z]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+        	var match = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
 
         	var array = [
         	    '建议字母、数字2种字符组合，6-20个字符',
@@ -794,7 +794,7 @@
         }); 
 
         //注册提交时验证
-        $("#doregister").submit(function(){
+        $("#doregister").submit(function() {
         	if(!uname) {
         		dotest('uname', '请输入用户名！', 'red');
         		return false;

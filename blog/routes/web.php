@@ -12,9 +12,7 @@
 */
 
 //前台首页
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'Home\IndexContrller@index');
 
 //登录，注册页面
 Route::get('/login', function () {
@@ -69,11 +67,6 @@ Route::prefix('/admin')->group(function () {
 
 
 
-
-   	// Route::get('product/delete/{gayquan}', 'Admin\ProductController@destroy')
-    //     ->where(['gayquan' => '\d+']);
-
-
 });
 
 //前台用户中心路由
@@ -109,8 +102,65 @@ Route::post('/existence', 'Home\RegisterController@isExistence');
 
 //处理登录
 Route::post('/dologin', 'Home\LoginController@doLogin');
+Route::get('/outlogin', 'Home\LoginController@outLogin');
 
 //处理注册
 Route::post('/doregister', 'Home\RegisterController@doregister');
 //搜索
 Route::get('/search', 'Home\SearchController@search');
+
+
+
+//购物车资源路由
+Route::prefix('/cart')->group(function () {    
+    //购物车首页
+    Route::get('/', 'Home\CartController@cart');
+    //查看购物车商品
+    Route::get('/show', 'Home\CartController@showCart');
+
+    //添加商品到购物车
+    Route::get('/add', 'Home\CartController@addCart');
+
+    //移除商品
+    Route::post('/del', 'Home\CartController@delCart');
+
+    //修改商品数量
+    Route::post('/change', 'Home\CartController@changeCart');
+
+});
+
+
+//订单资源路由
+Route::prefix('/order')->group(function () {    
+    //结算页面
+    Route::get('/', 'Home\OrderController@check');
+
+    //提交订单
+    Route::post('/add', 'Home\OrderController@add');
+
+    //成功提交订单
+    Route::get('/success', 'Home\OrderController@success');
+
+    Route::get('/show', 'Home\OrderController@show');
+
+});
+
+//地址资源路由
+Route::prefix('/address')->group(function () {    
+    //三级联动
+    Route::post('/select', 'Home\AddressController@select');
+
+    //添加地址
+    Route::post('/add', 'Home\AddressController@add');    
+
+    //显示地址
+    Route::post('/show', 'Home\AddressController@show');   
+
+    //删除地址
+    Route::post('/del', 'Home\AddressController@del');
+
+    //默认地址添加
+    Route::post('/tacit', 'Home\AddressController@tacit');
+
+});
+

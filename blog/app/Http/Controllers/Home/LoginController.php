@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Home_users;
+use App\Model\Home\HomeUsers;
 use App\Http\Requests\LoginRequest;
 use Hash;
 use Illuminate\Support\Facades\Redis;
@@ -15,7 +15,7 @@ class LoginController extends Controller
 	/**
 	 * 登录判断
 	 * @author kjw <[kjwlaravel@163.com]>
-	 * @param  LoginRequest $request [正则判断]
+	 * @param  LoginRequest $request   [正则判断]
 	 * @return [string]                [把错误放在闪存中，回退同时把错误信息返回]
 	 */
 	public function doLogin(LoginRequest $request) 
@@ -36,10 +36,11 @@ class LoginController extends Controller
 		}
 
 		//查询数据库
-		$user = Home_users::select(['id','pass','uid'])->where('uid',$name)->first();
+		$user = HomeUsers::select(['id','pass','uid'])->where('uid',$name)->first();
 
 		//判断密码
 		if (Hash::check($pass, $user->pass)) {
+			 session(['user' => $user->id]);
 			$request->session()->flash('success', '登录成功!');
 			return back();
 		} else {
@@ -57,5 +58,10 @@ class LoginController extends Controller
 			$request->session()->flash('erro', '密码错误!');
 			return back();
 		}
+	}
+
+	public function outLogin()
+	{		session()->flush();
+		return redirect('/');
 	}
 }

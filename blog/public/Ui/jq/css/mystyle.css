@@ -1,0 +1,26 @@
+			.alert {
+				width: 90%;
+				text-align: center;
+				color: #fff;
+				margin: 10px auto;
+				border-radius: 5px;
+				line-height: 30px;
+				cursor: pointer;
+				background: #4ab819;
+			}
+			
+			.confirm {
+				background: #196fb8;
+			}
+			
+			.open {
+				background: #f88408;
+			}
+			
+			.toast {
+				background: #f80851;
+			}
+			
+			.later {
+				background: #a9a9a9;
+			}
