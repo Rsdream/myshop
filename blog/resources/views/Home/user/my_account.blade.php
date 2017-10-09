@@ -546,18 +546,18 @@
 		<div class="listings-title">
 			<div class="container">
 				<div class="wrap-title">
-					<h1>My Account</h1>
+					<h1>我的信息中心</h1>
 					<div class="bread">
 						<div class="breadcrumbs theme-clearfix">
 							<div class="container">
 								<ul class="breadcrumb">
 									<li>
-										<a href="#">Home</a>
+										<a href="#">首页</a>
 										<span class="go-page"></span>
 									</li>
 
 									<li class="active">
-										<span>My account</span>
+										<span>用户中心</span>
 									</li>
 								</ul>
 							</div>
@@ -574,7 +574,7 @@
 						<div class="entry">
 							<div class="entry-content">
 								<header>
-									<h2 class="entry-title">My Account</h2>
+									<h2 class="entry-title">用户中心</h2>
 								</header>
 
 								<div class="entry-content">
@@ -582,36 +582,45 @@
 										<nav class="woocommerce-MyAccount-navigation">
 											<ul>
 												<li class="is-active">
-													<a href="my_account.html">Dashboard</a>
+													<a>用户中心</a>
 												</li>
 
 												<li >
-												   <a href="http://demo.smartaddons.com/templates/html/etrostore/order.html">Orders</a>
+												   <a href="http://demo.smartaddons.com/templates/html/etrostore/order.html">我的订单</a>
 												</li>
 
 												<li>
-													<a href="http://demo.smartaddons.com/templates/html/etrostore/addresses.html">Addresses</a>
+													<a href="{{url('/user/address')}}">我的收货地址</a>
 												</li>
 
 												<li>
-												   <a href="http://demo.smartaddons.com/templates/html/etrostore/account_details.html">Account Details</a>
+												   <a href="{{url('/user/information')}}">信息&积分&会员等级</a>
+												</li>
+
+												<li >
+												   <a href="http://demo.smartaddons.com/templates/html/etrostore/order.html">我的收藏</a>
 												</li>
 
 												<li>
-													<a href="create_account.html">Logout</a>
+													<a href="{{url('/queit')}}">退出</a>
 												</li>
 											</ul>
 										</nav>
 
 										<div class="woocommerce-MyAccount-content">
 											<p>
-												Hello <strong>Tester</strong> (not Tester? <a href="create_account.html">Sign out</a>)
+												你好!
+												@if (session()->has('userinfo') && isset(session('userinfo')['name']))
+													{{session('userinfo')['name']}}
+												@elseif (session()->has('userinfo') && isset(session('userinfo')['uid']))
+													{{session('userinfo')['uid']}}
+												@endif
 											</p>
 											<p>
-												From your account dashboard you can view your
-												<a href="http://demo.smartaddons.com/templates/html/etrostore/order.html">recent orders</a>,
-												manage your <a href="http://demo.smartaddons.com/templates/html/etrostore/addresses.html">shipping and billing addresses</a>
-												and <a href="http://demo.smartaddons.com/templates/html/etrostore/account_details.html">edit your password and account details</a>.
+												从你的账户指示板，你可以查看你
+												<a href="http://demo.smartaddons.com/templates/html/etrostore/order.html">最近的订单</a>,
+												管理你 <a href="http://demo.smartaddons.com/templates/html/etrostore/addresses.html">发货和账单地址</a>
+												并编辑你的 <a href="http://demo.smartaddons.com/templates/html/etrostore/account_details.html">账户信息</a>.
 											</p>
 										</div>
 									</div>

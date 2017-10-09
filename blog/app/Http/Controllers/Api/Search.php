@@ -30,13 +30,12 @@ class Search extends Controller
     {
 
 
-        // define ('XS_APP_ROOT', '/usr/local/xunsearch/sdk/php/app');
+        define ('XS_APP_ROOT', '/usr/local/xunsearch/sdk/php/app/');
 
 
         $this->xs = new \XS($configFile);
         $this->fuzzy = $fuzzy;
         $this->synonyms = $synonyms;
-
         //获取搜索对象
         $this->search = $this->xs->search;
     }
@@ -103,4 +102,17 @@ class Search extends Controller
         //添加索引到xunsearch中
         $this->xs->index->add($doc);
     }
+
+    /**
+     * 修改索引
+     */
+     public function updateDocumentData( $data = array() )
+     {
+         $doc = new \XSDocument;
+
+         $doc->setFields($data);
+
+         //添加索引到xunsearch中
+         $this->xs->index->update($doc);
+     }
 }
