@@ -54,7 +54,7 @@
     <div id="errorTip" class="alert alert-danger" style="display:none">无法禁用老大</div>
     <div id="die" class="alert alert-danger" style="display:none">您没有权限</div>
 
-    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a href="{{url('admin/adminlist/create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span>  </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a href="{{url('admin/user/create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span>  </div>
     <table class="table table-border table-bordered table-bg">
         <thead>
             <tr>
@@ -64,19 +64,15 @@
                 <!-- <th width="25"><input type="checkbox" name="" value=""></th> -->
                 <th width="60">序号</th>
                 <th width="150">账号</th>
-                <th width="150">用户名</th>
                 <th width="50">性别</th>
                 <th width="130">电话</th>
-                <th width="160">邮箱</th>
-                <th width="100">地址</th>
-                <th width="100">权限</th>
-                <th width="100">状态</th>
+                <th width="150">角色</th>
                 <th width="100">操作</th>
             </tr>
         </thead>
         <tbody>
 
-            @foreach($userinfo as $v)
+            @foreach($users as $v)
 
             
 
@@ -84,7 +80,6 @@
                 <!-- <td><input type="checkbox" value="1" name=""></td> -->
                 <td>{{$v->id}}</td>
                 <td>{{$v->uid}}</td>
-                <td>{{$v->name}}</td>
                 <td>
                     @if ($v->sex == '0')
 
@@ -94,34 +89,28 @@
                     @endif
                 </td>
                 <td>{{$v->phone}}</td>
-                <td>{{$v->email}}</td>
-                <td>{{$v->address}}</td>
-                <td>{{$v->power}}</td>
-                <td class="td-status"><span class="label label-success radius">
 
-                    @if ($v->status == 0)
-
-                        <span style="color:white">启用</span>
-                    @else
-                        <span style="color:red">禁用</span>
-                    
-                    @endif
-                </span></td>
+                
+                
+                <td>
+                @foreach($v->roles as $role)
+                {{$role->name}}
+                @endforeach
+                </td>
+                
 
                 <td class="td-manage">
 
-                    <a style="text-decoration:none" id="stop"  title="禁用" href="javascript:;"><i class="Hui-iconfont">&#xe631;</i></a>
+                    <!-- <a style="text-decoration:none" id="stop"  title="禁用" href="javascript:;"><i class="Hui-iconfont">&#xe631;</i></a>
 
-                    <a href="javascript:;" id="start" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>
+                    <a href="javascript:;" id="start" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a> -->
 
-                    <a title="编辑" href="{{url('admin/adminlist', ['id' => $v->id])}}"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                    <a title="编辑" href="{{url('admin/user', ['id' => $v->id])}}"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                 </td>
             </tr>
-
             @endforeach
         </tbody>
     </table>
-    {{$userinfo->appends(['name' => $name])->links()}}
 
 
 </div>

@@ -21,7 +21,7 @@ class LoginController extends Controller
             return $this->json(1404, '验证码错误');
         }
         // 查询数据库				
-        $users = DB::table('admin_users')->select('id','uid','name','pass','power','phone','status')->where('uid',"$name")->first();	
+        $users = DB::table('admin_users')->select('id','uid','name','pass','phone','status')->where('uid',"$name")->first();	
         if (!$users) {
             return $this->json(1400,"登陆失败,用户名不存在",$users);
         } elseif ($pass != $users->pass) {

@@ -55,15 +55,32 @@ Route::prefix('/admin')->group(function () {
         //显示我的桌面路由
         Route::get('/welcome', 'Admin\IndexController@welCome');
 
-        //角色权限
-        Route::resource('/role', 'Admin\Administrator\Role');
+        //角色管理
+        // Route::resource('/role', 'Admin\Administrator\Role');
+        Route::get('/role', 'Admin\Administrator\RoleController@index');
+        Route::get('/role/create', 'Admin\Administrator\RoleController@create');
+        Route::post('/role/create', 'Admin\Administrator\RoleController@store');
+        Route::get('/role/{id}', 'Admin\Administrator\RoleController@show');
+        Route::patch('/role/{id}', 'Admin\Administrator\RoleController@update');
+        Route::get('/role/details/{id}', 'Admin\Administrator\RoleController@details');
 
         //权限管理
-        Route::resource('/permission', 'Admin\Administrator\Permission');
+        // Route::resource('/permission', 'Admin\Administrator\Permission');
+        Route::get('/permission', 'Admin\Administrator\PermissionController@index');
+        Route::get('/permission/create', 'Admin\Administrator\PermissionController@create');
+        Route::post('/permission/create', 'Admin\Administrator\PermissionController@store');
+        Route::get('/permission/{id}', 'Admin\Administrator\PermissionController@show');
+        Route::patch('/permission/{id}', 'Admin\Administrator\PermissionController@update');
+
 
         //管理员列表
-        Route::resource('/adminlist', 'Admin\Administrator\AdminList');
-        Route::post('/update/{id}', 'Admin\Administrator\AdminList@update')->where('id','\d+');
+        // Route::resource('/adminlist', 'Admin\Administrator\AdminList');
+        // Route::post('/update/{id}', 'Admin\Administrator\AdminList@update')->where('id','\d+');
+        Route::get('/user', 'Admin\Administrator\UserController@index');
+        Route::get('/user/create', 'Admin\Administrator\UserController@create');
+        Route::post('/user/create', 'Admin\Administrator\UserController@store');
+        Route::get('/user/{id}', 'Admin\Administrator\UserController@show');
+        Route::patch('/user/{id}', 'Admin\Administrator\UserController@update');
 
         //后台系统管理->友情链接
         Route::resource('/url', 'Admin\Systron\Url');

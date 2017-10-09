@@ -35,7 +35,7 @@ class CommonController extends Controller
 
     public function Out(Request $request)
     {
-        $request->session()->forget('admin_users');
+        $request->session()->forget('adminusers');
         return view('Admin/login');
     }
 }
