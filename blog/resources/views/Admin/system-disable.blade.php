@@ -80,6 +80,7 @@
 			@endforeach
 			</tbody>
 		</table>
+		{{$data->links()}}
 	</div>
 </div>
 <!--_footer 作为公共模版分离出去-->
@@ -93,14 +94,7 @@
 <script type="text/javascript" src="{{asset('/Admin/lib/datatables/1.10.0/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/lib/laypage/1.2/laypage.js')}}"></script>
 <script type="text/javascript">
-$('.table-sort').dataTable({
-	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-	"bStateSave": true,//状态保存
-	"aoColumnDefs": [
-	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable":false,"aTargets":[0,5]}// 制定列不参与排序
-	]
-});
+
 /*数据字典-编辑*/
 // function system_data_edit(title,url,id,w,h){
 //   layer_show(title,url,w,h);

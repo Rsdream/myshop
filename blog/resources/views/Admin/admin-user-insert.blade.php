@@ -27,7 +27,7 @@
 <article class="page-container">
     
     
-    <form class="form form-horizontal" id="form-admin-add" action="{{url('admin/user/create')}}" method="post">
+    <form class="form form-horizontal" id="form-admin-add" action="{{url('admin/rbac/user/create')}}" method="post">
 
 
     {{csrf_field()}}

@@ -31,42 +31,56 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="{{url('admin/rbac/role', ['id' => $role->id])}}" method="post" class="form form-horizontal" >
-	{{csrf_field()}}
-	{{ method_field('PATCH') }}
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" disabled class="input-text" value="{{$role->name}}" placeholder=""  name="name">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">列表：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="{{$role->display_name}}" placeholder="" id="" name="display_name">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">描述：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="{{$role->description}}" placeholder="" id="" name="description">
-			</div>
-		</div>
-		
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">权限</label>
-			<div class="formControls col-xs-8 col-sm-9">
-			@foreach($permission as $v)
-				<label><input type="checkbox" name="permission[]" value="{{$v->id}}">{{$v->name}}</label><br>
-			@endforeach
-			</div>
-		</div>
-		<div class="row cl">
-			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-				<input type="submit" value="确定" class="btn btn-success radius">
-			</div>
-		</div>
-	</form>
+	<div class="container">
+
+	<div class="row">
+	    <div class="col-lg-12 margin-tb">
+	        <div class="pull-left">
+	            <h2> Show Role</h2>
+	        </div>
+	        <div class="pull-right">
+	            <a class="btn btn-primary" href="{{url('admin/rbac/role')}}"> Back</a>
+	        </div>
+	    </div>
+	</div>
+
+	<div class="row">
+
+		<div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Name:</strong>
+                {{ $role->name }}
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Display Name:</strong>
+                {{ $role->display_name }}
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Description:</strong>
+               	{{ $role->description }}
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Permission:</strong>
+                
+                @foreach ($role->permissions as $permission)
+                <label class="label label-success">{{ $permission->display_name }}</label>
+                @endforeach
+                
+            </div>
+        </div>
+
+	</div>
+
+</div>
 </article>
 
 <!--_footer 作为公共模版分离出去-->

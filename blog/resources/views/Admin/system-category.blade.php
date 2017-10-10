@@ -30,8 +30,11 @@
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
-	
+	@if ($sum <= 0)
 
+	<div class="cl pd-5 bg-1 bk-gray" > <span class="l">  <a class="btn btn-primary radius" href="{{url('/admin/addlogo')}}" <i class="Hui-iconfont">&#xe600;</i> 添加Logo</a> </span></div>
+	
+	@endif
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>

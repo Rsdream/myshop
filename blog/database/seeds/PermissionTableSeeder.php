@@ -27,13 +27,13 @@ class PermissionTableSeeder extends Seeder
         	],
 
         	[
-        		'name' => 'user-edit',
-        		'display_name' => 'User Edit',
+        		'name' => 'user-show',
+        		'display_name' => 'User Show',
         		'description' => '用户修改',
         	],
         	[
-        		'name' => 'user-show',
-        		'display_name' => 'User Show',
+        		'name' => 'user-details',
+        		'display_name' => 'user Details',
         		'description' => '用户信息',
         	],
         	[
@@ -56,13 +56,13 @@ class PermissionTableSeeder extends Seeder
         	],
 
         	[
-        		'name' => 'permission-edit',
-        		'display_name' => 'Permission Edit',
+        		'name' => 'permission-show',
+        		'display_name' => 'Permission Show',
         		'description' => '权限修改',
         	],
         	[
-        		'name' => 'permission-show',
-        		'display_name' => 'Permission Show',
+        		'name' => 'permission-details',
+        		'display_name' => 'Permission Details',
         		'description' => '权限信息',
         	],
         	[
@@ -84,13 +84,13 @@ class PermissionTableSeeder extends Seeder
         	],
 
         	[
-        		'name' => 'role-edit',
-        		'display_name' => 'Role Edit',
+        		'name' => 'role-show',
+        		'display_name' => 'Role Show',
         		'description' => '角色修改',
         	],
         	[
-        		'name' => 'role-show',
-        		'display_name' => 'Role Show',
+        		'name' => 'role-details',
+        		'display_name' => 'Role Details',
         		'description' => '角色信息',
         	],
         	[

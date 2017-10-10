@@ -13,13 +13,8 @@ class UserController extends Controller
     public function index()
     {
 
-    	$user = AdminUser::get();
-        // $user = AdminUser::find(1);
-        // foreach ($user->roles as $role) {
-        //     var_dump($role);
-        // }
+    	$user = AdminUser::where('status', 0)->paginate(6);
 
-        // die;
 
     	return view('Admin/admin-list', ['users' => $user]);
     }
@@ -68,7 +63,7 @@ class UserController extends Controller
     	}
     	DB::table('role_user')->insert($role_user);
 
-    	return redirect('admin/user')->with('msg', '添加成功');
+    	return redirect('admin/rbac/user')->with('msg', '添加成功');
     }
 
 
@@ -90,7 +85,7 @@ class UserController extends Controller
             'pass' => 'required',
             'sex' => 'required',
     		'phone' => 'required',
-            'email' => 'required|email|unique:admin_users,email,'.$id,
+            'email' => 'required',
             'roles' => 'required'
     	]);
 
@@ -113,6 +108,31 @@ class UserController extends Controller
         DB::table('role_user')->insert($role_user);
         
 
-    	return redirect('admin/user')->with('msgg', '修改成功');
+    	return redirect('admin/rbac/user')->with('msgg', '修改成功');
+    }
+
+    //查看用户详情
+    public function details(Request $request,$id)
+    {
+        $user = AdminUser::find($id);
+
+        return view('Admin/admin-user-details', ['user' => $user]);
+    }
+
+    //禁用启用用户
+    public function disable(Request $request, $id)
+    {
+
+
+        $bool = DB::table('admin_users')->where('id', $id)->update(['status' => $_GET['status'] ]);
+
+        echo $bool;
+    }
+
+    //查看禁用的用户
+    public function showDisable()
+    {
+        $user = AdminUser::where('status', 1)->get();
+        return view('Admin/admin-stop-user', ['user' => $user]);
     }
 }

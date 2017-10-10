@@ -31,7 +31,7 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="{{url('admin/role/create')}}" method="post" class="form form-horizontal" >
+	<form action="{{url('admin/rbac/role/create')}}" method="post" class="form form-horizontal" >
 		{{csrf_field()}}
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>

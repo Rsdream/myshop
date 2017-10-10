@@ -17,7 +17,7 @@ class IndexController extends Controller
     {
 
     	$data = $request->session()->get('admin_users');
-    	var_dump($data);
+    	// var_dump($data);
         return view('Admin/welcome');
     }
     public function doLogin()

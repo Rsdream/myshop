@@ -38,34 +38,51 @@
 @endif
 
 <div class="page-container">
-	<div class="cl pd-5 bg-1 bk-gray"> <span class="l">  <a class="btn btn-primary radius" href="{{url('/admin/role/create')}}" <i class="Hui-iconfont">&#xe600;</i> 添加角色</a> </span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+	@permission ('role-create')
+	<div class="cl pd-5 bg-1 bk-gray"> <span class="l">  <a class="btn btn-primary radius" href="{{url('/admin/rbac/role/create')}}" <i class="Hui-iconfont">&#xe600;</i> 添加角色</a> </span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+	@endpermission
 	<table class="table table-border table-bordered table-hover table-bg">
 		<thead>
 			<tr>
 				<th scope="col" colspan="6">角色管理</th>
 			</tr>
 			<tr class="text-c">
-				<th width="25"><input type="checkbox" value="" name=""></th>
-				<th width="40">序号</th>
+
+				<th width="60">序号</th>
 				<th width="200">角色名</th>
 				<th>列表</th>
 				<th width="300">描述</th>
-				<th width="70">操作</th>
+				<th width="170">操作</th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach ($roles as $role) 
 				<tr class="text-c">
-					<td><input type="checkbox" value="" name=""></td>
+
 					<td>{{$role->id}}</td>
 					<td>{{$role->name}}</td>
 					<td>{{$role->display_name}}</td>
 					<td>{{$role->description}}</td>
-					<td class="f-14"><a title="编辑" href="{{url('/admin/role', ['id' => $role->id])}}" ><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="" ><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+					<td class="f-14" >
+					@permission ('role-show')
+					<a title="编辑" href="{{url('/admin/rbac/role', ['id' => $role->id])}}" ><i class="Hui-iconfont">&#xe6df;</i></a>
+					@endpermission
+					
+					@permission ('role-details')
+					<a title="详情" href="{{url('/admin/rbac/role/details', ['id' => $role->id])}}" ><i class="Hui-iconfont">详情</i></a>
+					@endpermission
+
+					@permission ('role-delete')
+					<a title="删除" id="delete" href="javascript:;" ><i class="Hui-iconfont">删除</i></a>
+					</td>
+					@endpermission
 				</tr>
 			@endforeach
 		</tbody>
 	</table>
+
+
+	{{ $roles->links() }}
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="{{asset('/Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script> 
@@ -76,31 +93,36 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="{{asset('/Admin/lib/datatables/1.10.0/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript">
-/*管理员-角色-添加*/
-function admin_role_add(title,url,w,h){
-	layer_show(title,url,w,h);
-}
-/*管理员-角色-编辑*/
-function admin_role_edit(title,url,id,w,h){
-	layer_show(title,url,w,h);
-}
-/*管理员-角色-删除*/
-function admin_role_del(obj,id){
-	layer.confirm('角色删除须谨慎，确认要删除吗？',function(index){
-		$.ajax({
-			type: 'POST',
-			url: '',
-			dataType: 'json',
-			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
-			},
-			error:function(data) {
-				console.log(data.msg);
-			},
-		});		
-	});
-}
+
+//删除角色
+$('td.f-14').on('click', '#delete', function () {
+
+    var that = $(this);
+
+    var title = $(this).attr('title');
+
+    var id = $(this).parent().parent().children().eq(0).html();
+    // alert(id);
+
+    var url = '{{url("/admin/rbac/role/")}}';
+
+    console.log(that, title, id, url);
+
+    $.get(
+
+        url+'/delete/'+id,
+        function (data) {
+            // console.log(data);
+
+            if (data == 1) {
+
+                that.parent().parent().remove();
+
+            }
+        },
+        'json'
+    );
+});
 
 setTimeout(function () {
 

@@ -34,7 +34,7 @@
     @endif
     
     
-    <form class="form form-horizontal" id="form-admin-add" action="{{url('/admin/user', ['id' => $user->id])}}" method="post">
+    <form class="form form-horizontal" id="form-admin-add" action="{{url('/admin/rbac/user', ['id' => $user->id])}}">
 
 
     {{csrf_field()}}

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AdminLoginRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Api\CommonController;
+use App\Model\Admin\AdminUser;
 
 class LoginController extends Controller
 {
@@ -22,14 +23,24 @@ class LoginController extends Controller
         }
 
         // 查询数据库				
-        $users = DB::table('admin_users')->select('id','uid','name','pass','phone','status')->where('uid',"$name")->first();	
+        $users = DB::table('admin_users')->select('id','uid','name','pass','phone','status')->where('uid',"$name")->first();
 
         if (!$users) {
             return $this->json(1400,"登陆失败,用户名不存在",$users);
         } elseif ($pass != $users->pass) {
             return $this->json(1401,'登陆失败,密码错误');
 
-        } else {	 
+        } else {
+            $user = AdminUser::find($users->id);
+
+            foreach ($user->roles as $v) {
+
+                $arr[] = $v->name;
+                $permission[] = $v;
+            } 
+
+            $users->role = $arr;
+            $users->permission = $permission;
             $user_information = $users;  		
 
             $request->session()->pull('admin_users',$user_information);

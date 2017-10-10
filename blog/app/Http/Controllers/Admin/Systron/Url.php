@@ -23,7 +23,8 @@ class Url extends Controller
     public function index()
     {
 
-        $data = DB::table('url')->select('id', 'name', 'logo', 'url', 'status')->limit(10)->get();
+        $data = DB::table('url')->select('id', 'name', 'logo', 'url', 'status')->where('status', 0)->paginate(5);
+        // $user = AdminUser::where('status', 0)->paginate(6);
         
         return view('Admin/system-data', ['data' => $data]);
     }
@@ -107,7 +108,7 @@ class Url extends Controller
     public function disable()
     {
 
-        $data = DB::table('url')->select('id', 'name', 'logo', 'url', 'status')->limit(10)->get();
+        $data = DB::table('url')->select('id', 'name', 'logo', 'url', 'status')->where('status', 1)->paginate(1);;
 
         return view('Admin/system-disable', ['data' => $data]);
     }

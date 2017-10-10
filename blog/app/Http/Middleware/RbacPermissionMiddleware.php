@@ -1,33 +1,36 @@
 <?php
 
-namespace App\Model\Admin;
+namespace App\Http\Middleware;
 
-use Illuminate\Database\Eloquent\Model;
+use Closure;
 use App\Model\Admin\Permission;
-use Illuminate\Http\Request;
 
-class AdminUser extends Model
+class RbacPermissionMiddleware
 {
-    protected $table = 'admin_users';
-    protected $primaryKey = 'id';
-    public $timestamps = false;
-
-
-    //关联角色表
-    public function roles()
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
     {
 
-        return $this->belongsToMany('App\Model\Admin\Role', 'role_user');
-    }
+        $i = 2;
+        $permi = func_get_args();
+        while($i < func_num_args()) {
+
+            $permission[] = $permi[$i];
+            $i++;
+        }
 
 
-    public static function hasPermission( $permission)
-    {
+        $permission_role = [];
 
-    	$permission_role = [];
+        $data = $request->session()->get('admin_users');
 
-    	$data = session('admin_users');
-
+        // dd($data);
         // 得出用户的角色
         foreach ($data as $value) {
             //permission是一个属性
@@ -50,10 +53,10 @@ class AdminUser extends Model
         $permission_list = array_unique($permission_list);
         // dd($permission_list, $permission);
 
-        if (!array_intersect($permission_list, [$permission])) {
-            return false;
+        if (!array_intersect($permission_list, $permission)) {
+            return redirect('admin/welcome');
         }
 
-        return true;
+        return $next($request);
     }
 }

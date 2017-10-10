@@ -13,7 +13,8 @@ class RoleController extends Controller
     public function index()
     {
 
-    	$roles = Role::select('id', 'name', 'display_name', 'description')->get();
+    	$roles = Role::select('id', 'name', 'display_name', 'description')->paginate(6);
+
     	return view('Admin/admin-roles', ['roles' => $roles]);
     }
 
@@ -40,7 +41,7 @@ class RoleController extends Controller
     	$role->description = $request->input('description');
     	$role->save();
 
-    	return redirect('admin/role')->with('msg', '添加成功');
+    	return redirect('admin/rbac/role')->with('msg', '添加成功');
     }
 
 
@@ -77,12 +78,37 @@ class RoleController extends Controller
         }
         DB::table('permission_role')->insert($permission_role);
 
-    	return redirect('admin/role')->with('msgg', '修改成功');
+    	return redirect('admin/rbac/role')->with('msgg', '修改成功');
     }
 
-    //展示用户的权限信息
+    //展示角色的权限信息
     public function details($id)
     {
+
+        $role = Role::find($id);
+        // dd($role);
+
+        return view('Admin/admin-role-detail', ['role' => $role]);
+    }
+
+    //删除角色
+    public function delete($id)
+    {
+
+        $role = Role::find($id);
+
+        //先查出角色所用有的权限
+        $permissions = [];
+        foreach ($role->permissions as $v) {
+            $permissions[] = $v->name;
+        }
+
+        //删除角色对应的权限
+        DB::table('permission_role')->where('role_id', $id)->delete();
+
+        //再删除角色
+        $bool = Role::where('id', $id)->delete();
+        echo $bool;
 
     }
 

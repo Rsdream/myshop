@@ -16,9 +16,24 @@ class Logo extends Controller
     public function index()
     {
 
-    	$data = DB::table('logo')->select('id', 'name', 'logo')->get();
+        $data = DB::table('logo')->select('id', 'name', 'logo')->get();
 
-    	return view('Admin/system-category', ['logo' => $data]);
+    	$sum = DB::table('logo')->select('id')->count();
+
+    	return view('Admin/system-category', ['logo' => $data, 'sum' => $sum]);
+    }
+
+    //加载添加页面
+    public function add()
+    {
+
+        return 1;
+    }
+
+    //执行添加
+    public function insert()
+    {
+
     }
 
     public function edit($id)

@@ -35,7 +35,7 @@
         <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
         -
         <input type="hidden" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;">
-        <form action="{{url('admin/adminlist')}}" method="get">
+        <form action="" method="get">
 
             <input type="text" class="input-text" style="width:250px" placeholder="输入管理员名称" value="" name="name">
             <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
@@ -55,13 +55,8 @@
 
     
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-    @permission ('user-create')
-    <span class="l"> <a href="{{url('admin/rbac/user/create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a></span>&nbsp;&nbsp;&nbsp;&nbsp;
-    @endpermission
-    
-    @permission ('user-stop')
-    <span class="l"> <a href="{{url('admin/rbac/user/desc/stop')}}"  class="btn btn-primary radius"><i class="Hui-iconfont"></i> 禁用的用户</a></span>
-    @endpermission
+
+    <span class="l"> <a href="{{url('admin/rbac/user')}}"  class="btn btn-primary radius"><i class="Hui-iconfont"></i> 返回</a></span>
 
     </div>
 
@@ -83,7 +78,7 @@
         </thead>
         <tbody>
 
-            @foreach($users as $v)
+            @foreach($user as $v)
           
             <tr class="text-c">
                 <!-- <td><input type="checkbox" value="1" name=""></td> -->
@@ -105,12 +100,8 @@
                 </td>
                 <td class="td-manage">
 
-                    @permission ('user-show')
-                    <a title="编辑" href="{{url('admin/rbac/user', ['id' => $v->id])}}"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-                    @endpermission
-
                     @permission ('user-disable')
-                    <a title="禁用" id="stop" href="javascript:;"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>
+                    <a title="启用" id="start" href="javascript:;"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>
                     @endpermission
 
                     @permission ('user-details')
@@ -123,7 +114,7 @@
         </tbody>
     </table>
 
-{{$users->links()}}
+
 </div>
 
 <!--_footer 作为公共模版分离出去-->
@@ -177,11 +168,11 @@ $('td.td-manage').on('click', '#start', function () {
     var title = $(this).attr('title');
 
     var id = $(this).parent().parent().children().eq(0).html();
-    var url = '{{url("admin/adminlist/")}}';
+    var url = '{{url("/admin/rbac/user/")}}';
 
     $.get(
 
-        url+'/'+id+'/edit/',
+        url+'/disable/'+id,
         {status:0},
         function (data) {
             console.log(data);
@@ -189,18 +180,8 @@ $('td.td-manage').on('click', '#start', function () {
             if (data == 1) {
 
 
-                that.parent().prev().children().html('启用').css('color','white');
+                that.parent().parent().remove();
 
-            }
-
-            if (data == '4') {
-
-                $('#die').css('display','block');
-
-                setTimeout(function () {
-
-                    $('#die').css('display','none');
-                },2000);
             }
         },
         'json'
