@@ -41,6 +41,21 @@ class PermissionTableSeeder extends Seeder
         		'display_name' => 'User Delete',
         		'description' => '用户删除',
         	],
+            [
+                'name' => 'user-update',
+                'display_name' => 'User Update',
+                'description' => '执行修改',
+            ],
+            [
+                'name' => 'user-disable',
+                'display_name' => 'User Disable',
+                'description' => '禁用/启用',
+            ],
+            [
+                'name' => 'user-stop',
+                'display_name' => 'User Stop',
+                'description' => '查看禁用',
+            ],
 
 
         	[
@@ -98,6 +113,11 @@ class PermissionTableSeeder extends Seeder
         		'display_name' => 'Role Delete',
         		'description' => '角色删除',
         	],
+            [
+                'name' => 'role-update',
+                'display_name' => 'Role Update',
+                'description' => '执行修改',
+            ],
         ];
 
         foreach ($permission as $value) {

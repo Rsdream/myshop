@@ -33,14 +33,19 @@ class LoginController extends Controller
         } else {
             $user = AdminUser::find($users->id);
 
-            foreach ($user->roles as $v) {
+            // if ($user->roles) {
+                $arr = [];
+                $permission = [];
+                foreach ($user->roles as $v) {
 
-                $arr[] = $v->name;
-                $permission[] = $v;
-            } 
+                    $arr[] = $v->name;
+                    $permission[] = $v;
+                }
+                $users->role = $arr;
+                $users->permission = $permission;
+            // }
 
-            $users->role = $arr;
-            $users->permission = $permission;
+            
             $user_information = $users;  		
 
             $request->session()->pull('admin_users',$user_information);

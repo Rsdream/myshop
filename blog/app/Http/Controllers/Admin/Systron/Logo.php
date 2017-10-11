@@ -11,8 +11,12 @@ use Intervention\Image\ImageManager;
 use App\Http\Controllers\Admin\Api\ImageApi;
 use App\Http\Controllers\Api\Common;
 
+/**
+ * @author [Dengjihua] <[<2563654031@qq.com>]>
+ */
 class Logo extends Controller
 {
+    //显示logo页
     public function index()
     {
 
@@ -27,13 +31,51 @@ class Logo extends Controller
     public function add()
     {
 
-        return 1;
+        return view('Admin/add-logo');
     }
 
     //执行添加
-    public function insert()
+    public function insert(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required',
+            'logo' => 'required',
+        ],[
+            'name.required' => '网站名不能为空',
+            'logo.required' => 'Logo不能为空',
+        ]);
+        $name = $request->input('name');
+        $logo = $request->input('logo');
+        //允许上传的图片格式
+        $allowExt = ['jpg', 'png', 'gif', 'jpeg'];
+        if( !$request->hasFile('logo') ){
 
+            return redirect('/admin/logo/add')->with('errorTip', '请上传网站logo');
+        }
+        // 获取文件扩展名
+        $extension = $request->logo->extension();
+        //判断是否合法图片类型
+        if (!in_array($extension, $allowExt)) {
+
+            return redirect('/admin/logo/add')->with('errorTip', '上传文件类型错误');
+        }
+        //获取文件临时路径
+        $filePath = $request->logo->path();
+        //生成文件名
+        $fileName = rand(0, 1000).time();
+        //处理图片
+        $file = ImageApi::attrImg($filePath, 80, 40, $fileName.'_80_40.'.$extension);
+        //上传到七牛云
+        // $ret = ImageApi::imgUp($filePath, $file);
+        $data = [ 'name' => $name, 'logo' => $file ];
+        // dd($data);
+        $results = DB::table('logo')->insert($data);
+        if ($results) {
+            
+            return redirect('admin/logo')->with('msg', '添加成功');
+        }
+
+        return back()->with('err', '添加失败');
     }
 
     public function edit($id)
@@ -90,7 +132,13 @@ class Logo extends Controller
 	            return '<script>parent.location.reload();</script>';
 	        }
         }else{
-        	return back()->with('errorTip', '修改失败');
+        	$bool = DB::table('logo')->where('id', $id)->update([
+                'name' => $name,
+            ]);
+            if ($bool) {
+                redirect('/admin/logo');
+                return '<script>parent.location.reload();</script>';
+            }
         }
 
     }

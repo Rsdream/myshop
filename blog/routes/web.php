@@ -75,8 +75,8 @@ Route::prefix('/admin')->group( function () {
             Route::get('/user','Admin\Administrator\UserController@index')->middleware('rbac.permission:user-list,user-create,user-show,user-details,user-delete,user-update,user-disable,user-stop');
             Route::get('/user/create','Admin\Administrator\UserController@create')->middleware('rbac.permission:user-create');
             Route::post('/user/create', 'Admin\Administrator\UserController@store')->middleware('rbac.permission:user-create');
-            Route::get('/user/{id}', 'Admin\Administrator\UserController@show')->middleware('rbac.permission:user-show');
-            Route::patch('/user/{id}', 'Admin\Administrator\UserController@update')->middleware('rbac.permission:user-update');
+            Route::get('/user/{id}', 'Admin\Administrator\UserController@show')->middleware('rbac.permission:user-show,user-update');
+            Route::post('/user/aa/{id}', 'Admin\Administrator\UserController@update')->middleware('rbac.permission:user-update,user-show');
             Route::get('/user/details/{id}', 'Admin\Administrator\UserController@details')->middleware('rbac.permission:user-details');
             Route::get('/user/disable/{id}', 'Admin\Administrator\UserController@disable')->middleware('rbac.permission:user-disable');
             Route::get('/user/desc/stop', 'Admin\Administrator\UserController@showDisable')->middleware('rbac.permission:user-stop');
@@ -90,6 +90,7 @@ Route::prefix('/admin')->group( function () {
         //网站logo的路由
         Route::get('logo', 'Admin\Systron\Logo@index');
         Route::get('addlogo', 'Admin\Systron\Logo@add');
+        Route::post('insertlogo', 'Admin\Systron\Logo@insert');
         Route::get('editlogo/{id}', 'Admin\Systron\Logo@edit');
         Route::post('update', 'Admin\Systron\Logo@update');
 
@@ -255,4 +256,7 @@ Route::get('/goods/list/{type}/{id}', 'Home\GoodsListController@list');
 Route::get('/goods/detail/{id}', 'Home\GoodsListController@goodsDetail');
 //home用户退出
 Route::get('/queit', 'Home\LoginController@queit');
+
+//热销商品路由
+Route::post('/hotsale', 'Home\IndexController@hotsale');
 

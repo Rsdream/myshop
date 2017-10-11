@@ -40,7 +40,7 @@ class LoginController extends Controller
 			}
 
 			//查询数据库
-			$user = Home_users::select(['id', 'pass', 'uid', 'name'])->where('uid',$name)->first();
+			$user = HomeUsers::select(['id', 'pass', 'uid', 'name'])->where('uid',$name)->first();
 
 			//判断密码
 			if (Hash::check($pass, $user->pass)) {

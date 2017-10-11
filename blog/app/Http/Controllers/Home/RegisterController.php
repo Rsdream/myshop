@@ -75,7 +75,8 @@ class RegisterController extends Controller
 
 
         //注册时间
-        $time = time();
+        $time =  time();
+        // dd($time);
 
         //验证码判断
         $bool = CommonApi::checkCode($request, 'ucode');
@@ -93,7 +94,6 @@ class RegisterController extends Controller
             $request->session()->flash('erro', '手机验证码错误!');
             return back();
         } else {
-
             //注册成功提交数据到数据库
             $user = DB::table('home_users')->insert(
                 [

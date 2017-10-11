@@ -76,14 +76,14 @@
 </header>
 <aside class="Hui-aside">
 	<div class="menu_dropdown bk_2">
-		<dl id="menu-article">
+		<!-- <dl id="menu-article">
 			<dt><i class="Hui-iconfont">&#xe616;</i> 资讯管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
 					<li><a data-href="{{url('admin/list')}}" data-title="资讯管理" href="javascript:void(0)">资讯管理</a></li>
 				</ul>
 			</dd>
-		</dl>
+		</dl> -->
 		<dl id="menu-picture">
 			<dt><i class="Hui-iconfont">&#xe613;</i> 图片管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
@@ -124,9 +124,13 @@
 			<dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
+				@permission ('role-list')
 					<li><a data-href="{{url('admin/rbac/role')}}" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-					<li><a data-href="{{url('admin/rbac/permission')}}" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
+				@endpermission
+					<!-- <li><a data-href="{{url('admin/rbac/permission')}}" data-title="权限管理" href="javascript:void(0)">权限管理</a></li> -->
+				@permission ('user-list')
 					<li><a data-href="{{url('admin/rbac/user')}}" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
+				@endpermission
 				</ul>
 			</dd>
 		</dl>
@@ -142,12 +146,12 @@
 			<dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li>
+					<!-- <li><a data-href="system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li> -->
 					<li><a data-href="{{url('admin/logo')}}" data-title="Logo管理" href="javascript:void(0)">Logo管理</a></li>
 					<li><a data-href="{{url('admin/url')}}" data-title="友情链接" href="javascript:void(0)">友情链接</a></li>
 					<li><a data-href="{{url('admin/feedback')}}" data-title="意见反馈" href="javascript:void(0)">意见反馈</a></li>
-					<li><a data-href="system-shielding.html" data-title="屏蔽词" href="javascript:void(0)">屏蔽词</a></li>
-					<li><a data-href="system-log.html" data-title="系统日志" href="javascript:void(0)">系统日志</a></li>
+					<!-- <li><a data-href="system-shielding.html" data-title="屏蔽词" href="javascript:void(0)">屏蔽词</a></li> -->
+					<!-- <li><a data-href="system-log.html" data-title="系统日志" href="javascript:void(0)">系统日志</a></li> -->
 				</ul>
 			</dd>
 		</dl>

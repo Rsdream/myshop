@@ -8,6 +8,11 @@ use App\Model\Admin\Role;
 use App\Model\Admin\Permission;
 use DB;
 
+/**
+ * @author [Dengjihua] <[<2563654031@qq.com>]>
+ *
+ * 用来对用户角色的增删改查等操作
+ */
 class RoleController extends Controller
 {
     public function index()
@@ -30,10 +35,15 @@ class RoleController extends Controller
     {
     	$this->validate($request, [
 
-    		'name' => 'required|unique:roles,name',
+    		'name' => 'required',
     		'display_name' => 'required',
     		'description' => 'required',
-    	]);
+    	],[
+
+            'name.required' => '请填写角色名',
+            'display_name.required' => '请填写列表名',
+            'description.required' => '请填写描述',
+        ]);
 
     	$role = new Role;
     	$role->name = $request->input('name');
@@ -49,6 +59,8 @@ class RoleController extends Controller
     public function show($id)
     {
     	$role = Role::find($id);
+
+        //查询出权限信息
         $permission = Permission::select('id', 'name', 'display_name', 'description')->get();
     	return view('Admin/admin-role-edit', ['role' => $role, 'permission' => $permission]);
     }

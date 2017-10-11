@@ -30,11 +30,6 @@
 	<link rel="stylesheet" href="{{asset('Home/css/app-responsive.css')}}" />
 	<link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
 	<style>
-		#b123{
-			width: 33%;
-			float: left;
-		}
-
 		.block{
 
 			display:block;
@@ -48,6 +43,9 @@
 		}
 		#display{
 			display: block;
+		}
+		#yin{
+			display: none;
 		}
 	</style>
 </head>
@@ -64,6 +62,12 @@
 				            {{ session('msg') }}
 				        </div>
 				    @endif
+
+				    @if (session('err'))
+				        <div id="time" class="alert alert-danger">
+				            {{ session('err') }}
+				        </div>
+				    @endif
 						<!-- SIDEBAR TOP MENU -->
 						<div class="pull-left top1">
 							<div class="widget text-2 widget_text pull-left">
@@ -71,7 +75,10 @@
 									<div class="textwidget">
 
 										<div class="call-us">
-											<span>欢迎</span><span>来到ETRO商城</span>
+											<span>欢迎</span>
+											@if ($logo) 
+											<span>来到{{$logo->name}}</span>
+											@endif
 											@if (session()->has('userinfo') && isset(session('userinfo')['name']))
 												{{session('userinfo')['name']}}
 												<a href="{{url('/queit')}}">退出</a>
@@ -202,10 +209,12 @@
 						<!-- LOGO -->
 						<div class="etrostore-logo pull-left" >
 
+							@if ($logo)
 							<a href="#" >
 								<img src="{{asset($logo->logo)}}" alt="Shoopy" >
 								
 							</a>
+							@endif
 						</div>
 
 						<div class="mid-header pull-right">
@@ -1538,39 +1547,6 @@
 								</div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 								<div class="vc_row wpb_row vc_row-fluid margin-bottom-60">
 									<div class="wpb_column vc_column_container vc_col-sm-12">
 										<div class="vc_column-inner ">
@@ -1610,20 +1586,13 @@
 													</div>
 
 
-
-
-
-
-
-
-
-
 													<div class="content-slider" >
 
 														<div class="childcat-slider-content clearfix"  >
 															<div class="resp-slider-container" id="old" style="border:1px solid #ccc">
+															@if($phone)
 																@foreach($phone as $good)
-																<div id="b123" style="border-bottom:1px solid #ccc;border-left:1px solid #ccc;padding:3px;" class="block">
+																<div style="border:1px solid #ccc;padding:3px;float:left;width: 33.33333%;" >
 																
 																	<div class="item product" >
 																		<div class="item-wrap">
@@ -1697,6 +1666,7 @@
 																</div>
 
 															@endforeach	
+															@endif
 															</div>
 														</div>
 
@@ -3613,108 +3583,124 @@
    <!-- 热销商品的js -->
 	<script>
 		
-		$('#relagood').on('mouseenter', 'a', function () {
+		$('#relagood').on('click', 'a', function () {
 
 			//获取到id
 			var id = $(this).attr('data-id');
 
-			$(this).attr('data-ajax');
-
 			var url = "{{url('/hotsale')}}";
+			var that = $(this);
 
-			$('.block').css('display','none');
-
-
-        	$.ajax({
-
-        		type:"post",
-        		url:url,
-        		data:"id="+id+'&_token={{csrf_token()}}',
-        		success:function (data) {
+			//添加一个属性，隐藏
+			$('#old').children().attr('id', 'yin');
 
 
-        			var str = '';
+			if($('div[display='+id+']').length > 0){
+				$('div[display='+id+']').attr('id', 'display')
+				return;
+			}
 
-        			for (var i=0; i<data.length; i++) {
+			var bool = that.attr('haverequested');
+			if (bool != 1) {
 
-        				str += `<div id="b123" style="border-bottom:1px solid #ccc;border-left:1px solid #ccc;padding:3px;" class="block">
-										
-									<div class="item product" >
-										<div class="item-wrap">
-											<div class="item-detail">
-												<div class="item-content">
+				$.ajax({
 
-													<h4>
-														<a href="simple_product.html" title="nisi ball tip">`+data[i].gname+`</a>
-													</h4>
+	        		type:"post",
+	        		url:url,
+	        		data:"id="+id+'&_token={{csrf_token()}}',
+	        		success:function (data) {
 
-													<!-- Price -->
-													
-													<div class="item-price">
-														<span>
-															<ins>
-																<span class="woocommerce-Price-amount amount">
-																	<span class="woocommerce-Price-currencySymbol">$</span>666
-																</span>
-															</ins>
-														</span>
+
+	        			var str = '';
+
+	        			for (var i=0; i<data.length; i++) {
+
+	        				str += `<div id='display' display='`+id+`' style="border:1px solid #ccc;padding:3px;float:left;width: 33.33333%;" >
+											
+										<div class="item product" >
+											<div class="item-wrap">
+												<div class="item-detail">
+													<div class="item-content">
+
+														<h4>
+															<a href="simple_product.html" title="nisi ball tip">`+data[i].gname+`</a>
+														</h4>
+
+														<!-- Price -->
+														
+														<div class="item-price">
+															<span>
+																<ins>
+																	<span class="woocommerce-Price-amount amount">
+																		<span class="woocommerce-Price-currencySymbol">$</span>666
+																	</span>
+																</ins>
+															</span>
+														</div>
+														
+														
+														<div class="sale-off">-10%</div>
 													</div>
-													
-													
-													<div class="sale-off">-10%</div>
-												</div>
 
-												<div class="item-img products-thumb">
-													<span class="onsale">Sale!</span>
+													<div class="item-img products-thumb">
+														<span class="onsale">Sale!</span>
 
-													<a href="simple_product.html">
-														<div class="product-thumb-hover">
-															<img 	width="300" height="300" src="`+$.parseJSON(data[i].gpic)[0]+`" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																	srcset="`+$.parseJSON(data[i].gpic)[0]+` 300w, `+$.parseJSON(data[i].gpic)[0]+` 150w, `+$.parseJSON(data[i].gpic)[0]+` 180w, `+$.parseJSON(data[i].gpic)[0]+` 500w"
-																	sizes="(max-width: 300px) 100vw, 300px" />
+														<a href="simple_product.html">
+															<div class="product-thumb-hover">
+																<img 	width="300" height="300" src="`+$.parseJSON(data[i].gpic)[0]+`" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
+																		srcset="`+$.parseJSON(data[i].gpic)[0]+` 300w, `+$.parseJSON(data[i].gpic)[0]+` 150w, `+$.parseJSON(data[i].gpic)[0]+` 180w, `+$.parseJSON(data[i].gpic)[0]+` 500w"
+																		sizes="(max-width: 300px) 100vw, 300px" />
+															</div>
+														</a>
+
+														<!-- add to cart, wishlist, compare -->
+														<div class="item-bottom clearfix">
+															<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
+
+															<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
+
+															<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
+																<div class="yith-wcwl-add-button show" style="display:block">
+																	<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+																	<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+																</div>
+
+																<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+																	<span class="feedback">Product added!</span>
+																	<a href="#" rel="nofollow">Browse Wishlist</a>
+																</div>
+
+																<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
+																	<span class="feedback">The product is already in the wishlist!</span>
+																	<a href="#" rel="nofollow">Browse Wishlist</a>
+																</div>
+
+																<div style="clear:both"></div>
+																<div class="yith-wcwl-wishlistaddresponse"></div>
+															</div>
+
+															<div class="clear"></div>
+															<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
 														</div>
-													</a>
-
-													<!-- add to cart, wishlist, compare -->
-													<div class="item-bottom clearfix">
-														<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-														<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-														<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-															<div class="yith-wcwl-add-button show" style="display:block">
-																<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-															</div>
-
-															<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																<span class="feedback">Product added!</span>
-																<a href="#" rel="nofollow">Browse Wishlist</a>
-															</div>
-
-															<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																<span class="feedback">The product is already in the wishlist!</span>
-																<a href="#" rel="nofollow">Browse Wishlist</a>
-															</div>
-
-															<div style="clear:both"></div>
-															<div class="yith-wcwl-wishlistaddresponse"></div>
-														</div>
-
-														<div class="clear"></div>
-														<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</div>`;	
-        			}
-        			
-					$('#old').append(str);
-        		},
-        		dataType:'json'
-        	});
+									</div>`;	
+	        			}
+	        			
+						that.attr('haverequested', 1);
+		        		$('#old').append(str);
+
+		        		if (data == '404') {
+		        			var str = `<div id='display' display='`+id+`'  >没有商品了</div>`;
+		        			$('#old').append(str);
+		        		}
+	        		},
+	        		dataType:'json'
+	        	});
+			}
+        	
 		});
 
 

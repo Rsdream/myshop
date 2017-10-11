@@ -10,12 +10,14 @@
 <script type="text/javascript" src="lib/html5shiv.js"></script>
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <![endif]-->
+
+<link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui/css/H-ui.min.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui.admin/css/H-ui.admin.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/lib/Hui-iconfont/1.0.8/iconfont.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui.admin/skin/default/skin.css')}}" id="skin" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui.admin/css/style.css')}}" />
-<link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
+
 <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -26,9 +28,19 @@
 </head>
 <body>
 <article class="page-container">
-    
+
+    @if (session('msg'))
+        <div id="time" class="alert alert-success">
+            {{ session('msg') }}
+        </div>
+    @endif
+    @if (session('err'))
+        <div id="time" class="alert alert-danger">
+            {{ session('err') }}
+        </div>
+    @endif
     @if (count($errors) > 0)
-        <div class="alert alert-danger" id="time">
+        <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -36,72 +48,22 @@
             </ul>
         </div>
     @endif
-    <form class="form form-horizontal" id="form-admin-add" action="{{url('admin/rbac/user/create')}}" method="post">
+    
+    <form class="form form-horizontal" id="form-admin-add" action="{{url('/admin/insertlogo')}}" method="post" enctype="multipart/form-data">
 
 
     {{csrf_field()}}
-
-    <input type="hidden" value="0" name="status">
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>账号</label>
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>网站名</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" class="input-text" value="" placeholder="" id="adminName" name="uid">
+            <input type="text" class="input-text"  value="" placeholder="" id="adminName" name="name">
         </div>
     </div>
 
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户名</label>
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>网站Logo</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" class="input-text" value="" placeholder="" id="adminName" name="name">
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="password" class="input-text" autocomplete="off" value="" placeholder="密码" id="password" name="pass">
-        </div>
-    </div>
-
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
-        <div class="formControls col-xs-8 col-sm-9 skin-minimal">
-            <div class="radio-box">
-                <input name="sex" type="radio" id="sex-1" value="1" >
-                <label for="sex-1">男</label>
-            </div>
-            <div class="radio-box">
-                <input type="radio" id="sex-2" value="0" name="sex" >
-                <label for="sex-2">女</label>
-            </div>
-        </div>
-    </div>
-
-    <input type="hidden" value="0" name="status">
-
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" class="input-text" value="" placeholder="" id="phone" name="phone">
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>地址：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" class="input-text" value="" placeholder="" id="phone" name="address">
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" class="input-text" placeholder="@" name="email" id="email" value="">
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3">角色：</label>
-        <div class="formControls col-xs-8 col-sm-9"> 
-            @foreach($role as $v)
-                <label><input type="checkbox" name="roles[]" value="{{$v->id}}">{{$v->name}}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            @endforeach
+            <input id="upload" name="logo" accept="image/gif,image/jpeg,image/jpg,image/png" accept="image/*" type="file" >
         </div>
     </div>
     <div class="row cl">
@@ -123,7 +85,6 @@
 <script type="text/javascript" src="{{asset('/Admin/lib/jquery.validation/1.14.0/validate-methods.js')}}"></script> 
 <script type="text/javascript" src="{{asset('/Admin/lib/jquery.validation/1.14.0/messages_zh.js')}}"></script> 
 <script type="text/javascript">
-
 setTimeout(function () {
 
     $('#time').removeClass().html('');

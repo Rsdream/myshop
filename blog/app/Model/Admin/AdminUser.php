@@ -28,6 +28,7 @@ class AdminUser extends Model
 
     	$data = session('admin_users');
 
+
         // 得出用户的角色
         foreach ($data as $value) {
             //permission是一个属性

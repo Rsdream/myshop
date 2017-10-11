@@ -14,6 +14,7 @@ class IndexController extends Controller
 	public function index()
 	{
 
+        // dd(session('userinfo'));
         //查询所有类别
         $category = DB::table('home_category')->select('name', 'id')->get()->toArray();
         // 得到手机的类别id
@@ -44,7 +45,7 @@ class IndexController extends Controller
 
 
         //网站Logo
-        $logo = DB::table('logo')->select('id', 'name', 'logo')->where('id', '=', '1')->first();
+        $logo = DB::table('logo')->select('id', 'name', 'logo')->first();
 
         $seckillList = DB::table('goods')
             ->leftJoin('price', 'goods.id', '=', 'price.gid')
@@ -61,10 +62,9 @@ class IndexController extends Controller
 	}
 
 
-	//接收ajax传过来的id，查出对应类别的商品
+	// 热销商品 接收ajax传过来的id，查出对应类别的商品
 	public function hotSale()
 	{
-
 		// var_dump($_POST);
 		$id = $_POST['id'];
 		// var_dump($id);
@@ -86,13 +86,15 @@ class IndexController extends Controller
                 ->get()
                 ->toArray();
             //将商品放入缓存中
-            Cache::put('Hgoods'.$id, $hotProduct,1);
+            Cache::put('Hgoods'.$id, $hotProduct, 60*24);
 
         }
 		
 		if ($hotProduct) {
 			echo json_encode($hotProduct);
-		}
+		} else {
+            echo '404';
+        }
 
 	}
     
