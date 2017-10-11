@@ -134,7 +134,8 @@
 			<dt><i class="Hui-iconfont">&#xe61a;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="charts-1.html" data-title="折线图" href="javascript:void(0)">订单详情</a></li>
+					<li><a data-href="{{url('admin/order')}}" data-title="订单详情" href="javascript:void(0)">订单详情</a></li>
+					<li><a data-href="{{url('admin/order/back')}}" data-title="订单详情" href="javascript:void(0)">退款详情</a></li>
 				</ul>
 			</dd>
 		</dl>

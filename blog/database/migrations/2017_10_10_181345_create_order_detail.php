@@ -13,8 +13,6 @@ class CreateOrderDetail extends Migration
      */
     public function up()
     {
-
-
         //地址表
         Schema::create('orders_address', function (Blueprint $table) {
             $table->increments('id');
@@ -40,36 +38,9 @@ class CreateOrderDetail extends Migration
             $table->string('phone');
             $table->string('comment')->nullable();
             $table->integer('status')->unsigned()->default(0);
-            $table->timestamps();             
-        });        
-
-        //订单商品表
-        Schema::create('orders_goods', function (Blueprint $table) {
-            $table->increments('id');            
-            $table->integer('oid');            
-            $table->string('gid');
-            $table->string('gname');
-            $table->string('gpic');
-            $table->integer('gnum');
-            $table->integer('gprice');
+            $table->integer('back_status')->unsigned()->default(0);
             $table->timestamps();             
         });
-
-
-        //订单评论表
-        Schema::create('orders_comment', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('orders_id')->unsigned();
-            $table->string('comment');
-            $table->timestamps();
-
-            $table->foreign('orders_id')
-                  ->references('id')->on('orders_comment')
-                  ->onUpdate('cascade')->onDelete('cascade');
-        });
-        
-        
-
     }
 
     /**
@@ -79,9 +50,6 @@ class CreateOrderDetail extends Migration
      */
     public function down()
     {
-
-        Schema::drop('orders_comment');
-        Schema::drop('orders_detail');        
-        Schema::drop('orders_address');
+        //
     }
 }

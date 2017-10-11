@@ -615,7 +615,7 @@
 
 									<div class="order-main">
 										<div class="order-list">
-											<?php $total=0 ?>
+											<?php $total=0 ?>											
 											@foreach ($orders as $v)
 											<!--交易成功-->
 											<div class="order-status5">
@@ -631,7 +631,7 @@
 															<li class="td td-item">
 																<div class="item-pic">
 																	<a href="#" class="J_MakePoint">
-																		<img src="" class="itempic J_ItemImg">
+																		<img src="{{url('/').json_decode($k->gpic, true)[0]}}" class="itempic J_ItemImg">
 																	</a>
 																</div>
 																<div class="item-info">
@@ -675,14 +675,22 @@
 															<li class="td td-status">
 																<div class="item-status">
 																	<p class="Mystatus">交易状态</p>
-																	<p class="order-info"><a href="orderinfo.html">交易中</a></p>
-																	<p class="order-info"><a href="logistics.html">查看物流</a></p>
+																	<?php if ($v->status == 3) { ?>
+																	<p class="order-info"><a href="javascript:;">交易完成</a></p>
+																	<?php } else {?>
+																	<p class="order-info"><a href="javascript:;">交易中</a></p>
+																	<?php } ?>
+																	<p class="order-info"><a href='{{url("/order/backlist?id=$v->number")}}'>申请退款</a></p>
 																</div>
 															</li>
-															<?php $arr=[0=>'等待发货', 1=>'确认收货', 2=>'等待评价'] ?>
+															<?php $arr=[0=>'等待发货', 1=>'确认收货', 2=>'等待评价', 3=>'订单完成'] ?>
 															<li class="td td-change">
-																<div class="am-btn am-btn-danger anniu">
-																	{{$arr[$v->status]}}</div>
+															    <?php if($v->status == 2) { ?>
+																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'>{{$arr[$v->status]}}</a></div>
+																<?php } else { ?>
+																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this)">{{$arr[$v->status]}}</div>
+																<?php } ?>
+
 															</li>
 														</div>
 													</div>
@@ -2009,5 +2017,31 @@
       	b[c] += ( window.postMessage && request ? ' ' : ' no-' ) + cs;
    </script>
    <!--<![endif]-->
+   <script type="text/javascript">
+
+    //订单状态修改
+    function change(id, obj) {
+    	var status = $(obj).html();
+
+    	$.ajax({
+    		type : 'post',
+    		url  : '{{url("order/change")}}',
+    		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
+    		success:function(data) {
+
+    			if (data == '修改失败') {
+    				alert(data);
+    				return;
+    			} else if (data == '等待评价') {
+    				$(obj).html("<a href ='{{url("/order/commentlist/?number=$v->number")}}'>"+data+"</a>");
+    				return;
+    			}
+    			$(obj).html(data);
+    		},
+    		dataType : 'json',
+    	})
+    }
+
+   </script>
    </body>
 </html>

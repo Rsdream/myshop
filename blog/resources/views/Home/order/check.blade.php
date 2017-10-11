@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="{{asset('Home/css/slick-1.6.0/slick.css')}}" />
 	<style type="text/css">
 	    *{text-decoration: none;list-style: none}
+	    .button a:hover{background: #D35D1F}
 	</style>
 
 	<link rel="stylesheet" href="{{asset('Home/css/jquery.fancybox.css')}}" />
@@ -753,7 +754,9 @@
 
 									<div id="holyshit269" class="submitOrder">
 										<div class="go-btn-wrap">
+										<div class="button">
 											<a id="J_Go" href="javascript:;" class="btn-go" tabindex="0" title="点击此按钮，提交订单">提交订单</a>
+										<div>
 										</div>
 									</div>
 									<div class="clear"></div>
