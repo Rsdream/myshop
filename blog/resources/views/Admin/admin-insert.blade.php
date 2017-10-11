@@ -25,82 +25,82 @@
 </head>
 <body>
 <article class="page-container">
-	
-	
-	<form class="form form-horizontal" id="form-admin-add" action="{{url('admin/adminlist')}}" method="post">
+    
+    
+    <form class="form form-horizontal" id="form-admin-add" action="{{url('admin/adminlist')}}" method="post">
 
 
-	{{csrf_field()}}
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>账号</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="adminName" name="uid">
-		</div>
-	</div>
+    {{csrf_field()}}
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>账号</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" value="" placeholder="" id="adminName" name="uid">
+        </div>
+    </div>
 
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户名</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="adminName" name="name">
-		</div>
-	</div>
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码：</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="password" class="input-text" autocomplete="off" value="" placeholder="密码" id="password" name="pass">
-		</div>
-	</div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户名</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" value="" placeholder="" id="adminName" name="name">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="password" class="input-text" autocomplete="off" value="" placeholder="密码" id="password" name="pass">
+        </div>
+    </div>
 
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
-		<div class="formControls col-xs-8 col-sm-9 skin-minimal">
-			<div class="radio-box">
-				<input name="sex" type="radio" id="sex-1" value="1" >
-				<label for="sex-1">男</label>
-			</div>
-			<div class="radio-box">
-				<input type="radio" id="sex-2" value="0" name="sex" >
-				<label for="sex-2">女</label>
-			</div>
-		</div>
-	</div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
+        <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+            <div class="radio-box">
+                <input name="sex" type="radio" id="sex-1" value="1" >
+                <label for="sex-1">男</label>
+            </div>
+            <div class="radio-box">
+                <input type="radio" id="sex-2" value="0" name="sex" >
+                <label for="sex-2">女</label>
+            </div>
+        </div>
+    </div>
 
-	<input type="hidden" value="0" name="status">
+    <input type="hidden" value="0" name="status">
 
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="phone" name="phone">
-		</div>
-	</div>
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>地址：</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="phone" name="address">
-		</div>
-	</div>
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" placeholder="@" name="email" id="email" value="">
-		</div>
-	</div>
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3">角色：</label>
-		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
-			<select class="select" name="power" size="1">
-				<option value="0" name="power" >普通管理员</option>
-				<option value="1" name="power" >超级管理员</option>
-				<option value="2" name="power" >老大</option>
-			</select>
-			</span> </div>
-	</div>
-	<div class="row cl">
-		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
-		</div>
-	</div>
-	</form>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" value="" placeholder="" id="phone" name="phone">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>地址：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" value="" placeholder="" id="phone" name="address">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="@" name="email" id="email" value="">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-3">角色：</label>
+        <div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
+            <select class="select" name="power" size="1">
+                <option value="0" name="power" >普通管理员</option>
+                <option value="1" name="power" >超级管理员</option>
+                <option value="2" name="power" >老大</option>
+            </select>
+            </span> </div>
+    </div>
+    <div class="row cl">
+        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+            <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+        </div>
+    </div>
+    </form>
 </article>
 
 <!--_footer 作为公共模版分离出去--> 
@@ -115,60 +115,60 @@
 <script type="text/javascript" src="{{asset('/Admin/lib/jquery.validation/1.14.0/messages_zh.js')}}"></script> 
 <script type="text/javascript">
 // $(function(){
-// 	$('.skin-minimal input').iCheck({
-// 		checkboxClass: 'icheckbox-blue',
-// 		radioClass: 'iradio-blue',
-// 		increaseArea: '20%'
-// 	});
-	
-// 	$("#form-admin-add").validate({
-// 		rules:{
-// 			adminName:{
-// 				required:true,
-// 				minlength:4,
-// 				maxlength:16
-// 			},
-// 			password:{
-// 				required:true,
-// 			},
-// 			password2:{
-// 				required:true,
-// 				equalTo: "#password"
-// 			},
-// 			sex:{
-// 				required:true,
-// 			},
-// 			phone:{
-// 				required:true,
-// 				isPhone:true,
-// 			},
-// 			email:{
-// 				required:true,
-// 				email:true,
-// 			},
-// 			adminRole:{
-// 				required:true,
-// 			},
-// 		},
-// 		onkeyup:false,
-// 		focusCleanup:true,
-// 		success:"valid",
-// 		submitHandler:function(form){
-// 			$(form).ajaxSubmit({
-// 				type: 'post',
-// 				url: "xxxxxxx" ,
-// 				success: function(data){
-// 					layer.msg('添加成功!',{icon:1,time:1000});
-// 				},
+//  $('.skin-minimal input').iCheck({
+//      checkboxClass: 'icheckbox-blue',
+//      radioClass: 'iradio-blue',
+//      increaseArea: '20%'
+//  });
+    
+//  $("#form-admin-add").validate({
+//      rules:{
+//          adminName:{
+//              required:true,
+//              minlength:4,
+//              maxlength:16
+//          },
+//          password:{
+//              required:true,
+//          },
+//          password2:{
+//              required:true,
+//              equalTo: "#password"
+//          },
+//          sex:{
+//              required:true,
+//          },
+//          phone:{
+//              required:true,
+//              isPhone:true,
+//          },
+//          email:{
+//              required:true,
+//              email:true,
+//          },
+//          adminRole:{
+//              required:true,
+//          },
+//      },
+//      onkeyup:false,
+//      focusCleanup:true,
+//      success:"valid",
+//      submitHandler:function(form){
+//          $(form).ajaxSubmit({
+//              type: 'post',
+//              url: "xxxxxxx" ,
+//              success: function(data){
+//                  layer.msg('添加成功!',{icon:1,time:1000});
+//              },
 //                 error: function(XmlHttpRequest, textStatus, errorThrown){
-// 					layer.msg('error!',{icon:1,time:1000});
-// 				}
-// 			});
-// 			var index = parent.layer.getFrameIndex(window.name);
-// 			parent.$('.btn-refresh').click();
-// 			parent.layer.close(index);
-// 		}
-// 	});
+//                  layer.msg('error!',{icon:1,time:1000});
+//              }
+//          });
+//          var index = parent.layer.getFrameIndex(window.name);
+//          parent.$('.btn-refresh').click();
+//          parent.layer.close(index);
+//      }
+//  });
 // });
 </script> 
 <!--/请在上方写此页面业务相关的脚本-->

@@ -28,24 +28,59 @@
 	<link rel="stylesheet" href="{{asset('Home/css/app-orange.css')}}" id="theme_color" />
 	<link rel="stylesheet" href="" id="rtl" />
 	<link rel="stylesheet" href="{{asset('Home/css/app-responsive.css')}}" />
+	<link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
+	<style>
+		#b123{
+			width: 33%;
+			float: left;
+		}
+
+		.block{
+
+			display:block;
+		}
+		.hidden{
+			display: none;
+		}
+		.box{
+
+			display: none;
+		}
+		#display{
+			display: block;
+		}
+	</style>
 </head>
 
-<body class="page page-id-6 home-style1">
-
-
-
-
+<body class="page page-id-6 home-style1" >
 	<div class="body-wrapper theme-clearfix">
 		<header id="header" class="header header-style1">
 			<div class="header-top clearfix">
 				<div class="container">
 					<div class="rows">
+
+					@if (session('msg'))
+				        <div id="time" class="alert alert-success">
+				            {{ session('msg') }}
+				        </div>
+				    @endif
 						<!-- SIDEBAR TOP MENU -->
 						<div class="pull-left top1">
 							<div class="widget text-2 widget_text pull-left">
 								<div class="widget-inner">
 									<div class="textwidget">
-										<div class="call-us"><span>欢迎</span>xxx<span>来到ETRO商城</span></div>
+
+										<div class="call-us">
+											<span>欢迎</span><span>来到ETRO商城</span>
+											@if (session()->has('userinfo') && isset(session('userinfo')['name']))
+												{{session('userinfo')['name']}}
+												<a href="{{url('/queit')}}">退出</a>
+											@elseif (session()->has('userinfo') && isset(session('userinfo')['uid']))
+												{{session('userinfo')['uid']}}
+												<a href="{{url('/queit')}}">退出</a>
+											@endif
+										</div>
+
 									</div>
 								</div>
 							</div>
@@ -56,22 +91,9 @@
 										<div id="lang_sel">
 											<ul class="nav">
 												<li>
-													<a class="lang_sel_sel icl-en">
-														<!-- <img class="iclflag" title="English" alt="en" src="{{asset('Home/images/icons/en.png')}}" width="18" height="12" /> --> 会员登录
-													</a>
-<!-- 													<ul>
-														<li class="icl-en">
-															<a href="#">
-																<img class="iclflag" title="English" alt="en" src="{{asset('Home/images/icons/en.png')}}" width="18" height="12" /> English
-															</a>
-														</li>
-
-														<li class="icl-ar">
-															<a href="#">
-																<img class="iclflag" title="Arabic" alt="ar" src="{{asset('Home/images/icons/ar.png')}}" width="18" height="12" /> Arabic
-															</a>
-														</li>
-													</ul> -->
+													@if (!session()->has('userinfo'))
+													<a href="{{url('/login')}}" class="lang_sel_sel icl-en">会员登录</a>
+													@endif
 												</li>
 											</ul>
 										</div>
@@ -84,7 +106,9 @@
 									<form method="post" class="currency_converter" action="">
 										<ul class="currency_w">
 											<li>
-												<a href="#" class="">会员注册</a>
+												@if (!session()->has('userinfo'))
+												<a href="{{url('/login')}}" class="">会员注册</a>
+												@endif
 <!-- 												<ul class="currency_switcher">
 													<li><a href="#" class="reset default active" data-currencycode="USD">USD</a></li>
 													<li><a href="#" class="" data-currencycode="EUR">EUR</a></li>
@@ -95,7 +119,6 @@
 								</div>
 							</div>
 						</div>
-
 						<div class="wrap-myacc pull-right">
 							<div class="sidebar-account pull-left">
 								<div class="account-title">我的管理</div>
@@ -177,9 +200,11 @@
 				<div class="container">
 					<div class="rows">
 						<!-- LOGO -->
-						<div class="etrostore-logo pull-left">
-							<a href="#">
-								<img src="{{asset('Home/images/icons/logo-orange.png')}}" alt="Shoopy">
+						<div class="etrostore-logo pull-left" >
+
+							<a href="#" >
+								<img src="{{asset($logo->logo)}}" alt="Shoopy" >
+								
 							</a>
 						</div>
 
@@ -746,6 +771,7 @@
 																		</div>
 
 																		<ul id="menu-vertical-menu-1" class="nav vertical-megamenu etrostore-mega etrostore-menures">
+
 																			<li class="fix-menu dropdown menu-smartphones-tablet etrostore-mega-menu level">
 																				<a href="simple_product.html" class="item-link">
 																					<span class="have-title">
@@ -1008,6 +1034,14 @@
 																								</a>
 																							</li>
 
+																							<li class="menu-laptop-desktop-accessories">
+																								<a href="#">
+																									<span class="have-title">
+																										<span class="menu-title">Laptop & Desktop Accessories</span>
+																									</span>
+																								</a>
+																							</li>
+
 																							<li class="menu-storage-external-drives">
 																								<a href="#">
 																									<span class="have-title">
@@ -1227,279 +1261,11 @@
 																				</a>
 																			</li>
 
-																			<li class="dropdown menu-electronic-component etrostore-mega-menu level1">
-																				<a href="simple_product.html" class="item-link dropdown-toggle">
-																					<span class="have-title">
-																						<span class="menu-color" data-color="#f03442"></span>
 
-																						<span class="menu-title">Electronic Component</span>
-																					</span>
-																				</a>
 
-																				<ul class="dropdown-menu nav-level1 column-3">
-																					<li class="dropdown-submenu column-3 menu-electronics etrostore-menu-img">
-																						<a href="#">
-																							<span class="have-title">
-																								<span class="menu-img">
-																									<img src="{{asset('Home/images/1903/menu-bn7.jpg')}}" alt="Menu Image" />
-																								</span>
 
-																								<span class="menu-title">Electronics</span>
-																							</span>
-																						</a>
 
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-leds">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Leds</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-laptop-desktop-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Laptop & Desktop Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-storage-external-drives">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Storage & External Drives</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-networking-wireless">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Networking & Wireless</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-motherboards-cpus-psus">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Motherboards, CPUs & PSUs</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-webcams">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Webcams</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-gaming-mice">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Gaming Mice</span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-
-																					<li class="dropdown-submenu column-3 menu-smartphone etrostore-menu-img">
-																						<a href="#">
-																							<span class="have-title">
-																								<span class="menu-img">
-																									<img src="{{asset('Home/images/1903/menu-bn8.jpg')}}" alt="Menu Image" />
-																								</span>
-
-																								<span class="menu-title">Smartphone</span>
-																							</span>
-																						</a>
-
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-smartphones">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Smartphones</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-mobile-phones">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Mobile Phones</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-smart-watches-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Smart Watches & Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-mobile-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Mobile Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-cases-covers">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Cases & Covers</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-power-banks">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Power Banks</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-memory-cards">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Memory Cards</span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-
-																					<li class="dropdown-submenu column-3 menu-tablet etrostore-menu-img">
-																						<a href="#">
-																							<span class="have-title">
-																								<span class="menu-img">
-																									<img src="{{asset('Home/images/1903/menu-bn9.jpg')}}" alt="Menu Image" />
-																								</span>
-
-																								<span class="menu-title">Tablet</span>
-																							</span>
-																						</a>
-
-																						<ul class="dropdown-sub nav-level2">
-																							<li class="menu-tablets">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Tablets</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-tablet-accessories">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Tablet Accessories</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-cases-covers">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Cases & Covers</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-power-banks">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Power Banks</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-memory-cards">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Memory Cards</span>
-																									</span>
-																								</a>
-																							</li>
-
-																							<li class="menu-headphonesheadsets">
-																								<a href="#">
-																									<span class="have-title">
-																										<span class="menu-title">Headphones/Headsets</span>
-																									</span>
-																								</a>
-																							</li>
-																						</ul>
-																					</li>
-																				</ul>
-																			</li>
-
-																			<li class="menu-home-appliances etrostore-menu-custom level1">
-																				<a href="simple_product.html" class="item-link">
-																					<span class="have-title">
-																						<span class="menu-color" data-color="#f034ca"></span>
-
-																						<span class="menu-title">Home Appliances</span>
-																					</span>
-																				</a>
-																			</li>
-
-																			<li class="menu-home-furniture etrostore-menu-custom level1">
-																				<a href="simple_product.html" class="item-link">
-																					<span class="have-title">
-																						<span class="menu-color" data-color="#7745bc"></span>
-
-																						<span class="menu-title">Home Furniture</span>
-																					</span>
-																				</a>
-																			</li>
-
-																			<li class="menu-household-goods etrostore-menu-custom level1">
-																				<a href="simple_product.html" class="item-link">
-																					<span class="have-title">
-																						<span class="menu-color" data-color="#42b8d1"></span>
-
-																						<span class="menu-title">Household Goods</span>
-																					</span>
-																				</a>
-																			</li>
-
-																			<li class="menu-television etrostore-menu-custom level1">
-																				<a href="simple_product.html" class="item-link">
-																					<span class="have-title">
-																						<span class="menu-color" data-color="#3f5eca"></span>
-
-																						<span class="menu-title">Television</span>
-																					</span>
-																				</a>
-																			</li>
-
-																			<li class="menu-accessories-for-tablet etrostore-menu-custom level1">
-																				<a href="simple_product.html" class="item-link">
-																					<span class="have-title">
-																						<span class="menu-color" data-color="#13528c"></span>
-
-																						<span class="menu-title">Accessories for Tablet</span>
-																					</span>
-																				</a>
-																			</li>
-
-																			<li class="menu-laptops-accessories etrostore-menu-custom level1">
-																				<a href="simple_product.html" class="item-link">
-																					<span class="have-title">
-																						<span class="menu-color" data-color="#2f2e2e"></span>
-
-																						<span class="menu-title">Laptops & Accessories</span>
-																					</span>
-																				</a>
-																			</li>
+																			
 
 																			<li class="menu-blender etrostore-menu-custom level1" style="display: none;">
 																				<a href="simple_product.html" class="item-link">
@@ -1668,7 +1434,7 @@
 												<div id="_sw_countdown_01" class="sw-woo-container-slider responsive-slider countdown-slider" data-lg="5" data-md="4" data-sm="2" data-xs="1" data-mobile="1" data-speed="1000" data-scroll="1" data-interval="5000" data-autoplay="false" data-circle="false">
 													<div class="resp-slider-container">
 														<div class="box-title clearfix">
-															<h3>Today deals</h3>
+															<h3>秒杀 商品</h3>
 															<a href="deals.html">See all</a>
 														</div>
 
@@ -1678,509 +1444,91 @@
 																	sizes="(max-width: 195px) 100vw, 195px" />
 														</div>
 
-														<div class="slider responsive">
-															<div class="item-countdown product " id="product_sw_countdown_02">
-																<div class="item-wrap">
-																	<div class="item-detail">
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star">
-																					<span style="width:35px"></span>
+														<div class="slider responsive" id='seckill'>
+															@foreach($seckillList as $v)
+																<div class="item-countdown product" id="product_sw_countdown_07">
+																	<div class="item-wrap">
+																		<div class="item-detail">
+																			<div class="item-content">
+																				<!-- rating  -->
+																				<div class="reviews-content">
+																					<div class="star"></div>
+																					<div class="item-number-rating">{{$v->workoff}} 人已购买</div>
 																				</div>
-
-																				<div class="item-number-rating">2 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="veniam dolore">veniam dolore</a>
-																			</h4>
-
-																			<!-- Price -->
-																			<div class="item-price">
-																				<span>
-																					<del>
-																						<span class="woocommerce-Price-amount amount">
-																							<span class="woocommerce-Price-currencySymbol">$</span>250.00
-																						</span>
-																					</del>
-
-																					<ins>
-																						<span class="woocommerce-Price-amount amount">
-																							<span class="woocommerce-Price-currencySymbol">$</span>190.00
-																						</span>
-																					</ins>
-																				</span>
-																			</div>
-
-																			<div class="sale-off">-24%</div>
-
-																			<div class="product-countdown" data-date="1519776000" data-price="$250" data-starttime="1483747200" data-cdtime="1519776000" data-id="product_sw_countdown_02"></div>
-																		</div>
-
-																		<div class="item-image-countdown">
-																			<span class="onsale">Sale!</span>
-
-																			<a href="simple_product.html">
-																				<div class="product-thumb-hover">
-																					<img 	width="300" height="300" src="{{asset('Home/images/1903/45-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																							srcset="{{asset('Home/images/1903/45-300x300.jpg')}} 300w, {{asset('Home/images/1903/45-150x150.jpg')}} 150w, {{asset('Home/images/1903/45-180x180.jpg')}} 180w, {{asset('Home/images/1903/45.jpg')}} 600w"
-																							sizes="(max-width: 300px) 100vw, 300px" />
-																				</div>
-																			</a>
-
-																			<!-- add to cart, wishlist, compare -->
-																			<div class="item-bottom clearfix">
-																				<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																				<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																				<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																					<div class="yith-wcwl-add-button show" style="display:block">
-																						<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																						<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																					</div>
-
-																					<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																						<span class="feedback">Product added!</span>
-																						<a href="#" rel="nofollow">Browse Wishlist</a>
-																					</div>
-
-																					<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																						<span class="feedback">The product is already in the wishlist!</span>
-																						<a href="#" rel="nofollow">Browse Wishlist</a>
-																					</div>
-
-																					<div style="clear:both"></div>
-																					<div class="yith-wcwl-wishlistaddresponse"></div>
-																				</div>
-
-																				<div class="clear"></div>
-																				<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-
-															<div class="item-countdown product" id="product_sw_countdown_03">
-																<div class="item-wrap">
-																	<div class="item-detail">
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star">
-																					<span style="width:63px"></span>
-																				</div>
-
-																				<div class="item-number-rating">2 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="Cleaner with bag">Cleaner with bag</a>
-																			</h4>
-
-																			<!-- Price -->
-																			<div class="item-price">
-																				<span>
-																					<del>
-																						<span class="woocommerce-Price-amount amount">
-																							<span class="woocommerce-Price-currencySymbol">$</span>390.00
-																						</span>
-																					</del>
-
-																					<ins>
-																						<span class="woocommerce-Price-amount amount">
-																							<span class="woocommerce-Price-currencySymbol">$</span>350.00
-																						</span>
-																					</ins>
-																				</span>
-																			</div>
-
-																			<div class="sale-off">-10%</div>
-
-																			<div class="product-countdown" data-date="1517356800" data-price="$390" data-starttime="1483660800" data-cdtime="1517356800" data-id="product_sw_countdown_03"></div>
-																		</div>
-
-																		<div class="item-image-countdown">
-																			<span class="onsale">Sale!</span>
-
-																			<a href="simple_product.html">
-																				<div class="product-thumb-hover">
-																					<img 	width="300" height="300" src="{{asset('Home/images/1903/22-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																							srcset="{{asset('Home/images/1903/22-300x300.jpg')}} 300w, {{asset('Home/images/1903/22-150x150.jpg')}} 150w, {{asset('Home/images/1903/22-180x180.jpg')}} 180w, {{asset('Home/images/1903/22.jpg')}} 600w"
-																							sizes="(max-width: 300px) 100vw, 300px" />
-																				</div>
-																			</a>
-
-																			<!-- add to cart, wishlist, compare -->
-																			<div class="item-bottom clearfix">
-																				<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																				<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																				<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																					<div class="yith-wcwl-add-button show" style="display:block">
-																						<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																						<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																					</div>
-
-																					<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																						<span class="feedback">Product added!</span>
-																						<a href="#" rel="nofollow">Browse Wishlist</a>
-																					</div>
-
-																					<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																						<span class="feedback">The product is already in the wishlist!</span>
-																						<a href="#" rel="nofollow">Browse Wishlist</a>
-																					</div>
-
-																					<div style="clear:both"></div>
-																					<div class="yith-wcwl-wishlistaddresponse"></div>
-																				</div>
-
-																				<div class="clear"></div>
-																				<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-
-															<div class="item-countdown product" id="product_sw_countdown_04">
-																<div class="item-wrap">
-																	<div class="item-detail">
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star"></div>
-
-																				<div class="item-number-rating">0 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="philips stand">philips stand</a>
-																			</h4>
-
-																			<!-- Price -->
-																			<div class="item-price">
-																				<span>
-																					<del>
-																						<span class="woocommerce-Price-amount amount">
-																							<span class="woocommerce-Price-currencySymbol">$</span>300.00
-																						</span>
-																					</del>
-
-																					<ins>
-																						<span class="woocommerce-Price-amount amount">
-																							<span class="woocommerce-Price-currencySymbol">$</span>250.00
-																						</span>
-																					</ins>
-																				</span>
-																			</div>
-
-																			<div class="sale-off">-17%</div>
-
-																			<div class="product-countdown" data-date="1498780800" data-price="$300" data-starttime="1483488000" data-cdtime="1498780800" data-id="product_sw_countdown_04"></div>
-																		</div>
-
-																		<div class="item-image-countdown">
-																			<span class="onsale">Sale!</span>
-																			<a href="simple_product.html">
-																				<div class="product-thumb-hover">
-																					<img 	width="300" height="300" src="{{asset('Home/images/1903/62-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																							srcset="{{asset('Home/images/1903/62-300x300.jpg')}} 300w, {{asset('Home/images/1903/62-150x150.jpg')}} 150w, {{asset('Home/images/1903/62-180x180.jpg')}} 180w, {{asset('Home/images/1903/62.jpg')}} 600w"
-																							sizes="(max-width: 300px) 100vw, 300px" />
-																				</div>
-																			</a>
-
-																			<!-- add to cart, wishlist, compare -->
-																			<div class="item-bottom clearfix">
-																				<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																				<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																				<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																					<div class="yith-wcwl-add-button show" style="display:block">
-																						<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																						<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																					</div>
-
-																					<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																						<span class="feedback">Product added!</span>
-																						<a href="#" rel="nofollow">Browse Wishlist</a>
-																					</div>
-
-																					<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																						<span class="feedback">The product is already in the wishlist!</span>
-																						<a href="#" rel="nofollow">Browse Wishlist</a>
-																					</div>
-
-																					<div style="clear:both"></div>
-																					<div class="yith-wcwl-wishlistaddresponse"></div>
-																				</div>
-
-																				<div class="clear"></div>
-																				<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-
-															<div class="item-countdown product" id="product_sw_countdown_05">
-																<div class="item-wrap">
-																	<div class="item-detail">
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star">
-																					<span style="width:52.5px"></span>
-																				</div>
-
-																				<div class="item-number-rating">4 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="Vacuum cleaner">Vacuum cleaner</a>
-																			</h4>
-
-																			<!-- Price -->
-																			<div class="item-price">
-																				<span>
-																					<del>
-																						<span class="woocommerce-Price-amount amount">
-																							<span class="woocommerce-Price-currencySymbol">$</span>350.00
-																						</span>
-																					</del>
-
-																					<ins>
-																						<span class="woocommerce-Price-amount amount">
-																							<span class="woocommerce-Price-currencySymbol">$</span>260.00
-																						</span>
-																					</ins>
-																				</span>
-																			</div>
-
-																			<div class="sale-off">-26%</div>
-
-																			<div class="product-countdown" data-date="1493510400" data-price="$350" data-starttime="1483747200" data-cdtime="1493510400" data-id="product_sw_countdown_05"></div>
-																		</div>
-
-																		<div class="item-image-countdown">
-																			<span class="onsale">Sale!</span>
-
-																			<a href="simple_product.html">
-																				<div class="product-thumb-hover">
-																					<img 	width="300" height="300" src="{{asset('Home/images/1903/26-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																							srcset="{{asset('Home/images/1903/26-300x300.jpg')}} 300w, {{asset('Home/images/1903/26-150x150.jpg')}} 150w, {{asset('Home/images/1903/26-180x180.jpg')}} 180w, {{asset('Home/images/1903/26.jpg')}} 600w"
-																							sizes="(max-width: 300px) 100vw, 300px" />
-																				</div>
-																			</a>
-
-																			<!-- add to cart, wishlist, compare -->
-																			<div class="item-bottom clearfix">
-																				<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																				<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																				<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																					<div class="yith-wcwl-add-button show" style="display:block">
-																						<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																						<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																					</div>
-
-																					<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																						<span class="feedback">Product added!</span>
-																						<a href="#" rel="nofollow">Browse Wishlist</a>
-																					</div>
-
-																					<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																						<span class="feedback">The product is already in the wishlist!</span>
-																						<a href="#" rel="nofollow">Browse Wishlist</a>
-																					</div>
-
-																					<div style="clear:both"></div>
-																					<div class="yith-wcwl-wishlistaddresponse"></div>
-																				</div>
-
-																				<div class="clear"></div>
-
-																				<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-
-															<div class="item-countdown product" id="product_sw_countdown_06">
-																<div class="item-wrap">
-																	<div class="item-detail">
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star"></div>
-																				<div class="item-number-rating">0 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="nisi ball tip">Nisi ball tip</a>
-																			</h4>
-
-																			<!-- Price -->
-																		 <div class="item-price">
-																			<span>
-																				<del>
-																					<span class="woocommerce-Price-amount amount">
-																						<span class="woocommerce-Price-currencySymbol">$</span>460.00
+																				<!-- end rating  -->
+
+																				<h4>
+																					<a href="simple_product.html" title="MacBook Air">{{$v->gname}}</a>
+																				</h4>
+
+																				<!-- Price -->
+																				<div class="item-price">
+																					<span>
+																						<del>
+																							<span class="woocommerce-Price-amount amount">
+																								<span class="woocommerce-Price-currencySymbol">$</span>
+																							</span>
+																						</del>
+
+																						<ins>
+																							<span class="woocommerce-Price-amount amount">
+																								<span class="woocommerce-Price-currencySymbol">$</span>1
+																							</span>
+																						</ins>
 																					</span>
-																				</del>
-
-																				<ins>
-																					<span class="woocommerce-Price-amount amount">
-																						<span class="woocommerce-Price-currencySymbol">$</span>400.00
-																					</span>
-																				</ins>
-																			</span>
-																		 </div>
-
-																			<div class="sale-off">-13%</div>
-																			<div class="product-countdown" data-date="1525046400" data-price="$460" data-starttime="1483747200" data-cdtime="1525046400" data-id="product_sw_countdown_06"></div>
-																		</div>
-
-																		<div class="item-image-countdown">
-																			<span class="onsale">Sale!</span>
-
-																			<a href="simple_product.html">
-																				<div class="product-thumb-hover">
-																					<img	width="300" height="300" src="{{asset('Home/images/1903/11-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																							srcset="{{asset('Home/images/1903/11-300x300.jpg')}} 300w, {{asset('Home/images/1903/11-150x150.jpg')}} 150w, {{asset('Home/images/1903/11-180x180.jpg')}} 180w, {{asset('Home/images/1903/11.jpg')}} 600w"
-																							sizes="(max-width: 300px) 100vw, 300px" />
-																				</div>
-																			</a>
-
-																			<!-- add to cart, wishlist, compare -->
-																			<div class="item-bottom clearfix">
-																				<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																				<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																				<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																					<div class="yith-wcwl-add-button show" style="display:block">
-																						<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																						<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																					</div>
-
-																					<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																						<span class="feedback">Product added!</span>
-																						<a href="#" rel="nofollow">Browse Wishlist</a>
-																					</div>
-
-																					<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																						<span class="feedback">The product is already in the wishlist!</span>
-																						<a href="#" rel="nofollow">Browse Wishlist</a>
-																					</div>
-
-																					<div style="clear:both"></div>
-																					<div class="yith-wcwl-wishlistaddresponse"></div>
 																				</div>
 
-																				<div class="clear"></div>
+																				<div class="sale-off">一元</div>
 
-																				<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
+																				<div class="product-countdown" data-date="1517356800" data-price="$800" data-starttime="1483747200" data-cdtime="1517356800" data-id="product_sw_countdown_07"></div>
+																			</div>
+
+																			<div class="item-image-countdown">
+																				<span class="onsale">Sale!</span>
+
+																				<a href="simple_product.html">
+																					<div class="product-thumb-hover">
+																						<img 	width="300" height="300" src="{{asset(json_decode($v->gpic, true)[0])}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
+																								srcset="{{asset(json_decode($v->gpic, true)[2])}} 300w, {{asset(json_decode($v->gpic, true)[0])}} 150w, {{asset(json_decode($v->gpic, true)[1])}} 180w, {{asset('Home/images/1903/50.jpg')}} 600w"
+																								sizes="(max-width: 300px) 100vw, 300px" />
+																					</div>
+																				</a>
+
+																				<!-- add to cart, wishlist, compare -->
+																				<div class="item-bottom clearfix">
+																					<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
+
+																					<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
+
+																					<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
+																						<div class="yith-wcwl-add-button show" style="display:block">
+																							<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+																							<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+																						</div>
+
+																						<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+																							<span class="feedback">Product added!</span>
+																							<a href="#" rel="nofollow">Browse Wishlist</a>
+																						</div>
+
+																						<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
+																							<span class="feedback">The product is already in the wishlist!</span>
+																							<a href="#" rel="nofollow">Browse Wishlist</a>
+																						</div>
+
+																						<div style="clear:both"></div>
+																						<div class="yith-wcwl-wishlistaddresponse"></div>
+																					</div>
+
+																					<div class="clear"></div>
+
+																					<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
+																				</div>
 																			</div>
 																		</div>
 																	</div>
 																</div>
-															</div>
-
-															<div class="item-countdown product" id="product_sw_countdown_07">
-																<div class="item-wrap">
-																	<div class="item-detail">
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star"></div>
-																				<div class="item-number-rating">0 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="MacBook Air">MacBook Air</a>
-																			</h4>
-
-																			<!-- Price -->
-																			<div class="item-price">
-																				<span>
-																					<del>
-																						<span class="woocommerce-Price-amount amount">
-																							<span class="woocommerce-Price-currencySymbol">$</span>800.00
-																						</span>
-																					</del>
-
-																					<ins>
-																						<span class="woocommerce-Price-amount amount">
-																							<span class="woocommerce-Price-currencySymbol">$</span>700.00
-																						</span>
-																					</ins>
-																				</span>
-																			</div>
-
-																			<div class="sale-off">-13%</div>
-
-																			<div class="product-countdown" data-date="1517356800" data-price="$800" data-starttime="1483747200" data-cdtime="1517356800" data-id="product_sw_countdown_07"></div>
-																		</div>
-
-																		<div class="item-image-countdown">
-																			<span class="onsale">Sale!</span>
-
-																			<a href="simple_product.html">
-																				<div class="product-thumb-hover">
-																					<img 	width="300" height="300" src="{{asset('Home/images/1903/50-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																							srcset="{{asset('Home/images/1903/50-300x300.jpg')}} 300w, {{asset('Home/images/1903/50-150x150.jpg')}} 150w, {{asset('Home/images/1903/50-180x180.jpg')}} 180w, {{asset('Home/images/1903/50.jpg')}} 600w"
-																							sizes="(max-width: 300px) 100vw, 300px" />
-																				</div>
-																			</a>
-
-																			<!-- add to cart, wishlist, compare -->
-																			<div class="item-bottom clearfix">
-																				<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																				<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																				<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																					<div class="yith-wcwl-add-button show" style="display:block">
-																						<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																						<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																					</div>
-
-																					<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																						<span class="feedback">Product added!</span>
-																						<a href="#" rel="nofollow">Browse Wishlist</a>
-																					</div>
-
-																					<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																						<span class="feedback">The product is already in the wishlist!</span>
-																						<a href="#" rel="nofollow">Browse Wishlist</a>
-																					</div>
-
-																					<div style="clear:both"></div>
-																					<div class="yith-wcwl-wishlistaddresponse"></div>
-																				</div>
-
-																				<div class="clear"></div>
-
-																				<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
+															@endforeach
 														</div>
 													</div>
 												</div>
@@ -2189,6 +1537,40 @@
 									</div>
 								</div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 								<div class="vc_row wpb_row vc_row-fluid margin-bottom-60">
 									<div class="wpb_column vc_column_container vc_col-sm-12">
 										<div class="vc_column-inner ">
@@ -2196,7 +1578,7 @@
 												<div id="slider_sw_woo_slider_widget_1" class="responsive-slider woo-slider-default sw-child-cat clearfix" data-lg="3" data-md="3" data-sm="2" data-xs="2" data-mobile="1" data-speed="1000" data-scroll="1" data-interval="5000" data-autoplay="false">
 													<div class="child-top clearfix" data-color="#ff9901">
 														<div class="box-title pull-left">
-															<h3>Electronics</h3>
+															<h3>热销商品</h3>
 
 															<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#child_sw_woo_slider_widget_1" aria-expanded="false">
 																<span class="icon-bar"></span>
@@ -2205,224 +1587,66 @@
 															</button>
 														</div>
 
+														
 														<div class="box-title-right clearfix">
-															<div class="childcat-content pull-left" id="child_sw_woo_slider_widget_1">
-																<ul>
-																	<li><a href="#">Television</a></li>
-																	<li><a href="#">Air Conditional</a></li>
-																	<li><a href="#">Laptops & Accessories</a></li>
-																	<li><a href="#">Accessories for Tablet</a></li>
-																	<li><a href="#">Headphone</a></li>
+														
+															<div class="childcat-content pull-left" id="child_sw_woo_slider_widget_2" >
+																<ul id="fuul" >
+																
+																	<li   id="relagood">
+																	@foreach($category as $v)
+																	<a data-id="{{$v->id}}">{{$v->name}}</a>
+																	@endforeach
+																	</li>
+																
 																</ul>
 															</div>
 
+
 															<div class="view-all">
-																<a href="#">See All<i class="fa  fa-caret-right"></i></a>
+																<a href="#">查看更多<i class="fa  fa-caret-right"></i></a>
 															</div>
 														</div>
 													</div>
 
-													<div class="content-slider">
-														<div class="childcat-slider-content clearfix">
-															<!-- Brand -->
-															<div class="child-cat-brand pull-left">
-																<div class="item-brand">
-																	<a href="#">
-																		<img width="170" height="87" src="{{asset('Home/images/1903/Brand_1.jpg')}}" class="attachment-170x90 size-170x90" alt="" />
-																	</a>
-																</div>
 
-																<div class="item-brand">
-																	<a href="#">
-																		<img width="170" height="90" src="{{asset('Home/images/1903/br5.jpg')}}" class="attachment-170x90 size-170x90" alt="" />
-																	</a>
-																</div>
 
-																<div class="item-brand">
-																	<a href="#">
-																		<img width="170" height="90" src="{{asset('Home/images/1903/br2.jpg')}}" class="attachment-170x90 size-170x90" alt="" />
-																	</a>
-																</div>
 
-																<div class="item-brand">
-																	<a href="#">
-																		<img width="170" height="90" src="{{asset('Home/images/1903/br3.jpg')}}" class="attachment-170x90 size-170x90" alt="" />
-																	</a>
-																</div>
-															</div>
 
-															<!-- slider content -->
-															<div class="resp-slider-container">
-																<div class="slider responsive">
-																	<div class="item product">
+
+
+
+
+
+													<div class="content-slider" >
+
+														<div class="childcat-slider-content clearfix"  >
+															<div class="resp-slider-container" id="old" style="border:1px solid #ccc">
+																@foreach($phone as $good)
+																<div id="b123" style="border-bottom:1px solid #ccc;border-left:1px solid #ccc;padding:3px;" class="block">
+																
+																	<div class="item product" >
 																		<div class="item-wrap">
 																			<div class="item-detail">
 																				<div class="item-content">
-																					<!-- rating  -->
-																					<div class="reviews-content">
-																						<div class="star"></div>
-																						<div class="item-number-rating">0 Review(s)</div>
-																					</div>
-																					<!-- end rating  -->
 
 																					<h4>
-																						<a href="simple_product.html" title="voluptate ipsum">Voluptate ipsum</a>
+																						<a href="simple_product.html" title="nisi ball tip">{{$good->gname}}</a>
 																					</h4>
 
 																					<!-- Price -->
+																					
 																					<div class="item-price">
 																						<span>
-																							<span class="woocommerce-Price-amount amount">
-																								<span class="woocommerce-Price-currencySymbol">$</span>550.00
-																							</span>
-																						</span>
-																					</div>
-																				</div>
-
-																				<div class="item-img products-thumb">
-																					<a href="simple_product.html">
-																						<div class="product-thumb-hover">
-																							<img 	width="300" height="300" src="{{asset('Home/images/1903/52-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																									srcset="{{asset('Home/images/1903/52-300x300.jpg')}} 300w, {{asset('Home/images/1903/52-150x150.jpg')}} 150w, {{asset('Home/images/1903/52-180x180.jpg')}} 180w, {{asset('Home/images/1903/52.jpg')}} 600w"
-																									sizes="(max-width: 300px) 100vw, 300px" />
-																						</div>
-																					</a>
-
-																					<!-- add to cart, wishlist, compare -->
-																					<div class="item-bottom clearfix">
-																						<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																						<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																							</div>
-
-																							<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																								<span class="feedback">Product added!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																								<span class="feedback">The product is already in the wishlist!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div style="clear:both"></div>
-																							<div class="yith-wcwl-wishlistaddresponse"></div>
-																						</div>
-
-																						<div class="clear"></div>
-																						<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-
-																		<div class="item-wrap">
-																			<div class="item-detail">
-																				<div class="item-content">
-																					<!-- rating  -->
-																					<div class="reviews-content">
-																						<div class="star"></div>
-																						<div class="item-number-rating">0 Review(s)</div>
-																					</div>
-																					<!-- end rating  -->
-
-																					<h4>
-																						<a href="simple_product.html" title="veniam dolore">Veniam dolore</a>
-																					</h4>
-
-																					<!-- Price -->
-																					<div class="item-price">
-																						<span>
-																							<span class="woocommerce-Price-amount amount">
-																								<span class="woocommerce-Price-currencySymbol">$</span>450.00
-																							</span>
-																						</span>
-																					</div>
-																				</div>
-
-																				<div class="item-img products-thumb">
-																					<a href="simple_product.html">
-																						<div class="product-thumb-hover">
-																							<img 	width="300" height="300" src="{{asset('Home/images/1903/50-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																									srcset="{{asset('Home/images/1903/50-300x300.jpg')}} 300w, {{asset('Home/images/1903/50-150x150.jpg')}} 150w, {{asset('Home/images/1903/50-180x180.jpg')}} 180w, {{asset('Home/images/1903/50.jpg')}} 600w"
-																									sizes="(max-width: 300px) 100vw, 300px" />
-																						</div>
-																					</a>
-
-																					<!-- add to cart, wishlist, compare -->
-																					<div class="item-bottom clearfix">
-																						<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																						<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																							</div>
-
-																							<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																								<span class="feedback">Product added!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																								<span class="feedback">The product is already in the wishlist!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div style="clear:both"></div>
-																							<div class="yith-wcwl-wishlistaddresponse"></div>
-																						</div>
-
-																						<div class="clear"></div>
-																						<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-
-																	<div class="item product">
-																		<div class="item-wrap">
-																			<div class="item-detail">
-																				<div class="item-content">
-																					<!-- rating  -->
-																					<div class="reviews-content">
-																						<div class="star">
-																							<span style="width:63px"></span>
-																						</div>
-
-																						<div class="item-number-rating">2 Review(s)</div>
-																					</div>
-																					<!-- end rating  -->
-
-																					<h4>
-																						<a href="simple_product.html" title="Cleaner with bag">Cleaner with bag</a>
-																					</h4>
-
-																					<!-- Price -->
-																					<div class="item-price">
-																						<span>
-																							<del>
-																								<span class="woocommerce-Price-amount amount">
-																									<span class="woocommerce-Price-currencySymbol">$</span>390.00
-																								</span>
-																							</del>
-
 																							<ins>
 																								<span class="woocommerce-Price-amount amount">
-																									<span class="woocommerce-Price-currencySymbol">$</span>350.00
+																									<span class="woocommerce-Price-currencySymbol">$</span>666
 																								</span>
 																							</ins>
 																						</span>
 																					</div>
-
+																					
+																					
 																					<div class="sale-off">-10%</div>
 																				</div>
 
@@ -2431,221 +1655,8 @@
 
 																					<a href="simple_product.html">
 																						<div class="product-thumb-hover">
-																							<img 	width="300" height="300" src="{{asset('Home/images/1903/22-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																									srcset="{{asset('Home/images/1903/22-300x300.jpg')}} 300w, {{asset('Home/images/1903/22-150x150.jpg')}} 150w, {{asset('Home/images/1903/22-180x180.jpg')}} 180w, {{asset('Home/images/1903/22.jpg')}} 600w"
-																									sizes="(max-width: 300px) 100vw, 300px" />
-																						</div>
-																					</a>
-
-																					<!-- add to cart, wishlist, compare -->
-																					<div class="item-bottom clearfix">
-																						<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																						<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																							</div>
-
-																							<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																								<span class="feedback">Product added!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																								<span class="feedback">The product is already in the wishlist!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div style="clear:both"></div>
-																							<div class="yith-wcwl-wishlistaddresponse"></div>
-																						</div>
-
-																						<div class="clear"></div>
-
-																						<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-
-																		<div class="item-wrap">
-																			<div class="item-detail">
-																				<div class="item-content">
-																					<!-- rating  -->
-																					<div class="reviews-content">
-																						<div class="star"></div>
-																						<div class="item-number-rating">0 Review(s)</div>
-																					</div>
-																					<!-- end rating  -->
-
-																					<h4>
-																						<a href="simple_product.html" title="Sony BRAVIA 4K">Sony BRAVIA 4K</a>
-																					</h4>
-
-																					<!-- Price -->
-																					<div class="item-price">
-																						<span>
-																							<span class="woocommerce-Price-amount amount">
-																								<span class="woocommerce-Price-currencySymbol">$</span>600.00
-																							</span>
-																						</span>
-																					</div>
-																				</div>
-
-																				<div class="item-img products-thumb">
-																					<a href="simple_product.html">
-																						<div class="product-thumb-hover">
-																							<img 	width="300" height="300" src="{{asset('Home/images/1903/6-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																									srcset="{{asset('Home/images/1903/6-300x300.jpg')}} 300w, {{asset('Home/images/1903/6-150x150.jpg')}} 150w, {{asset('Home/images/1903/6-180x180.jpg')}} 180w, {{asset('Home/images/1903/6.jpg')}} 600w"
-																									sizes="(max-width: 300px) 100vw, 300px" />
-																						</div>
-																					</a>
-
-																					<!-- add to cart, wishlist, compare -->
-																					<div class="item-bottom clearfix">
-																						<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																						<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																							</div>
-
-																							<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																								<span class="feedback">Product added!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																								<span class="feedback">The product is already in the wishlist!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div style="clear:both"></div>
-																							<div class="yith-wcwl-wishlistaddresponse"></div>
-																						</div>
-
-																						<div class="clear"></div>
-																						<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-
-																	<div class="item product">
-																		<div class="item-wrap">
-																			<div class="item-detail">
-																				<div class="item-content">
-																					<!-- rating  -->
-																					<div class="reviews-content">
-																						<div class="star"></div>
-																						<div class="item-number-rating">0 Review(s)</div>
-																					</div>
-																					<!-- end rating  -->
-
-																					<h4>
-																						<a href="simple_product.html" title="Samsung SUHD">Samsung SUHD</a>
-																					</h4>
-
-																					<!-- Price -->
-																					<div class="item-price">
-																						<span>
-																							<span class="woocommerce-Price-amount amount">
-																								<span class="woocommerce-Price-currencySymbol">$</span>500.00
-																							</span>
-																						</span>
-																					</div>
-																				</div>
-
-																				<div class="item-img products-thumb">
-																					<a href="simple_product.html">
-																						<div class="product-thumb-hover">
-																							<img 	width="300" height="300" src="{{asset('Home/images/1903/3-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																									srcset="{{asset('Home/images/1903/3-300x300.jpg')}} 300w, {{asset('Home/images/1903/3-150x150.jpg')}} 150w, {{asset('Home/images/1903/3-180x180.jpg')}} 180w, {{asset('Home/images/1903/3.jpg')}} 600w"
-																									sizes="(max-width: 300px) 100vw, 300px" />
-																						</div>
-																					</a>
-
-																					<!-- add to cart, wishlist, compare -->
-																					<div class="item-bottom clearfix">
-																						<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																						<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																							</div>
-
-																							<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																								<span class="feedback">Product added!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																								<span class="feedback">The product is already in the wishlist!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div style="clear:both"></div>
-																							<div class="yith-wcwl-wishlistaddresponse"></div>
-																						</div>
-
-																						<div class="clear"></div>
-																						<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-
-																		<div class="item-wrap">
-																			<div class="item-detail">
-																				<div class="item-content">
-																					<!-- rating  -->
-																					<div class="reviews-content">
-																						<div class="star"></div>
-																						<div class="item-number-rating">0 Review(s)</div>
-																					</div>
-																					<!-- end rating  -->
-
-																					<h4>
-																						<a href="simple_product.html" title="nisi ball tip">nisi ball tip</a>
-																					</h4>
-
-																					<!-- Price -->
-																					<div class="item-price">
-																						<span>
-																							<del>
-																								<span class="woocommerce-Price-amount amount">
-																									<span class="woocommerce-Price-currencySymbol">$</span>460.00
-																								</span>
-																							</del>
-
-																							<ins>
-																								<span class="woocommerce-Price-amount amount">
-																									<span class="woocommerce-Price-currencySymbol">$</span>400.00
-																								</span>
-																							</ins>
-																						</span>
-																					</div>
-
-																					<div class="sale-off">-13%</div>
-																				</div>
-
-																				<div class="item-img products-thumb">
-																					<span class="onsale">Sale!</span>
-
-																					<a href="simple_product.html">
-																						<div class="product-thumb-hover">
-																							<img 	width="300" height="300" src="{{asset('Home/images/1903/11-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																									srcset="{{asset('Home/images/1903/11-300x300.jpg')}} 300w, {{asset('Home/images/1903/11-150x150.jpg')}} 150w, {{asset('Home/images/1903/11-180x180.jpg')}} 180w, {{asset('Home/images/1903/11.jpg')}} 600w"
+																							<img 	width="300" height="300" src="{{json_decode($good->gpic, true)[0]}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
+																									srcset="{{json_decode($good->gpic, true)[0]}} 300w, {{json_decode($good->gpic, true)[0]}} 150w, {{json_decode($good->gpic, true)[0]}} 180w, {{json_decode($good->gpic, true)[0]}} 500w"
 																									sizes="(max-width: 300px) 100vw, 300px" />
 																						</div>
 																					</a>
@@ -2684,37 +1695,46 @@
 																		</div>
 																	</div>
 																</div>
+
+															@endforeach	
 															</div>
 														</div>
 
+
+
+
+
+
 														<div class="best-seller-product">
 															<div class="box-slider-title">
-																<h2 class="page-title-slider">Best sellers</h2>
+																<h2 class="page-title-slider">总排行榜</h2>
 															</div>
 
 															<div class="wrap-content">
-																<div class="item">
+
+															@foreach($salesvolume as $sales)
+																<div class="item" style="border:1px solid pink;margin-top:20px">
 																	<div class="item-inner">
 																		<div class="item-img">
 																			<a href="simple_product.html" title="Sony BRAVIA 4K">
-																				<img 	width="180" height="180" src="{{asset('Home/images/1903/6-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
-																						srcset="{{asset('Home/images/1903/6-180x180.jpg')}} 180w, {{asset('Home/images/1903/6-150x150.jpg')}} 150w, {{asset('Home/images/1903/6-300x300.jpg')}} 300w, {{asset('Home/images/1903/6.jpg')}} 600w"
+																				<img 	width="180" height="180" src="{{json_decode($sales->gpic, true)[0]}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
+																						srcset="{{json_decode($sales->gpic, true)[0]}} 180w, {{json_decode($sales->gpic, true)[0]}} 150w, {{json_decode($sales->gpic, true)[0]}} 300w, {{json_decode($sales->gpic, true)[0]}} 600w"
 																						sizes="(max-width: 180px) 100vw, 180px" />
 																			</a>
 																		</div>
 
-																		<div class="item-sl pull-left">1</div>
+																		<!-- <div class="item-sl pull-left">1</div> -->
 
 																		<div class="item-content">
 																			<!-- rating  -->
-																			<div class="reviews-content">
+																			<!-- <div class="reviews-content">
 																				<div class="star"></div>
-																				<div class="item-number-rating">0 Review(s)</div>
-																			</div>
+																				<div class="item-number-rating"></div>
+																			</div> -->
 																			<!-- end rating  -->
 
 																			<h4>
-																				<a href="simple_product.html" title="Sony BRAVIA 4K">Sony BRAVIA 4K</a>
+																				<a href="simple_product.html" title="Sony BRAVIA 4K">{{$sales->gname}}</a>
 																			</h4>
 
 																			<div class="item-price">
@@ -2726,145 +1746,7 @@
 																	</div>
 																</div>
 
-																<div class="item">
-																	<div class="item-inner">
-																		<div class="item-img">
-																			<a href="simple_product.html" title="iPad Mini 2 Retina">
-																				<img 	width="180" height="180" src="{{asset('Home/images/1903/39-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
-																						srcset="{{asset('Home/images/1903/39-180x180.jpg')}} 180w, {{asset('Home/images/1903/39-150x150.jpg')}} 150w, {{asset('Home/images/1903/39-300x300.jpg')}} 300w, {{asset('Home/images/1903/39.jpg')}} 600w"
-																						sizes="(max-width: 180px) 100vw, 180px" />
-																			</a>
-																		</div>
-
-																		<div class="item-sl pull-left">2</div>
-
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star"></div>
-																				<div class="item-number-rating">0 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="iPad Mini 2 Retina">iPad Mini 2 Retina</a>
-																			</h4>
-
-																			<div class="item-price">
-																				<del>
-																					<span class="woocommerce-Price-amount amount">
-																						<span class="woocommerce-Price-currencySymbol">$</span>300.00
-																					</span>
-																				</del>
-
-																				<ins>
-																					<span class="woocommerce-Price-amount amount">
-																						<span class="woocommerce-Price-currencySymbol">$</span>290.00
-																					</span>
-																				</ins>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<div class="item">
-																	<div class="item-inner">
-																		<div class="item-img">
-																			<a href="simple_product.html" title="ipsum fugiat">
-																				<img 	width="180" height="180" src="{{asset('Home/images/1903/66-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
-																						srcset="{{asset('Home/images/1903/66-180x180.jpg')}} 180w, {{asset('Home/images/1903/66-150x150.jpg')}} 150w, {{asset('Home/images/1903/66-300x300.jpg')}} 300w, {{asset('Home/images/1903/66.jpg')}} 600w"
-																						sizes="(max-width: 180px) 100vw, 180px" />
-																			</a>
-																		</div>
-
-																		<div class="item-sl pull-left">3</div>
-
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star"></div>
-																				<div class="item-number-rating">0 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="ipsum fugiat">ipsum fugiat</a>
-																			</h4>
-
-																			<div class="item-price">
-																				<span class="woocommerce-Price-amount amount">
-																					<span class="woocommerce-Price-currencySymbol">$</span>250.00
-																				</span>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<div class="item">
-																	<div class="item-inner">
-																		<div class="item-img">
-																			<a href="simple_product.html" title="veniam dolore">
-																				<img 	width="180" height="180" src="{{asset('Home/images/1903/50-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
-																						srcset="{{asset('Home/images/1903/50-180x180.jpg')}} 180w, {{asset('Home/images/1903/50-150x150.jpg')}} 150w, {{asset('Home/images/1903/50-300x300.jpg')}} 300w, {{asset('Home/images/1903/50.jpg')}} 600w"
-																						sizes="(max-width: 180px) 100vw, 180px" />
-																			</a>
-																		</div>
-
-																		<div class="item-sl pull-left">4</div>
-
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star"></div>
-																				<div class="item-number-rating">0 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="veniam dolore">Veniam dolore</a>
-																			</h4>
-
-																			<div class="item-price">
-																				<span class="woocommerce-Price-amount amount">
-																					<span class="woocommerce-Price-currencySymbol">$</span>450.00
-																				</span>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<div class="item">
-																	<div class="item-inner">
-																		<div class="item-img">
-																			<a href="simple_product.html" title="voluptate ipsum">
-																				<img 	width="180" height="180" src="{{asset('Home/images/1903/52-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
-																						srcset="{{asset('Home/images/1903/52-180x180.jpg')}} 180w, {{asset('Home/images/1903/52-150x150.jpg')}} 150w, {{asset('Home/images/1903/52-300x300.jpg')}} 300w, {{asset('Home/images/1903/52.jpg')}} 600w"
-																						sizes="(max-width: 180px) 100vw, 180px" />
-																			</a>
-																		</div>
-
-																		<div class="item-sl pull-left">5</div>
-
-																		<div class="item-content">
-																			<!-- rating  -->
-																			<div class="reviews-content">
-																				<div class="star"></div>
-																				<div class="item-number-rating">0 Review(s)</div>
-																			</div>
-																			<!-- end rating  -->
-
-																			<h4>
-																				<a href="simple_product.html" title="voluptate ipsum">voluptate ipsum</a>
-																			</h4>
-
-																			<div class="item-price">
-																				<span class="woocommerce-Price-amount amount">
-																					<span class="woocommerce-Price-currencySymbol">$</span>550.00
-																				</span>
-																			</div>
-																		</div>
-																	</div>
-																</div>
+															@endforeach
 															</div>
 														</div>
 													</div>
@@ -2873,6 +1755,15 @@
 										</div>
 									</div>
 								</div>
+
+
+
+
+
+
+
+
+
 
 								<div class="vc_row wpb_row vc_row-fluid margin-bottom-60">
 									<div class="wpb_column vc_column_container vc_col-sm-6">
@@ -2904,6 +1795,8 @@
 									</div>
 								</div>
 
+							
+
 								<div class="vc_row wpb_row vc_row-fluid margin-bottom-60">
 									<div class="wpb_column vc_column_container vc_col-sm-12">
 										<div class="vc_column-inner ">
@@ -2911,7 +1804,7 @@
 												<div id="slider_sw_woo_slider_widget_2" class="responsive-slider woo-slider-default sw-child-cat clearfix" data-lg="3" data-md="3" data-sm="2" data-xs="2" data-mobile="1" data-speed="1000" data-scroll="1" data-interval="5000" data-autoplay="false">
 													<div class="child-top clearfix" data-color="#7ac143">
 														<div class="box-title pull-left">
-															<h3>Computers</h3>
+															<h3>新品推介</h3>
 
 															<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#child_sw_woo_slider_widget_2" aria-expanded="false">
 																<span class="icon-bar"></span>
@@ -2922,13 +1815,10 @@
 
 														<div class="box-title-right clearfix">
 															<div class="childcat-content pull-left" id="child_sw_woo_slider_widget_2">
-																<ul>
-																	<li><a href="#">Laptop Dell</a></li>
-																	<li><a href="#">Macbook</a></li>
-																	<li><a href="#">Laptop HP</a></li>
-																	<li><a href="#">Laptop MSI</a></li>
-																	<li><a href="#">Laptop Asus</a></li>
-																	<li><a href="#">Accessories</a></li>
+																<ul id='newgoods'>
+																	@foreach($type as $v)
+																	<li data-id='{{$v->id}}'><a href="javascript:;" onclick="gain({{$v->id}})">　{{$v->name}}　</a></li>
+																	@endforeach
 																</ul>
 															</div>
 
@@ -2943,469 +1833,14 @@
 													<div class="content-slider">
 														<div class="childcat-slider-content clearfix">
 															<!-- Brand -->
-															<div class="child-cat-brand pull-left">
-																<div class="item-brand">
-																	<a href="#">
-																		<img width="170" height="90" src="{{asset('Home/images/1903/br4.jpg')}}" class="attachment-170x90 size-170x90" alt="" />
-																	</a>
-																</div>
+															<div class="child-cat-brand pull-left" id='brand'>
 
-																<div class="item-brand">
-																	<a href="#">
-																		<img width="170" height="90" src="{{asset('Home/images/1903/br2.jpg')}}" class="attachment-170x90 size-170x90" alt="" />
-																	</a>
-																</div>
-
-																<div class="item-brand">
-																	<a href="#">
-																		<img width="170" height="90" src="{{asset('Home/images/1903/br3.jpg')}}" class="attachment-170x90 size-170x90" alt="" />
-																	</a>
-																</div>
-
-																<div class="item-brand">
-																	<a href="#">
-																		<img width="170" height="90" src="{{asset('Home/images/1903/br5.jpg')}}" class="attachment-170x90 size-170x90" alt="" />
-																	</a>
-																</div>
-
-																<div class="item-brand">
-																	<a href="#">
-																		<img width="170" height="87" src="{{asset('Home/images/1903/Brand_1.jpg')}}" class="attachment-170x90 size-170x90" alt="" />
-																	</a>
-																</div>
 															</div>
 
 															<!-- slider content -->
-															<div class="resp-slider-container">
-																<div class="slider responsive">
-																	<div class="item product">
-																		<div class="item-wrap">
-																			<div class="item-detail">
-																				<div class="item-content">
-																					<!-- rating  -->
-																					<div class="reviews-content">
-																						<div class="star"></div>
-																						<div class="item-number-rating">0 Review(s)</div>
-																					</div>
-																					<!-- end rating  -->
-
-																					<h4>
-																						<a href="simple_product.html" title="voluptate ipsum">Voluptate ipsum</a>
-																					</h4>
-
-																					<!-- Price -->
-																					<div class="item-price">
-																						<span>
-																							<span class="woocommerce-Price-amount amount">
-																								<span class="woocommerce-Price-currencySymbol">$</span>550.00
-																							</span>
-																						</span>
-																					</div>
-																				</div>
-
-																				<div class="item-img products-thumb">
-																					<a href="simple_product.html">
-																						<div class="product-thumb-hover">
-																							<img 	width="300" height="300" src="{{asset('Home/images/1903/52-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																									srcset="{{asset('Home/images/1903/52-300x300.jpg')}} 300w, {{asset('Home/images/1903/52-150x150.jpg')}} 150w, {{asset('Home/images/1903/52-180x180.jpg')}} 180w, {{asset('Home/images/1903/52.jpg')}} 600w"
-																									sizes="(max-width: 300px) 100vw, 300px" />
-																						</div>
-																					</a>
-
-																					<!-- add to cart, wishlist, compare -->
-																					<div class="item-bottom clearfix">
-																						<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																						<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																							</div>
-
-																							<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																								<span class="feedback">Product added!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																								<span class="feedback">The product is already in the wishlist!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div style="clear:both"></div>
-																							<div class="yith-wcwl-wishlistaddresponse"></div>
-																						</div>
-
-																						<div class="clear"></div>
-																						<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-
-																		<div class="item-wrap">
-																			<div class="item-detail">
-																				<div class="item-content">
-																					<!-- rating  -->
-																					<div class="reviews-content">
-																						<div class="star"></div>
-																						<div class="item-number-rating">0 Review(s)</div>
-																					</div>
-																					<!-- end rating  -->
-
-																					<h4>
-																						<a href="simple_product.html" title="veniam dolore">Veniam dolore</a>
-																					</h4>
-
-																					<!-- Price -->
-																					<div class="item-price">
-																						<span>
-																							<span class="woocommerce-Price-amount amount">
-																								<span class="woocommerce-Price-currencySymbol">$</span>450.00
-																							</span>
-																						</span>
-																					</div>
-																				</div>
-
-																				<div class="item-img products-thumb">
-																					<a href="simple_product.html">
-																						<div class="product-thumb-hover">
-																							<img 	width="300" height="300" src="{{asset('Home/images/1903/50-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																									srcset="{{asset('Home/images/1903/50-300x300.jpg')}} 300w, {{asset('Home/images/1903/50-150x150.jpg')}} 150w, {{asset('Home/images/1903/50-180x180.jpg')}} 180w, {{asset('Home/images/1903/50.jpg')}} 600w"
-																									sizes="(max-width: 300px) 100vw, 300px" />
-																						</div>
-																					</a>
-
-																					<!-- add to cart, wishlist, compare -->
-																					<div class="item-bottom clearfix">
-																						<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																						<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																							</div>
-
-																							<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																								<span class="feedback">Product added!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																								<span class="feedback">The product is already in the wishlist!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div style="clear:both"></div>
-																							<div class="yith-wcwl-wishlistaddresponse"></div>
-																						</div>
-
-																						<div class="clear"></div>
-																						<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-
-																	<div class="item product">
-																		<div class="item-wrap">
-																			<div class="item-detail">
-																				<div class="item-content">
-																					<!-- rating  -->
-																					<div class="reviews-content">
-																						<div class="star">
-																							<span style="width:63px"></span>
-																						</div>
-
-																						<div class="item-number-rating">2 Review(s)</div>
-																					</div>
-																					<!-- end rating  -->
-
-																					<h4>
-																						<a href="simple_product.html" title="Cleaner with bag">Cleaner with bag</a>
-																					</h4>
-
-																					<!-- Price -->
-																					<div class="item-price">
-																						<span>
-																							<del>
-																								<span class="woocommerce-Price-amount amount">
-																									<span class="woocommerce-Price-currencySymbol">$</span>390.00
-																								</span>
-																							</del>
-
-																							<ins>
-																								<span class="woocommerce-Price-amount amount">
-																									<span class="woocommerce-Price-currencySymbol">$</span>350.00
-																								</span>
-																							</ins>
-																						</span>
-																					</div>
-
-																					<div class="sale-off">-10%</div>
-																				</div>
-
-																				<div class="item-img products-thumb">
-																					<span class="onsale">Sale!</span>
-
-																					<a href="simple_product.html">
-																						<div class="product-thumb-hover">
-																							<img 	width="300" height="300" src="{{asset('Home/images/1903/22-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																									srcset="{{asset('Home/images/1903/22-300x300.jpg')}} 300w, {{asset('Home/images/1903/22-150x150.jpg')}} 150w, {{asset('Home/images/1903/22-180x180.jpg')}} 180w, {{asset('Home/images/1903/22.jpg')}} 600w"
-																									sizes="(max-width: 300px) 100vw, 300px" />
-																						</div>
-																					</a>
-
-																					<!-- add to cart, wishlist, compare -->
-																					<div class="item-bottom clearfix">
-																						<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																						<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																							</div>
-
-																							<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																								<span class="feedback">Product added!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																								<span class="feedback">The product is already in the wishlist!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div style="clear:both"></div>
-																							<div class="yith-wcwl-wishlistaddresponse"></div>
-																						</div>
-
-																						<div class="clear"></div>
-
-																						<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-
-																		<div class="item-wrap">
-																			<div class="item-detail">
-																				<div class="item-content">
-																					<!-- rating  -->
-																					<div class="reviews-content">
-																						<div class="star"></div>
-																						<div class="item-number-rating">0 Review(s)</div>
-																					</div>
-																					<!-- end rating  -->
-
-																					<h4>
-																						<a href="simple_product.html" title="Sony BRAVIA 4K">Sony BRAVIA 4K</a>
-																					</h4>
-
-																					<!-- Price -->
-																					<div class="item-price">
-																						<span>
-																							<span class="woocommerce-Price-amount amount">
-																								<span class="woocommerce-Price-currencySymbol">$</span>600.00
-																							</span>
-																						</span>
-																					</div>
-																				</div>
-
-																				<div class="item-img products-thumb">
-																					<a href="simple_product.html">
-																						<div class="product-thumb-hover">
-																							<img 	width="300" height="300" src="{{asset('Home/images/1903/6-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																									srcset="{{asset('Home/images/1903/6-300x300.jpg')}} 300w, {{asset('Home/images/1903/6-150x150.jpg')}} 150w, {{asset('Home/images/1903/6-180x180.jpg')}} 180w, {{asset('Home/images/1903/6.jpg')}} 600w"
-																									sizes="(max-width: 300px) 100vw, 300px" />
-																						</div>
-																					</a>
-
-																					<!-- add to cart, wishlist, compare -->
-																					<div class="item-bottom clearfix">
-																						<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																						<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																							</div>
-
-																							<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																								<span class="feedback">Product added!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																								<span class="feedback">The product is already in the wishlist!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div style="clear:both"></div>
-																							<div class="yith-wcwl-wishlistaddresponse"></div>
-																						</div>
-
-																						<div class="clear"></div>
-																						<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-
-																	<div class="item product">
-																		<div class="item-wrap">
-																			<div class="item-detail">
-																				<div class="item-content">
-																					<!-- rating  -->
-																					<div class="reviews-content">
-																						<div class="star"></div>
-																						<div class="item-number-rating">0 Review(s)</div>
-																					</div>
-																					<!-- end rating  -->
-
-																					<h4>
-																						<a href="simple_product.html" title="Samsung SUHD">Samsung SUHD</a>
-																					</h4>
-
-																					<!-- Price -->
-																					<div class="item-price">
-																						<span>
-																							<span class="woocommerce-Price-amount amount">
-																								<span class="woocommerce-Price-currencySymbol">$</span>500.00
-																							</span>
-																						</span>
-																					</div>
-																				</div>
-
-																				<div class="item-img products-thumb">
-																					<a href="simple_product.html">
-																						<div class="product-thumb-hover">
-																							<img 	width="300" height="300" src="{{asset('Home/images/1903/3-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																									srcset="{{asset('Home/images/1903/3-300x300.jpg')}} 300w, {{asset('Home/images/1903/3-150x150.jpg')}} 150w, {{asset('Home/images/1903/3-180x180.jpg')}} 180w, {{asset('Home/images/1903/3.jpg')}} 600w"
-																									sizes="(max-width: 300px) 100vw, 300px" />
-																						</div>
-																					</a>
-
-																					<!-- add to cart, wishlist, compare -->
-																					<div class="item-bottom clearfix">
-																						<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																						<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																							</div>
-
-																							<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																								<span class="feedback">Product added!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																								<span class="feedback">The product is already in the wishlist!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div style="clear:both"></div>
-																							<div class="yith-wcwl-wishlistaddresponse"></div>
-																						</div>
-
-																						<div class="clear"></div>
-																						<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-
-																		<div class="item-wrap">
-																			<div class="item-detail">
-																				<div class="item-content">
-																					<!-- rating  -->
-																					<div class="reviews-content">
-																						<div class="star"></div>
-																						<div class="item-number-rating">0 Review(s)</div>
-																					</div>
-																					<!-- end rating  -->
-
-																					<h4>
-																						<a href="simple_product.html" title="nisi ball tip">nisi ball tip</a>
-																					</h4>
-
-																					<!-- Price -->
-																					<div class="item-price">
-																						<span>
-																							<del>
-																								<span class="woocommerce-Price-amount amount">
-																									<span class="woocommerce-Price-currencySymbol">$</span>460.00
-																								</span>
-																							</del>
-
-																							<ins>
-																								<span class="woocommerce-Price-amount amount">
-																									<span class="woocommerce-Price-currencySymbol">$</span>400.00
-																								</span>
-																							</ins>
-																						</span>
-																					</div>
-
-																					<div class="sale-off">-13%</div>
-																				</div>
-
-																				<div class="item-img products-thumb">
-																					<span class="onsale">Sale!</span>
-
-																					<a href="simple_product.html">
-																						<div class="product-thumb-hover">
-																							<img 	width="300" height="300" src="{{asset('Home/images/1903/11-300x300.jpg')}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
-																									srcset="{{asset('Home/images/1903/11-300x300.jpg')}} 300w, {{asset('Home/images/1903/11-150x150.jpg')}} 150w, {{asset('Home/images/1903/11-180x180.jpg')}} 180w, {{asset('Home/images/1903/11.jpg')}} 600w"
-																									sizes="(max-width: 300px) 100vw, 300px" />
-																						</div>
-																					</a>
-
-																					<!-- add to cart, wishlist, compare -->
-																					<div class="item-bottom clearfix">
-																						<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																						<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
-																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
-																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
-																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-																							</div>
-
-																							<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																								<span class="feedback">Product added!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																								<span class="feedback">The product is already in the wishlist!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
-																							<div style="clear:both"></div>
-																							<div class="yith-wcwl-wishlistaddresponse"></div>
-																						</div>
-
-																						<div class="clear"></div>
-																						<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
+															<div class="resp-slider-container" >
+																<div class="slider">
+																	<div class="item product" id='new'>
 																	</div>
 																</div>
 															</div>
@@ -4625,8 +3060,8 @@
 												<div class="wpb_text_column wpb_content_element ">
 													<div class="wpb_wrapper">
 														<div class="ya-logo">
-															<a href="#">
-																<img src="{{asset('Home/images/icons/logo-footer.png')}}" alt="logo" />
+															<a href="{{url('feedback')}}" style="color:white">
+																意见反馈
 															</a>
 														</div>
 													</div>
@@ -4855,15 +3290,22 @@
 						<div class="widget-1 widget-first widget text-4 widget_text">
 							<div class="widget-inner">
 								<div class="textwidget">
-									<div class="payment">
-										<a href="#">
-											<img src="{{asset('Home/images/1903/paypal.png')}}" alt="payment" title="payment" />
+
+									<div class="payment" id="tiaozhuan">
+									@foreach($url as $v)
+
+										<a href="javascript:;" type-url="{{$v->url}}" style="display:block;float:left;margin-left:5px" target="_black">
+											<img src="{{($v->logo)}}" alt="payment" title="payment" style="width:50px;height:30px"/>
 										</a>
+									@endforeach
 									</div>
+
 								</div>
 							</div>
 						</div>
 					</div>
+
+
 				</div>
 			</div>
 		</footer>
@@ -5002,8 +3444,134 @@
 	<script type="text/javascript" src="{{asset('Home/js/plugins.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/megamenu.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/main.min.js')}}"></script>
-
+	<script type="text/javascript" src="{{asset('Home/js/jquery.lazyload.min.js')}}">	</script>
 	<script type="text/javascript">
+		// img = $('.img')
+		// $(function(){
+    //   $("img.img").lazyload({
+		// 		effect: "fadeIn"
+		// 	});
+    // })
+	</script>
+	<script type="text/javascript">
+		function gain(id) {
+			if (!id) {
+				var dataId = $('#newgoods').children().first().attr('data-id');
+			} else {
+				var dataId = id;
+			}
+			$('#new').children().attr('id', ' ');
+			$('#brand').children().attr('id', ' ');
+			if($('div[display='+dataId+']').length > 0){
+				$('div[display='+dataId+']').attr('id', 'display')
+				return;
+			}
+			var url = '{{url("newgoods")}}' + '/' + dataId;
+			$.ajax({
+				url: url,
+				dataType: 'json',
+				type: 'get',
+				success: function (msg) {
+					var str = '';
+					var goods = msg['newgoods']
+					var logo = msg['logoimg']
+					for (i = 0; i<goods.length; i++) {
+						var obj = JSON.parse(goods[i].gpic);
+						str = `
+						<div id='display' display='`+dataId+`' class='box' style='float:left;width: 33.33333%;border-bottom: 1px solid #EAEAEA;border-right: 1px solid #EAEAEA;'>
+						<div class="item-wrap" >
+							<div class="item-detail">
+								<div class="item-content">
+									<!-- rating  -->
+									<div class="reviews-content">
+										<div class="star"></div>
+										<div class="item-number-rating">`+goods[i].workoff+` 人已购买</div>
+									</div>
+									<!-- end rating  -->
+
+									<h4>
+										<a href="simple_product.html" title="voluptate ipsum">`+goods[i].gname+`</a>
+									</h4>
+
+									<!-- Price -->
+									<div class="item-price">
+										<span>
+											<span class="woocommerce-Price-amount amount">
+												<span class="woocommerce-Price-currencySymbol">$</span>`+goods[i].price+`
+											</span>
+										</span>
+									</div>
+								</div>
+
+								<div class="item-img products-thumb">
+									<a href="simple_product.html">
+										<div class="product-thumb-hover">
+											<img 	width="300" height="300" src="{{asset('/')}}`+obj[2]+`" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
+													srcset="{{asset('/')}}`+obj[2]+` 300w, {{asset('/')}}`+obj[2]+` 150w, {{asset('/')}}`+obj[2]+` 180w, {{asset('Home/images/1903/52.jpg')}} 600w"
+													sizes="(max-width: 300px) 100vw, 300px" />
+										</div>
+									</a>
+
+									<!-- add to cart, wishlist, compare -->
+									<div class="item-bottom clearfix">
+										<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
+
+										<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
+
+										<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
+											<div class="yith-wcwl-add-button show" style="display:block">
+												<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+												<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+											</div>
+
+											<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+												<span class="feedback">Product added!</span>
+												<a href="#" rel="nofollow">Browse Wishlist</a>
+											</div>
+
+											<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
+												<span class="feedback">The product is already in the wishlist!</span>
+												<a href="#" rel="nofollow">Browse Wishlist</a>
+											</div>
+
+											<div style="clear:both"></div>
+											<div class="yith-wcwl-wishlistaddresponse"></div>
+										</div>
+
+										<div class="clear"></div>
+										<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+						`;
+						$('#new').append(str);
+					}
+
+					for (i = 0 , str = ''; i < logo.length; i++) {
+						str += `
+							<div id='display' display='`+dataId+`' class='box'>
+								<div class="item-brand">
+									<a href="javascript:;">
+										<img width="170" height="90" src="{{asset('/upload/image')}}/`+logo[i].blogo+`" class="attachment-170x90 size-170x90" alt="" />
+									</a>
+								</div>
+							</div>
+						`;
+					}
+					$('#brand').append(str);
+					console.log(str);
+				}
+			})
+		};
+	</script>
+	<script type="text/javascript">
+
+	setTimeout(function () {
+
+	    $('#time').removeClass().html('');
+	},2000);
 		var sticky_navigation_offset_top = $("#header .header-bottom").offset().top;
 		var sticky_navigation = function(){
 									var scroll_top = $(window).scrollTop();
@@ -5040,5 +3608,123 @@
       	b[c] += ( window.postMessage && request ? ' ' : ' no-' ) + cs;
    </script>
    <!--<![endif]-->
+
+
+   <!-- 热销商品的js -->
+	<script>
+		
+		$('#relagood').on('mouseenter', 'a', function () {
+
+			//获取到id
+			var id = $(this).attr('data-id');
+
+			$(this).attr('data-ajax');
+
+			var url = "{{url('/hotsale')}}";
+
+			$('.block').css('display','none');
+
+
+        	$.ajax({
+
+        		type:"post",
+        		url:url,
+        		data:"id="+id+'&_token={{csrf_token()}}',
+        		success:function (data) {
+
+
+        			var str = '';
+
+        			for (var i=0; i<data.length; i++) {
+
+        				str += `<div id="b123" style="border-bottom:1px solid #ccc;border-left:1px solid #ccc;padding:3px;" class="block">
+										
+									<div class="item product" >
+										<div class="item-wrap">
+											<div class="item-detail">
+												<div class="item-content">
+
+													<h4>
+														<a href="simple_product.html" title="nisi ball tip">`+data[i].gname+`</a>
+													</h4>
+
+													<!-- Price -->
+													
+													<div class="item-price">
+														<span>
+															<ins>
+																<span class="woocommerce-Price-amount amount">
+																	<span class="woocommerce-Price-currencySymbol">$</span>666
+																</span>
+															</ins>
+														</span>
+													</div>
+													
+													
+													<div class="sale-off">-10%</div>
+												</div>
+
+												<div class="item-img products-thumb">
+													<span class="onsale">Sale!</span>
+
+													<a href="simple_product.html">
+														<div class="product-thumb-hover">
+															<img 	width="300" height="300" src="`+$.parseJSON(data[i].gpic)[0]+`" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
+																	srcset="`+$.parseJSON(data[i].gpic)[0]+` 300w, `+$.parseJSON(data[i].gpic)[0]+` 150w, `+$.parseJSON(data[i].gpic)[0]+` 180w, `+$.parseJSON(data[i].gpic)[0]+` 500w"
+																	sizes="(max-width: 300px) 100vw, 300px" />
+														</div>
+													</a>
+
+													<!-- add to cart, wishlist, compare -->
+													<div class="item-bottom clearfix">
+														<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
+
+														<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
+
+														<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
+															<div class="yith-wcwl-add-button show" style="display:block">
+																<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+																<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+															</div>
+
+															<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+																<span class="feedback">Product added!</span>
+																<a href="#" rel="nofollow">Browse Wishlist</a>
+															</div>
+
+															<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
+																<span class="feedback">The product is already in the wishlist!</span>
+																<a href="#" rel="nofollow">Browse Wishlist</a>
+															</div>
+
+															<div style="clear:both"></div>
+															<div class="yith-wcwl-wishlistaddresponse"></div>
+														</div>
+
+														<div class="clear"></div>
+														<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>`;	
+        			}
+        			
+					$('#old').append(str);
+        		},
+        		dataType:'json'
+        	});
+		});
+
+
+		//实现url跳转
+		$('#tiaozhuan').on('click', 'a', function () {
+
+			var url = $(this).attr('type-url');
+
+			window.location.href='http://' + url;
+		})
+	</script>
    </body>
 </html>

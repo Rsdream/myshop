@@ -21,7 +21,7 @@
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>H-ui.admin 3.0</title>
+<title>商城后台</title>
 <meta name="keywords" content="H-ui.admin 3.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
 <meta name="description" content="H-ui.admin 3.0，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
 </head>
@@ -55,7 +55,7 @@
 					<ul class="dropDown-menu menu radius box-shadow">
 						<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
 						<li><a href="#">切换账户</a></li>
-						<li><a href="#">退出</a></li>
+						<li><a href="{{url('/admin/out')}}">退出</a></li>
 				</ul>
 			</li>
 				<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
@@ -107,7 +107,7 @@
 			<dd>
 				<ul>
 					<li><a data-href="http://h-ui.duoshuo.com/admin/" data-title="评论列表" href="javascript:;">评论列表</a></li>
-					<li><a data-href="feedback-list.html" data-title="意见反馈" href="javascript:void(0)">意见反馈</a></li>
+					
 				</ul>
 			</dd>
 		</dl>
@@ -126,7 +126,7 @@
 				<ul>
 					<li><a data-href="{{url('admin/role')}}" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
 					<li><a data-href="{{url('admin/permission')}}" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
-					<li><a data-href="{{url('admin/adminlist')}}" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
+					<li><a data-href="{{url('admin/user')}}" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -144,8 +144,9 @@
 			<dd>
 				<ul>
 					<li><a data-href="system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li>
-					<li><a data-href="system-category.html" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
-					<li><a data-href="system-data.html" data-title="数据字典" href="javascript:void(0)">数据字典</a></li>
+					<li><a data-href="{{url('admin/logo')}}" data-title="Logo管理" href="javascript:void(0)">Logo管理</a></li>
+					<li><a data-href="{{url('admin/url')}}" data-title="友情链接" href="javascript:void(0)">友情链接</a></li>
+					<li><a data-href="{{url('admin/feedback')}}" data-title="意见反馈" href="javascript:void(0)">意见反馈</a></li>
 					<li><a data-href="system-shielding.html" data-title="屏蔽词" href="javascript:void(0)">屏蔽词</a></li>
 					<li><a data-href="system-log.html" data-title="系统日志" href="javascript:void(0)">系统日志</a></li>
 				</ul>
@@ -160,7 +161,7 @@
 				<ul>
 					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">轮播图</a></li>
 					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">封面图</a></li>
-					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">秒杀商品</a></li>
+					<li><a data-href="{{url('admin/seckill')}}" data-title="秒杀商品" href="javascript:void(0)">秒杀商品</a></li>
 					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">新品推介</a></li>
 					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">热卖推介</a></li>
 					<li><a data-href="article-list.html" data-title="资讯管理" href="javascript:void(0)">优惠推介</a></li>
@@ -306,16 +307,5 @@ function member_add(title,url,w,h){
 
 </script>
 
-<!--此乃百度统计代码，请自行删除-->
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?080836300300be57b7f34f4b3e97d911";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-<!--/此乃百度统计代码，请自行删除-->
 </body>
 </html>

@@ -31,4 +31,11 @@ class CommonController extends Controller
         }
         	return false;		
     }
+
+
+    public function Out(Request $request)
+    {
+        $request->session()->forget('adminusers');
+        return view('Admin/login');
+    }
 }
