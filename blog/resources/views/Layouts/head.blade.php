@@ -22,7 +22,11 @@
                 <div class="textwidget">
 
                   <div class="call-us">
-                    <span>欢迎</span><span>来到{{$logo->name}}</span>
+                    <span>欢迎</span><span>来到
+                    @if($logo)
+                    {{$logo->name}}
+                    @endif
+                    </span>
                     @if (session()->has('userinfo') && isset(session('userinfo')['name']))
                       {{session('userinfo')['name']}}
                       <a href="{{url('/queit')}}">退出</a>
@@ -144,8 +148,9 @@
           <div class="etrostore-logo pull-left" >
 
             <a href="#" >
+            @if($logo)
               <img src="{{asset($logo->logo)}}">
-
+            @endif
             </a>
           </div>
 

@@ -232,6 +232,5 @@ class IndexController extends Controller
        //网站Logo
        return $logo = DB::table('logo')->select('id', 'name', 'logo')->first();
 
-
     }
 }

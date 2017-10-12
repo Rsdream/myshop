@@ -13,8 +13,8 @@ class Feedback extends Controller
 {
     
     /**
-     * 友情链接的列表
-     * @return [array $data] [友情链接的数据]
+     * 意见反馈的列表
+     * @return [array $data] [意见反馈]
      */
     public function index()
     {
@@ -23,10 +23,13 @@ class Feedback extends Controller
             ->select('id', 'uid', 'name','contact','content','addtime')
             ->orderBy('addtime', 'desc')
             ->paginate(6);
-    	foreach ($data as $v) {
-    		$userinfo = $v;
-    	}
-    	$user = DB::table('home_users')->select('uid')->where('id', $userinfo->uid)->first();
+
+        $user = [];
+        foreach ($data as $v) {
+            if ($v->uid) {
+                $user = DB::table('home_users')->select('uid')->where('id', $v->uid)->first();
+            }
+        }
 
     	return view('Admin/feedback-list', ['data' => $data, 'user' => $user]);
     }
