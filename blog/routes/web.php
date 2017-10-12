@@ -205,6 +205,11 @@ Route::post('/existence', 'Home\RegisterController@isExistence');
 Route::post('/dologin', 'Home\LoginController@doLogin');
 Route::get('/outlogin', 'Home\LoginController@outLogin');
 
+//找回密码
+Route::get('/forget', 'Home\ForgetController@forget');
+Route::post('/handle', 'Home\ForgetController@handle');
+Route::post('/send', 'Home\ForgetController@send');
+
 //处理注册
 Route::post('/doregister', 'Home\RegisterController@doregister');
 
