@@ -26,12 +26,12 @@ class CreateOrderDetail extends Migration
             $table->timestamps();
         });
 
-        
+
         //订单表
         Schema::create('orders_detail', function (Blueprint $table) {
-            $table->increments('id');            
-            $table->integer('number')->unique();            
-            $table->integer('uid');            
+            $table->increments('id');
+            $table->integer('number')->unique();
+            $table->integer('uid');
             $table->string('address');
             $table->integer('addtime')->unsigned();
             $table->string('name');
@@ -39,7 +39,7 @@ class CreateOrderDetail extends Migration
             $table->string('comment')->nullable();
             $table->integer('status')->unsigned()->default(0);
             $table->integer('back_status')->unsigned()->default(0);
-            $table->timestamps();             
+            $table->timestamps();
         });
     }
 
@@ -50,6 +50,7 @@ class CreateOrderDetail extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('orders_address');
+        Schema::dropIfExists('orders_detail');
     }
 }

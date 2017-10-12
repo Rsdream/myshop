@@ -125,7 +125,7 @@
 
 
 
-									{{$goodsData->links()}}
+									{{$goodsData->appends(['min_price' => $min, 'max_price' => $max])->links()}}
 								</div>
 
 								<div class="clear"></div>
@@ -145,13 +145,13 @@
 
 														<!-- add to cart, wishlist, compare -->
 														<div class="item-bottom clearfix">
-															<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
+															<a rel="nofollow" onclick='addcart({{$v->id}})' href="javascript:;" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
 
 															<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
 
 															<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
 																<div class="yith-wcwl-add-button show" style="display:block">
-																	<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+																	<a href="javascript:;" onclick='addCollection({{$v->id}})'  rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
 																	<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
 																</div>
 
@@ -170,16 +170,16 @@
 															</div>
 
 															<div class="clear"></div>
-															<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
+															<a href="{{url('/img/'.$v->gid)}}"  data-fancybox-type="ajax" title="商品大图" class="sm_quickview_handler-list fancybox fancybox.ajax">商品大图</a>
 														</div>
 													</div>
 
 													<div class="item-content products-content">
 														<div class="reviews-content">
-															<div class="star"><span style="width: 63px"></span></div>
+															<div class="star"><span style="width: 63px"></span> </div>
 														</div>
 
-														<h4><a href="simple_product.html" title="Cleaner with bag">{{$v->gname}}：{{$v->ram}}+{{$v->rom}}　{{$v->color}}</a></h4>
+														<h4 style="height:35px;"><a href="simple_product.html" title="Cleaner with bag">{{$v->gname}}：{{$v->ram}}+{{$v->rom}} {{$v->color}}</a></h4>
 
 														<span class="item-price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol"></span></span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{$v->price}}.00</span></ins></span>
 
@@ -187,7 +187,7 @@
 
 														<!-- add to cart, wishlist, compare -->
 														<div class="item-bottom clearfix">
-															<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
+															<a rel="nofollow" href="javascript:;" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
 
 															<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
 
@@ -212,7 +212,7 @@
 															</div>
 
 															<div class="clear"></div>
-															<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
+															<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">商品大图 </a>
 														</div>
 													</div>
 												</div>
@@ -232,7 +232,7 @@
 									</div>
 
 
-									{{$goodsData->links()}}
+									{{$goodsData->appends(['min_price' => $min, 'max_price' => $max])->links()}}
 								</div>
 							</div>
 						</div>
@@ -268,36 +268,26 @@
 						</div>
 					</div>
 
-					<div class="widget-3 widget woocommerce_layered_nav-5 woocommerce widget_layered_nav">
-						<div class="widget-inner">
-							<div class="block-title-widget">
-								<h2><span>Size</span></h2>
-							</div>
-
-							<ul>
-								<li class="wc-layered-nav-term "><a href="shop.html">L</a> <span class="count">(3)</span></li>
-								<li class="wc-layered-nav-term "><a href="shop.html">M</a> <span class="count">(1)</span></li>
-								<li class="wc-layered-nav-term "><a href="shop.html">S</a> <span class="count">(2)</span></li>
-								<li class="wc-layered-nav-term "><a href="shop.html">XL</a> <span class="count">(3)</span></li>
-								<li class="wc-layered-nav-term "><a href="shop.html">XS</a> <span class="count">(1)</span></li>
-							</ul>
-						</div>
-					</div>
-
 					<div class="widget-4 widget woocommerce_price_filter-3 woocommerce widget_price_filter">
 						<div class="widget-inner">
 							<div class="block-title-widget">
-								<h2><span>price</span></h2>
+								<h2><span>筛选价格</span></h2>
 							</div>
-
+							@php
+								if (empty($min)) {
+									$min = 1;
+								}
+								if (empty($max)) {
+									$max = 100000;
+								}
+							@endphp
 							<form method="get" action="">
 								<div class="price_slider_wrapper">
-									<div class="price_slider" style="display:none;"></div>
+									<br><br>
 									<div class="price_slider_amount">
-										<input type="text" id="min_price" name="min_price" value="100" data-min="150" placeholder="Min price">
-										<input type="text" id="max_price" name="max_price" value="650" data-max="700" placeholder="Max price">
-
-										<button type="submit" class="button">Filter</button>
+										<input type="text" id="min_price" name="min_price" value="{{$min}}" data-min="1" placeholder="Min price">
+										<input type="text" id="max_price" name="max_price" value="{{$max}}" data-max="100000" placeholder="Max price">
+										<button type="submit" class="button">筛选</button>
 
 										<div class="price_label" style="display:none;">
 											Price: <span class="from"></span> - <span class="to"></span>
@@ -305,6 +295,9 @@
 										<div class="clear"></div>
 									</div>
 								</div>
+							</form>
+							<form class="" action="" method="get">
+								<button class="button" type="submit">清除筛选</button>
 							</form>
 						</div>
 					</div>
@@ -611,5 +604,9 @@
       	b[c] += ( window.postMessage && request ? ' ' : ' no-' ) + cs;
    </script>
    <!--<![endif]-->
+	 @include('Layouts/addcart')
+	 <script type="text/javascript">
+	 	$('.fancybox').attr('title', '商品大图')
+	 </script>
    </body>
 </html>

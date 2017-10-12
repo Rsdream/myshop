@@ -35,6 +35,7 @@ class GoodsController extends Controller
                 'gpic',
                 'brandid',
                 'addtime',
+                'price',
                 'status',
                 'workoff',
                 'goodsdetail.gdetail'

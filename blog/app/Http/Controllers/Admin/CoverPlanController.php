@@ -65,7 +65,7 @@ class CoverPlanController extends Controller
         ImageApi::imgUp($filePath, $fileName);
         //处理图片
         $filePathArr [] = trim(ImageApi::attrImg($filePath, 400, 150, $fileName.'_400_150.'.$extension), './');
-        $filePathArr [] = trim(ImageApi::attrImg($filePath, 778, 352, $fileName.'_778_352.'.$extension), './');
+        $filePathArr [] = trim(ImageApi::attrImg($filePath, 776, 351, $fileName.'_778_352.'.$extension), './');
         $filePathArr [] = trim(ImageApi::attrImg($filePath, 1170, 452, $fileName.'_1170_352.'.$extension), './');
         //json图片名数组
         $gpicJson = json_encode($filePathArr);
@@ -127,9 +127,14 @@ class CoverPlanController extends Controller
     /**
      * 图片的删除
      */
-     public function del($id)
-     {
+    public function del($id)
+    {
+        $imgPath = DB::table('cover')->select('price')->where('id', $id)->first();
+        $imgPath = json_decode($imgPath->price, true);
+        foreach($imgPath as $v) {
+            unlink('./'.$v);
+        }
         DB::table('cover')->where('id', $id)->delete();
         return $id;
-     }
+    }
 }

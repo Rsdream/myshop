@@ -21,13 +21,12 @@ class GoodsListController extends Controller
      */
     public function list(Request $request, $type, $id)
     {
+        $this->min = $request->input('min_price');
+        $this->max = $request->input('max_price');
         switch ($type) {
             case 'category':
                 $goodsData = $this->category($id);
                 // dd($goodsData);
-                if (empty($goodsData[0]->id)) {
-                    return view('errors/404');
-                }
                 $brand = DB::table('brands')
                     ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
                     ->leftJoin('price', 'goods.id', '=', 'price.gid')
@@ -42,9 +41,6 @@ class GoodsListController extends Controller
                 break;
             case 'brand':
                 $goodsData = $this->brand($id);
-                if (empty($goodsData[0]->id)) {
-                    return view('errors/404');
-                }
                 $categoryId = DB::table('brands')->select('categoryid')->where('id', $id)->first();
                 $brand = DB::table('brands')
                     ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
@@ -64,11 +60,14 @@ class GoodsListController extends Controller
         }
         $coverImg = DB::table('cover')->select('id', 'name', 'price')->get();
         $category = $this->type();
+
         return view('Home/goods/shop', [
             'goodsData' => $goodsData,
             'category' => $category,
             'brand' => $brand,
             'coverImg' => $coverImg,
+            'min' => $this->min,
+            'max' => $this->max,
         ]);
     }
 
@@ -79,14 +78,22 @@ class GoodsListController extends Controller
      */
     public function category($id)
     {
+        $map[] = ['home_category.id', '=', $id];
+        $map[] = ['goods.status', '>', 0];
+        if ($this->min) {
+            $map[] = ['price.price', '>=', $this->min];
+        }
+        if ($this->max) {
+            $map[] = ['price.price', '<=', $this->max];
+        }
         $goodsData = DB::table('home_category')
         ->leftJoin('brands', 'home_category.id', '=', 'brands.categoryid')
         ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
         ->leftJoin('price', 'goods.id', '=', 'price.gid')
-        ->select('price.id', 'gname', 'gpic', 'workoff', 'price.price', 'ram', 'rom', 'color')
+        ->select('price.id', 'gname', 'gpic', 'workoff', 'price.price', 'ram', 'rom', 'color', 'gid')
         ->orderBy('goods.addtime', 'desc')
         ->limit(12)
-        ->where([['goods.status', '>', 0], ['home_category.id', '=', $id]])
+        ->where($map)
         ->paginate(12);
         return $goodsData;
     }
@@ -98,12 +105,20 @@ class GoodsListController extends Controller
      */
     public function brand($id)
     {
+        $map[] = ['brandid', '=', $id];
+        $map[] = ['goods.status', '>', 0];
+        if ($this->min) {
+            $map[] = ['price.price', '>=', $this->min];
+        }
+        if ($this->max) {
+            $map[] = ['price.price', '<=', $this->max];
+        }
         $goodsData = DB::table('goods')
             ->leftJoin('price', 'goods.id', '=', 'price.gid')
-            ->select('price.id', 'gname', 'gpic', 'workoff', 'price.price', 'ram', 'rom', 'color')
+            ->select('price.id', 'gname', 'gpic', 'workoff', 'price.price', 'ram', 'rom', 'color', 'gid')
             ->orderBy('goods.addtime', 'desc')
             ->limit(12)
-            ->where([['goods.status', '>', 0], ['brandid', '=', $id]])
+            ->where($map)
             ->paginate(12);
         return $goodsData;
     }
@@ -112,8 +127,8 @@ class GoodsListController extends Controller
      * 查询所有分类
      * @return array $type 类型
      */
-     public function type()
-     {
+    public function type()
+    {
         $type = DB::table('home_category')
             ->leftJoin('brands', 'brands.categoryid', '=', 'home_category.id')
             ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
@@ -123,7 +138,7 @@ class GoodsListController extends Controller
             ->groupBy('home_category.id', 'home_category.name')
             ->get();
         return $type;
-     }
+    }
 
      /**
       * 商品详细页
@@ -132,155 +147,181 @@ class GoodsListController extends Controller
       * @return array $goodsImg    商品的图片
       * @return array $goodsList   商品的其他版本
       */
-      public function goodsDetail($id)
-      {
-          $workoff = DB::table('goods')
-              ->leftJoin('price', 'goods.id', '=', 'price.gid')
-              ->select('workoff')
-              ->where('price.id', '=', $id)
-              ->first();
-          if (empty($workoff)) {
-              return view('errors/404');
-          }
-          if ($workoff->workoff >= 1000) {
-              if ( Cache::has('goods:price:'.$id) ) {
-                  $goodsDetail = Cache::get('goods:price:'.$id);
-                  $goodsImg = Cache::get('goods:img:'.$id);
-                  $goodsList = Cache::get('goods:list:'.$id);
-              } else {
-                //查询指定id商品
-                $goodsDetail = DB::table('goods')
-                    ->leftJoin('price', 'goods.id', '=', 'price.gid')
-                    ->select('goods.id', 'price.id as pid', 'gname', 'gpic', 'addtime', 'workoff', 'price.price', 'stock', 'ram', 'rom', 'color', 'attr')
-                    ->where('price.id', '=', $id)
-                    ->get()
-                    ->toArray();
-                //查询此商品的其他版本
-                $goodsList = DB::table('goods')
-                    ->leftJoin('price', 'goods.id', '=', 'price.gid')
-                    ->select('price.id', 'gname', 'ram', 'rom', 'color')
-                    ->where('goods.id', '=', $goodsDetail[0]->id)
-                    ->get()
-                    ->toArray();
-                //查询此商品的图片
-                $goodsImg = DB::table('goodsimg')
-                    ->select('gimg')
-                    ->where('gid', $goodsDetail[0]->id)
-                    ->get();
-                Cache::add('goods:price:'.$id, $goodsDetail, 10080);
-                Cache::add('goods:img:'.$id, $goodsImg, 10080);
-                Cache::add('goods:list:'.$id, $goodsList, 10080);
+    public function goodsDetail($id)
+    {
+        $workoff = DB::table('goods')
+            ->leftJoin('price', 'goods.id', '=', 'price.gid')
+            ->select('workoff')
+            ->where('price.id', '=', $id)
+            ->first();
+        if (empty($workoff)) {
+            return view('errors/404');
+        }
+        if ($workoff->workoff >= 1000) {
+            if ( Cache::has('goods:price:'.$id) ) {
+                $goodsDetail = Cache::get('goods:price:'.$id);
+                $goodsImg = Cache::get('goods:img:'.$id);
+                $goodsList = Cache::get('goods:list:'.$id);
+                $detail = Cache::get('goods:detail:'.$id);
+            } else {
+              //查询指定id商品
+              $goodsDetail = DB::table('goods')
+                  ->leftJoin('price', 'goods.id', '=', 'price.gid')
+                  ->select('goods.id', 'price.id as pid', 'gname', 'gpic', 'addtime', 'workoff', 'price.price', 'stock', 'ram', 'rom', 'color', 'attr')
+                  ->where('price.id', '=', $id)
+                  ->get()
+                  ->toArray();
+              //查询此商品的其他版本
+              $goodsList = DB::table('goods')
+                  ->leftJoin('price', 'goods.id', '=', 'price.gid')
+                  ->select('price.id', 'gname', 'ram', 'rom', 'color')
+                  ->where('goods.id', '=', $goodsDetail[0]->id)
+                  ->get()
+                  ->toArray();
+              //查询此商品的图片
+              $goodsImg = DB::table('goodsimg')
+                  ->select('gimg')
+                  ->where('gid', $goodsDetail[0]->id)
+                  ->get();
+              //查询商品描述
+              $detail = DB::table('goodsdetail')
+                  ->select('gdetail')
+                  ->where('gid', $goodsDetail[0]->id)
+                  ->first();
+              Cache::add('goods:price:'.$id, $goodsDetail, 1440);
+              Cache::add('goods:img:'.$id, $goodsImg, 1440);
+              Cache::add('goods:list:'.$id, $goodsList, 1440);
+              Cache::add('goods:detail:'.$id, $detail, 1440);
+            }
+            return view('Home/goods/simple_product', [
+                'goodsDetail' => $goodsDetail,
+                'goodsImg' => $goodsImg,
+                'goodsList' => $goodsList,
+                'detail' => $detail,
+            ]);
+        }
+        //查询指定id商品
+        $goodsDetail = DB::table('goods')
+            ->leftJoin('price', 'goods.id', '=', 'price.gid')
+            ->select('goods.id', 'price.id as pid', 'gname', 'gpic', 'addtime', 'workoff', 'price.price', 'stock', 'ram', 'rom', 'color', 'attr')
+            ->where('price.id', '=', $id)
+            ->get()
+            ->toArray();
+        //查询此商品的其他版本
+        $goodsList = DB::table('goods')
+            ->leftJoin('price', 'goods.id', '=', 'price.gid')
+            ->select('price.id', 'gname', 'ram', 'rom', 'color')
+            ->where('goods.id', '=', $goodsDetail[0]->id)
+            ->get()
+            ->toArray();
+        //查询此商品的图片
+        $goodsImg = DB::table('goodsimg')
+            ->select('gimg')
+            ->where('gid', $goodsDetail[0]->id)
+            ->get();
+        //查询商品描述
+        $detail = DB::table('goodsdetail')
+            ->select('gdetail')
+            ->where('gid', $goodsDetail[0]->id)
+            ->first();
+        return view('Home/goods/simple_product', [
+            'goodsDetail' => $goodsDetail,
+            'goodsImg' => $goodsImg,
+            'goodsList' => $goodsList,
+            'detail' => $detail,
+        ]);
+    }
 
-              }
-              return view('Home/goods/simple_product', [
-                  'goodsDetail' => $goodsDetail,
-                  'goodsImg' => $goodsImg,
-                  'goodsList' => $goodsList,
-              ]);
-          }
-          //查询指定id商品
-          $goodsDetail = DB::table('goods')
-              ->leftJoin('price', 'goods.id', '=', 'price.gid')
-              ->select('goods.id', 'price.id as pid', 'gname', 'gpic', 'addtime', 'workoff', 'price.price', 'stock', 'ram', 'rom', 'color', 'attr')
-              ->where('price.id', '=', $id)
-              ->get()
-              ->toArray();
-          //查询此商品的其他版本
-          $goodsList = DB::table('goods')
-              ->leftJoin('price', 'goods.id', '=', 'price.gid')
-              ->select('price.id', 'gname', 'ram', 'rom', 'color')
-              ->where('goods.id', '=', $goodsDetail[0]->id)
-              ->get()
-              ->toArray();
-          //查询此商品的图片
-          $goodsImg = DB::table('goodsimg')
-              ->select('gimg')
-              ->where('gid', $goodsDetail[0]->id)
-              ->get();
-          return view('Home/goods/simple_product', [
-              'goodsDetail' => $goodsDetail,
-              'goodsImg' => $goodsImg,
-              'goodsList' => $goodsList,
-          ]);
-      }
-
-      /**
-       * 商品详细页
-       * @author $id   商品的id
-       * @return array $goodsDetail 指定id商品信息
-       * @return array $goodsImg    商品的图片
-       * @return array $goodsList   商品的其他版本
-       */
-       public function goodsDetailTwo($id)
-       {
-           $workoff = DB::table('goods')
-               ->leftJoin('price', 'goods.id', '=', 'price.gid')
-               ->select('workoff', 'price.id')
-               ->where('goods.id', '=', $id)
-               ->first();
-           if (empty($workoff)) {
-               return view('errors/404');
-           }
-           $id = $workoff->id;
-           if ($workoff->workoff >= 1000) {
-               if ( Cache::has('goods:price:'.$id) ) {
-                   $goodsDetail = Cache::get('goods:price:'.$id);
-                   $goodsImg = Cache::get('goods:img:'.$id);
-                   $goodsList = Cache::get('goods:list:'.$id);
-               } else {
-                 //查询指定id商品
-                 $goodsDetail = DB::table('goods')
-                     ->leftJoin('price', 'goods.id', '=', 'price.gid')
-                     ->select('goods.id', 'price.id as pid', 'gname', 'gpic', 'addtime', 'workoff', 'price.price', 'stock', 'ram', 'rom', 'color', 'attr')
-                     ->where('price.id', '=', $id)
-                     ->get()
-                     ->toArray();
-                 //查询此商品的其他版本
-                 $goodsList = DB::table('goods')
-                     ->leftJoin('price', 'goods.id', '=', 'price.gid')
-                     ->select('price.id', 'gname', 'ram', 'rom', 'color')
-                     ->where('goods.id', '=', $goodsDetail[0]->id)
-                     ->get()
-                     ->toArray();
-                 //查询此商品的图片
-                 $goodsImg = DB::table('goodsimg')
-                     ->select('gimg')
-                     ->where('gid', $goodsDetail[0]->id)
-                     ->get();
-                 Cache::add('goods:price:'.$id, $goodsDetail, 10080);
-                 Cache::add('goods:img:'.$id, $goodsImg, 10080);
-                 Cache::add('goods:list:'.$id, $goodsList, 10080);
-
-               }
-               return view('Home/goods/simple_product', [
-                   'goodsDetail' => $goodsDetail,
-                   'goodsImg' => $goodsImg,
-                   'goodsList' => $goodsList,
-               ]);
-           }
-           //查询指定id商品
-           $goodsDetail = DB::table('goods')
-               ->leftJoin('price', 'goods.id', '=', 'price.gid')
-               ->select('goods.id', 'price.id as pid', 'gname', 'gpic', 'addtime', 'workoff', 'price.price', 'stock', 'ram', 'rom', 'color', 'attr')
-               ->where('price.id', '=', $id)
-               ->get()
-               ->toArray();
-           //查询此商品的其他版本
-           $goodsList = DB::table('goods')
-               ->leftJoin('price', 'goods.id', '=', 'price.gid')
-               ->select('price.id', 'gname', 'ram', 'rom', 'color')
-               ->where('goods.id', '=', $goodsDetail[0]->id)
-               ->get()
-               ->toArray();
-           //查询此商品的图片
-           $goodsImg = DB::table('goodsimg')
-               ->select('gimg')
-               ->where('gid', $goodsDetail[0]->id)
-               ->get();
-           return view('Home/goods/simple_product', [
+    /**
+    * 商品详细页
+    * @author $id   商品的id
+    * @return array $goodsDetail 指定id商品信息
+    * @return array $goodsImg    商品的图片
+    * @return array $goodsList   商品的其他版本
+    */
+    public function goodsDetailTwo($id)
+    {
+        $workoff = DB::table('goods')
+           ->leftJoin('price', 'goods.id', '=', 'price.gid')
+           ->select('workoff', 'price.id')
+           ->where('goods.id', '=', $id)
+           ->first();
+        if (empty($workoff)) {
+           return view('errors/404');
+        }
+        $id = $workoff->id;
+        if ($workoff->workoff >= 1000) {
+            if ( Cache::has('goods:price:'.$id) ) {
+               $goodsDetail = Cache::get('goods:price:'.$id);
+               $goodsImg = Cache::get('goods:img:'.$id);
+               $goodsList = Cache::get('goods:list:'.$id);
+               $detail = Cache::get('goods:detail:'.$id);
+            } else {
+               //查询指定id商品
+               $goodsDetail = DB::table('goods')
+                   ->leftJoin('price', 'goods.id', '=', 'price.gid')
+                   ->select('goods.id', 'price.id as pid', 'gname', 'gpic', 'addtime', 'workoff', 'price.price', 'stock', 'ram', 'rom', 'color', 'attr')
+                   ->where('price.id', '=', $id)
+                   ->get()
+                   ->toArray();
+               //查询此商品的其他版本
+               $goodsList = DB::table('goods')
+                   ->leftJoin('price', 'goods.id', '=', 'price.gid')
+                   ->select('price.id', 'gname', 'ram', 'rom', 'color')
+                   ->where('goods.id', '=', $goodsDetail[0]->id)
+                   ->get()
+                   ->toArray();
+               //查询此商品的图片
+               $goodsImg = DB::table('goodsimg')
+                   ->select('gimg')
+                   ->where('gid', $goodsDetail[0]->id)
+                   ->get();
+               //查询商品描述
+               $detail = DB::table('goodsdetail')
+                   ->select('gdetail')
+                   ->where('gid', $goodsDetail[0]->id)
+                   ->first();
+               Cache::add('goods:price:'.$id, $goodsDetail, 1440);
+               Cache::add('goods:img:'.$id, $goodsImg, 1440);
+               Cache::add('goods:list:'.$id, $goodsList, 1440);
+               Cache::add('goods:detail:'.$id, $detail, 1440);
+            }
+            return view('Home/goods/simple_product', [
                'goodsDetail' => $goodsDetail,
                'goodsImg' => $goodsImg,
                'goodsList' => $goodsList,
-           ]);
-       }
+               'detail' => $detail,
+            ]);
+        }
+        //查询指定id商品
+        $goodsDetail = DB::table('goods')
+           ->leftJoin('price', 'goods.id', '=', 'price.gid')
+           ->select('goods.id', 'price.id as pid', 'gname', 'gpic', 'addtime', 'workoff', 'price.price', 'stock', 'ram', 'rom', 'color', 'attr')
+           ->where('price.id', '=', $id)
+           ->get()
+           ->toArray();
+        //查询此商品的其他版本
+        $goodsList = DB::table('goods')
+           ->leftJoin('price', 'goods.id', '=', 'price.gid')
+           ->select('price.id', 'gname', 'ram', 'rom', 'color')
+           ->where('goods.id', '=', $goodsDetail[0]->id)
+           ->get()
+           ->toArray();
+        //查询此商品的图片
+        $goodsImg = DB::table('goodsimg')
+           ->select('gimg')
+           ->where('gid', $goodsDetail[0]->id)
+           ->get();
+        //查询商品描述
+        $detail = DB::table('goodsdetail')
+           ->select('gdetail')
+           ->where('gid', $goodsDetail[0]->id)
+           ->first();
+        return view('Home/goods/simple_product', [
+           'goodsDetail' => $goodsDetail,
+           'goodsImg' => $goodsImg,
+           'goodsList' => $goodsList,
+           'detail' => $detail,
+        ]);
+    }
 }

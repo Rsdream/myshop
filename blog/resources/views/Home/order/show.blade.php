@@ -52,7 +52,7 @@
 
 		<script src="{{asset('/Ui/AmazeUI-2.4.2/assets/js/jquery.min.js')}}"></script>
 		<script src="{{asset('/Ui/AmazeUI-2.4.2/assets/js/amazeui.js')}}"></script>
-	
+
 </head>
 
 <body class="page page-id-6 home-style1">
@@ -183,7 +183,7 @@
 												<a class="item-link" href="checkout.html">
 													<span class="menu-title">收藏夹</span>
 												</a>
-											</li>											
+											</li>
 											<li class="menu-checkout">
 												<a class="item-link" href="{{url('/outlogin')}}">
 													<span class="menu-title">退出</span>
@@ -591,7 +591,7 @@
 								<li><a href="#tab5">待评价</a></li>
 							</ul>
 
-							
+
 							<div class="am-tabs-bd">
 								<div class="am-tab-panel am-fade am-in am-active" id="tab1">
 									<div class="order-top">
@@ -615,7 +615,7 @@
 
 									<div class="order-main">
 										<div class="order-list">
-											<?php $total=0 ?>											
+											<?php $total=0 ?>
 											@foreach ($orders as $v)
 											<!--交易成功-->
 											<div class="order-status5">
@@ -631,7 +631,7 @@
 															<li class="td td-item">
 																<div class="item-pic">
 																	<a href="#" class="J_MakePoint">
-																		<img src="{{url('/').json_decode($k->gpic, true)[0]}}" class="itempic J_ItemImg">
+																		<img src="{{url('/').'/'.json_decode($k->gpic, true)[0]}}" class="itempic J_ItemImg">
 																	</a>
 																</div>
 																<div class="item-info">
@@ -656,13 +656,13 @@
 															</li>
 															<li class="td td-operation">
 																<div class="item-operation">
-																	
+
 																</div>
 															</li>
 														</ul>
 														<?php $total +=$k->gprice*$k->gnum ?>
 														@endforeach
-														
+
 													</div>
 													<div class="order-right">
 														<li class="td td-amount">
@@ -697,7 +697,7 @@
 												</div>
 											</div>
 											@endforeach
-											
+
 										</div>
 
 									</div>
@@ -1260,8 +1260,8 @@
 													</div>
 												</div>
 											</div>
-											
-											
+
+
 											<div class="order-status4">
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">1601430</a></div>
@@ -1337,7 +1337,7 @@
 																</div>
 															</li>
 														</ul>
-														
+
 														<ul class="item-list">
 															<li class="td td-item">
 																<div class="item-pic">
@@ -1371,7 +1371,7 @@
 																</div>
 															</li>
 														</ul>
-														
+
 
 													</div>
 													<div class="order-right">

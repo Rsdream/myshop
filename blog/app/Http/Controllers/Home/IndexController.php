@@ -23,17 +23,19 @@ class IndexController extends Controller
         		$id = $category[$i]->id;
         	}
         }
-
-        //根据类别查询出手机的销量排行
-       	$phone = DB::table('goods')
-            ->leftJoin('brands', 'brands.id', '=', 'goods.brandid')
-            ->select('goods.id', 'goods.brandid', 'goods.gname', 'goods.gpic', 'goods.workoff', 'brands.categoryid', 'bname')
-            ->where('brands.categoryid', '=', $id)
-            ->orderBy('workoff', 'desc')
-            ->limit(6)
-            ->get()
-            ->toArray();
-
+        if ( !empty($id) ) {
+            //根据类别查询出手机的销量排行
+           	$phone = DB::table('goods')
+                ->leftJoin('brands', 'brands.id', '=', 'goods.brandid')
+                ->select('goods.id', 'goods.brandid', 'goods.gname', 'goods.gpic', 'goods.workoff', 'brands.categoryid', 'bname')
+                ->where('brands.categoryid', '=', $id)
+                ->orderBy('workoff', 'desc')
+                ->limit(6)
+                ->get()
+                ->toArray();
+        } else {
+            $phone = [];
+        }
 
         //查询商品总销量排行
         $salesVolume = DB::table('goods')->select('brandid', 'gname', 'id', 'gpic', 'workoff')->orderBy('workoff', 'desc')->limit(5)->get();
@@ -105,10 +107,12 @@ class IndexController extends Controller
         $newGoodsData = DB::table('home_category')
         ->leftJoin('brands', 'home_category.id', '=', 'brands.categoryid')
         ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
-        ->select('goods.id', 'gname', 'gpic', 'workoff', 'price')
+        ->leftJoin('price', 'goods.id', '=', 'price.gid')
+        ->select('goods.id', 'gname', 'gpic', 'workoff', 'goods.price', 'price.id as pid')
         ->orderBy('goods.addtime', 'desc')
         ->limit(6)
         ->where([['goods.status', '>', 0], ['home_category.id', '=', $id]])
+        ->groupBy('goods.id', 'gname', 'gpic', 'workoff', 'goods.price', 'price.id')
         ->get()
         ->toArray();
         $logoImg = DB::table('brands')

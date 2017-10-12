@@ -45,6 +45,7 @@ class LoginController extends Controller
 			//判断密码
 			if (Hash::check($pass, $user->pass)) {
 					$request->session()->flush();
+					$request->session()->put('user', $user->id);
 					$request->session()->put('userinfo', [
 							'id' => $user->id,
 							'uid' => $user->uid,
