@@ -49,7 +49,7 @@
 	<body>
 		<!--头 -->
 		@include('Layouts/head')
-			<b class="line"></b>		
+			<b class="line"></b>
 
 
 						<!--标题 -->
@@ -62,7 +62,7 @@
 
 							<ul class="am-avg-sm-2 am-tabs-nav am-nav am-nav-tabs">
 								<li class="am-active"><a href="#tab1">退款管理</a></li>
-								
+
 
 							</ul>
 
@@ -100,7 +100,7 @@
 														<li class="td td-item">
 															<div class="item-pic">
 																<a href="#" class="J_MakePoint">
-																	<img src="{{url('/').json_decode($v->gpic, true)[0]}}" class="itempic J_ItemImg">
+																	<img src="{{url('/').'/'.json_decode($val->gpic, true)[0]}}" class="itempic J_ItemImg">
 																</a>
 															</div>
 															<div class="item-info">
@@ -161,14 +161,14 @@
 									@endforeach
 
 								</div>
-								
+
 
 							</div>
 
 						</div>
 					</div>
 
-				
+
 				<!--底部-->
 
 		    @include('Layouts/footer')
@@ -200,9 +200,9 @@
 		    		type : 'post',
 		    		url  : '{{url("/order/drawBack")}}',
 		    		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
-				    beforeSend:function(){ 
+				    beforeSend:function(){
 		                index = layer.load(3);
-		            }, 
+		            },
 		    		success:function(data) {console.log(data);
 		    			if (data == 3) {
 		    				layer.close(index);

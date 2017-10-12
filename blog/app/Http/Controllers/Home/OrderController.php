@@ -75,15 +75,18 @@ class OrderController extends Controller
     {
         $text    = '';
         $id      = $request->input('like');
-        $name    = $request->input('uname');
-        $phone   = $request->input('uphone');
-        $address = $request->input('address');
+        $name    = $request->input('myname');
+        $phone   = $request->input('myphone');
+        $address = $request->input('myaddress');
         $text    = $request->input('text');
         $uid     = Session::get('user');
         $score   = $request->input('score');
         $number  = rand(111111,999999);
         $time    = time();
-
+        //未知错误！出现过$name值无法获取;
+        if ($name == null) {
+            return back();
+        }
         //用户登录
         $key       = 'cart:ids:'.Session::get('user');
         $cartDatas = [];
@@ -187,16 +190,16 @@ class OrderController extends Controller
         $data = DB::table('orders_detail')
             ->select('id', 'addtime', 'status', 'number' , 'tprice', 'oscore')
             ->where('uid', '=', $uid)
-            ->get()
-            ->toArray();
-            foreach ($data as $k => $v) {
-                $data[$k]->orderDetail = DB::table('orders_goods as o')
-                    ->leftJoin('price', 'price.id', 'o.gid')
-                    ->select('o.id', 'o.oid', 'o.gid', 'o.gname', 'o.gpic', 'o.gnum', 'o.gprice', 'ram', 'rom', 'color')
-                    ->where('oid', $v->number)
-                    ->get()
-                    ->toArray();
-            }
+            ->orderBy('addtime', 'desc')
+            ->paginate(6);
+        foreach ($data as $k => $v) {
+            $data[$k]->orderDetail = DB::table('orders_goods as o')
+                ->leftJoin('price', 'price.id', 'o.gid')
+                ->select('o.id', 'o.oid', 'o.gid', 'o.gname', 'o.gpic', 'o.gnum', 'o.gprice', 'ram', 'rom', 'color')
+                ->where('oid', $v->number)
+                ->get()
+                ->toArray();
+        }
 
         return view('Home/order/show', ['data' => $data]);
     }
@@ -333,6 +336,7 @@ class OrderController extends Controller
         $data   = DB::table('orders_goods')
             ->select('id', 'oid', 'gname', 'gpic', 'gnum', 'gprice', 'gid', 'setmeal')
             ->where('back_status', '=', 0)
+            ->where('oid', '=', $number)
             ->get()
             ->toArray();
 
@@ -356,11 +360,11 @@ class OrderController extends Controller
             'bid'     => $bid,
         ]);
         //修改退款商品状态
-        $a = DB::table('orders_goods')
+        DB::table('orders_goods')
             ->where('id', $bid)
             ->update(['back_status' => 1]);
 
-         return redirect('order/backlist?number='.$oid.'')->with('backlist', '申请退款成功!');;
+         return redirect('order/backlist?id='.$oid.'')->with('backlist', '申请退款成功!');;
     }
 
     //删除订单

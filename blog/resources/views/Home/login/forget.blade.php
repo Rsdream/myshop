@@ -127,7 +127,7 @@
 									</ul>
 									<div class="tab-content form-horizontal" >
 										<div  class="tab-content-inner active " data-content="signup">
-										   
+
 											<form action="{{url('/send')}}" id="doregister" method="post">
 											    {{csrf_field()}}
 
@@ -145,7 +145,7 @@
 												</div>
 												<div class="form-group has-feedback">
 													    <div class="col-md-3">
-													        <label for="inputEmail3" class=" control-label">密码</label>
+													        <label for="inputEmail3" class=" control-label">新密码</label>
 													    </div>
 													    <div class="col-md-9 ">
 													        <input type="password" name="upass" class="form-control" id="inputEmail3" placeholder="请输入密码">
@@ -622,7 +622,7 @@
          	$('.my-repeatpass').html('');
          	$('#repeatpass').css('display','block');
         }
-    }) 
+    })
 
     //手机验证码判断
     $('input[name="phonecode"]').on('focus', function () {

@@ -31,7 +31,7 @@
 </head>
 <body>
 <article class="page-container">
-	
+
 	@if (count($errors) > 0)
 	    <div class="alert alert-danger" id="time">
 	        <ul>
@@ -52,13 +52,13 @@
 		{{csrf_field()}}
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>称呼：</label>
-			<div class="formControls col-xs-8 col-sm-9">
+			<div class="formControls col-xs-8 col-sm-6">
 				<input type="text" class="input-text" value="" placeholder="" id="" name="name">
 			</div>
 		</div>
-		<div class="row cl">
+		<div class="row cl" >
 			<label class="form-label col-xs-4 col-sm-3">联系方式</label>
-			<div class="formControls col-xs-8 col-sm-9">
+			<div class="formControls col-xs-8 col-sm-6" >
 				<input type="text" class="input-text" value="" placeholder="" id="" name="contact">
 			</div>
 		</div>
@@ -69,7 +69,7 @@
 				<textarea name="content" id="" cols="130" rows="10"></textarea>
 			</div>
 		</div>
-		
+
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 				<input type="submit" value="确定" class="btn btn-success radius">
@@ -79,9 +79,9 @@
 </article>
 
 <!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="{{asset('/Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('/Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/lib/layer/2.4/layer.js')}}"></script>
-<script type="text/javascript" src="{{asset('/Admin/static/h-ui/js/H-ui.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('/Admin/static/h-ui/js/H-ui.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/static/h-ui.admin/js/H-ui.admin.js')}}"></script> <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
@@ -114,7 +114,7 @@ $(function(){
 			}
 		}
 	});
-	
+
 	$("#form-admin-role-add").validate({
 		rules:{
 			roleName:{

@@ -27,7 +27,6 @@ class IndexController extends Controller
         if ( !empty($id) ) {
             //根据类别查询出手机的销量排行
             $phone = Cache::get('Hgoods'.$id);
-            // dd($phone);
             if (!$phone) {
                 $phone = DB::table('goods')
                 ->leftJoin('price', 'goods.id', 'price.gid')
@@ -45,7 +44,7 @@ class IndexController extends Controller
 
                 //放入缓存
                 Cache::put('Hgoods'.$id, $phone, 24*60);
-                
+
             }
 
         } else {
@@ -69,7 +68,7 @@ class IndexController extends Controller
             }
             Cache::put('goodsdata', $salesVolume, 24*60);
         }
-        
+
 
         $seckillList = DB::table('goods')
             ->leftJoin('price', 'goods.id', '=', 'price.gid')
@@ -144,10 +143,10 @@ class IndexController extends Controller
     public function newGoods(Request $request, $id)
     {
 
-        // if (Cache::has('newgoods:'.$id)){
-        //     $newGoodsData = Cache::get('newgoods:'.$id);
-        //     return $newGoodsData;
-        // }
+        if (Cache::has('newgoods:'.$id)){
+            $newGoodsData = Cache::get('newgoods:'.$id);
+            return $newGoodsData;
+        }
         $newGoodsData = DB::table('home_category')
         ->leftJoin('brands', 'home_category.id', '=', 'brands.categoryid')
         ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')

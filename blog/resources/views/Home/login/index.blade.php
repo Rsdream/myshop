@@ -75,7 +75,7 @@
 
 		</div>
 
-		
+
 	</nav>
 	<header id="gtco-header" class="gtco-cover" role="banner" style="background-image: url('{{asset('/Home/login/images/img_4.jpg')}}');">
 
@@ -84,16 +84,27 @@
         <div class="alert alert-danger alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align: center"> {{session('erro')}}</div>
     @endif
 
-    <!--登录注册成功提示-->
+    <!--注册成功提示-->
     @if(!empty(session('success')))
         <div class="alert alert-success alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align:center">
         {{session('success')}}</div>
             <script type="text/javascript">
                 //3秒后清除提示样式
                 setTimeout(function () {
-        	        $('.alter-register-tip').remove();
-        	            window.location.replace("{{url('/')}}");
-                    },3000);
+        	         $('.alter-register-tip').remove();
+                },3000);
+            </script>
+    @endif
+		<!--登录成功提示-->
+    @if(!empty(session('login')))
+        <div class="alert alert-success alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align:center">
+        {{session('login')}}</div>
+            <script type="text/javascript">
+                //3秒后清除提示样式
+                setTimeout(function () {
+        	         $('.alter-register-tip').remove();
+									 window.location.replace('{{url("/")}}')
+                },3000);
             </script>
     @endif
 
@@ -131,7 +142,7 @@
 									</ul>
 									<div class="tab-content form-horizontal" >
 										<div  class="tab-content-inner active " data-content="signup">
-										    
+
 											<form action="{{url('/dologin')}}" id="dologin" method="post">
 											    {{csrf_field()}}
 
@@ -800,7 +811,7 @@
 	    	} else {
 	    		check = true;
 	    }
-    });	  
+    });
 
     //注册提交时验证
     $("#doregister").submit(function() {
@@ -829,7 +840,7 @@
     		return true;
     	}
     });
-    
+
     //登录时验证值
     $("#dologin").submit(function(){
     	if(!username) {

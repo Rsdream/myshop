@@ -54,16 +54,13 @@
 <body>
 	<div id="loading" class="loading">上传图片中...</div>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 订单详情 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-<div class="page-container">
 
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
-	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-sort">
 			<thead>
 				<tr class="text-c">
-					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th width="70">订单编号</th>
-					<th width="70">商品名</th>
+
+					<th width="170">订单编号</th>
+					<th width="270">商品名</th>
 					<th >商品数量</th>
 					<th >商品价格</th>
 					<th width="100">商品总价</th>
@@ -74,7 +71,7 @@
 			    @if (isset($goods))
 				@foreach($goods as $v)
 					<tr class="text-c">
-						<td><input name="" type="checkbox" value=""></td>
+
 						<td>{{$v->oid}}</td>
 						<td>{{$v->gname}}</td>
 						<td>{{$v->gnum}}</td>
@@ -100,8 +97,8 @@
 <script type="text/javascript" src="{{asset('/Admin/lib/laypage/1.2/laypage.js')}}"></script>
 @include('Admin/Common/tip')
 <script type="text/javascript">
-    
-    
+
+
     //订单状态修改
     function change(id, obj) {
     	var status = $(obj).parent().parent().children('th').html();

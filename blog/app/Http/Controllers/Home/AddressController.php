@@ -102,25 +102,27 @@ class AddressController extends Controller
     //查询默认地址
     public function showChange()
     {
+        $uid = Session::get('user');
         //查询状态伪1默认地址
         $v= DB::table('orders_address')
             ->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment', 'status')
             ->where('status', 1)
+            ->where('uid', $uid)
             ->first();
         if ($v) {
-          $add   = [];
-          $pro   = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
-          $city  = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
-          $area  = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
-          $add[] = [
-          'id'      => $v->id,
-          'pro'     => $pro->name,
-          'city'    => $city->name,
-          'area'    => $area->name,
-          'name'    => $v->name,
-          'phone'   => $v->phone,
-          'comment' => $v->comment,
-          'status'  => $v->status,
+            $add   = [];
+            $pro   = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
+            $city  = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
+            $area  = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
+            $add[] = [
+            'id'      => $v->id,
+            'pro'     => $pro->name,
+            'city'    => $city->name,
+            'area'    => $area->name,
+            'name'    => $v->name,
+            'phone'   => $v->phone,
+            'comment' => $v->comment,
+            'status'  => $v->status,
         ];
             echo json_encode($add);
         } else {
