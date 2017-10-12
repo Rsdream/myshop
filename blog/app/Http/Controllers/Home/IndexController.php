@@ -11,8 +11,8 @@ use Carbon\Carbon;
 class IndexController extends Controller
 {
 
-  	public function index()
-  	{
+    public function index()
+    {
 
         // dd(session('userinfo'));
         //查询所有类别
@@ -20,9 +20,9 @@ class IndexController extends Controller
         // 得到手机的类别id
         for ($i=0;$i<count($category);$i++) {
 
-        	if ($category[$i]->name == '手机') {
-        		  $id = $category[$i]->id;
-        	}
+            if ($category[$i]->name == '手机') {
+                  $id = $category[$i]->id;
+            }
         }
         if ( !empty($id) ) {
             //根据类别查询出手机的销量排行
@@ -83,23 +83,23 @@ class IndexController extends Controller
             ->get();
         $coverImg = DB::table('cover')->select('id', 'name', 'price')->get();
         $new = DB::table('goods')->select('id', 'price', 'gpic', 'workoff', 'gname')->orderBy('addtime', 'desc')->limit(6)->get();
-  		  return view('index', ['category' => $category, 'phone' => $phone, 'salesvolume' => $salesVolume, 'seckillList' => $seckillList, 'type' => $type, 'new' => $new, 'coverImg' => $coverImg]);
-  	}
+          return view('index', ['category' => $category, 'phone' => $phone, 'salesvolume' => $salesVolume, 'seckillList' => $seckillList, 'type' => $type, 'new' => $new, 'coverImg' => $coverImg]);
+    }
 
 
 
-	/**
+    /**
      * 热销商品加载
      * @author Dengjihua <[<2563654031@qq.com>]>
      */
-	public function hotSale()
-	{
-		// var_dump($_POST);
-		$id = $_POST['id'];
-		// var_dump($id);
+    public function hotSale()
+    {
+        // var_dump($_POST);
+        $id = $_POST['id'];
+        // var_dump($id);
 
-		//得到类别
-		$class = DB::table('home_category')->select('id', 'name')->where('id', '=', $id)->first();
+        //得到类别
+        $class = DB::table('home_category')->select('id', 'name')->where('id', '=', $id)->first();
 
 
         //先查缓存中有无商品
@@ -126,12 +126,12 @@ class IndexController extends Controller
             Cache::put('Hgoods'.$id, $hotProduct, 24*60);
 
         }
-    		if ($hotProduct) {
-    			  echo json_encode($hotProduct);
-    		} else {
+            if ($hotProduct) {
+                  echo json_encode($hotProduct);
+            } else {
             echo '404';
         }
-  	}
+    }
 
 
 
@@ -144,10 +144,10 @@ class IndexController extends Controller
     public function newGoods(Request $request, $id)
     {
 
-        if (Cache::has('newgoods:'.$id)){
-            $newGoodsData = Cache::get('newgoods:'.$id);
-            return $newGoodsData;
-        }
+        // if (Cache::has('newgoods:'.$id)){
+        //     $newGoodsData = Cache::get('newgoods:'.$id);
+        //     return $newGoodsData;
+        // }
         $newGoodsData = DB::table('home_category')
         ->leftJoin('brands', 'home_category.id', '=', 'brands.categoryid')
         ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')

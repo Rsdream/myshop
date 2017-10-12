@@ -11,10 +11,6 @@ use DB;
  */
 class Feedback extends Controller
 {
-    /**
-    * @author kjw <[kjwlaravel@163.com]>
-    */
-    //后台订单评论列表
     public function index(Request $request)
     {
     	if (!$request->session()->get('userinfo')) {
@@ -32,7 +28,7 @@ class Feedback extends Controller
         //查出最近的1条
         $num = DB::table('feedback')->select('addtime')->where('uid', $user['id'])->orderBy('addtime', 'desc')->first();
 
-        if (time() - $num->addtime < 60*60) {
+        if (time() - $num->addtime < 60*60*24) {
             return redirect('/')->with('err', '请稍后再来');
         }
 

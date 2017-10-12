@@ -93,6 +93,7 @@ Route::prefix('/admin')->group( function () {
 
         //后台意见反馈路由
         Route::get('feedback','Admin\Systron\Feedback@index');
+        Route::get('delfeedback/{id}', 'Admin\Systron\Feedback@delete');
 
         //后台退出路由组
         route::get('/out','Admin\Api\CommonController@Out');

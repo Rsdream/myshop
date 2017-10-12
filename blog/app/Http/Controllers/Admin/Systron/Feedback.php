@@ -19,7 +19,24 @@ class Feedback extends Controller
     public function index()
     {
 
-    	$data = DB::table('feedback')->select('id','name','contact','content','addtime')->paginate(6);
-    	return view('Admin/feedback-list', ['data' => $data]);
+    	$data = DB::table('feedback')
+            ->select('id', 'uid', 'name','contact','content','addtime')
+            ->orderBy('addtime', 'desc')
+            ->paginate(6);
+    	foreach ($data as $v) {
+    		$userinfo = $v;
+    	}
+    	$user = DB::table('home_users')->select('uid')->where('id', $userinfo->uid)->first();
+
+    	return view('Admin/feedback-list', ['data' => $data, 'user' => $user]);
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $bool = DB::table('feedback')->where('id', $id)->delete();
+
+        if ($bool > 0) {
+            return redirect('/admin/feedback')->with('msg', '删除成功');
+        }
     }
 }
