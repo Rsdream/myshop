@@ -615,8 +615,9 @@
 
 									<div class="order-main">
 										<div class="order-list">
-											<?php $total=0 ?>											
-											@foreach ($orders as $v)
+											<?php $total=0 ?>
+											@if (isset($data))											
+											@foreach ($data as $v)
 											<!--交易成功-->
 											<div class="order-status5">
 												<div class="order-title">
@@ -626,18 +627,18 @@
 												</div>
 												<div class="order-content">
 													<div class="order-left">
-													    @foreach ($goods as $k)
+													    
 														<ul class="item-list">
 															<li class="td td-item">
 																<div class="item-pic">
 																	<a href="#" class="J_MakePoint">
-																		<img src="{{url('/').json_decode($k->gpic, true)[0]}}" class="itempic J_ItemImg">
+																		<img src="{{url('/').json_decode($v->gpic, true)[0]}}" class="itempic J_ItemImg">
 																	</a>
 																</div>
 																<div class="item-info">
 																	<div class="item-basic-info">
 																		<a href="#">
-																			<p>{{$k->gname}}</p>
+																			<p>{{$v->gname}}</p>
 																			<p class="info-little">颜色：12#川南玛瑙
 																				<br/>包装：裸装 </p>
 																		</a>
@@ -646,12 +647,12 @@
 															</li>
 															<li class="td td-price">
 																<div class="item-price">
-																	{{$k->gprice}}
+																	{{$v->gprice}}
 																</div>
 															</li>
 															<li class="td td-number">
 																<div class="item-number">
-																	<span>×</span>{{$k->gnum}}
+																	<span>×</span>{{$v->gnum}}
 																</div>
 															</li>
 															<li class="td td-operation">
@@ -660,9 +661,7 @@
 																</div>
 															</li>
 														</ul>
-														<?php $total +=$k->gprice*$k->gnum ?>
-														@endforeach
-														
+														<?php $total +=$v->gprice*$v->gnum ?>	
 													</div>
 													<div class="order-right">
 														<li class="td td-amount">
@@ -684,11 +683,11 @@
 																</div>
 															</li>
 															<?php $arr=[0=>'等待发货', 1=>'确认收货', 2=>'等待评价', 3=>'订单完成'] ?>
-															<li class="td td-change">
+															<li class="td td-change"> 
 															    <?php if($v->status == 2) { ?>
-																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'>{{$arr[$v->status]}}</a></div>
+																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'><spna>{{$arr[$v->status]}}</spna></a></div>
 																<?php } else { ?>
-																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this)">{{$arr[$v->status]}}</div>
+																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this, number={{$v->number}})">{{$arr[$v->status]}}</div>
 																<?php } ?>
 
 															</li>
@@ -697,7 +696,7 @@
 												</div>
 											</div>
 											@endforeach
-											
+											@endif
 										</div>
 
 									</div>
@@ -2020,9 +2019,8 @@
    <script type="text/javascript">
 
     //订单状态修改
-    function change(id, obj) {
+    function change(id, obj, num) {
     	var status = $(obj).html();
-
     	$.ajax({
     		type : 'post',
     		url  : '{{url("order/change")}}',
@@ -2033,7 +2031,7 @@
     				alert(data);
     				return;
     			} else if (data == '等待评价') {
-    				$(obj).html("<a href ='{{url("/order/commentlist/?number=$v->number")}}'>"+data+"</a>");
+    				$(obj).html("<a href='{{url("/order/commentlist/?number=num")}}'>"+data+"</a>");
     				return;
     			}
     			$(obj).html(data);

@@ -16,30 +16,23 @@ class OrderController extends Controller
 {
     
     //订单页面
-    public function check()
+    public function check(Request $request)
     {
-
-        if (Session::get('user') == '') {
-            return redirect('/login');
-        }
-    	//用户登录
-    	$key = 'cart:ids:'.Session::get('user');
-    	//拿出商品ID
-    	$idsArr = Redis::sMembers($key);
+        $id = $request->input('like');
 
     	//拿出购物车中数据
-    	$cartDatas = [];
-    	foreach ($idsArr as $k) {
-    		$hashKey = 'cart:'.Session::get('user').':'.$k;
-    		$cartDatas[] =Redis::HGetAll($hashKey);
-    	}
+        foreach ($id as $v) {
+            $hashKey = 'cart:'.Session::get('user').':'.$v;
+            $cartDatas[] =Redis::HGetAll($hashKey);
+        }
 
     	//图片数据转化为数组
     	foreach ($cartDatas as $key => $value) {
     		$val = json_decode($value['gpic'], true);
     		$cartDatas[$key]['gpic'] = $val;
     	}
-    	   return view('Home/order/check', ['orders'=>$cartDatas]);
+
+    	return view('Home/order/check', ['orders'=>$cartDatas]);
     }
 
     //提交订单
@@ -118,13 +111,18 @@ class OrderController extends Controller
     public function show()
     {
         $uid = Session::get('user');
-        $orders = DB::table('orders_detail')->select('id', 'addtime', 'status', 'number')->where('uid', $uid)->get()->toArray();
-
-        foreach ($orders as $v) {
-            $goods = DB::table('orders_goods')->select('gpic', 'gid', 'gname', 'gprice', 'gnum')->where('oid', $v->number)->get()->toArray();
+        $data = DB::table('orders_detail as d')
+            ->leftJoin('orders_goods as g', 'd.number', '=', 'g.oid')
+            ->select('d.id', 'd.addtime', 'd.status', 'd.number', 'g.gpic', 'g.gid', 'g.gname', 'g.gprice', 'g.gnum')
+            ->where('d.uid', '=', $uid)
+            ->get()
+            ->toArray();
+        if ($data) {
+            return view('Home/order/show', ['data' => $data]);
+        } else {
+            return view('Home/order/show', [$v = '']);
         }
-
-        return view('Home/order/show', ['orders' => $orders, 'goods' => $goods]);
+        
     }
 
     //修改订单状态

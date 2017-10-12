@@ -29,6 +29,17 @@
 	<link rel="stylesheet" href="{{asset('Home/css/app-orange.css')}}" id="theme_color" />
 	<link rel="stylesheet" href="" id="rtl" />
 	<link rel="stylesheet" href="{{asset('Home/css/app-responsive.css')}}" /> 
+
+	<script type="text/javascript" src="{{asset('Home/js/jquery/jquery.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/jquery/jquery-migrate.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/bootstrap.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('Home/js/jquery/js.cookie.min.js')}}"></script>
+
+	<style type="text/css">
+	    #clear{background-color: orange}
+	    #clear:hover{background-color: #E0C15F;cursor: pointer;}
+	</style>
+
 </head>
 
 <body class="page woocommerce-cart woocommerce-page">
@@ -546,18 +557,18 @@
 		<div class="listings-title">
 			<div class="container">
 				<div class="wrap-title">
-					<h1>Cart</h1>
+					<h1>购物车</h1>
 					<div class="bread">
 						<div class="breadcrumbs theme-clearfix">
 							<div class="container">
 								<ul class="breadcrumb">
 									<li>
-										<a href="#">Home</a>
+										<a href="#">商城</a>
 										<span class="go-page"></span>
 									</li>
 									
 									<li class="active">
-										<span>Cart</span>
+										<span>购物车</span>
 									</li>
 								</ul>
 							</div>
@@ -574,85 +585,59 @@
 						<div class="entry-content">
 							<div class="entry-summary">
 								<div class="woocommerce">
-                                @if (empty($cart))
-								<div id="noshop" style="width: 100%;height: 100px;text-align: center;font-size: 15px;">
+
+								<div id="noshop" style="width: 100%;height: 100px;text-align: center;font-size: 15px;display: none">
 								    <span>购物车内暂时没有商品，登录后将显示您之前加入的商品</span><br>
-								    <span><a href="" style="color:red">登录</a></span>&nbsp;&nbsp;&nbsp;<span><a href="" style="color:orange;">购物》</a></span>
+								    <span><a href="" style="color:red">登录</a></span>&nbsp;&nbsp;&nbsp;<span><a  href="" style="color:orange;">购物》</a></span>
 								</div>
-								@else 
-									<form action="" method="post">
+									<form action="javascript:;" method="post" id="cart" style="display: none;">
 										<table class="shop_table shop_table_responsive cart" cellspacing="0">
-											<thead>
-											    <center>
+											<thead>   
 												<tr>
-													<th class="product-remove">操作</th>
-													<th class="product-thumbnail">图片</th>
 													<th class="product-name">商品名</th>
+													<th class="product-thumbnail">图片</th>
 													<th class="product-price">价格</th>
 													<th class="product-quantity">数量</th>
 													<th class="product-subtotal">小计</th>
+													<th class="product-remove">操作</th>
 												</tr>
-												</center>
-											</thead>
-											
+												
+											</thead>											
 											<tbody>
-											    <?php $total = 0 ?>
-											    @foreach ( $cart as $v)
-												<tr class="cart_item">
-													<td class="product-remove">
-														<a href="#" class="remove" title="删除此商品"><i class="fa fa-times" aria-hidden="true"></i></a>					
-													</td>
-													
-													<td class="product-thumbnail">
-														<a href="simple_product.html">
-															<img width="180" height="180" src="{{ json_decode($v['gpic'], true)[0] }}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" 
-															srcset="{{ json_decode($v['gpic'], true)[0] }} 180w, {{ json_decode($v['gpic'], true)[0] }} 150w, {{ json_decode($v['gpic'], true)[0] }} 300w, {{ json_decode($v['gpic'], true)[0] }} 600w" sizes="(max-width: 180px) 100vw, 180px">
-														</a>
-													</td>
-													
-													<td class="product-name" data-title="Product">
-														<a href="simple_product.html">{{ $v['gname'] }}</a>					
-													</td>
-													
-													<td class="product-price" data-title="Price">
-														<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span>{{ $v['price'] }}</span>					
-													</td>
-													
-													<td class="product-quantity" data-title="Quantity">
-														<div class="quantity">
-															<input type="number" step="1" min="1" max="{{ $v['stock'] }}" name="number" value="{{ $v['num'] }}" title="Qty" gid="{{ $v['id'] }}" class="input-text qty text" size="4" pattern="[0-9]*" inputmode="numeric">
-														</div>
-														</div>
-													</td>
-													
-													<td class="product-subtotal" data-title="Total">
-														<span class="woocommerce-Price-amount amount">
 
-														<span class="woocommerce-Price-currencySymbol">￥</span>{{ $v['num']*$v['price'] }}</span>					
-													</td>
-
-												</tr>
-										<?php $total +=  $v['num']*$v['price']  ?>
-										@endforeach		
-										
-												<tr>
-													<td colspan="6" class="actions">
-														<div class="coupon" style="float:right;">
-															<label for="coupon_code">Coupon:</label> 
-															<input type="submit" class="button" name="apply_coupon" value="结算">
-														</div>														
-														<div class="coupon" style="float:right;">
-															<label for="coupon_code">Coupon:</label> 
-															<span style="font-size: 20px">总价：<span style="color:red">￥{{ $total }}</span></span>
-														</div>
-														<input type="submit" class="button" name="update_cart" value="清空">		
-													</td>
-												</tr>
-											
 											</tbody>
+	
 										</table>
+									
+										<div class="cart-collaterals">
+											<div class="products-wrapper">
+												<div class="cart_totals ">
+													<h2>Cart Totals</h2>
+													
+													<table cellspacing="0" border="1" class="shop_table shop_table_responsive" style="width: 300px;">
+														<tbody>
+															<tr class="cart-subtotal">
+																<td><strong> 购买商品数量：</strong> </td>
+																<td data-title="总价">
+																	<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol"></span ><span class="myavg"></span>件</span>
+																</td>
+															</tr>
+															<tr class="order-total">
+																<td><strong> 实付：</strong> </td>
+																<td data-title="实付">
+																	<strong style="color:orange"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span ><span class="mytotal" ></span></span></strong> 
+																</td>
+															</tr>
+														</tbody>
+													</table>
+													
+													<div class="wc-proceed-to-checkout" style="width: 300px">
+														<a href="{{url('/order')}}" class="checkout-button button alt wc-forward">结算</a>
+													</div>
+												</div>
+											</div>
+										</div>
 									</form>
-						    @endif
 								</div>
 							</div>
 						</div>
@@ -1211,10 +1196,121 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="{{asset('Home/js/jquery/jquery.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('Home/js/jquery/jquery-migrate.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('Home/js/bootstrap.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('Home/js/jquery/js.cookie.min.js')}}"></script>
+   <script type="text/javascript">
+
+    //删除数据
+    function del(obj) {
+
+    	//获取id
+    	var id = $(obj).attr('id');
+    	$.ajax({
+    		type : 'post',
+    		data : 'id='+id+'&_token={{csrf_token()}}',
+    		url  : '{{url("/cart/del")}}',
+    		success:function(){
+    			//刷新
+    			showcart();
+    		}
+    	})
+    	//删除页面数据
+    	$(obj).parent().parent().remove();
+    }
+
+    //修改商品数量
+    function change(obj) {
+    	//获取数据
+    	var num = $(obj).val();
+    	var id  = $(obj).attr('id');
+    	$.ajax({
+    		type : 'post',
+    		data : 'id='+id+'&num='+num+'&_token={{csrf_token()}}',
+    		url  : "{{url('/cart/change')}}",
+    		success:function(){
+    			//刷新
+    			showcart();
+    		},
+    		dataType: 'json',
+    	});
+    }
+
+
+    //查看购物车商品
+    function showcart() {
+    	$.ajax({
+    	    type : 'get',
+    	    url  : "{{ url('cart/show')}}",
+    	    data : '_token={{csrf_token()}}',
+    	    success:function(data) {
+    	    	if (data == 'noshop') {
+    	    		//购物车内没有商品
+    	    		$("#noshop").css('display', 'block');
+    	    		$('#cart').css('display', 'none');
+    	    	} else {
+    	    		//显示商品
+    	    		$('#cart').css('display', 'block');
+    	    		$("#noshop").css('display', 'none');
+    	    		var str = '';
+    	    		var total = 0;
+    	    		var sum = 0;
+    	    		var url = "{{url('/')}}";
+    	    		for (var i = 0; i<data.length; i++) {
+    	    			str += `<tr class="cart_item">
+							<td class="product-name" data-title="Product">
+								<a href="simple_product.html">`+data[i].gname+`</a>					
+							</td>
+							<td class="product-thumbnail">
+								<a href="simple_product.html">
+                              <img width="180" height="180" src="`+url+data[i].gpic[0]+`" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" 
+									srcset="`+url+data[i].gpic[0]+` 180w, `+url+data[i].gpic[1]+` 150w, `+url+data[i].gpic[2]+` 300w, `+url+data[i].gpic[3]+` 600w" sizes="(max-width: 180px) 100vw, 180px">
+									</a>
+							</td>
+													
+							<td class="product-price" data-title="Price">
+								<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span>`+data[i].price+`</span>				
+							</td>
+							<td class="product-quantity" data-title="Quantity">						
+                                <div class="quantity buttons_added" style="width:110.2px;">
+									<input type="button" value="-" class="minus">
+									<input  type="number" id="`+data[i].id+`" step="1" onchange="change(this)" min="1" max="`+data[i].stock+`" name="number" value="`+data[i].num+`" title="Qty" class="input-text qty text" size="4" pattern="[1-9]*" inputmode="numeric">
+									<input type="button" value="+" class="plus">
+							    </div>
+							</td>s
+							</td>
+													
+							<td class="product-subtotal" data-title="Total">
+								<span class="woocommerce-Price-amount amount" >
+
+							    <span class="woocommerce-Price-currencySymbol" >￥</span ><span class="total" style="margin-right:10px">`+data[i].num*data[i].price+`</span></span>				
+							</td>
+							<td class="product-remove">
+								<a href="javascript:;" class="remove" onclick="del(this)" id="`+data[i].id+`" title="删除此商品"><i class="fa fa-times" aria-hidden="true"></i></a>			
+							</td>
+
+						</tr>
+						<hr>`;
+
+					//统计总价
+                    total += data[i].num*data[i].price;
+                    sum   += parseInt(data[i].num);
+    	    		}
+
+    	    		//追加数据到购物车
+    	    		$('tbody:first').html(str);
+    	    		$('.myavg').html(sum);
+    	    		$('.mytotal').html(total);
+
+    	    	}
+
+    	    },
+    	    dataType: 'json',    		
+    	});
+    }
+
+    //调用
+    showcart(); 
+
+
+   </script>
 	
 	<!-- OPEN LIBS JS -->
 	<script type="text/javascript" src="{{asset('Home/js/owl-carousel/owl.carousel.min.js')}}"></script>
@@ -1232,7 +1328,8 @@
 	<script type="text/javascript" src="{{asset('Home/js/plugins.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/megamenu.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/main.min.js')}}"></script>
-   
+
+
 	<script type="text/javascript">
 		var sticky_navigation_offset_top = $("#header .header-bottom").offset().top;
 		var sticky_navigation = function(){
@@ -1270,13 +1367,6 @@
       	b[c] += ( window.postMessage && request ? ' ' : ' no-' ) + cs;
    </script>
    <!--<![endif]-->
-
-   <script type="text/javascript">
-
-       $('input[name="number"]').on('change', function() {
-       	    alert($('input[name="number"]').val());
-       })
-   </script>
    </body>
 </html>
 
