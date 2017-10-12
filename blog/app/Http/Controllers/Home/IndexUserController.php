@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Home\HomeDistrict;
+use App\Model\Home\HomeAddress;
 use DB;
 
 /**
@@ -41,13 +43,21 @@ class IndexUserController extends Controller
     public function address()
     {
         $id = session('userinfo')['id'];
-        $addressList = DB::table('address')->select('id', 'name', 'phone', 'province', 'district', 'city', 'detail')->where('uid', $id)->get();
+        $addressList = DB::table('orders_address')->select('id', 'name', 'phone', 'pro', 'area', 'city', 'comment')->where('uid', $id)->get();
+        foreach ($addressList as $k => $v) {
+        		$pro = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
+        		$city = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
+        		$area = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
+        		$addressList[$k]->pro = $pro->name;
+            $addressList[$k]->city = $city->name;
+            $addressList[$k]->area = $area->name;
+      	}
         return view('Home/user/address', ['addressList' => $addressList]);
     }
     //添加地址
     public function add()
     {
-        $region = DB::table('region')->select('REGION_NAME', 'REGION_ID')->where('PARENT_ID', '1')->get();
+        $region = DB::table('district')->select('id', 'name')->where('level', '1')->get();
         return view('Home/user/add', ['region' => $region]);
     }
 
@@ -55,8 +65,8 @@ class IndexUserController extends Controller
     public function edit(Request $request, $id)
     {
 
-        $region = DB::table('region')->select('REGION_NAME', 'REGION_ID')->where('PARENT_ID', '1')->get();
-        $address = DB::table('address')->select('id', 'name', 'phone', 'province', 'district', 'city', 'detail')->where('id', $id)->first();
+        $region = DB::table('district')->select('id', 'name')->where('level', '1')->get();
+        $address = DB::table('orders_address')->select('id', 'name', 'phone', 'pro', 'area', 'city', 'comment')->where('id', $id)->first();
         return view('Home/user/edit', ['address' => $address, 'region' => $region]);
     }
 

@@ -116,7 +116,7 @@
 													<select title="省份" class="select" name="province">
 														<option value="">-请选择-</option>
 														@foreach($region as $v)
-														<option data-id='{{$v->REGION_ID}}' value="{{$v->REGION_NAME}}">{{$v->REGION_NAME}}</option>
+														<option data-id='{{$v->id}}' value="{{$v->id}}">{{$v->name}}</option>
 														@endforeach
 													</select>
 													<select title="城市" class="select" name="city">
@@ -276,7 +276,7 @@
 				success: function (msg) {
 					var str = '';
 					for (var i = 0; i<msg.length; i++) {
-						str += '<option value='+msg[i].REGION_NAME+' data-id="'+msg[i].REGION_ID+'">'+msg[i].REGION_NAME+'</option>';
+						str += '<option value='+msg[i].id+' data-id="'+msg[i].id+'">'+msg[i].name+'</option>';
 					}
 					that.next('select').append(str);
 				}

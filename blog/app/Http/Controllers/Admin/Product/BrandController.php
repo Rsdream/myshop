@@ -56,49 +56,49 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-      $bName = $request->input('bname');
-      $categoryId = $request->input('categoryid');
-      $depict = $request->input('depict');
+        $bName = $request->input('bname');
+        $categoryId = $request->input('categoryid');
+        $depict = $request->input('depict');
 
-      //允许的图片格式
-      $allowExt = ['jpg', 'png', 'gif', 'jpeg'];
-      //判断 品牌名、品牌类别、描述是否为空 返回失败
-      if ( !$bName || !$categoryId || !$depict || !$request->hasFile('blogo')) {
-          return redirect('/admin/product/brand')->with('errorTip', '添加失败');
-      }
+        //允许的图片格式
+        $allowExt = ['jpg', 'png', 'gif', 'jpeg'];
+        //判断 品牌名、品牌类别、描述是否为空 返回失败
+        if ( !$bName || !$categoryId || !$depict || !$request->hasFile('blogo')) {
+            return redirect('/admin/product/brand')->with('errorTip', '添加失败');
+        }
 
-      //获取文件扩展名
-      $extension = $request->blogo->extension();
-      //判断是否合法图片类型
-      if (!in_array($extension, $allowExt)) {
+        //获取文件扩展名
+        $extension = $request->blogo->extension();
+        //判断是否合法图片类型
+        if (!in_array($extension, $allowExt)) {
 
-          return redirect('/admin/product/brand')->with('errorTip', '上传文件类型错误');
-      }
+            return redirect('/admin/product/brand')->with('errorTip', '上传文件类型错误');
+        }
 
-      //获取文件临时路径
-      $filePath = $request->blogo->path();
-      //保存图片，赋值文件名
-      // $fileName = $request->logo->store('image');
-      $fileName = time().'_logo.jpg';
-      //处理图片
-      $filePath = ImageApi::attrImg($filePath, 180, 60, $fileName);
-      //上传到七牛云
-      $ret = ImageApi::imgUp($filePath, $fileName);
-      //上传成功的状态
-      $bool =DB::table('brands')->insert(
-          [
-              'bname' => $bName,
-              'categoryid' => $categoryId,
-              'depict' => $depict,
-              'blogo' => $fileName,
-          ]
-      );
-      //判断添加数据或图片是否成功
-      if ( $bool ) {
-          return redirect('/admin/product/brand')->with('msg', '添加成功');
-      } else {
-          return redirect('/admin/product/brand')->with('errorTip', '添加失败');
-      }
+        //获取文件临时路径
+        $filePath = $request->blogo->path();
+        //保存图片，赋值文件名
+        // $fileName = $request->logo->store('image');
+        $fileName = time().'_logo.jpg';
+        //处理图片
+        $filePath = ImageApi::attrImg($filePath, 180, 60, $fileName);
+        //上传到七牛云
+        $ret = ImageApi::imgUp($filePath, $fileName);
+        //上传成功的状态
+        $bool =DB::table('brands')->insert(
+            [
+                'bname' => $bName,
+                'categoryid' => $categoryId,
+                'depict' => $depict,
+                'blogo' => $fileName,
+            ]
+        );
+        //判断添加数据或图片是否成功
+        if ( $bool ) {
+            return redirect('/admin/product/brand')->with('msg', '添加成功');
+        } else {
+            return redirect('/admin/product/brand')->with('errorTip', '添加失败');
+        }
     }
 
     /**

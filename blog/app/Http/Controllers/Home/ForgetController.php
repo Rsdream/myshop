@@ -14,6 +14,7 @@ class ForgetController extends Controller
 	//加载找回密码首页
 	public function forget(Request $request)
 	{
+
 		return view('Home/login/forget');
 	}
 
@@ -22,13 +23,11 @@ class ForgetController extends Controller
 	{
         //判断注册手機號名是否存在
         //获取字段值
-        $uphone = $request->input('uphone');
-
-        //查询数据库
-        $userphone = HomeUsers::select(['id','phone'])->where('phone',$uphone)->first();
-
+        $uphone    = $request->input('uphone');
+        $userphone = HomeUsers::select(['id','phone'])->where('phone',$uphone)->first();//查询数据库
         //手机号不存在
         if(!$userphone) {
+
           return $this->json(1001,'手机号不存在');
         } 
 	}
@@ -36,26 +35,25 @@ class ForgetController extends Controller
 	//发送密码
 	public function send(Request $request)
 	{
-
 		//获取用户输入数据
 	    $phone = $request->input('uphone');
-	    $pass = $request->input('upass');
-
+	    $pass  = $request->input('upass');
 	    //手机验证码判断
 	    $phonebool = CommonApi::checkPhoneCode($request, 'phonecode');
-
 	    if (!$phonebool) {
 	        $request->session()->flash('erro', '手机验证码错误!');
+
 	        return back();
 	    }
-
 	    //修改密码
 	    $bool = HomeUsers::where('phone', '=', $phone)->update(['pass' => bcrypt($pass)]);
 	    if ($bool) {
 	    	$request->session()->flash('success', '修改密码成功! 请重新登陆');
+
 	    	return redirect('/login');
 	    } else {
 	    	$request->session()->flash('erro', '修改密码失败!');
+
 	    	return back();
 	    }    
 	}
@@ -66,7 +64,7 @@ class ForgetController extends Controller
         return response()->json([
           'status' => $code,
           'msg'    => $msg,
-          'data'  => $data,
+          'data'   => $data,
         ]);
     }    
 }

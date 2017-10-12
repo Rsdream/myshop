@@ -30,15 +30,22 @@ class IndexController extends Controller
             // dd($phone);
             if (!$phone) {
                 $phone = DB::table('goods')
+                ->leftJoin('price', 'goods.id', 'price.gid')
                 ->leftJoin('brands', 'brands.id', '=', 'goods.brandid')
-                ->select('goods.id', 'goods.price', 'goods.brandid', 'goods.gname', 'goods.gpic', 'goods.workoff', 'brands.categoryid', 'bname', 'goods.status')
+                ->select('goods.id', 'goods.price', 'goods.brandid', 'goods.gname', 'goods.gpic', 'goods.workoff', 'brands.categoryid', 'bname', 'goods.status', 'price.gid')
                 ->where([['goods.status', '>', 0],['brands.categoryid', '=', $id] ])
                 ->orderBy('workoff', 'desc')
                 ->limit(6)
                 ->get()
                 ->toArray();
+                foreach ($phone as $k=>$v) {
+                  $pid = DB::table('price')->select('id')->where('gid', $v->id)->first();
+                  $phone[$k]->pid = $pid->id;
+                }
+
                 //放入缓存
                 Cache::put('Hgoods'.$id, $phone, 24*60);
+                
             }
 
         } else {
@@ -49,19 +56,24 @@ class IndexController extends Controller
         $salesVolume = Cache::get('goodsdata');
         if (!$salesVolume) {
             $salesVolume = DB::table('goods')
-            ->select('brandid', 'price', 'gname', 'status', 'id', 'gpic', 'workoff')
+            ->leftJoin('price', 'goods.id', 'price.gid')
+            ->select('goods.brandid', 'goods.price', 'goods.gname', 'goods.status', 'goods.id', 'goods.gpic', 'goods.workoff', 'price.gid', 'price.price')
             ->where('status', 1)
             ->orderBy('workoff', 'desc')
             ->limit(5)
             ->get()
             ->toArray();
+            foreach ($salesVolume as $k=>$v) {
+              $pid = DB::table('price')->select('id')->where('gid', $v->id)->first();
+              $salesVolume[$k]->pid = $pid->id;
+            }
             Cache::put('goodsdata', $salesVolume, 24*60);
         }
         
 
         $seckillList = DB::table('goods')
             ->leftJoin('price', 'goods.id', '=', 'price.gid')
-            ->select('price.id', 'brandid', 'gname', 'workoff', 'goods.price', 'gpic', 'workoff')
+            ->select('price.id', 'gid', 'brandid', 'gname', 'workoff', 'goods.price', 'gpic', 'workoff')
             ->where('attr', 2)
             ->get()
             ->toArray();
@@ -95,13 +107,19 @@ class IndexController extends Controller
             // echo '没有缓存';
             // 根据类别得到对应的商品
             $hotProduct = DB::table('goods')
+                ->leftJoin('price', 'goods.id', 'price.gid')
                 ->leftJoin('brands', 'brands.id', '=', 'goods.brandid')
-                ->select('goods.id', 'goods.status', 'goods.price', 'goods.brandid', 'goods.gname', 'goods.gpic', 'goods.workoff', 'brands.categoryid', 'bname')
+                ->select('goods.brandid', 'goods.price', 'goods.gname', 'goods.status', 'goods.id', 'goods.gpic', 'goods.workoff', 'price.gid', 'price.price')
                 ->where([['goods.status', '>', 0],['brands.categoryid', '=', $class->id]])
                 ->orderBy('workoff', 'desc')
                 ->limit(6)
                 ->get()
                 ->toArray();
+                foreach ($hotProduct as $k=>$v) {
+                    $pid = DB::table('price')->select('id')->where('gid', $v->id)->first();
+                    $hotProduct[$k]->pid = $pid->id;
+                }
+
             // 将商品放入缓存中
             Cache::put('Hgoods'.$id, $hotProduct, 24*60);
 

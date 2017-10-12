@@ -30,13 +30,13 @@ class AddressApi extends Controller
         $addressInfo = [
             'name' => $name,
             'phone' => $phone,
-            'province' => $province,
+            'pro' => $province,
             'city' => $city,
-            'district' => $district,
-            'detail' => $detail,
+            'area' => $district,
+            'comment' => $detail,
             'uid' => $id,
         ];
-        DB::table('address')->insert($addressInfo);
+        DB::table('orders_address')->insert($addressInfo);
         $request->session()->flash('msg', '添加成功!');
         return redirect('/user/address');
     }
@@ -47,7 +47,7 @@ class AddressApi extends Controller
     public function select(Request $request)
     {
         $id = $request->input('id');
-        $region = DB::table('region')->select('REGION_NAME', 'REGION_ID')->where('PARENT_ID', $id)->get();
+        $region = DB::table('district')->select('id', 'name')->where('upid', $id)->get();
         return $region;
     }
 
@@ -62,18 +62,18 @@ class AddressApi extends Controller
        $city = $request->input('city');
        $district = $request->input('district');
        $detail = $request->input('detail');
-       if (!$name || !$phone || !$province || !$city || !$district || !$detail){
+       if (!$name || !$phone || !$province || !$city || !$district || !$detail) {
            return back();
        }
        $addressInfo = [
            'name' => $name,
            'phone' => $phone,
-           'province' => $province,
+           'pro' => $province,
            'city' => $city,
-           'district' => $district,
-           'detail' => $detail,
+           'area' => $district,
+           'comment' => $detail,
        ];
-       DB::table('address')->where('id', $id)->update($addressInfo);
+       DB::table('orders_address')->where('id', $id)->update($addressInfo);
        $request->session()->flash('msg', '修改成功!');
        return redirect('/user/address');
      }
@@ -83,7 +83,7 @@ class AddressApi extends Controller
       */
       public function delete(Request $request, $id)
       {
-          DB::table('address')->where('id', $id)->delete();
+          DB::table('orders_address')->where('id', $id)->delete();
           $request->session()->flash('msg', '删除成功!');
           return redirect('/user/address');
       }

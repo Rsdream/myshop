@@ -108,14 +108,14 @@ class ProdectController extends Controller
     {
         //删除分类
         if (empty($id)) {
-          return false;
+            return false;
         }
 
         $bool =  DB::table('home_category')->where('id', $id)->delete();
 
         if ($bool) {
-          redirect('/admin/product/category')->with('msg', '删除成功');
-          return '<script>parent.location.reload();</script>';
+            redirect('/admin/product/category')->with('msg', '删除成功');
+            return '<script>parent.location.reload();</script>';
         }
     }
 }

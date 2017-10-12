@@ -63,6 +63,7 @@
 					<th width="100">收货人</th>
 					<th width="100">联系电话</th>
 					<th>联系地址</th>
+					<th>留言</th>
 					<th width="60">交易状态</th>
 					<th width="80">操作</th>
 				</tr>
@@ -71,14 +72,20 @@
 			    @if (isset($orders))
 				@foreach($orders as $v)
 					<tr class="text-c">
-						<td><input name="" type="checkbox" value=""></td>s
+						<td><input name="" type="checkbox" value=""></td>
 						<td>{{$v->id}}</td>
 						<td>{{$v->number}}</td>
 						<td>{{$v->name}}</td>					
 						<td class="text-l">{{$v->phone}}</td>
 						<td class="text-l">{{$v->address}}</td>
+						@if ($v->text == '')
+						<td class="status">无留言信息</td>
+						@else
+						<td class="status">{{$v->text}}</td>
+						@endif
 						<?php $data = [0=>'等待发货', 1=>'等待收货', 2=>'等待评价', 3=>'订单完成'] ?>
 						<th class="status">{{$data[$v->status]}}</th>
+						
 						<td class="f-14 product-brand-manage"><a style="text-decoration:none"   href='{{url("admin/order/show?number=$v->number")}}' title="查看订单商品详情"><i class="Hui-iconfont">&#xe6de;</i></a><a style="text-decoration:none" onClick="change(id={{$v->id}}, this)" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> </td>
 					</tr>
 				@endforeach
@@ -89,6 +96,7 @@
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="{{asset('/Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('/layer/layer.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/lib/layer/2.4/layer.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/static/h-ui/js/H-ui.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/static/h-ui.admin/js/H-ui.admin.js')}}"></script> <!--/_footer 作为公共模版分离出去-->
@@ -107,15 +115,25 @@
     	if (status == '订单完成') {
     		return $(obj).parent().parent().children('th').html('订单完成');
     	}
+    	if (status == '等待收货' || status == '等待评价' || status == '订单完成') {
+    		return;
+    	}
     	$.ajax({
     		type : 'post',
     		url  : '{{url("admin/order/change")}}',
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
+    		beforeSend:function(){ 
+                index = layer.load(3);
+            }, 
     		success:function(data) {
 
     			if (data == '修改失败') {
-    				alert(data);
+    				layer.alert(data, {icon: 2});
     				return;
+    			}
+    			if (data == '等待收货') {
+    				layer.close(index);
+    				layer.alert('发货成功', {icon: 6}); 
     			}
     			$(obj).parent().parent().children('th').html(data);
     		},

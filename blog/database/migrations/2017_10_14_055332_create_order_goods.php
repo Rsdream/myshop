@@ -20,6 +20,7 @@ class CreateOrderGoods extends Migration
             $table->string('gid');
             $table->string('gname');
             $table->string('gpic');
+            $table->string('setmeal')->nullable();
             $table->integer('gnum');
             $table->integer('gprice');
             $table->integer('status')->default(0);

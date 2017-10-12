@@ -168,7 +168,7 @@
 												</div>
 											</div>
 											<div class="s-tp">
-												<span class="ui-btn-loading-before">找相似</span>
+												<span onClick='addcart(`+data[i].gid+`)' class="ui-btn-loading-before">加入购物车</span>
 												<i class="am-icon-trash"></i>
 												<span class="ui-btn-loading-before buy" onClick="cancel(id=`+data[i].gid+`, this)">取消收藏</span>
 												<p>
@@ -231,7 +231,7 @@
 				$('#billing_country').select2();
 			});
 	   </script>
-
+		 @include('Layouts/addcart')
 
 
 </html>
