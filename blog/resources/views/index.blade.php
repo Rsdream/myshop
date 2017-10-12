@@ -607,7 +607,7 @@
 																						<span>
 																							<ins>
 																								<span class="woocommerce-Price-amount amount">
-																									<span class="woocommerce-Price-currencySymbol">$</span>666
+																									<span class="woocommerce-Price-currencySymbol">$</span>{{$good->price}}
 																								</span>
 																							</ins>
 																						</span>
@@ -631,13 +631,11 @@
 
 																					<!-- add to cart, wishlist, compare -->
 																					<div class="item-bottom clearfix">
-																						<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																						<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
+																						<a rel="nofollow" href="javascript:;"  class="button product_type_simple add_to_cart_button ajax_add_to_cart" onclick=addcart('{{$good->id}}') title="Add to Cart">Add to cart</a>
 
 																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
 																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+																								<a href="javscript:;" onclick=addCollection('{{$good->id}}') rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
 																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
 																							</div>
 
@@ -645,18 +643,12 @@
 																								<span class="feedback">Product added!</span>
 																								<a href="#" rel="nofollow">Browse Wishlist</a>
 																							</div>
-
-																							<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																								<span class="feedback">The product is already in the wishlist!</span>
-																								<a href="#" rel="nofollow">Browse Wishlist</a>
-																							</div>
-
 																							<div style="clear:both"></div>
 																							<div class="yith-wcwl-wishlistaddresponse"></div>
 																						</div>
 
 																						<div class="clear"></div>
-																						<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
+																						<a href="{{url('img/'.$good->id)}}" data-fancybox-type="ajax"  class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
 																					</div>
 																				</div>
 																			</div>
@@ -685,7 +677,7 @@
 																<div class="item" style="border:1px solid pink;margin-top:20px">
 																	<div class="item-inner">
 																		<div class="item-img">
-																			<a href="simple_product.html" title="Sony BRAVIA 4K">
+																			<a href="{{url('goods/detailtwo/'.$sales->id)}}" title="Sony BRAVIA 4K">
 																				<img 	width="180" height="180" src="{{json_decode($sales->gpic, true)[0]}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
 																						srcset="{{json_decode($sales->gpic, true)[0]}} 180w, {{json_decode($sales->gpic, true)[0]}} 150w, {{json_decode($sales->gpic, true)[0]}} 300w, {{json_decode($sales->gpic, true)[0]}} 600w"
 																						sizes="(max-width: 180px) 100vw, 180px" />
@@ -703,12 +695,12 @@
 																			<!-- end rating  -->
 
 																			<h4>
-																				<a href="simple_product.html" title="Sony BRAVIA 4K">{{$sales->gname}}</a>
+																				<a href="{{url('goods/detailtwo/'.$sales->id)}}" title="Sony BRAVIA 4K">{{$sales->gname}}</a>
 																			</h4>
 
 																			<div class="item-price">
 																				<span class="woocommerce-Price-amount amount">
-																					<span class="woocommerce-Price-currencySymbol">$</span>600.00
+																					<span class="woocommerce-Price-currencySymbol">$</span>{{$sales->price}}
 																				</span>
 																			</div>
 																		</div>
@@ -2055,7 +2047,7 @@
 															<span>
 																<ins>
 																	<span class="woocommerce-Price-amount amount">
-																		<span class="woocommerce-Price-currencySymbol">$</span>666
+																		<span class="woocommerce-Price-currencySymbol">$</span>`+data[i].price+`
 																	</span>
 																</ins>
 															</span>
@@ -2078,13 +2070,11 @@
 
 														<!-- add to cart, wishlist, compare -->
 														<div class="item-bottom clearfix">
-															<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-															<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
+															<a style='margin-left:15px;' rel="nofollow" href="javascript:;" onclick='addcart(`+data[i].id+`)' class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="加入购物车">加入购物车</a>
 
 															<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
 																<div class="yith-wcwl-add-button show" style="display:block">
-																	<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+																	<a href="javascript:;" onclick='addCollection(`+data[i].id+`)' rel="nofollow" class="add_to_wishlist" title="收藏商品">收藏商品</a>
 																	<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
 																</div>
 
@@ -2103,7 +2093,7 @@
 															</div>
 
 															<div class="clear"></div>
-															<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
+															<a href="{{url('img')}}`+'/'+data[i].id+`" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax" title="商品大图">商品大图 </a>
 														</div>
 													</div>
 												</div>

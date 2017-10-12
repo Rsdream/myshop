@@ -9,6 +9,12 @@
                   {{ session('msg') }}
               </div>
           @endif
+
+          @if (session('err'))
+              <div id="time" class="alert alert-danger">
+                  {{ session('err') }}
+              </div>
+          @endif
           <!-- SIDEBAR TOP MENU -->
           <div class="pull-left top1">
             <div class="widget text-2 widget_text pull-left">
@@ -16,7 +22,7 @@
                 <div class="textwidget">
 
                   <div class="call-us">
-                    <span>欢迎</span><span>来到ETRO商城</span>
+                    <span>欢迎</span><span>来到{{$logo->name}}</span>
                     @if (session()->has('userinfo') && isset(session('userinfo')['name']))
                       {{session('userinfo')['name']}}
                       <a href="{{url('/queit')}}">退出</a>
@@ -148,7 +154,7 @@
           <div class="etrostore-logo pull-left" >
 
             <a href="#" >
-              <img src="{{asset($logo)}}" alt="Shoopy" >
+              <img src="{{asset($logo->logo)}}">
 
             </a>
           </div>
@@ -336,7 +342,7 @@
                       <li><a href="{{url('/order/show')}}">我的订单</a></li>
                       <li><a href="{{url('/cart')}}">我的购物车</a></li>
                       <li><a href="{{url('/collection')}}">我的收藏</a></li>
-                      <li><a href="shop.html">意见反馈</a></li>
+                      <li><a href="{{url('feedback')}}">意见反馈</a></li>
                       <!-- <li><a href="simple_product.html">Simple Product</a></li>
                       <li><a href="about_us.html">About Us</a></li>
                       <li><a href="contact_us.html">Contact Us</a></li> -->
@@ -350,7 +356,7 @@
                   <li><a href="{{url('/order/show')}}">我的订单</a></li>
                   <li><a href="{{url('/cart')}}">我的购物车</a></li>
                   <li><a href="{{url('/collection')}}">我的收藏</a></li>
-                  <li><a href="shop.html">意见反馈</a></li>
+                  <li><a href="{{url('feedback')}}">意见反馈</a></li>
 
                   <!-- <li><a href="about_us.html">About Us</a></li>
                   <li><a href="contact_us.html">Contact Us</a></li> -->

@@ -66,7 +66,7 @@ class Logo extends Controller
         //处理图片
         $file = ImageApi::attrImg($filePath, 80, 40, $fileName.'_80_40.'.$extension);
         //上传到七牛云
-        // $ret = ImageApi::imgUp($filePath, $file);
+        $ret = ImageApi::imgUp($filePath, $file);
         $data = [ 'name' => $name, 'logo' => $file ];
         // dd($data);
         $results = DB::table('logo')->insert($data);
