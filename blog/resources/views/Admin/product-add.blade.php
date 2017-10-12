@@ -38,7 +38,7 @@
 </head>
 <body>
 <div class="page-container">
-	<form  action="{{url('/admin/product/goods')}}" method="post" enctype="multipart/form-data" class="form form-horizontal" id="form-article-add">
+	<form onsubmit="return check()" action="{{url('/admin/product/goods')}}" method="post" enctype="multipart/form-data" class="form form-horizontal" id="form-article-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品名：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -192,10 +192,17 @@
 		var bool;
 		$("input[type='text']").each(function(){
         if ($(this).val() == '') {
+        	var title = $(this).attr('title')
+        			if (title == undefined) {
+        				return;
+        			}
 					layer.msg($(this).attr('title')+'没有填写',{icon:0,time:1500});
 					return bool = false;
 				}
     })
+		if (bool == false) {
+			return false;
+		}
 		var detail = $('textarea[name="detail"]').val();
 		if (detail == '') {
 			layer.msg('商品详情没有填写',{icon:0,time:1500});

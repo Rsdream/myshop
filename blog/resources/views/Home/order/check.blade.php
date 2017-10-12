@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="{{asset('Home/css/slick-1.6.0/slick.css')}}" />
 	<style type="text/css">
 	    *{text-decoration: none;list-style: none}
+	    .button a:hover{background: #D35D1F}
 	</style>
 
 	<link rel="stylesheet" href="{{asset('Home/css/jquery.fancybox.css')}}" />
@@ -43,7 +44,7 @@
 	<script type="text/javascript" src="{{asset('/Ui/js/address.js')}}"></script>
 	<script type="text/javascript" src="{{asset('/Ui/jq/jq.js')}}"></script>
 	<script type="text/javascript" src="{{asset('/Ui/jq/js/ui.js')}}"></script>
-	
+
 </head>
 
 <body class="page page-id-6 home-style1">
@@ -174,7 +175,7 @@
 												<a class="item-link" href="checkout.html">
 													<span class="menu-title">收藏夹</span>
 												</a>
-											</li>											
+											</li>
 											<li class="menu-checkout">
 												<a class="item-link" href="{{url('/outlogin')}}">
 													<span class="menu-title">退出</span>
@@ -640,10 +641,10 @@
 											<div class="pay-phone">
 												<li class="td td-item">
 													<div class="item-pic">
-													
+
 														<a href="#" class="J_MakePoint">
-														
-															<img style="width: 80px;height: 80px" src="{{$v['gpic'][0]}}" class="itempic J_ItemImg"></a>															
+
+															<img style="width: 80px;height: 80px" src="{{$v['gpic'][0]}}" class="itempic J_ItemImg"></a>
 													</div>
 													<div class="item-info">
 														<div class="item-basic-info">
@@ -699,7 +700,7 @@
 							@endforeach
 							</div>
 
-							
+
 						<!--留言-->
 							<div class="order-extra">
 								<div class="order-user-info">
@@ -716,7 +717,7 @@
 
 							<div class="clear"></div>
 							</div>
-							
+
 
 
 							<!--信息 -->
@@ -743,7 +744,7 @@
 											</p>
 											<p class="buy-footer-address">
 												<span class="buy-line-title">收货人：</span>
-												<span class="buy-address-detail">   
+												<span class="buy-address-detail">
                                          <span class="buy-user mybuy-user"></span>
 												<span class="buy-phone mybuy-phone"></span>
 												</span>
@@ -753,7 +754,9 @@
 
 									<div id="holyshit269" class="submitOrder">
 										<div class="go-btn-wrap">
+										<div class="button">
 											<a id="J_Go" href="javascript:;" class="btn-go" tabindex="0" title="点击此按钮，提交订单">提交订单</a>
+										<div>
 										</div>
 									</div>
 									<div class="clear"></div>
@@ -1456,7 +1459,7 @@
        	    $('.theme-popover').css('display', 'none');
        	    $('body').css('overflow', 'visible');
        	    $('.theme-popover').css('overflow', 'visible');
-       })       
+       })
    </script>
 
    <script type="text/javascript">
@@ -1475,7 +1478,7 @@
     	if (val) {
     		uname = true;
     	}
-    })    
+    })
 
     $('input[name="uphone"]').blur(function () {
     	var val = $('input[name="uphone"]').val();
@@ -1489,30 +1492,30 @@
     	if (val) {
     		pro = true;
     	}
-    })     
+    })
 
     $('#city').change(function () {
     	var val = $('#city').val();
     	if (val) {
     		city = true;
     	}
-    })     
+    })
 
     $('#area').change(function () {
     	var val = $('#area').val();
     	if (val) {
     		area = true;
     	}
-    })    
+    })
 
-   
+
 
     $('#user-intro').blur(function () {
     	var val = $('#user-intro').val();
     	if (val) {
     		address = true;
     	}
-    })   
+    })
 
     $('#add').submit(function () {
         if (!uname) {
@@ -1523,13 +1526,13 @@
         	return false;
         } else if (!pro) {
         	alert('省份不能为空');
-        	return false;        
+        	return false;
         } else if (!city) {
         	alert('城市不能为空');
-        	return false;        
+        	return false;
         } else if (!area) {
         	alert('区/县不能为空');
-        	return false;        
+        	return false;
         } else if (!address) {
         	alert('详细地址不能为空');
         	return false;
@@ -1560,7 +1563,7 @@
 	//当select标签中的内容发生改变时，应该再触发ajax拿到省份对应的市的数据
 	$('div#show').on('change', 'select', function () {
 
-	 
+
 		//当前用户点击那个select
 		var that = $(this);
 
@@ -1592,7 +1595,7 @@
 
 				//将拿到数据放到下一个select标签中
 				that.next('select').append(str);
-					
+
 			},
 			dataType:'json',
 
@@ -1613,7 +1616,7 @@
 								<div class="address-left">
 									<div class="user DefaultAddr">
 
-										<span class="buy-address-detail">   
+										<span class="buy-address-detail">
                                        <span class="buy-user" name="name">`+data[i].name+` </span>
 										<span class="buy-phone" name="phone">`+data[i].phone+`</span>
 										</span>
@@ -1640,7 +1643,7 @@
 								<div class="clear"></div>
 
 								<div class="new-addr-btn" atr="`+data[i].id+`">
-									<a href="javascript:;" onclick="change(this)" class="default" style="display:block">设为默认</a>
+									<a href="javascript:;" onclick="change(this)" class="default" style="display:block">使用该地址</a>
 									<span class="new-addr-bar hidden">|</span>
 									<a href="javascript:;" onclick="update(this);">编辑</a>
 									<span class="new-addr-bar">|</span>
@@ -1697,7 +1700,7 @@
 		var city = $(obj).parent().parent().children().first('div').children().next().children().last('span').children().next(':first').html();
 		var dist = $(obj).parent().parent().children().first('div').children().next().children().last('span').children().next().next(':first').html();
 		var street = $(obj).parent().parent().children().first('div').children().next().children().last('span').children().last().html();
-		
+
 		$('.myprovince').html(pro);
 		$('.mycity').html(city);
 		$('.mydist').html(dist);
@@ -1707,6 +1710,7 @@
 
 	}
 
+	//提交订单
 	$('.btn-go').click(function () {
 
 		var pro = $('.province').html();
@@ -1727,7 +1731,7 @@
 		$.ajax({
 			type : 'post',
 			data : 'sum='+sum+'&name='+name+'&phone='+phone+'&address='+address+'&_token={{csrf_token()}}',
-			url  : '{{url("order/add")}}',
+			url  : '{{url("/order/add")}}',
 			success:function(data) {
 				 window.location.href = '{{url("/order/success")}}';
 			},

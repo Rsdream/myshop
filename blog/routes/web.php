@@ -99,7 +99,26 @@ Route::prefix('/admin')->group( function () {
 
         //后台退出路由组
         route::get('/out','Admin\Api\CommonController@Out');
+        //轮播图资源控制器
+        Route::resource('/coverplan', 'Admin\CoverPlanController');
+        //轮播图的删除
+        Route::get('cover/del/{id}', 'Admin\CoverPlanController@del');
+    });
 
+
+
+    //订单管理路由组
+    Route::prefix('/order')->group(function () {
+        //显示订单列表路由
+        Route::get('/', 'Admin\Order\OrderController@order');
+        //修改订单状态路由
+        Route::post('/change', 'Admin\Order\OrderController@change');
+        //查看订单商品详情
+        Route::get('/show', 'Admin\Order\OrderController@show');
+        //显示退款订单列表路由
+        Route::get('/back', 'Admin\Order\OrderController@back');
+        //修改退款状态
+        Route::post('/drawBack', 'Admin\Order\OrderController@drawBack');
     });
 
 
@@ -108,6 +127,7 @@ Route::prefix('/admin')->group( function () {
     Route::get('/makecode', 'Admin\Api\CommonController@buildCode');
     //提交用户登陆信息
     Route::post('dologin','Admin\Api\LoginController@dologin');
+
 
    	// Route::get('product/delete/{gayquan}', 'Admin\ProductController@destroy')
     //     ->where(['gayquan' => '\d+']);
@@ -184,6 +204,11 @@ Route::post('/existence', 'Home\RegisterController@isExistence');
 Route::post('/dologin', 'Home\LoginController@doLogin');
 Route::get('/outlogin', 'Home\LoginController@outLogin');
 
+//找回密码
+Route::get('/forget', 'Home\ForgetController@forget');
+Route::post('/handle', 'Home\ForgetController@handle');
+Route::post('/send', 'Home\ForgetController@send');
+
 //处理注册
 Route::post('/doregister', 'Home\RegisterController@doregister');
 
@@ -209,6 +234,9 @@ Route::prefix('/cart')->group(function () {
     //修改商品数量
     Route::post('/change', 'Home\CartController@changeCart');
 
+    //选择购买商品
+    Route::post('/select', 'Home\CartController@select');
+
 });
 
 
@@ -223,7 +251,35 @@ Route::prefix('/order')->group(function () {
     //成功提交订单
     Route::get('/success', 'Home\OrderController@success');
 
+    //订单展示
     Route::get('/show', 'Home\OrderController@show');
+
+    //订单状态修改
+    Route::post('/change', 'Home\OrderController@change');
+
+    //发表订单评论
+    Route::get('/commentlist', 'Home\OrderController@commentlist');
+
+    //订单退货
+    Route::get('/back', 'Home\OrderController@back');
+
+    //处理订单评论
+    Route::post('/comment', 'Home\OrderController@comment');
+
+    //查看订单评论
+    Route::get('/showComment', 'Home\OrderController@showComment');
+
+    //申请退款
+    Route::get('/backlist', 'Home\OrderController@backlist');
+
+    //取消退款
+    Route::post('/drawBack', 'Home\OrderController@drawBack');
+
+    //处理订单评论
+    Route::post('/back', 'Home\OrderController@back');
+
+    //处理订单评论
+    Route::get('/showBack', 'Home\OrderController@showBack');
 
 });
 
@@ -246,17 +302,38 @@ Route::prefix('/address')->group(function () {
 
 });
 
+
+//收藏资源路由
+Route::prefix('/collection')->group(function () {
+    //收藏首页
+    Route::get('/', 'Home\CollectionController@collection');
+
+    //添加收藏
+    Route::get('/add', 'Home\CollectionController@add');
+
+    //展示收藏
+    Route::post('/show', 'Home\CollectionController@show');
+
+});
+
 //加载秒杀商品路由
 Route::get('/seckill', 'Home\IndexController@seckill');
 //加载新品推介路由
-Route::get('/newgoods/{id}', 'Home\IndexController@newGoods');
+Route::get('/newgoods/{id}', 'Home\IndexController@newGoods')->where('id', '\d+');
 //商品列表路由
-Route::get('/goods/list/{type}/{id}', 'Home\GoodsListController@list');
+Route::get('/goods/list/{type}/{id}', 'Home\GoodsListController@list')->where('id', '\d+');
 //商品详情页路由
-Route::get('/goods/detail/{id}', 'Home\GoodsListController@goodsDetail');
+Route::get('/goods/detail/{id}', 'Home\GoodsListController@goodsDetail')->where('id', '\d+');
 //home用户退出
 Route::get('/queit', 'Home\LoginController@queit');
 
 //热销商品路由
 Route::post('/hotsale', 'Home\IndexController@hotsale');
+
+//异步加载二级菜单
+Route::get('/menu/{id}', 'Home\IndexController@menu')->where('id', '\d+');
+//加载商品详情页第二章路由
+Route::get('/goods/detailtwo/{id}', 'Home\GoodsListController@goodsDetailTwo')->where('id', '\d+');
+//请求图片
+Route::get('/img/{id}', 'Home\GoodsImgApi@getImg')->where('id', '\d+');
 

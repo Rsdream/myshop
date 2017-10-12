@@ -19,8 +19,8 @@ class CreateGoodsTable extends Migration
             $table->string('gname', 200)->index('gname');
             $table->string('gpic');
             $table->integer('addtime');
+            $table->integer('price');
             $table->integer('workoff')->default(0);
-            $table->integer('attr')->nullable();
             $table->smallInteger('status')->default(0);
             $table->timestamps();
         });

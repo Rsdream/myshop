@@ -15,7 +15,7 @@ class AdminUsers extends Seeder
         //
         DB::table('admin_users')->insert([
 
-        	'uid'   => 123456,
+        	'uid'   => '123456',
         	'pass'  => '123456',
         	'name'  => '华哥',
         	'sex'   => '1',
