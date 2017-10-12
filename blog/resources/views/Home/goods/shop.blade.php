@@ -40,19 +40,19 @@
 		<div class="listings-title">
 			<div class="container">
 				<div class="wrap-title">
-					<h1>Products</h1>
+					<h1>商品列表</h1>
 
 					<div class="bread">
 						<div class="breadcrumbs theme-clearfix">
 							<div class="container">
 								<ul class="breadcrumb">
 									<li>
-										<a href="#">Home</a>
+										<a href="{{url('/')}}">首页</a>
 										<span class="go-page"></span>
 									</li>
 
 									<li class="active">
-										<span>Products</span>
+										<span>商品列表</span>
 									</li>
 								</ul>
 							</div>
@@ -296,112 +296,6 @@
 							<form class="" action="" method="get">
 								<button class="button" type="submit">清除筛选</button>
 							</form>
-						</div>
-					</div>
-
-					<div class="widget-5 widget etrostore_best_seller_product-3 etrostore_best_seller_product">
-						<div class="widget-inner">
-							<div class="block-title-widget">
-								<h2><span>Best Sellers</span></h2>
-							</div>
-
-							<div id="best-seller-01" class="sw-best-seller-product">
-								<ul class="list-unstyled">
-									<li class="clearfix">
-										<div class="item-img">
-											<a href="simple_product.html" title="corned beef enim">
-												<img width="180" height="180" src="{{asset('Home/images/1903/65-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" srcset="{{asset('Home/images/1903/65-180x180.jpg')}} 180w, images/1903/65-150x150.jpg')}} 150w, images/1903/65-300x300.jpg')}} 300w, images/1903/65.jpg 600w" sizes="(max-width: 180px) 100vw, 180px">
-											</a>
-										</div>
-
-										<div class="item-content">
-											<div class="reviews-content">
-												<div class="star"></div>
-												<div class="item-number-rating">
-													0 Review(s)
-												</div>
-											</div>
-
-											<h4><a href="simple_product.html" title="corned beef enim">Corned beef enim</a></h4>
-
-											<div class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>400.00</span></div>
-										</div>
-									</li>
-
-									<li class="clearfix">
-										<div class="item-img">
-											<a href="simple_product.html" title="philips stand">
-												<img width="180" height="180" src="{{asset('Home/images/1903/62-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" srcset="{{asset('Home/images/1903/62-180x180.jpg')}} 180w, images/1903/62-150x150.jpg')}} 150w, images/1903/62-300x300.jpg')}} 300w, images/1903/62.jpg 600w" sizes="(max-width: 180px) 100vw, 180px">
-											</a>
-										</div>
-
-										<div class="item-content">
-											<div class="reviews-content">
-												<div class="star"></div>
-												<div class="item-number-rating">
-													0 Review(s)
-												</div>
-											</div>
-
-											<h4><a href="simple_product.html" title="philips stand">Philips stand</a></h4>
-
-											<div class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>300.00</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>250.00</span></ins></div>
-										</div>
-									</li>
-
-									<li class="clearfix">
-										<div class="item-img">
-											<a href="simple_product.html" title="Vacuum cleaner">
-												<img width="180" height="180" src="{{asset('Home/images/1903/26-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" srcset="{{asset('Home/images/1903/26-180x180.jpg')}} 180w, images/1903/26-150x150.jpg')}} 150w, images/1903/26-300x300.jpg')}} 300w, images/1903/26.jpg 600w" sizes="(max-width: 180px) 100vw, 180px">
-											</a>
-										</div>
-
-										<div class="item-content">
-											<div class="reviews-content">
-												<div class="star"><span style="width:52.5px"></span></div>
-												<div class="item-number-rating">
-													4 Review(s)
-												</div>
-											</div>
-
-											<h4><a href="simple_product.html" title="Vacuum cleaner">Vacuum cleaner</a></h4>
-
-											<div class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>350.00</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>260.00</span></ins></div>
-										</div>
-									</li>
-
-									<li class="clearfix">
-										<div class="item-img">
-											<a href="simple_product.html" title="veniam dolore">
-												<img width="180" height="180" src="{{asset('Home/images/1903/45-180x180.jpg')}}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" srcset="{{asset('Home/images/1903/45-180x180.jpg')}} 180w, images/1903/45-150x150.jpg')}} 150w, images/1903/45-300x300.jpg')}} 300w, images/1903/45.jpg 600w" sizes="(max-width: 180px) 100vw, 180px">
-											</a>
-										</div>
-
-										<div class="item-content">
-											<div class="reviews-content">
-												<div class="star"><span style="width:35px"></span></div>
-												<div class="item-number-rating">
-													2 Review(s)
-												</div>
-											</div>
-
-											<h4><a href="simple_product.html" title="veniam dolore">Veniam dolore</a></h4>
-
-											<div class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>250.00</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>190.00</span></ins></div>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-
-					<div class="widget-6 widget-last widget text-6 widget_text">
-						<div class="widget-inner">
-							<div class="textwidget">
-								<div class="banner-sidebar">
-									<img src="{{asset('Home/images/1903/banner-detail.jpg')}}" title="banner" alt="banner">
-								</div>
-							</div>
 						</div>
 					</div>
 				</aside>

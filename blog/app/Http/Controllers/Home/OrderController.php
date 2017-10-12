@@ -14,6 +14,9 @@ use DB;
 
 class OrderController extends Controller
 {
+    /**
+    * @author kjw <[kjwlaravel@163.com]>
+    */
     //订单页面
     public function check(Request $request)
     {
@@ -48,7 +51,7 @@ class OrderController extends Controller
         $add = [];
         foreach ($data as $v) {
 
-            $pro = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
+            $pro  = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
             $city = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
             $area = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
             $add[] = [
@@ -63,65 +66,71 @@ class OrderController extends Controller
             ];
         }
         $score = DB::table('home_users')->select('score')->where('id', session('userinfo')['id'])->first();
-    	  return view('Home/order/check', ['orders'=>$cartDatas, 'address' => $add, 'score' => $score->score]);
+
+    	return view('Home/order/check', ['orders'=>$cartDatas, 'address' => $add, 'score' => $score->score]);
     }
 
     //提交订单
     public function add(Request $request)
     {
-        $text = '';
-        $id=$request->input('like');
-        $name=$request->input('uname');
-        $phone=$request->input('uphone');
-        $address=$request->input('address');
-        $text=$request->input('text');
-        $uid = Session::get('user');
-        $score = $request->input('score');
-        $number = rand(111111,999999);
-        $time = time();
+        $text    = '';
+        $id      = $request->input('like');
+        $name    = $request->input('uname');
+        $phone   = $request->input('uphone');
+        $address = $request->input('address');
+        $text    = $request->input('text');
+        $uid     = Session::get('user');
+        $score   = $request->input('score');
+        $number  = rand(111111,999999);
+        $time    = time();
 
         //用户登录
-        $key = 'cart:ids:'.Session::get('user');
+        $key       = 'cart:ids:'.Session::get('user');
         $cartDatas = [];
         foreach ($id as $k) {
             $hashKey = 'cart:'.Session::get('user').':'.$k;
             $cartDatas[] =Redis::HGetAll($hashKey);
         }
-
-        $tPrice = 0;
+        $tPrice = 0; //计算总金额
         if (!$cartDatas) {
             return redirect('cart');
         }
         foreach ($cartDatas as $v) {
             $tPrice += $v['num'] * $v['price'];
         }
-
+        $tPrice += 10;
         //如果提交订单失败
         //事务回滚
         if (!empty($score)) {
             $score = DB::table('home_users')->select('score')->where('id', session('userinfo')['id'])->first();
             $score = floor($score->score / 100);
-            $tPrice -= $score;
-            $uid = session('userinfo')['id'];
-            DB::table('home_users')->where('id', $uid)->decrement('score', $score * 100);
+            if ($score > $tPrice) {
+                DB::table('home_users')->where('id', $uid)->decrement('score', $tPrice * 100);
+                $score = $tPrice;
+                $tPrice = 0;
+            } else {
+                $tPrice -= $score;
+                DB::table('home_users')->where('id', $uid)->decrement('score', $score * 100);
+            }
         } else {
             $score = 0;
         }
+
         DB::transaction(function () use($name, $phone, $address, $uid, $number, $tPrice, $text, $time, $score){
             DB::table('orders_detail')->insert([
                 'uid' => $uid,
                 'number' => $number,
                 'name' => $name,
                 'phone' => $phone,
-                'tprice' => $tPrice + 10,
+                'tprice' => $tPrice,
                 'oscore' => $score,
                 'address' => $address,
                 'addtime' => $time,
                 'text' => $text,
-                ]);
+            ]);
         });
 
-        //删除
+        //删除相对Redis对应键
         $setKey = 'cart:ids:'.Session::get('user');
         //拿出购物车中数据
         $datas = [];
@@ -130,27 +139,37 @@ class OrderController extends Controller
             Redis::del($hashKey);
             Redis::sRem($setKey, $id);
         }
-
-
         //添加到商品订单
         foreach ($cartDatas as $v) {
-                $oid = $number;
-                $gid = $v['id'];
-                $setmeal = $v['setmeal'];
-                $gpic = $v['gpic'];
-                $gname = $v['gname'];
-                $gnum = $v['num'];
-                $gprice= $v['price'];
-
-                OrdersGood::insert(['oid' => $oid, 'gid' => $gid, 'gpic' => $gpic, 'gname' => $gname, 'gnum' => $gnum, 'gprice' => $gprice, 'setmeal' => $setmeal]);
-                $stock = DB::table('price')->select('stock')->where('id', '=', $gid)->first();
-                DB::table('price')->where('id', '=', $gid)->update(['stock' => $stock->stock-$gnum]);
+            $oid     = $number;
+            $gid     = $v['id'];
+            $setmeal = $v['setmeal'];
+            $gpic    = $v['gpic'];
+            $gname   = $v['gname'];
+            $gnum    = $v['num'];
+            $gprice  = $v['price'];
+            OrdersGood::insert([
+                'oid'     => $oid,
+                'gid'     => $gid,
+                'gpic'    => $gpic,
+                'gname'   => $gname,
+                'gnum'    => $gnum,
+                'gprice'  => $gprice,
+                'setmeal' => $setmeal
+            ]);
+            $stock = DB::table('price')
+                ->select('stock')
+                ->where('id', '=', $gid)
+                ->first();
+            DB::table('price')
+                ->where('id', '=', $gid)
+                ->update(['stock' => $stock->stock-$gnum]);
         }
 
         return redirect('order/success');
     }
 
-    //成功下单
+    //下单成功
     public function success()
     {
         return view('Home/success/success');
@@ -178,6 +197,7 @@ class OrderController extends Controller
                     ->get()
                     ->toArray();
             }
+
         return view('Home/order/show', ['data' => $data]);
     }
 
@@ -186,7 +206,7 @@ class OrderController extends Controller
     {
         $id     = $request->input('id');
         $status = $request->input('status');
-
+        //判断订单状态
         if ($status == '等待发货') {
             echo json_encode('等待发货');
             exit;
@@ -201,16 +221,24 @@ class OrderController extends Controller
             exit;
         }
         $uid = session('userinfo')['id'];
-
         //如果确认收货失败
         //回滚事务
         DB::transaction(function () use($id, $status, $uid) {
             $data = DB::table('orders_detail')->where('id', $id)->update(['status' => $status]);
-            $price = DB::table('orders_detail')->select('tprice')->where('id', $id)->first();
-            $score = $price->tprice / 10;
+            $price = DB::table('orders_detail')->select('tprice', 'oscore')->where('id', $id)->first();
+            $score = ($price->tprice + $price->oscore) / 10;
             $score = floor($score);
+            $order = DB::table('orders_detail as o')
+                ->leftJoin('orders_goods as g', 'o.number', '=', 'oid')
+                ->leftJoin('price as p', 'g.gid', '=', 'p.id')
+                ->select('p.gid', 'g.gnum')
+                ->where('o.id', $id)
+                ->get();
+            foreach ($order as $v) {
+                DB::table('goods')->where('id', $v->gid)->increment('workoff', $v->gnum);
+            }
             DB::table('home_users')->where('id', $uid)->increment('score', $score);
-            DB::table('home_users')->where('id', $uid)->increment('growth', $price->tprice);
+            DB::table('home_users')->where('id', $uid)->increment('growth', $price->tprice + $price->oscore);
         });
 
     }
@@ -218,13 +246,14 @@ class OrderController extends Controller
     //发表订单评论
     public function commentlist(Request $request)
     {
+        //根据订单编号找出要评论商品
         $number = $request->input('number');
-        $data = DB::table('orders_goods')
-                ->select('gid', 'gname', 'gpic', 'gprice', 'oid', 'id')
-                ->where('oid', '=', $number)
-                ->where('status', '=', '0')
-                ->get()
-                ->toArray();
+        $data   = DB::table('orders_goods')
+            ->select('id', 'gid', 'gname', 'gpic', 'gprice', 'oid', 'id', 'setmeal')
+            ->where('oid', '=', $number)
+            ->where('status', '=', 0)
+            ->get()
+            ->toArray();
 
         return view('Home/order/commentlist', ['data' => $data]);
     }
@@ -232,94 +261,77 @@ class OrderController extends Controller
     //处理订单评论
     public function comment(Request $request)
     {
-        $gid = $request->input('gid');
-        $oid = $request->input('oid');
+        $gid     = $request->input('gid');
+        $oid     = $request->input('oid');
+        $id      = $request->input('id');
         $comment = $request->input('comment');
         $addtime = time();
-        $uid = Session::get('user');
+        $uid     = Session::get('user');
 
         //添加数据到订单评论表
-        DB::table('orders_comment')->insert(
-            ['gid' => $gid, 'comment' => $comment, 'addtime' => $addtime, 'uid' => $uid, 'number' => $oid]
+        DB::table('orders_comment')->insert([
+            'gid' => $gid,
+            'comment' => $comment,
+            'addtime' => $addtime,
+            'uid' => $uid,
+            'number' => $oid]
         );
 
         //修改商品评论状态
         $a = DB::table('orders_goods')
-            ->where('gid', $gid)
+            ->where('gid', $id)
             ->update(['status' => 1]);
-
-        //订单评论完成，订单就完成
-        //修改订单状态
-        //查出订单编号
-        $data = DB::table('orders_goods')
-            ->where('gid', '=', $gid)
-            ->select('oid')
+        //查出对应评论商品状态
+        $status = DB::table('orders_goods')
+            ->where('oid', '=', $oid)
+            ->select('status')
             ->get()
             ->toArray();
-
-            //根据订单编号查出商品评论状态
-            foreach ($data as $v) {
-                $status = DB::table('orders_goods')
-                    ->where('oid', '=', $v->oid)
-                    ->select('status')
-                    ->get()
-                    ->toArray();
-
-                $val = false;
-                foreach ($status as $v) {
-                    if($v->status == 0) {
-                        $val = true;
-                        break;
-                    }
-                        if ($val) {
-                            echo '';
-                        } else {
-                            foreach ($data as $v) {
-
-                                //如果‘订单完成’修改失败
-                                //事务回滚
-                                DB::transaction(function () use($v) {
-                                    DB::table('orders_detail')->where('number', '=', $v->oid)->update(['status' => 3]);
-                                });
-
-                        }
-                    }
-                }
+        //每一个订单中所有商品进行判断是否已经被评论
+        $val = false;
+        foreach ($status as $v) {
+            if($v->status == '0') {
+                $val = true;
+                break;
             }
+        }
+        //订单中所有商品已经评论完成
+        //修改订单状态，订单结束
+        if (!$val) {
+            DB::table('orders_detail')->where('number', '=', $oid)->update(['status' => 3]);
+        }
 
-        return redirect('order/commentlist?number='.$oid.'');
+        return redirect('order/commentlist?number='.$oid.'')->with('commentlist', '评论成功!');
     }
 
     //查看订单评论
     public function showComment()
     {
         $uid = Session::get('user');
-
-        $data = [];
         //查询出当前用户订单
-
-                $data = DB::table('orders_comment')
-                            ->join('orders_goods', 'orders_comment.gid', '=', 'orders_goods.gid')
-                            ->select('orders_comment.addtime', 'orders_comment.comment',
-                                'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.status', 'orders_goods.setmeal')
-                                ->where('orders_goods.status', '=', 1)
-                                ->where('orders_comment.uid', '=', $uid)
-                                ->orderBy('orders_comment.addtime', 'desc')
-                                ->get()
-                                ->toArray();
+        $data = DB::table('orders_comment')
+            ->join('orders_goods', 'orders_goods.id', '=', 'orders_comment.gid')
+            ->select('orders_comment.id',
+                'orders_comment.addtime',
+                'orders_comment.comment',
+                'orders_comment.text',
+                'orders_goods.gname',
+                'orders_goods.setmeal',
+                'orders_goods.gpic')
+            ->where('uid', '=', $uid)
+            ->get();
 
         return view('Home/order/comment', ['data' => $data]);
-
     }
 
     //申请退款
     public function backlist(Request $request)
     {
+        //查询出要退款商品信息
         $number = $request->input('id');
-        $uid = Session::get('user');
-
-        $data = DB::table('orders_goods')
-            ->select('id', 'oid', 'gname', 'gpic', 'gnum', 'gprice', 'gid')
+        $uid    = Session::get('user');
+        $data   = DB::table('orders_goods')
+            ->select('id', 'oid', 'gname', 'gpic', 'gnum', 'gprice', 'gid', 'setmeal')
             ->where('back_status', '=', 0)
             ->get()
             ->toArray();
@@ -330,80 +342,55 @@ class OrderController extends Controller
     //处理退款订单
     public function back(Request $request)
     {
-        $bid = $request->input('id');
-        $oid = $request->input('oid');
+        $bid     = $request->input('id');
+        $oid     = $request->input('oid');
         $comment = $request->input('comment');
         $addtime = time();
-        $number = rand(111111,999999);
+        $number  = rand(111111,999999);
 
         //添加数据到订单评论表
         DB::table('orders_back')->insert([
             'comment' => $comment,
             'addtime' => $addtime,
-            'number' => $number,
-            'bid' => $bid,
-            ]
-        );
-
+            'number'  => $number,
+            'bid'     => $bid,
+        ]);
         //修改退款商品状态
         $a = DB::table('orders_goods')
             ->where('id', $bid)
             ->update(['back_status' => 1]);
 
-        //订单评论完成，订单就完成
-        //修改订单状态
-        //查出订单编号
-        $data = DB::table('orders_goods')
-            ->where('gid', '=', $bid)
-            ->select('oid')
-            ->get()
-            ->toArray();
+         return redirect('order/backlist?number='.$oid.'')->with('backlist', '申请退款成功!');;
+    }
 
-            //根据订单编号查出商品评论状态
-            foreach ($data as $v) {
-                $status = DB::table('orders_goods')
-                    ->where('oid', '=', $v->oid)
-                    ->select('back_status')
-                    ->get()
-                    ->toArray();
-
-                $val = false;
-                foreach ($status as $v) {
-                    if($v->back_status == 0) {
-                        $val = true;
-                        break;
-                    }
-                        if ($val) {
-                            echo '';
-                        } else {
-                            foreach ($data as $v) {
-
-                                //如果‘订单完成’修改失败
-                                //事务回滚
-                                DB::transaction(function () use($v) {
-                                    DB::table('orders_detail')->where('number', '=', $v->oid)->update(['back_status' => 1]);
-                                });
-
-                        }
-                    }
-                }
-            }
-
-         return redirect('order/backlist?number='.$oid.'');
+    //删除订单
+    public function del(Request $request)
+    {
+        //根据订单编号删除对应订单
+        $number = $request->input('number');
+        $goods = DB::table('orders_goods')->where('oid', '=', $number)->delete();
+        $data = DB::table('orders_detail')->where('number', '=', $number)->delete();
+        if (!$goods && !$data) {
+            echo json_encode(1);
+        }
     }
 
     //查看退款订单
     public function showBack()
     {
         $uid = Session::get('user');
-
         //查出当前用户退款订单
         $data = DB::table('orders_back')
-            ->join('orders_goods', function($join)
-            {
-                $join->on('orders_goods.id', '=', 'orders_back.bid');
-            })->select('orders_back.addtime', 'orders_back.number', 'orders_back.status', 'orders_back.id',
-                      'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.gnum', 'orders_goods.gprice', 'orders_goods.setmeal')
+            ->join('orders_goods', function($join){$join->on('orders_goods.id', '=', 'orders_back.bid');})
+                ->select('orders_back.addtime',
+                    'orders_back.number',
+                    'orders_back.status',
+                    'orders_back.id',
+                    'orders_goods.gname',
+                    'orders_goods.gpic',
+                    'orders_goods.gnum',
+                    'orders_goods.gprice',
+                    'orders_goods.setmeal')
                 ->where('orders_goods.back_status', '=', 1)
                 ->orderBy('orders_back.addtime', 'desc')
                 ->get()
@@ -417,28 +404,36 @@ class OrderController extends Controller
     {
         $id     = $request->input('id');
         $status = $request->input('status');
-        //是否取消退款
-        $check = DB::table('orders_back')->select('id')->where('id', '=', $id)->where('status', '=', 1)->get();
+        $check = DB::table('orders_back')
+        //判断商品是否已退款
+        ->select('id')
+        ->where('id', '=', $id)
+        ->where('status', '=', 1)
+        ->get();
         if ($check->first()) {
-                echo json_encode(1);
-               exit;
+            echo json_encode(1);
+            exit;
         }
-        $back = DB::table('orders_back')->select('id')->where('id', '=', $id)->where('status', '=', 2)->get();
+        $back = DB::table('orders_back')
+            ->select('id')
+            ->where('id', '=', $id)
+            ->where('status', '=', 2)
+            ->get();
         if ($back->first()) {
-                echo json_encode(2);
-               exit;
+            echo json_encode(2);
+            exit;
         }
-
         //如果‘取消退款’状态修改失败
         //事务回滚
         DB::transaction(function () use($id, $status) {
-            $data = DB::table('orders_back')->where('id', $id)->update(['status' => $status]);
+            $data = DB::table('orders_back')
+                ->where('id', $id)
+                ->update(['status' => $status]);
             if ($data) {
-            	echo json_encode(3);
+            	echo json_encode(3); //失败
             } else {
-            	echo json_encode(4);
+            	echo json_encode(4); //成功
             }
-
         });
     }
 

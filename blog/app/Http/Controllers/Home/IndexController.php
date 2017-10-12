@@ -87,6 +87,7 @@ class IndexController extends Controller
   	}
 
 
+
 	/**
      * 热销商品加载
      * @author Dengjihua <[<2563654031@qq.com>]>
@@ -102,7 +103,7 @@ class IndexController extends Controller
 
 
         //先查缓存中有无商品
-    	$hotProduct = Cache::get('Hgoods'.$id);
+        $hotProduct = Cache::get('Hgoods'.$id);
         if (!$hotProduct) {
             // echo '没有缓存';
             // 根据类别得到对应的商品
@@ -115,6 +116,7 @@ class IndexController extends Controller
                 ->limit(6)
                 ->get()
                 ->toArray();
+
                 foreach ($hotProduct as $k=>$v) {
                     $pid = DB::table('price')->select('id')->where('gid', $v->id)->first();
                     $hotProduct[$k]->pid = $pid->id;
@@ -124,20 +126,20 @@ class IndexController extends Controller
             Cache::put('Hgoods'.$id, $hotProduct, 24*60);
 
         }
-
-		if ($hotProduct) {
-			echo json_encode($hotProduct);
-		} else {
+    		if ($hotProduct) {
+    			  echo json_encode($hotProduct);
+    		} else {
             echo '404';
         }
-
-	}
+  	}
 
 
 
     /**
-     * 新商品加载
+     * 新商品的加载
      * @author rong <[<871513137@qq.com>]>
+     * @param  int    类别的id
+     * @return object 新添加商品数据
      */
     public function newGoods(Request $request, $id)
     {
@@ -227,8 +229,10 @@ class IndexController extends Controller
     */
     public function logoShareData()
     {
+
        //网站Logo
        return $logo = DB::table('logo')->select('id', 'name', 'logo')->first();
+
 
     }
 }

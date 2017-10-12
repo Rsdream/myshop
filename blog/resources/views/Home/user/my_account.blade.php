@@ -42,7 +42,7 @@
 							<div class="container">
 								<ul class="breadcrumb">
 									<li>
-										<a href="#">首页</a>
+										<a href="{{url('/')}}">首页</a>
 										<span class="go-page"></span>
 									</li>
 
@@ -82,9 +82,9 @@
 											</p>
 											<p>
 												从你的账户指示板，你可以查看你
-												<a href="http://demo.smartaddons.com/templates/html/etrostore/order.html">最近的订单</a>,
-												管理你 <a href="http://demo.smartaddons.com/templates/html/etrostore/addresses.html">发货和账单地址</a>
-												并编辑你的 <a href="http://demo.smartaddons.com/templates/html/etrostore/account_details.html">账户信息</a>.
+												<a >最近的订单</a>,
+												管理你 <a >发货和账单地址</a>
+												并编辑你的 <a >账户信息</a>.
 											</p>
 										</div>
 									</div>

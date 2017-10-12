@@ -14,11 +14,8 @@
 //前台首页
 Route::get('/', 'Home\IndexController@index');
 
-
 //登录，注册页面
 Route::get('/login', 'Home\LoginController@login');
-//处理登录，注册
-
 
 //后台路由组
 Route::prefix('/admin')->group( function () {
@@ -121,6 +118,8 @@ Route::prefix('/admin')->group( function () {
         Route::post('/drawBack', 'Admin\Order\OrderController@drawBack');
         //订单评论
         Route::get('/feedback', 'Admin\Order\OrderController@feedBack');
+        //订单回复
+        Route::post('/reply', 'Admin\Order\OrderController@reply');
     });
 
 
@@ -239,40 +238,31 @@ Route::prefix('/cart')->group(function () {
 Route::prefix('/order')->group(function () {
     //结算页面
     Route::get('/', 'Home\OrderController@check');
-
     //提交订单
     Route::post('/add', 'Home\OrderController@add');
-
     //成功提交订单
     Route::get('/success', 'Home\OrderController@success');
-
     //订单展示
     Route::get('/show', 'Home\OrderController@show');
-
     //订单状态修改
     Route::post('/change', 'Home\OrderController@change');
 
     //发表订单评论
     Route::get('/commentlist', 'Home\OrderController@commentlist');
-
     //订单退货
     Route::get('/back', 'Home\OrderController@back');
-
     //处理订单评论
     Route::post('/comment', 'Home\OrderController@comment');
-
     //查看订单评论
     Route::get('/showComment', 'Home\OrderController@showComment');
-
+    //删除订单
+    Route::post('/del', 'Home\OrderController@del');
     //申请退款
     Route::get('/backlist', 'Home\OrderController@backlist');
-
     //取消退款
     Route::post('/drawBack', 'Home\OrderController@drawBack');
-
     //处理订单评论
     Route::post('/back', 'Home\OrderController@back');
-
     //展示订单退款列表
     Route::get('/showBack', 'Home\OrderController@showBack');
 
@@ -282,16 +272,12 @@ Route::prefix('/order')->group(function () {
 Route::prefix('/address')->group(function () {
     //三级联动
     Route::post('/select', 'Home\AddressController@select');
-
     //添加地址
     Route::post('/add', 'Home\AddressController@add');
-
     //显示地址
     Route::post('/show', 'Home\AddressController@show');
-
     //删除地址
     Route::post('/del', 'Home\AddressController@del');
-
     //默认地址添加
     Route::post('/tacit', 'Home\AddressController@tacit');
     //选择默认地址
@@ -307,10 +293,8 @@ Route::prefix('/address')->group(function () {
 Route::prefix('/collection')->group(function () {
     //收藏首页
     Route::get('/', 'Home\CollectionController@collection');
-
     //添加收藏
     Route::get('/add', 'Home\CollectionController@add');
-
     //展示收藏
     Route::post('/show', 'Home\CollectionController@show');
 

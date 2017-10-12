@@ -46,18 +46,18 @@
 		<div class="listings-title">
 			<div class="container">
 				<div class="wrap-title">
-					<h1>My Account</h1>
+					<h1>我的收货地址</h1>
 					<div class="bread">
 						<div class="breadcrumbs theme-clearfix">
 							<div class="container">
 								<ul class="breadcrumb">
 									<li>
-										<a href="http://demo.smartaddons.com/templates/html/etrostore/home_page_1.html">Home</a>
+										<a href="{{url('/')}}">首页</a>
 										<span class="go-page"></span>
 									</li>
 
 									<li class="active">
-										<span>My account</span>
+										<span>收货地址</span>
 									</li>
 								</ul>
 							</div>
@@ -74,7 +74,7 @@
 						<div class="entry">
 							<div class="entry-content">
 								<header>
-									<h2 class="entry-title">My Account</h2>
+									<h2 class="entry-title">收货地址</h2>
 								</header>
 
 								<div class="entry-content">

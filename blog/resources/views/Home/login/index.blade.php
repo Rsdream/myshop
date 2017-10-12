@@ -653,8 +653,6 @@
 	var ucode = false;
 	var check = false;
 
-
-
    //用户名判断
    $('input[name="uname"]').on('focus', function () {
     var type = 'uname';
@@ -825,7 +823,7 @@
     		dotest('ucode', '请先输入验证码！', 'red');
     		return false;
     	} else if (check) {
-    		dotest('check', '请同意条款！', 'red');
+    		layer.alert('不同意服务条款不能进行注册！')
     		return false;
     	} else {
     		return true;

@@ -30,6 +30,10 @@ class ShareUserDataProvider extends ServiceProvider
                 'Home/order/show',
                 'Home/order/commentlist',
                 'Home/order/comment',
+                'Home/order/check',
+                'Home/success/success',
+                'Home/order/backlist',
+                'Home/order/back',
             ],
             'App\Http\ViewComposers\ProfileComposer'
         );

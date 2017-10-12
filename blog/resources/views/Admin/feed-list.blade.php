@@ -37,7 +37,6 @@
 		<table class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 				<tr class="text-c">
-					<th width="25"><input type="checkbox" name="" value=""></th>
 					<th width="60">ID</th>
 					<th width="60">用户名</th>
 					<th width="160">商品详情</th>
@@ -50,7 +49,6 @@
 			    @if (!empty($data))
 			    @foreach ($data as $v)
 				<tr class="text-c">
-					<td><input type="checkbox" value="1" name=""></td>
 					<td>{{$v->id}}</td>
 					<td>{{$v->name}}</td>
 					<td class="text-l">
@@ -65,7 +63,8 @@
 					<td ><div>{{$v->text}}</div></td>
 					@endif
 
-					<td class="td-manage"><a title="编辑" href="javascript:;" onclick="member_edit('编辑','member-add.html','4','','510')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+					<td class="td-manage"><a title="编辑" href="javascript:;" onclick="edit({{$v->id}}, this)" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> 
+					</td>
 				</tr>
 				@endforeach
 				@endif
@@ -84,6 +83,7 @@
 <script type="text/javascript" src="{{asset('Admin/lib/My97DatePicker/4.8/WdatePicker.js')}}"></script> 
 <script type="text/javascript" src="{{asset('Admin/lib/datatables/1.10.0/jquery.dataTables.min.js')}}"></script> 
 <script type="text/javascript" src="{{asset('Admin/lib/laypage/1.2/laypage.js')}}"></script>
+<script type="text/javascript" src="{{asset('layer/layer.js')}}"></script>
 <script type="text/javascript">
 $(function(){
 	$('.table-sort').dataTable({
@@ -124,8 +124,33 @@ function member_start(obj,id){
 	});
 }
 /*用户-编辑*/
-function member_edit(title,url,id,w,h){
-	layer_show(title,url,w,h);
+function edit(id, obj) {
+// console.log($(obj).parent().parent().children('td').eq(4).html('1'))
+	layer.prompt({
+	  formType: 2,
+	  title: '请回复',
+	  area: ['400px', '150px'] //自定义文本域宽高
+	}, function(value, index, elem){
+	  $.ajax({
+	  	type : 'post',
+	  	data : 'id='+id+'&value='+value+'&_token={{csrf_token()}}',
+	  	url  : '{{url("admin/order/reply")}}',
+        beforeSend:function(){ 
+        	tist = layer.load(3)
+        },
+	  	success:function(data) {
+	  		$(obj).parent().parent().children('td').eq(4).html(value)
+
+	  		layer.alert('回复成功'); //得到value
+	  		layer.close(tist);
+	         
+	  	},
+	  	dataType:'json',
+	  });
+	  layer.close(index);
+
+	});
+
 }
 /*密码-修改*/
 function change_password(title,url,id,w,h){
@@ -148,6 +173,7 @@ function member_del(obj,id){
 		});		
 	});
 }
+
 </script>
 </body>
 </html>

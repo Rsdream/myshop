@@ -41,18 +41,18 @@
 			<div class="listings-title">
 				<div class="container">
 					<div class="wrap-title">
-						<h1>My Account</h1>
+						<h1>我的收藏</h1>
 						<div class="bread">
 							<div class="breadcrumbs theme-clearfix">
 								<div class="container">
 									<ul class="breadcrumb">
 										<li>
-											<a href="http://demo.smartaddons.com/templates/html/etrostore/home_page_1.html">Home</a>
+											<a href="{{url('/')}}">首页</a>
 											<span class="go-page"></span>
 										</li>
 
 										<li class="active">
-											<span>My account</span>
+											<span>收藏列表</span>
 										</li>
 									</ul>
 								</div>
@@ -69,7 +69,7 @@
 							<div class="entry">
 								<div class="entry-content">
 									<header>
-										<h2 class="entry-title">My Account</h2>
+										<h2 class="entry-title">收藏列表</h2>
 									</header>
 
 									<div class="entry-content">
@@ -188,20 +188,19 @@
 		</script>
 
 		<script type="text/javascript">
-		    //取消收藏
-		    function cancel(id, obj) {
-		    	$.ajax({
-		    		type : 'get',
-		    		data : 'id='+id+'&_token={{csrf_token()}}',
-		    		url  : '{{url("collection/add")}}',
-		    		success:function(data) {
-		    			console.log(data);
-		    		},
-		    		dataType: 'json',
-		    	});
-
-		    	$(obj).parent().parent().parent().remove();
-		    }
+		//取消收藏
+		function cancel(id, obj) {
+		    $.ajax({
+		    	type : 'get',
+		    	data : 'id='+id+'&_token={{csrf_token()}}',
+		    	url  : '{{url("collection/add")}}',
+		    	success:function(data) {
+		    		console.log(data);
+		    	},
+		    	dataType: 'json',
+		    });
+		    $(obj).parent().parent().parent().remove();
+		}
 		</script>
 		<script type="text/javascript">
 			var sticky_navigation_offset_top = $("#header .header-bottom").offset().top;

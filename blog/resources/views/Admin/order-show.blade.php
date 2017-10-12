@@ -105,7 +105,6 @@
     //订单状态修改
     function change(id, obj) {
     	var status = $(obj).parent().parent().children('th').html();
-
     	if (status == '订单完成') {
     		return $(obj).parent().parent().children('th').html('订单完成');
     	}
@@ -114,12 +113,11 @@
     		url  : '{{url("admin/order/change")}}',
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
     		success:function(data) {
-
     			if (data == '修改失败') {
     				alert(data);
     				return;
     			}
-    			$(obj).parent().parent().children('th').html(data);
+    			$(obj).parent().parent().children('th').html(data); //信息提示
     		},
     		dataType : 'json',
     	})

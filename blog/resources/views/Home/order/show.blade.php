@@ -166,10 +166,14 @@
 																	<p class="order-info"><a href='{{url("/order/backlist?id=$v->number")}}'>申请退款</a></p>
 																</div>
 															</li>
-															<?php $arr=[0=>'等待发货', 1=>'确认收货', 2=>'等待评价', 3=>'订单完成'] ?>
+															<?php $arr=[0=>'等待发货', 1=>'确认收货', 2=>'等待评价', 3=>'删除订单'] ?>
 															<li class="td td-change">
 															    <?php if($v->status == 2) { ?>
-																<div class="am-btn am-btn-danger anniu change"  onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'><spna style="color:white;">{{$arr[$v->status]}}</spna></a></div>
+
+																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'><spna>{{$arr[$v->status]}}</spna></a></div>
+																<?php } else if($v->status ==3){ ?>
+																<div class="am-btn am-btn-danger anniu change" onClick="del({{$v->number}})"><a href='javascript:;'><spna style="color:white;">{{$arr[$v->status]}}</spna></a></div>
+
 																<?php } else { ?>
 																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this, num={{$v->number}})">{{$arr[$v->status]}}</div>
 																<?php } ?>
@@ -218,6 +222,7 @@
 	<script type="text/javascript" src="{{asset('Home/js/plugins.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/megamenu.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/main.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('layer/layer.js')}}"></script>
 
 	<script type="text/javascript">
 		var sticky_navigation_offset_top = $("#header .header-bottom").offset().top;
@@ -268,15 +273,33 @@
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
     		success:function(data) {
     			if (data == '等待评价') {
-    				$('.td-change').html("<div class='am-btn am-btn-danger anniu change'><a href='"+url+"/order/commentlist/?number="+num+"'><spna>等待评价</spna></a></div>");
+    				$(obj).parent().html("<div class='am-btn am-btn-danger anniu change'><a href='"+url+"/order/commentlist/?number="+num+"'><spna>等待评价</spna></a></div>");
     				return;
     			}
+    			layer.alert(data, {icon: 1});
     			$(obj).html(data);
     		},
     		dataType : 'json',
     	})
     }
 
+    //删除订单
+    function del(num) {
+    	$.ajax({
+    		type : 'post',
+    		url  : '{{url("order/del")}}',
+    		data : 'number='+num+'&_token={{csrf_token()}}',
+    		beforeSend:function(){ 
+                index = layer.load(3);;//显示加载动画 
+            },
+    		success:function(data) {
+    			layer.close(index);
+    			window.location.reload();
+    			layer.alert('删除成功！', {icon: 1});
+    		},
+    		dataType : 'json',
+    	})
+    }
    </script>
    </body>
 </html>
