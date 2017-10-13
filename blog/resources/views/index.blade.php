@@ -54,7 +54,7 @@
 
 <body class="page page-id-6 home-style1" onload="gain()">
 	@include('Layouts/head')
-						
+
 
 
 		<div class="container">
@@ -883,7 +883,7 @@
 																			<!-- end rating  -->
 
 																			<h4>
-																				<a href="simple_product.html" title="corned beef enim">{{$v->gname}}</a>
+																				<a href="{{url('goods/detailtwo/'.$v->id)}}" title="{{$v->gname}}">{{$v->gname}}</a>
 																			</h4>
 
 																			<div class="item-price">
@@ -1944,13 +1944,12 @@
 
 									<!-- add to cart, wishlist, compare -->
 									<div class="item-bottom clearfix">
-										<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
 
-										<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
+										<a style='margin-left:15px;' rel="nofollow" href="javascript:;" onclick='addcart(`+goods[i].pid+`)' class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="加入购物车">加入购物车</a>
 
 										<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
 											<div class="yith-wcwl-add-button show" style="display:block">
-												<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+												<a href="javascript:;" onclick='addCollection(`+goods[i].pid+`)' rel="nofollow" title='收藏此商品' class="">收藏此商品</a>
 												<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
 											</div>
 
@@ -1969,7 +1968,7 @@
 										</div>
 
 										<div class="clear"></div>
-										<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
+										<a href="{{url('img')}}`+'/'+goods[i].pid+`" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">商品大图</a>
 									</div>
 								</div>
 							</div>
@@ -2155,7 +2154,7 @@
 			window.location.href='http://' + url;
 		})
 	</script>
-
+	@include('Layouts/addcart')
 	<script type="text/javascript">
 		$('.typelink').on('mouseenter', function (){
 			var obj = $(this);
@@ -2163,18 +2162,18 @@
 				return;
 			}
 			var id = $(this).attr('link-id');
-			var str = '<ul class="dropdown-menu nav-level1 column-3">';
+			var str = '<ul class="dropdown-menu nav-level1 column-4">';
 			$.ajax({
 				type: 'get',
 				url: '{{url("menu")}}'+'/'+id,
 				success: function (msg){
 					for (var i=0; i<msg.length; i++) {
 						str += `
-							<li class="dropdown-submenu column-3 menu-electronics etrostore-menu-img">
+							<li class="dropdown-submenu column-4 menu-electronics etrostore-menu-img">
 								<a href="`+`{{url('goods/list/brand')}}`+'/'+msg[i].id+`">
 									<span class="have-title">
 										<span class="menu-img">
-											<img width='220' height='146' src="`+`{{asset('upload/image')}}`+`/`+msg[i].blogo+`" alt="Menu Image">
+											<img width='110' height='55' src="`+`{{asset('upload/image')}}`+`/`+msg[i].blogo+`" alt="Menu Image">
 										</span>
 
 										<span class="menu-title">`+msg[i].bname+`</span>
@@ -2204,5 +2203,6 @@
 			})
 		})
 	</script>
+
    </body>
 </html>

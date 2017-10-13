@@ -15,7 +15,20 @@ class ShareUserDataProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-             ['index', 'Home/goods/shop', 'Home/search', 'Home/goods/simple_product'], 'App\Http\ViewComposers\ProfileComposer'
+            [
+              'index',
+              'Home/goods/shop',
+              'Home/search',
+              'Home/cart/cart',
+              'Home/goods/simple_product',
+              'Home/user/information',
+              'Home/user/my_account',
+              'Home/user/address',
+              'Home/user/edit',
+              'Home/user/add',
+              'Home/collection/collection',
+            ],
+            'App\Http\ViewComposers\ProfileComposer'
         );
     }
 

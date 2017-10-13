@@ -124,32 +124,37 @@
 
 												<div class="product-info clearfix">
 													<div class="product-stock pull-left out-stock">
-														<span>Out stock</span>
+														<span>商品描述</span>
 													</div>
 												</div>
 
 												<div class="description" itemprop="description">
-													<p>Proin nunc nibh, adipiscing eu nisi id, ultrices suscipit augue. Sed rhoncus hendrerit lacus, et venenatis felis. Donec ut fringilla magna ultrices suscipit augue. Proin nunc nibh, adipiscing eu nisi id, ultrices suscipit augue. Sed rhoncus hendrerit lacus, et venenatis felis. Donec ut fringilla magna ultrices suscipit augue.</p>
+													<p>{{$detail->gdetail}} {{$goodsDetail[0]->ram}} + {{$goodsDetail[0]->rom}} {{$goodsDetail[0]->color}}</p>
 												</div>
 
 												<p class="stock out-of-stock">Out of stock</p>
 												<h3 class="title-share">选择</h3>
 												<br>
 												@foreach($goodsList as $v)
-												<a <?php echo $goodsDetail[0]->pid==$v->id?'style="border:1px solid red"':''?> class="btn btn-default" href="{{url('/goods/detail/'.$v->id)}}" role="button">{{$v->gname}}: {{$v->ram}}G+{{$v->rom}}G　{{$v->color}}</a>　<br><br>
+												<a <?php echo $goodsDetail[0]->pid==$v->id?'style="border:1px solid red"':''?> class="btn btn-default" href="{{url('/goods/detail/'.$v->id)}}" role="button">{{$v->gname}}: {{$v->ram}}+{{$v->rom}} {{$v->color}}</a>　<br><br>
 												@endforeach
 											</div>
 											<br>
 											<br>
 											<div class="quantity buttons_added" style="width:107px;">
 													<input type="button" value="-" class="minus">
-													<input type="number" step="1" min="1" max="10" name="" value="1" title="Qty" class="input-text qty text" size="4" pattern="[1-9]*" inputmode="numeric">
+													<input type="number" step="1" min="1" max="10" name="num" value="1" title="Qty" class="input-text qty text" size="4" pattern="[1-9]*" inputmode="numeric">
 													<input type="button" value="+" class="plus">
 											</div>
 											<br>
 											<br>
-											<button type="button" class="btn btn-danger">　立即购买　</button>　
-											<button type="button" class="btn btn-success">　加入购物车　</button>　
+											@if($goodsDetail[0]->stock != 0)
+											<button type="button" onclick="addCollection({{$goodsDetail[0]->pid}})" class="btn btn-danger">　收藏此商品　</button>　
+											<button type="button" sub='{{$goodsDetail[0]->pid}}' class="btn btn-success sub">　加入购物车　</button>　
+											@else
+											<button type="button" onclick="addCollection({{$goodsDetail[0]->pid}})" class="btn btn-danger">　收藏此商品　</button>　
+											<button type="button" class="btn btn-success" disabled>商品暂无存货</button>
+											@endif
 										</div>
 									</div>
 								</div>
@@ -745,7 +750,22 @@
 	<script type="text/javascript" src="{{asset('Home/js/wc-quantity-increment.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/woocommerce/cart.min.js')}}"></script>
 
-
+	<script type="text/javascript">
+		$('.sub').on('click', function (){
+			var id = $(this).attr('sub');
+			var num = $('input[name="num"]').val();
+			if (num <= 0) {
+				return ;
+			}
+			$.ajax({
+				type: 'get',
+				url: '{{url("cart/add")}}'+'?id='+id+'&num='+num,
+				success: function (msg){
+					alert('‘添加成功’')
+				}
+			})
+		})
+	</script>
 	<script type="text/javascript">
 		var sticky_navigation_offset_top = $("#header .header-bottom").offset().top;
 		var sticky_navigation = function(){
@@ -783,5 +803,6 @@
       	b[c] += ( window.postMessage && request ? ' ' : ' no-' ) + cs;
    </script>
    <!--<![endif]-->
+	 @include('Layouts/addcart')
    </body>
 </html>

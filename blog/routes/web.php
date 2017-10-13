@@ -244,7 +244,7 @@ Route::prefix('/cart')->group(function () {
 //订单资源路由
 Route::prefix('/order')->group(function () {
     //结算页面
-    Route::post('/', 'Home\OrderController@check');
+    Route::get('/', 'Home\OrderController@check');
 
     //提交订单
     Route::post('/add', 'Home\OrderController@add');
@@ -332,3 +332,5 @@ Route::get('/queit', 'Home\LoginController@queit');
 Route::get('/menu/{id}', 'Home\IndexController@menu')->where('id', '\d+');
 //加载商品详情页第二章路由
 Route::get('/goods/detailtwo/{id}', 'Home\GoodsListController@goodsDetailTwo')->where('id', '\d+');
+//请求图片
+Route::get('/img/{id}', 'Home\GoodsImgApi@getImg')->where('id', '\d+');

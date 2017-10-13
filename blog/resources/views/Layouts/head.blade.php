@@ -161,26 +161,7 @@
                     <form method="get" action="{{url('/search')}}">
                        {{ csrf_field() }}
                       <div>
-                         <input type="text" value="" name="key" placeholder="Enter your keyword...">
-                        <div class="cat-wrapper">
-                          <label class="label-search">
-                            <select name="search_category" class="s1_option">
-                              <option value="">查找所有商品</option>
-                              <option value="">Computers  Laptops</option>
-                              <option value="13">Computers & Networking</option>
-                              <option value="14">Smartphones & Tablet</option>
-                              <option value="15">Home Furniture</option>
-                              <option value="16">Home Appliances</option>
-                              <option value="17">Electronic Component</option>
-                              <option value="18">Household Goods</option>
-                              <option value="32">Appliances</option>
-                              <option value="49">Accessories</option>
-                              <option value="51">Electronics</option>
-                              <option value="78">Televisions</option>
-                              <option value="80">Cameras & Accessories</option>
-                            </select>
-                          </label>
-                        </div>
+                         <input type="text" value="" name="key" placeholder="搜索">
 
                         <button type="submit" title="Search" class="fa fa-search button-search-pro form-button"></button>
                       </div>
@@ -189,18 +170,16 @@
                 </div>
               </div>
             </div>
-
-            <div class="widget sw_top-3 sw_top pull-left">
+            <a title="我的购物车" href="{{url('/cart')}}">
+              <div class="widget sw_top-3 sw_top pull-left">
               <div class="widget-inner">
                 <div class="top-form top-form-minicart etrostore-minicart pull-right">
                   <div class="top-minicart-icon pull-right">
                     <i class="fa fa-shopping-cart"></i>
-                    <a class="cart-contents" href="cart.html" title="View your shopping cart">
-                      <span class="minicart-number">2</span>
-                    </a>
+
                   </div>
 
-                  <div class="wrapp-minicart">
+                  <!-- <div class="wrapp-minicart">
                     <div class="minicart-padding">
                       <div class="number-item">
                         购物车有 <span>2</span> 件商品
@@ -308,22 +287,22 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
-
+            </a>
             <div class="widget nav_menu-3 widget_nav_menu pull-left">
               <div class="widget-inner">
                 <ul id="menu-wishlist" class="menu">
                   <li class="menu-wishlist">
-                    <a class="item-link" href="#">
-                      <span class="menu-title">Wishlist</span>
+                    <a class="item-link" title="我的收藏" href="#">
+                      <span class="menu-title">我的收藏</span>
                     </a>
                   </li>
 
                   <li class="yith-woocompare-open menu-compare">
-                    <a class="item-link compare" href="#">
+                    <a class="item-link" title="我的订单" href="{{url('/order/show')}}">
                       <span class="menu-title">Compare</span>
                     </a>
                   </li>
@@ -352,11 +331,12 @@
 
                   <div id="ResMenuprimary_menu" class="collapse menu-responsive-wrapper">
                     <ul id="menu-primary-menu" class="etrostore_resmenu">
-                      <li><a href="index.html">商城</a></li>
-                      <li><a href="cart.html">秒杀</a></li>
-                      <li><a href="checkout.html">热销商品</a></li>
-                      <li><a href="my_account.html">促销商品</a></li>
-                      <li><a href="shop.html">联系我们</a></li>
+                      <li><a href="{{url('/')}}">商城</a></li>
+                      <li><a href="{{url('/user/myaccount')}}">我的信息</a></li>
+                      <li><a href="{{url('/order/show')}}">我的订单</a></li>
+                      <li><a href="{{url('/cart')}}">我的购物车</a></li>
+                      <li><a href="{{url('/collection')}}">我的收藏</a></li>
+                      <li><a href="shop.html">意见反馈</a></li>
                       <!-- <li><a href="simple_product.html">Simple Product</a></li>
                       <li><a href="about_us.html">About Us</a></li>
                       <li><a href="contact_us.html">Contact Us</a></li> -->
@@ -365,12 +345,13 @@
                 </div>
 
                 <ul id="menu-primary-menu-1" class="nav nav-pills nav-mega etrostore-mega etrostore-menures">
-                  <li><a href="index.html">商城</a></li>
-                  <li><a href="cart.html">秒杀</a></li>
-                  <li><a href="checkout.html">热销商品</a></li>
-                  <li><a href="my_account.html">促销商品</a></li>
-                  <li><a href="shop.html">联系我们</a></li>
-                  <li><a href="simple_product.html">我的积分</a></li>
+                  <li><a href="{{url('/')}}">商城</a></li>
+                  <li><a href="{{url('/user/myaccount')}}">我的信息</a></li>
+                  <li><a href="{{url('/order/show')}}">我的订单</a></li>
+                  <li><a href="{{url('/cart')}}">我的购物车</a></li>
+                  <li><a href="{{url('/collection')}}">我的收藏</a></li>
+                  <li><a href="shop.html">意见反馈</a></li>
+
                   <!-- <li><a href="about_us.html">About Us</a></li>
                   <li><a href="contact_us.html">Contact Us</a></li> -->
                 </ul>
@@ -378,126 +359,13 @@
             </nav>
           </div>
           <!-- /Primary navbar -->
-
-          <div class="top-form top-form-minicart etrostore-minicart pull-right">
-            <div class="top-minicart-icon pull-right">
-              <i class="fa fa-shopping-cart"></i>
-              <a class="cart-contents" href="cart.html" title="View your shopping cart">
-                <span class="minicart-number">2</span>
-              </a>
-            </div>
-
-            <div class="wrapp-minicart">
-              <div class="minicart-padding">
-                <div class="number-item">
-                  There are <span>items</span> in your cart
-                </div>
-
-                <ul class="minicart-content">
-                  <li>
-                    <a href="simple_product.html" class="product-image">
-                      <img 	width="100" height="100" src="{{asset('Home/images/1903/45-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
-                          srcset="{{asset('Home/images/1903/45-150x150.jpg')}} 150w, {{asset('Home/images/1903/45-300x300.jpg')}} 300w, {{asset('Home/images/1903/45-180x180.jpg')}} 180w, {{asset('Home/images/1903/45.jpg')}} 600w"
-                          sizes="(max-width: 100px) 100vw, 100px" />
-                    </a>
-
-                    <div class="detail-item">
-                      <div class="product-details">
-                        <h4>
-                          <a class="title-item" href="simple_product.html">Veniam Dolore</a>
-                        </h4>
-
-                        <div class="product-price">
-                          <span class="price">
-                            <span class="woocommerce-Price-amount amount">
-                              <span class="woocommerce-Price-currencySymbol">$</span>190.00
-                            </span>
-                          </span>
-
-                          <div class="qty">
-                            <span class="qty-number">1</span>
-                          </div>
-                        </div>
-
-                        <div class="product-action clearfix">
-                          <a href="#" class="btn-remove" title="Remove this item">
-                            <span class="fa fa-trash-o"></span>
-                          </a>
-
-                          <a class="btn-edit" href="cart.html" title="View your shopping cart">
-                            <span class="fa fa-pencil"></span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-
-                  <li>
-                    <a href="simple_product.html" class="product-image">
-                      <img	 width="100" height="100" src="{{asset('Home/images/1903/22-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
-                          srcset="{{asset('Home/images/1903/22-150x150.jpg')}} 150w, {{asset('Home/images/1903/22-300x300.jpg')}} 300w, {{asset('Home/images/1903/22-180x180.jpg')}} 180w, {{asset('Home/images/1903/22.jpg')}} 600w"
-                          sizes="(max-width: 100px) 100vw, 100px" />
-                    </a>
-
-                    <div class="detail-item">
-                      <div class="product-details">
-                        <h4>
-                          <a class="title-item" href="simple_product.html">Cleaner with bag</a>
-                        </h4>
-
-                        <div class="product-price">
-                          <span class="price">
-                            <span class="woocommerce-Price-amount amount">
-                              <span class="woocommerce-Price-currencySymbol">$</span>350.00
-                            </span>
-                          </span>
-
-                          <div class="qty">
-                            <span class="qty-number">1</span>
-                          </div>
-                        </div>
-
-                        <div class="product-action clearfix">
-                          <a href="#" class="btn-remove" title="Remove this item">
-                            <span class="fa fa-trash-o"></span>
-                          </a>
-
-                          <a class="btn-edit" href="cart.html" title="View your shopping cart">
-                            <span class="fa fa-pencil"></span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-
-                <div class="cart-checkout">
-                  <div class="price-total">
-                    <span class="label-price-total">Total</span>
-
-                    <span class="price-total-w">
-                      <span class="price">
-                        <span class="woocommerce-Price-amount amount">
-                          <span class="woocommerce-Price-currencySymbol">$</span>540.00
-                        </span>
-                      </span>
-                    </span>
-                  </div>
-
-                  <div class="cart-links clearfix">
-                    <div class="cart-link">
-                      <a href="cart.html" title="Cart">View Cart</a>
-                    </div>
-
-                    <div class="checkout-link">
-                      <a href="checkout.html" title="Check Out">Check Out</a>
-                    </div>
-                  </div>
-                </div>
+          <a href="{{url('/cart')}}">
+            <div class="top-form top-form-minicart etrostore-minicart pull-right">
+              <div class="top-minicart-icon pull-right">
+                <i class="fa fa-shopping-cart"></i>
               </div>
             </div>
-          </div>
-
+          </a>
           <div class="mid-header pull-right">
             <div class="widget sw_top">
               <span class="stick-sr">
@@ -506,9 +374,10 @@
 
               <div class="top-form top-search">
                 <div class="topsearch-entry">
-                  <form role="search" method="get" class="form-search searchform" action="">
+                  <form role="search" method="get" class="form-search searchform" action="{{url('/search')}}">
+                    {{ csrf_field() }}
                     <label class="hide"></label>
-                    <input type="text" value="" name="s" class="search-query" placeholder="Keyword here..." />
+                    <input type="text" value="" name="key" class="search-query" placeholder="搜索商品" />
                     <button type="submit" class="button-search-pro form-button">Search</button>
                   </form>
                 </div>

@@ -52,7 +52,7 @@
 
 		<script src="{{asset('/Ui/AmazeUI-2.4.2/assets/js/jquery.min.js')}}"></script>
 		<script src="{{asset('/Ui/AmazeUI-2.4.2/assets/js/amazeui.js')}}"></script>
-	
+
 </head>
 
 <body class="page page-id-6 home-style1">
@@ -183,7 +183,7 @@
 												<a class="item-link" href="checkout.html">
 													<span class="menu-title">收藏夹</span>
 												</a>
-											</li>											
+											</li>
 											<li class="menu-checkout">
 												<a class="item-link" href="{{url('/outlogin')}}">
 													<span class="menu-title">退出</span>
@@ -591,7 +591,7 @@
 								<li><a href="#tab5">待评价</a></li>
 							</ul>
 
-							
+
 							<div class="am-tabs-bd">
 								<div class="am-tab-panel am-fade am-in am-active" id="tab1">
 									<div class="order-top">
@@ -616,7 +616,7 @@
 									<div class="order-main">
 										<div class="order-list">
 											<?php $total=0 ?>
-											@if (isset($data))											
+											@if (isset($data))
 											@foreach ($data as $v)
 											<!--交易成功-->
 											<div class="order-status5">
@@ -627,12 +627,12 @@
 												</div>
 												<div class="order-content">
 													<div class="order-left">
-													    
+
 														<ul class="item-list">
 															<li class="td td-item">
 																<div class="item-pic">
 																	<a href="#" class="J_MakePoint">
-																		<img src="{{url('/').json_decode($v->gpic, true)[0]}}" class="itempic J_ItemImg">
+																		<img src="{{url('/').'/'.json_decode($v->gpic, true)[0]}}" class="itempic J_ItemImg">
 																	</a>
 																</div>
 																<div class="item-info">
@@ -657,11 +657,11 @@
 															</li>
 															<li class="td td-operation">
 																<div class="item-operation">
-																	
+
 																</div>
 															</li>
 														</ul>
-														<?php $total +=$v->gprice*$v->gnum ?>	
+														<?php $total +=$v->gprice*$v->gnum ?>
 													</div>
 													<div class="order-right">
 														<li class="td td-amount">
@@ -683,7 +683,7 @@
 																</div>
 															</li>
 															<?php $arr=[0=>'等待发货', 1=>'确认收货', 2=>'等待评价', 3=>'订单完成'] ?>
-															<li class="td td-change"> 
+															<li class="td td-change">
 															    <?php if($v->status == 2) { ?>
 																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'><spna>{{$arr[$v->status]}}</spna></a></div>
 																<?php } else { ?>
@@ -1259,8 +1259,8 @@
 													</div>
 												</div>
 											</div>
-											
-											
+
+
 											<div class="order-status4">
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">1601430</a></div>
@@ -1336,7 +1336,7 @@
 																</div>
 															</li>
 														</ul>
-														
+
 														<ul class="item-list">
 															<li class="td td-item">
 																<div class="item-pic">
@@ -1370,7 +1370,7 @@
 																</div>
 															</li>
 														</ul>
-														
+
 
 													</div>
 													<div class="order-right">

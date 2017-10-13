@@ -36,7 +36,6 @@ class AddressController extends Controller
     		$pro = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
     		$city = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
     		$area = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
-
     		$add[] = [
     		'id' => $v->id,
     	    'pro' => $pro->name,
@@ -47,7 +46,7 @@ class AddressController extends Controller
     	    'comment' => $v->comment,
     	    ];
     	}
-     
+
     	echo json_encode($add);
     }
 
@@ -55,7 +54,7 @@ class AddressController extends Controller
     {
         $id = $request->input('id');
         DB::table('orders_address')->where('id', '=', $id)->delete();
-    } 
+    }
 
     //三级联动
     public function select(Request $request)
@@ -68,6 +67,6 @@ class AddressController extends Controller
         $data = HomeDistrict::select(['id', 'name', 'upid'])->where('upid', $upid)->get();
 
         echo json_encode($data);
-        exit; 
+        exit;
     }
 }

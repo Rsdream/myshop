@@ -16,8 +16,8 @@ class CreateOrderComment extends Migration
         //订单评论
         Schema::create('orders_comment', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('gid')->unsigned();           
-            $table->integer('uid')->unsigned();           
+            $table->integer('gid')->unsigned();
+            $table->integer('uid')->unsigned();
             $table->string('comment');
             $table->integer('number')->nullable();
             $table->string('setmeal')->nullable();
@@ -33,6 +33,6 @@ class CreateOrderComment extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collection');
+        Schema::dropIfExists('orders_comment');
     }
 }

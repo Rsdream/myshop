@@ -14,7 +14,7 @@ use DB;
 
 class OrderController extends Controller
 {
-    
+
     //订单页面
     public function check(Request $request)
     {
@@ -37,7 +37,7 @@ class OrderController extends Controller
 
     //提交订单
     public function add(Request $request)
-    {
+    {dd(1);
         $name = $request->input('name');
         $phone = $request->input('phone');
         $address = $request->input('address');
@@ -51,11 +51,11 @@ class OrderController extends Controller
         //事务回滚
         DB::transaction(function () use($name, $phone, $address, $uid, $number, $sum, $data){
             DB::table('orders_detail')->insert([
-                'uid' => $uid, 
-                'number' => $number, 
-                'name' => $name, 
-                'phone' => $phone, 
-                'address' => $address, 
+                'uid' => $uid,
+                'number' => $number,
+                'name' => $name,
+                'phone' => $phone,
+                'address' => $address,
                 'addtime' => $data
                 ]);
         });
@@ -73,7 +73,7 @@ class OrderController extends Controller
             $cartDatas[] =Redis::HGetAll($hashKey);
         }
 
-        //添加到商品订单        
+        //添加到商品订单
         foreach ($cartDatas as $v) {
                 $oid = $number;
                 $gid = $v['id'];
@@ -201,12 +201,12 @@ class OrderController extends Controller
                     ->where('oid', '=', $v->oid)
                     ->select('status')
                     ->get()
-                    ->toArray(); 
+                    ->toArray();
 
                 $val = false;
                 foreach ($status as $v) {
                     if($v->status == 0) {
-                        $val = true;                  
+                        $val = true;
                         break;
                     }
                         if ($val) {
@@ -219,7 +219,7 @@ class OrderController extends Controller
                                 DB::transaction(function () use($v) {
                                     DB::table('orders_detail')->where('number', '=', $v->oid)->update(['status' => 3]);
                                 });
-                                
+
                         }
                     }
                 }
@@ -241,20 +241,20 @@ class OrderController extends Controller
             ->get()
             ->toArray();
 
-        $data = DB::table('orders_comment')          
-            ->join('orders_goods', function($join)  
-            {  
-                $join->on('orders_goods.gid', '=', 'orders_comment.gid');  
+        $data = DB::table('orders_comment')
+            ->join('orders_goods', function($join)
+            {
+                $join->on('orders_goods.gid', '=', 'orders_comment.gid');
             })->select('orders_comment.addtime', 'orders_comment.comment',
-                'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.status')                    
-                ->where('orders_goods.status', '=', 1)  
+                'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.status')
+                ->where('orders_goods.status', '=', 1)
                 ->orderBy('orders_comment.addtime', 'desc')
                 ->get()
                 ->toArray();
 
         return view('Home/order/comment', ['data' => $data]);
 
-    } 
+    }
 
     //申请退款
     public function backlist(Request $request)
@@ -266,7 +266,7 @@ class OrderController extends Controller
             ->select('id', 'oid', 'gname', 'gpic', 'gnum', 'gprice', 'gid')
             ->where('back_status', '=', 0)
             ->get()
-            ->toArray();       
+            ->toArray();
 
         return view('Home/order/backlist', ['data' => $data]);
     }
@@ -280,8 +280,8 @@ class OrderController extends Controller
         $number = rand(111111,999999);
 
         //添加数据到订单评论表
-        DB::table('orders_back')->insert([ 
-            'comment' => $comment, 
+        DB::table('orders_back')->insert([
+            'comment' => $comment,
             'addtime' => $addtime,
             'number' => $number,
             'bid' => $bid,
@@ -308,12 +308,12 @@ class OrderController extends Controller
                     ->where('oid', '=', $v->oid)
                     ->select('back_status')
                     ->get()
-                    ->toArray(); 
+                    ->toArray();
 
                 $val = false;
                 foreach ($status as $v) {
                     if($v->back_status == 0) {
-                        $val = true;                  
+                        $val = true;
                         break;
                     }
                         if ($val) {
@@ -326,7 +326,7 @@ class OrderController extends Controller
                                 DB::transaction(function () use($v) {
                                     DB::table('orders_detail')->where('number', '=', $v->oid)->update(['back_status' => 1]);
                                 });
-                                
+
                         }
                     }
                 }
@@ -341,13 +341,13 @@ class OrderController extends Controller
         $uid = Session::get('user');
 
         //查出当前用户退款订单
-        $data = DB::table('orders_back')          
-            ->join('orders_goods', function($join)  
-            {  
-                $join->on('orders_goods.id', '=', 'orders_back.bid');  
+        $data = DB::table('orders_back')
+            ->join('orders_goods', function($join)
+            {
+                $join->on('orders_goods.id', '=', 'orders_back.bid');
             })->select('orders_back.addtime', 'orders_back.number', 'orders_back.status', 'orders_back.id',
                       'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.gnum', 'orders_goods.gprice')
-                ->where('orders_goods.back_status', '=', 1)  
+                ->where('orders_goods.back_status', '=', 1)
                 ->orderBy('orders_back.addtime', 'desc')
                 ->get()
                 ->toArray();
@@ -366,7 +366,7 @@ class OrderController extends Controller
         DB::transaction(function () use($id, $status) {
             $data = DB::table('orders_back')->where('id', $id)->update(['status' => $status]);
             echo json_encode($data);
-        });    
-    }   
-   
+        });
+    }
+
 }

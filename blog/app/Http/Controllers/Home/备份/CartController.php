@@ -12,13 +12,13 @@ use DB;
 
 class CartController extends Controller
 {
-    
+
     //购物车页面
 	public function cart()
 	{
 		return view('Home/cart/cart');
 	}
-    
+
     //查看购物车内商品
     public function showCart()
     {
@@ -34,7 +34,7 @@ class CartController extends Controller
 
     	        //放入到sessionID新键中
     	        $setKey = 'cart:ids:'.Session::get('user');
-    	        Redis::sAdd($setKey,  $oldIdsArr); 
+    	        Redis::sAdd($setKey,  $oldIdsArr);
 
     	       //获取用户没有登录时购物车商品数据
     	        foreach ($oldIdsArr as $k) {
@@ -60,8 +60,8 @@ class CartController extends Controller
     	        }
     	        ////删除没有登录时用来存储商品ID的键
     	        Redis::del($oldKey);
-    		    
-    	        
+
+
     		}
     		//用户登录
     		$key = 'cart:ids:'.Session::get('user');
@@ -78,7 +78,7 @@ class CartController extends Controller
 
             //图片数据转化为数组
             foreach ($cartDatas as $key => $value) {
-                $val = json_decode($value['gpic'], true); 
+                $val = json_decode($value['gpic'], true);
                 $cartDatas[$key]['gpic'] = $val;
             }
 
@@ -109,7 +109,7 @@ class CartController extends Controller
     	foreach ($cartDatas as $key => $value) {
 
     		$val = json_decode($value['gpic'], true);
-    		$cartDatas[$key]['gpic'] = $val;    		
+    		$cartDatas[$key]['gpic'] = $val;
     	}
 
     	//判断购物车中是否有商品
@@ -119,11 +119,12 @@ class CartController extends Controller
     		echo json_encode('noshop');
     	}
     }
-    
+
     //添加商品到购物车
     public function addCart(Request $request)
     {
     	$id  = $request->input('id');
+
     	$num = $request->input('num');
 
     	$gid = intval($id);
@@ -160,8 +161,8 @@ class CartController extends Controller
     			$setKey = 'cart:ids:'.Session::get('user');
 
     			//存储商品ID
-    			Redis::sAdd($setKey, $gid); 
-
+    			Redis::sAdd($setKey, $gid);
+          return 1;
     		} else {
     			//商品存在，仅增加商品数量
     			Redis::hIncrBy($key, 'num', $num);
@@ -193,13 +194,15 @@ class CartController extends Controller
 
     	    //存储商品ID
     	    Redis::sAdd($setKey, $gid);
+
+          return 1;
         } else {
 
         	//商品存在，仅增加商品数量
     	    Redis::hIncrBy($key, 'num', $num);
     	}
     }
-    
+
     //删除商品
     public function delCart(Request $request)
     {
@@ -226,7 +229,7 @@ class CartController extends Controller
     	Redis::sRem($setKey, $id);
 
     }
-    
+
     //修改商品数量
     public function changeCart(Request $request)
     {
@@ -242,7 +245,7 @@ class CartController extends Controller
     		Redis::hSet($key, 'num', $num);
     		exit;
     	}
-    	
+
     	//用户没有登录时
     	$key = 'cart:'.Session::getId().':'.$id;
 
@@ -263,30 +266,30 @@ class CartController extends Controller
 
             //商品存在，选择商品
             Redis::hSet($key, 'status', $status);
-            
+
         }
-        
+
         //用户没有登录时
         $key = 'cart:'.Session::getId().':'.$id;
 
         //商品存在，选择商品
-        Redis::hSet($key, 'status', $status); 
+        Redis::hSet($key, 'status', $status);
 
     }
-    
+
     //查询商品数据
     public function getGoodData($gid)
     {
     	$goods = '';
     	$goods = DB::table('goods')
-    	    ->select('goods.id', 'goods.gname', 'goods.gpic', 'price.price')
+    	    ->select('price.id', 'goods.gname', 'goods.gpic', 'price.price', 'ram', 'rom', 'color')
             ->leftJoin('price', 'goods.id', '=', 'price.gid')
-            ->where('goods.id', '=', $gid)
+            ->where('price.id', '=', $gid)
             ->first();
-
+      $goods->gname = $goods->gname.' '.$goods->ram.'+'.$goods->rom;
         return $goods;
     }
-    
+
     //对象转换数组
 	public function object2array($object) {
 	  if (is_object($object)) {

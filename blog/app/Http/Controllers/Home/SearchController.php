@@ -29,6 +29,8 @@ class SearchController extends Controller
     {
         //获取用户输入的关键字
         $key = $request->input('key');
+        $min = $request->input('min_price');
+        $max = $request->input('max_price');
         $search = new search('shop');
         $goodsList = $search->doSearch($key);
         $pageRes = Common::CustomPagination($this->request, $goodsList, 12);
@@ -42,10 +44,20 @@ class SearchController extends Controller
             ->groupBy('home_category.id', 'home_category.name')
             ->get();
         $coverImg = DB::table('cover')->select('id', 'name', 'price')->get();
+        if (!empty($min) && !empty($max)) {
+            foreach($pageRes as $k=>$v) {
+                if ($v['price'] < $min || $v['price'] > $max) {
+                    unset($pageRes[$k]);
+                }
+            }
+        }
         return view('Home/search', [
             'goodsData' => $pageRes,
             'category' => $category,
             'coverImg' => $coverImg,
+            'key' => $key,
+            'min' => $min,
+            'max' => $max,
         ]);
     }
 }
