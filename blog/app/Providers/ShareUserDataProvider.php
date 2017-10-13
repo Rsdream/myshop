@@ -27,6 +27,7 @@ class ShareUserDataProvider extends ServiceProvider
               'Home/user/edit',
               'Home/user/add',
               'Home/collection/collection',
+              'Home/order/show',
             ],
             'App\Http\ViewComposers\ProfileComposer'
         );

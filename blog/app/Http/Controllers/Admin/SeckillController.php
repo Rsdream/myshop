@@ -8,6 +8,7 @@ use DB;
 
 /**
  * 秒杀商品
+ * @author rong <[<871513137@qq.com>]>
  */
 class SeckillController extends Controller
 {
@@ -69,7 +70,7 @@ class SeckillController extends Controller
                 'brandid',
                 'status',
                 'workoff',
-                'price',
+                'price.price',
                 'ram',
                 'rom',
                 'goodsdetail.gdetail',

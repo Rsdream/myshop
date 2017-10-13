@@ -30,10 +30,6 @@
 </head>
 
 <body class="page woocommerce-account woocommerce-page">
-
-
-
-
 	<div class="body-wrapper theme-clearfix">
 		@include('Layouts/head')
 

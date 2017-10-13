@@ -20,7 +20,7 @@ class IndexController extends Controller
         for ($i=0;$i<count($category);$i++) {
 
         	if ($category[$i]->name == '手机') {
-        		$id = $category[$i]->id;
+        		  $id = $category[$i]->id;
         	}
         }
         if ( !empty($id) ) {
@@ -107,14 +107,16 @@ class IndexController extends Controller
         $newGoodsData = DB::table('home_category')
         ->leftJoin('brands', 'home_category.id', '=', 'brands.categoryid')
         ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
-        ->leftJoin('price', 'goods.id', '=', 'price.gid')
-        ->select('goods.id', 'gname', 'gpic', 'workoff', 'goods.price', 'price.id as pid')
+        ->select('goods.id', 'gname', 'gpic', 'workoff', 'goods.price')
         ->orderBy('goods.addtime', 'desc')
         ->limit(6)
         ->where([['goods.status', '>', 0], ['home_category.id', '=', $id]])
-        ->groupBy('goods.id', 'gname', 'gpic', 'workoff', 'goods.price', 'price.id')
         ->get()
         ->toArray();
+        foreach ($newGoodsData as $k=>$v) {
+            $pid = DB::table('price')->select('id')->where('gid', $v->id)->first();
+            $newGoodsData[$k]->pid = $pid->id;
+        }
         $logoImg = DB::table('brands')
         ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
         ->select('blogo')
@@ -136,54 +138,54 @@ class IndexController extends Controller
      * ajax二级菜单
      * @author rong <[871513137@qq.com]>
      */
-     public function menu($id)
-     {
-        $menu = DB::table('brands')
-            ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
-            ->select('bname', 'brands.id', 'blogo')
-            ->where([['brands.categoryid', $id], ['goods.status', '>', 0]])
-            ->groupBy('brands.id', 'bname', 'blogo')
-            ->get();
-        $menuInfo = DB::table('brands')
-            ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
-            ->select('gname', 'goods.id', 'brandid')
-            ->where([['brands.categoryid', $id], ['goods.status', '>', 0]])
-            ->orderBy('goods.addtime', 'desc')
-            ->get();
-        foreach($menu as $k=>$v) {
-            $x = 1;
-            foreach($menuInfo as $val) {
-                if ($v->id == $val->brandid && $x <= 5) {
-                    $menu[$k]->menuinfo[] = $val;
-                    $x++;
-                }
-            }
-        }
-
-        return $menu;
-
-     }
-
-     /**
-      * 模板友情链接数据共享
-      * @author rong <[871513137@qq.com]>
-      * @return object $url
-      */
-      public function urlShareData()
-      {
-          //查出友情链接
-          return $url = DB::table('url')->select('id', 'name', 'logo', 'url', 'status')->where('status', 0)->limit(5)->get();
-
+    public function menu($id)
+    {
+      $menu = DB::table('brands')
+          ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
+          ->select('bname', 'brands.id', 'blogo')
+          ->where([['brands.categoryid', $id], ['goods.status', '>', 0]])
+          ->groupBy('brands.id', 'bname', 'blogo')
+          ->get();
+      $menuInfo = DB::table('brands')
+          ->leftJoin('goods', 'brands.id', '=', 'goods.brandid')
+          ->select('gname', 'goods.id', 'brandid')
+          ->where([['brands.categoryid', $id], ['goods.status', '>', 0]])
+          ->orderBy('goods.addtime', 'desc')
+          ->get();
+      foreach($menu as $k=>$v) {
+          $x = 1;
+          foreach($menuInfo as $val) {
+              if ($v->id == $val->brandid && $x <= 5) {
+                  $menu[$k]->menuinfo[] = $val;
+                  $x++;
+              }
+          }
       }
 
-      /**
-       * 模板站点logo数据共享
-       * @author rong <[871513137@qq.com]>
-       * @return object $logo
-       */
-       public function logoShareData()
-       {
-           //网站Logo
-           return $logo = DB::table('logo')->select('id', 'name', 'logo')->where('id', '=', '1')->first();
-       }
+      return $menu;
+
+    }
+
+    /**
+    * 模板友情链接数据共享
+    * @author rong <[871513137@qq.com]>
+    * @return object $url
+    */
+    public function urlShareData()
+    {
+        //查出友情链接
+        return $url = DB::table('url')->select('id', 'name', 'logo', 'url', 'status')->where('status', 0)->limit(5)->get();
+
+    }
+
+    /**
+    * 模板站点logo数据共享
+    * @author rong <[871513137@qq.com]>
+    * @return object $logo
+    */
+    public function logoShareData()
+    {
+       //网站Logo
+       return $logo = DB::table('logo')->select('id', 'name', 'logo')->where('id', '=', '1')->first();
+    }
 }
