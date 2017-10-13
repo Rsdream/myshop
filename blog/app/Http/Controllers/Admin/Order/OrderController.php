@@ -24,7 +24,7 @@ class OrderController extends Controller
     {
         $number = $request->input('number');
         $goods = DB::table('orders_goods')
-            ->select('id', 'gname', 'gprice', 'gnum', 'oid')
+            ->select('id', 'gname', 'gprice', 'gnum', 'oid', 'setmeal')
             ->where('oid', '=', $number)
             ->get()
             ->toArray();

@@ -117,7 +117,7 @@
 																		<a href="{{url('goods/detail/'.$val->gid)}}">
 																			<p>{{$val->gname}}</p>
 																			<p class="info-little">配置：{{$val->ram}} + {{$val->rom}} + {{$val->color}}
-																				<br/>包装：裸装 </p>
+																			</p>
 																		</a>
 																	</div>
 																</div>

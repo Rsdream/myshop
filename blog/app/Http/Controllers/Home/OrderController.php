@@ -40,24 +40,55 @@ class OrderController extends Controller
     		$cartDatas[$key]['gpic'] = $val;
     	}
 
-    	return view('Home/order/check', ['orders'=>$cartDatas]);
+        $data = DB::table('orders_address')
+            ->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment', 'status')
+            ->where('uid', Session::get('user'))
+            ->where('status', 1)
+            ->get();
+        $add = [];
+        foreach ($data as $v) {
+
+            $pro = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
+            $city = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
+            $area = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
+            $add[] = [
+            'id'      => $v->id,
+            'pro'     => $pro->name,
+            'city'    => $city->name,
+            'area'    => $area->name,
+            'name'    => $v->name,
+            'phone'   => $v->phone,
+            'comment' => $v->comment,
+            'status'  => $v->status,
+            ];
+        }
+
+    	return view('Home/order/check', ['orders'=>$cartDatas, 'address' => $add]);
     }
 
     //提交订单
     public function add(Request $request)
     {
-        $name = $request->input('name');
-        $phone = $request->input('phone');
-        $address = $request->input('address');
+        $text = '';
+        $id=$request->input('like');
+        $name=$request->input('uname');
+        $phone=$request->input('uphone');
+        $address=$request->input('address');
+        $text=$request->input('text');
         $uid = Session::get('user');
         $number = rand(111111,999999);
-        $sum = $request->input('sum');
-        $data = time();
+        $time = time();
+
         //拿出购物车中数据
+
+        $key = 'cart:ids:'.Session::get('user');
         $cartDatas = [];
-        foreach ($idsArr as $k) {
+        foreach ($id as $k) {
             $hashKey = 'cart:'.Session::get('user').':'.$k;
             $cartDatas[] =Redis::HGetAll($hashKey);
+        }
+        if (!$cartDatas) {
+            return redirect('cart');
         }
         $tPeice = 0;
         foreach ($cartDatas as $v) {
@@ -65,7 +96,7 @@ class OrderController extends Controller
         }
         //如果提交订单失败
         //事务回滚
-        DB::transaction(function () use($name, $phone, $address, $uid, $number, $sum, $data, $tPeice){
+        DB::transaction(function () use($name, $phone, $address, $uid, $number, $time, $tPeice, $text){
             DB::table('orders_detail')->insert([
                 'uid' => $uid,
                 'number' => $number,
@@ -73,52 +104,43 @@ class OrderController extends Controller
                 'phone' => $phone,
                 'tpeicr' => $tPeice,
                 'address' => $address,
-                'addtime' => $data
+                'addtime' => $time,
+                'text' => $text,
                 ]);
         });
-
-        //用户登录
-        $key = 'cart:ids:'.Session::get('user');
-
-        //拿出商品ID
-        $idsArr = Redis::sMembers($key);
-
+            
+        //删除
+        $setKey = 'cart:ids:'.Session::get('user');
+        //拿出购物车中数据
+        $datas = [];
+        foreach ($id as $k) {
+            $hashKey = 'cart:'.Session::get('user').':'.$k;
+            Redis::del($hashKey);
+            Redis::sRem($setKey, $id);
+        }
 
 
         //添加到商品订单
         foreach ($cartDatas as $v) {
                 $oid = $number;
                 $gid = $v['id'];
+                $setmeal = $v['setmeal'];
                 $gpic = $v['gpic'];
                 $gname = $v['gname'];
                 $gnum = $v['num'];
                 $gprice= $v['price'];
 
-                OrdersGood::insert(['oid' => $oid, 'gid' => $gid, 'gpic' => $gpic, 'gname' => $gname, 'gnum' => $gnum, 'gprice' => $gprice]);
+                OrdersGood::insert(['oid' => $oid, 'gid' => $gid, 'gpic' => $gpic, 'gname' => $gname, 'gnum' => $gnum, 'gprice' => $gprice, 'setmeal' => $setmeal]);
                 $stock = DB::table('price')->select('stock')->where('id', '=', $gid)->first();
                 DB::table('price')->where('id', '=', $gid)->update(['stock' => $stock->stock-$gnum]);
         }
 
-
+        return redirect('order/success');
     }
 
     //成功下单
     public function success()
     {
-
-        //用户登录
-        $key = 'cart:ids:'.Session::get('user');
-        //拿出商品ID
-        $idsArr = Redis::sMembers($key);
-
-        //拿出购物车中数据
-        $cartDatas = [];
-        foreach ($idsArr as $k) {
-            $hashKey = 'cart:'.Session::get('user').':'.$k;
-            Redis::del($hashKey);
-        }
-        Redis::del($key);
-
         return view('Home/success/success');
     }
 
@@ -137,13 +159,11 @@ class OrderController extends Controller
                     ->leftJoin('price', 'price.id', 'o.gid')
                     ->select('o.id', 'o.oid', 'o.gid', 'o.gname', 'o.gpic', 'o.gnum', 'o.gprice', 'ram', 'rom', 'color')
                     ->where('oid', $v->number)
-                    ->get();
+                    ->get()
+                    ->toArray();
             }
             return view('Home/order/show', ['data' => $data]);
-        } else {
-            return view('Home/order/show', [$v = '']);
-        }
-
+        } 
     }
 
     //修改订单状态

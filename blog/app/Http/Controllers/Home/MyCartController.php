@@ -58,17 +58,16 @@ class MyCartController extends Controller
     		$priceDatas = [];
     		foreach ($idsArr as $k) {
     			$priceDatas[] = DB::table('price')
-		    	    ->select('stock')
+		    	    ->select('stock', 'id')
 		            ->where('id', '=', $k)
 		            ->first();
     		}
     		//更新库存
     		foreach ($priceDatas as $k) {
-    			foreach ($idsArr as $v) {
-    				$key = 'cart:'.Session::get('user').':'.$v;
-    				$bool = Redis::hSet($key, 'stock', $k->stock);;
-    			} 
+                 $key = 'cart:'.Session::get('user').':'.$k->id;
+                Redis::hSet($key, 'stock', $k->stock);
     		}
+
     		//拿出购物车数据
     		$cartDatas = [];
     		foreach ($idsArr as $k) {
@@ -254,11 +253,11 @@ class MyCartController extends Controller
     {
     	$goods = '';
     	$goods = DB::table('goods')
-    	    ->select('price.id', 'goods.gname', 'goods.gpic', 'price.price', 'price.ram', 'rom', 'color', 'price.stock')
+    	    ->select('price.id', 'goods.gname', 'goods.gpic', 'price.price', 'ram', 'rom', 'color', 'price.stock')
             ->leftJoin('price', 'goods.id', '=', 'price.gid')
             ->where('price.id', '=', $gid)
             ->first();
-        $goods->setmeal = $goods->ram.'+'.$goods->rom;
+        $goods->setmeal = $goods->ram.'+'.$goods->rom.'+'.$goods->color;
 
         return $goods;
     }

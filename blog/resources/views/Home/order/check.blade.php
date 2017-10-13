@@ -566,8 +566,6 @@
 				</div>
 			</div>
 		</header>
-
-
 		<div class="container">
 			<div class="row">
 				<div id="contents" role="main" class="main-page  col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -605,6 +603,8 @@
 					</div>
 					<div class="clear"></div>
 
+				<form method="post" action="{{url('order/add')}}" id="add">
+                {{ csrf_field() }}
 					<!--订单 -->
 					<div class="concent">
 						<div id="payTable">
@@ -635,7 +635,7 @@
 							@foreach ($orders as $v)
 							<tr class="item-list">
 								<div class="bundle  bundle-last">
-
+								<input type="hidden" name="like[]" value="{{$v['id']}}">
 									<div class="bundle-main">
 										<ul class="item-content clearfix">
 											<div class="pay-phone">
@@ -705,7 +705,7 @@
 								<div class="order-user-info">
 									<div id="holyshit257" class="memo">
 										<label>买家留言：</label>
-										<input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close">
+										<input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close" name="text">
 										<div class="msg hidden J-msg">
 											<p class="error">最多输入500个字符</p>
 										</div>
@@ -728,33 +728,37 @@
                                     <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee"><?php echo $total+10 ?></em>
 											</span>
 										</div>
-
+										@foreach ($address as $v)
 										<div id="holyshit268" class="pay-address">
 
 											<p class="buy-footer-address">
 												<span class="buy-line-title buy-line-title-type">寄送至：</span>
 												<span class="buy--address-detail">
-								               <span class="province myprovince"></span>
-												<span class="city mycity"></span>
-												<span class="dist mydist"></span>
-												<span class="street mystreet"></span>
+								               <span class="province myprovince">{{$v['pro']}}</span>
+								               <input type="hidden" name="address" value="{{$v['pro']}}{{$v['city']}}{{$v['area']}}{{$v['comment']}}">
+												<span class="city mycity">{{$v['city']}}</span>
+												<span class="dist mydist">{{$v['area']}}</span>
+												<span class="street mystreet">{{$v['comment']}}</span>
 												</span>
 												</span>
 											</p>
 											<p class="buy-footer-address">
 												<span class="buy-line-title">收货人：</span>
 												<span class="buy-address-detail">
-                                         <span class="buy-user mybuy-user"></span>
-												<span class="buy-phone mybuy-phone"></span>
+												<input type="hidden" name="uname" value="{{$v['name']}}">
+		                                        <span class="buy-user mybuy-user">{{$v['name']}}</span>
+		                                        <input type="hidden" name="uphone" value="{{$v['phone']}}">
+												<span class="buy-phone mybuy-phone">{{$v['phone']}}</span>
 												</span>
 											</p>
 										</div>
+										@endforeach
 									</div>
 
 									<div id="holyshit269" class="submitOrder">
 										<div class="go-btn-wrap">
 										<div class="button">
-											<a id="J_Go" href="javascript:;" class="btn-go" tabindex="0" title="点击此按钮，提交订单">提交订单</a>
+										    <button type="submit" class="btn btn-warning" style="font-size: 18px">提交订单</butto>
 										<div>
 										</div>
 									</div>
@@ -768,6 +772,7 @@
 				</div>
 				<div class="footer">
 
+			</form>
 				</div>
 			</div>
 			<div class="theme-popover-mask"></div>
@@ -1475,84 +1480,12 @@
 		$('#test').val('');
    })
 
-    //初始化地址表单默认值
-    var uname = false;
-    var uphone = false;
-    var address = false;
-    var pro = false;
-    var city = false;
-    var area = false;
-
-    $('input[name="uname"]').blur(function () {
-    	var val = $('input[name="uname"]').val();
-    	if (val) {
-    		uname = true;
-    	}
-    })
-
-    $('input[name="uphone"]').blur(function () {
-    	var val = $('input[name="uphone"]').val();
-    	if ( (/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/).test(val) ) {
-    		uphone = true;
-    	}
-    })
-
-    $('#pro').change(function () {
-    	var val = $('#pro').val();
-    	if (val) {
-    		pro = true;
-    	}
-    })
-
-    $('#city').change(function () {
-    	var val = $('#city').val();
-    	if (val) {
-    		city = true;
-    	}
-    })
-
-    $('#area').change(function () {
-    	var val = $('#area').val();
-    	if (val) {
-    		area = true;
-    	}
-    })
-
-
-    $('#user-intro').blur(function () {
-    	var val = $('#user-intro').val();
-    	if (val) {
-    		address = true;
-    	}
-    })
-
     $('#add').submit(function () {
-        if (!uname) {
-        	alert('收货人名字不能为空')
-        	return false;
-        } else if (!uphone) {
-        	alert('输入正确手机格式');
-        	return false;
-        } else if (!pro) {
-        	alert('省份不能为空');
-        	return false;
-        } else if (!city) {
-        	alert('城市不能为空');
-        	return false;
-        } else if (!area) {
-        	alert('区/县不能为空');
-        	return false;
-        } else if (!address) {
-        	alert('详细地址不能为空');
-        	return false;
-        } else {
-
 	       	$('.theme-popover-mask').css('display', 'none');
 	       	$('.theme-popover').css('display', 'none');
 	       	$('body').css('overflow', 'visible');
 	       	$('.theme-popover').css('overflow', 'visible');
             return true;
-        }
     })
 
     //三级联动地址选择
@@ -1761,34 +1694,18 @@
 			dataType: 'json',
 		})	
 	}
-   showChange() 
+   showChange()
+
 	//提交订单
-	$('.btn-go').click(function () {
+	$('#add').submit(function () {
 
-		var pro = $('.province').html();
-		var city = $('.city').html();
-		var dist = $('.dist').html();
-		var street = $('.street').html();
-		var name = $('.buy-user').html();
-		var phone = $('.buy-phone').html();
-		var sum = $('#J_ActualFee').html();
-
-		var address = pro+city+dist+street;
-
+		var pro = $('.myprovince').html();
 		if(pro == '') {
 			alert('请选择地址');
-			return;
+			return false;
+		} else {
+			return true;
 		}
-
-		$.ajax({
-			type : 'post',
-			data : 'sum='+sum+'&name='+name+'&phone='+phone+'&address='+address+'&_token={{csrf_token()}}',
-			url  : '{{url("/order/add")}}',
-			success:function(data) {
-				 window.location.href = '{{url("/order/success")}}';
-			},
-			dataType:'json',
-		});
 	})
    </script>
    </body>

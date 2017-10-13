@@ -20,9 +20,10 @@ class CreateOrderDetail extends Migration
             $table->integer('uid');
             $table->string('address');
             $table->integer('addtime')->unsigned();
+            $table->integer('tpeicr')->unsigned();
             $table->string('name');
             $table->string('phone');
-            $table->string('comment')->nullable();
+            $table->string('text')->nullable();
             $table->integer('status')->unsigned()->default(0);
             $table->integer('back_status')->unsigned()->default(0);
             $table->timestamps();
