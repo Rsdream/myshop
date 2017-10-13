@@ -57,9 +57,7 @@ class ForgetController extends Controller
 	    } else {
 	    	$request->session()->flash('erro', '修改密码失败!');
 	    	return back();
-	    }
-	    
-	    
+	    }    
 	}
 
     //返回值封装

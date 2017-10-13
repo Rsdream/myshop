@@ -85,7 +85,7 @@
 								    <span>购物车内暂时没有商品，登录后将显示您之前加入的商品</span><br>
 								    <span><a href="" style="color:red">登录</a></span>&nbsp;&nbsp;&nbsp;<span><a  href="" style="color:orange;">购物》</a></span>
 								</div>
-									<form action="{{url('/order')}}" method="post" id="cart" style="display: none;">
+									<form action="{{url('/order')}}" method="get" id="cart" style="display: none;">
 									    {{ csrf_field() }}
 										<table class="shop_table shop_table_responsive cart" cellspacing="0">
 											<thead>
@@ -456,30 +456,6 @@
     	$(obj).parent().parent().remove();
     }
 
-    //结算
-    // $('#settle').click(function () {
-    // 	var judge = true;
-    //    	$('input[name="like[]"]').each(function (i) {
-    //    		//选中清除
-    //    	    if ($(this).prop('checked')) {
-    //    	     var id= $(this).val();
-    //    	     settle(id);
-    //    	     judge = false;
-    //    	    }
-    //    	});
-
-    //    	if (judge) {
-    //    		alert('请选择购买商品');
-    //    	}
-
-    //    	function settle(id) {
-	   //     	$.ajax({
-	   //  		type : 'get',
-	   //  		data : 'id='+id+'&_token={{csrf_token()}}',
-	   //  		url  : '{{url("/order")}}',
-	   //  	});
-    //    	}
-    // });
 
    </script>
 

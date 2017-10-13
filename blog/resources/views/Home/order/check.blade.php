@@ -1710,6 +1710,7 @@
 
 	}
 
+	//提交订单
 	$('.btn-go').click(function () {
 
 		var pro = $('.province').html();
@@ -1730,7 +1731,7 @@
 		$.ajax({
 			type : 'post',
 			data : 'sum='+sum+'&name='+name+'&phone='+phone+'&address='+address+'&_token={{csrf_token()}}',
-			url  : '{{url("order/add")}}',
+			url  : '{{url("/order/add")}}',
 			success:function(data) {
 				 window.location.href = '{{url("/order/success")}}';
 			},

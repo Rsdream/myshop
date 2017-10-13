@@ -37,7 +37,7 @@ class OrderController extends Controller
 
     //提交订单
     public function add(Request $request)
-    {
+    {dd(1);
         $name = $request->input('name');
         $phone = $request->input('phone');
         $address = $request->input('address');

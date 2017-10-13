@@ -78,8 +78,7 @@
 
     <!--判断用户名，手机号不存在，密码错误返回值，在页面显示错误提示-->
     @if(!empty(session('erro')))
-        <div class="alert alert-danger alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align: center">
-            {{session('erro')}}</div>
+        <div class="alert alert-danger alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align: center"> {{session('erro')}}</div>
     @endif
 
     <!--登录注册成功提示-->
@@ -87,14 +86,15 @@
         <div class="alert alert-success alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align:center">
         {{session('success')}}</div>
             <script type="text/javascript">
-                    setTimeout(function () {
-        	            $('.alter-register-tip').remove();
+                //3秒后清除提示样式
+                setTimeout(function () {
+        	        $('.alter-register-tip').remove();
         	            window.location.replace("{{url('/')}}");
                     },3000);
             </script>
     @endif
 
-    <!--表单验证-->
+    <!--表单验证错误提示-->
     @if ($errors->any())
         <div class="alert alert-danger" style="position: relative;z-index: 2;width: 100%;height: auto;text-align:center">
             @foreach($errors->all() as $error)
@@ -157,7 +157,9 @@
 														   <span></span>
 														</div>
 												</div>
-												<div id="forget" sclass="col-md-12" style="float:right;color:orange;cursor: pointer;"><a href="{{url('/forget')}}">?忘记密码</a></div>
+												<div id="forget" class="col-md-12" style="float:right;color:orange;cursor: pointer;">
+												    <div ><a href="{{url('/forget')}}">?忘记密码</a></div>
+												</div>
 												<div class="row form-group">
 													<div class="col-md-12">
 														<input type="submit" class="btn btn-primary col-md-12" value="登录">
@@ -246,6 +248,12 @@
 													    <div class="my-ucode col-md-12" >
 														   <span></span>
 														</div>
+												</div>
+												<div id="forget" class="col-md-12" style="float:right;color:orange;cursor: pointer;">
+												    <div class="col-md-8"><input type="checkbox" name="check" checked ><span style="color:black;font-size: 15px">服务条款</span></div>
+												</div>
+												<div class="my-check col-md-12" >
+														   <span></span>
 												</div>
 												<div class="row form-group">
 													<div class="col-md-12">
@@ -632,366 +640,345 @@
 
 	<script type="text/javascript">
 
-	    //初始化字段值
-	    var username = false;
-	    var userpass = false
-	    var uname = false;
-	    var upass = false;
-	    var repeatpass = false;
-	    var uphone = false;
-	    var phonecode = false;
-	    var ucode = false;
+	//初始化字段值
+	var username = false;
+	var userpass = false
+	var uname = false;
+	var upass = false;
+	var repeatpass = false;
+	var uphone = false;
+	var phonecode = false;
+	var ucode = false;
+	var check = false;
 
 
 
-        //用户名判断
-        $('input[name="uname"]').on('focus', function () {
-        	var type = 'uname';
-        	var match = /^[a-zA-Z0-9\u4E00-\u9FA5]{2,20}$/;
-        	var array = [
-        	    '支持中文、字母、数字、"_"组合，2-20个字符',
-        	    '必须是中文、字母、数字、"_"组合，2-20个字符',
-        	]
-        	var test = false;
-        	var flat = false;
-        	var status = 1000;
+   //用户名判断
+   $('input[name="uname"]').on('focus', function () {
+    var type = 'uname';
+    var match = /^[a-zA-Z0-9\u4E00-\u9FA5]{2,20}$/;
+    var array = [
+        '支持中文、字母、数字、"_"组合，2-20个字符',
+        '必须是中文、字母、数字、"_"组合，2-20个字符',
+    ]
+    var test = false;
+    var flat = false;
+    var status = 1000;
 
-        	varildate (type, array, test, flat, match, status);
+    varildate (type, array, test, flat, match, status);
 
-        });
+   });
 
-        //密码判断
-        $('input[name="upass"]').on('focus', function () {
+    //密码判断
+    $('input[name="upass"]').on('focus', function () {
+     var type = 'upass';
+     var match = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+     var array = [
+        	'建议字母、数字2种字符组合，6-20个字符',
+        	'不能是纯字母、数字组合，6-20个字符',
+     ]
+     var test = false;
+     var flat = true;
+     varildate (type, array, test, flat, match);
+    });
 
-        	var type = 'upass';
+    //确认密码判断
+    $('input[name="repeatpass"]').on('focus', function () {
 
-        	var match = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+    //获取焦点时给出提示
+    $('.my-repeatpass').html('<span>请再次输入密码</span>');
+        $('#repeatpass').css('display','none');
+        $('input[name="repeatpass"]').css('border','2px solid #E4E4E4');
+    }).on('blur', function (){
 
-        	var array = [
-        	    '建议字母、数字2种字符组合，6-20个字符',
-        	    '不能是纯字母、数字组合，6-20个字符',
-        	]
+		//失去焦点时判断
+		repeatpass = $('input[name="repeatpass"]').val();
+		upass = $('input[name="upass"]').val();console.log()
+	    if (repeatpass == '') {
 
-        	var test = false;
-        	var flat = true;
-        	varildate (type, array, test, flat, match);
-        });
+	    	//值为空时隐藏提示
+	    	$('.my-repeatpass').html('');
+	    } else if (repeatpass != upass) {
 
-       //确认密码判断
-        $('input[name="repeatpass"]').on('focus', function () {
+	    	//判断密码是否一致
+	    	$('.my-repeatpass').html('<span style="color:red">请输入一致的密码</span>');
+	    	$('input[name="repeatpass"]').css('border','2px solid red')
+	    } else {
 
-        	//获取焦点时给出提示
-        	$('.my-repeatpass').html('<span>请再次输入密码</span>');
-            $('#repeatpass').css('display','none');
-            $('input[name="repeatpass"]').css('border','2px solid #E4E4E4');
-        }).on('blur', function (){
+	    	//验证通过
+	     	$('.my-repeatpass').html('');
+	     	$('#repeatpass').css('display','block');
+	    }
+	})
 
-        	//失去焦点时判断
-        	repeatpass = $('input[name="repeatpass"]').val();
-        	upass = $('input[name="upass"]').val();console.log()
-            if (repeatpass == '') {
+    //手机号判断
+    $('input[name="uphone"]').on('focus', function () {
+    	var type = 'uphone';
+    	var match = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
+    	var array = [
+    	    '请输入手机号',
+    	    '手机号格式不正确',
+    	]
+    	var test = false;
+    	var flat = false;
+    	var status = 1001;
+    	varildate (type, array, test, flat, match, status);
+    });
 
-            	//值为空时隐藏提示
-            	$('.my-repeatpass').html('');
-            } else if (repeatpass != upass) {
+    //手机验证码判断
+    $('input[name="phonecode"]').on('focus', function () {
+    	var type = 'phonecode';
+    	var match = /[0-9]/;
+    	var array = [
+    	    '请输入手机号',
+    	    '请输入4位有效数字',
+    	];
+    	var test = false;
+    	var flat = true;
+    	varildate (type, array, test, flat, match);
+    });
 
-            	//判断密码是否一致
-            	$('.my-repeatpass').html('<span style="color:red">请输入一致的密码</span>');
-            	$('input[name="repeatpass"]').css('border','2px solid red')
-            } else {
+    //获取手机验证码
+     function makePhoneCode() {
+     	phoneTime(60);
+    	var  uphone = $('input[name="uphone"]').val();
+    	if (uphone == '') {
+    		dotest('uphone', '请先输入手机号！', 'red');
+    	} else {
+    		$.ajax({
+    			type : 'post',
+    			url  : "{{url('/phonecode')}}",
+    			data : 'uphone='+uphone+'&_token={{csrf_token()}}',
+    			success:function(data) {
+    				if (data.status == 1200) {
+    					dotest('phonecode',data.msg,'red');
+    				}
+    			},
+    			dataType: 'json'
+    		});
+    	}
+    }
 
-            	//验证通过
-             	$('.my-repeatpass').html('');
-             	$('#repeatpass').css('display','block');
+    //验证码判断
+    $('input[name="ucode"]').on('focus', function () {
+    	var type = 'ucode';
+    	var match = /[0-9A-Za-z]/
+    	var array = [
+    	    '请输入验证码',
+    	    '看清楚？',
+    	]
+    	var test = false;
+    	var flat = true;
+    	varildate (type, array, test, flat, match);
+    });
+
+    //登录判断
+    //用户名是否存在
+    $('input[name="username"]').on('focus', function () {
+    	var type = 'username';
+    	var match = /^[a-zA-Z0-9\u4E00-\u9FA5]{2,20}$/;
+    	var array = [
+    	    '请输入用户名',
+    	    '非法名字',
+    	]
+    	var flat = false;
+    	var test = false;
+    	var status = 1002;
+    	varildate (type, array, test, flat, match, status);
+    });
+
+    //密碼判斷
+    $('input[name="userpass"]').on('focus', function () {
+    	var type = 'userpass';
+    	var match = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+    	var array = [
+    	    '请输入密碼',
+    	    '密码格式错误',
+    	]
+    	var test = false;
+    	var flat = true;
+    	varildate (type, array, test, flat, match);
+    });
+
+    //验证是否同意服务条款
+    $('input[name="check"]').change(function () {
+    	if ($('input[name="check"]').prop('checked')) {
+    		check = false;
+    	} else {
+    		check = true;
+    	}
+    });
+
+    //注册提交时验证
+    $("#doregister").submit(function() {
+    	if(!uname) {
+    		dotest('uname', '请输入用户名！', 'red');
+    		return false;
+    	} else if (!upass) {
+    		dotest('upass', '请输入密码！', 'red');
+    		return false;
+    	} else if (!repeatpass) {
+    		dotest('repeatpass', '请输入密码！', 'red');
+    		return false;
+    	} else if (!uphone) {
+    		dotest('uphone', '请输入手机号！', 'red');
+    		return false;
+    	} else if (!phonecode) {
+    		dotest('phonecode', '请输入手机验证码！', 'red');
+    		return false;
+    	} else if (!ucode) {
+    		dotest('ucode', '请先输入验证码！', 'red');
+    		return false;
+    	} else if (check) {
+    		dotest('check', '请同意条款！', 'red');
+    		return false;
+    	} else {
+    		return true;
+    	}
+    });
+    
+    //登录时验证值
+    $("#dologin").submit(function(){
+    	if(!username) {
+    		dotest('username', '请先输入用户名！', 'red');
+    		return false;
+    	} else if (!userpass) {
+    		dotest('userpass', '请先输入密码！', 'red');
+    		return false;
+    	} else {
+    		return true;
+    	}
+	});
+
+    /**
+     * 错误提示
+     * @param  {string} name   [字段名]
+     * @param  {string} str    [提示内容]
+     * @param  {string} color  [颜色：定义一个red类为红色，默认为#E4E4E4]
+     */
+    function dotest(name, str, color='#E4E4E4') {
+
+    	//获得焦点给出格式提示
+        $('input[name="'+name+'"]').css('border','2px solid '+color);
+
+        //清除成功提示
+        $('#'+name).css('display', 'none');
+
+        //给边框颜色，三元运算符：ture为红色，false为#E4E4E4
+    	$('.my-'+name).html(color=='red'?'<span class="'+color+' glyphicon glyphicon-minus-sign">'+str+'</span>':'<span class="'+color+'">'+str+'</span>');
+
+        $('input[name="'+name+'"]').on('blur', function (){
+
+    	    //失去焦点获取字段值
+    	    value = $('input[name="'+name+'"]').val();
+            if (value == '') {
+
+                //字段值为空清除提示
+                $('.my-'+name).html('');
             }
         })
+    }
 
-        //手机号判断
-        $('input[name="uphone"]').on('focus', function () {
-        	var type = 'uphone';
-        	var match = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
-        	var array = [
-        	    '请输入手机号',
-        	    '手机号格式不正确',
-        	]
-        	var test = false;
-        	var flat = false;
-        	var status = 1001;
-        	varildate (type, array, test, flat, match, status);
-        });
+    /**
+     * 注册登录，提示，正则，ajax封装
+     * @param  {string}  type   [字段名（input中name的名字）]
+     * @param  {array}   array  [0=>'格式提示内容',1=>'正则错误提示内容']
+     * @param  {Boolean} test   [控制正则判断是否运行,true为禁用状态,反之]
+     * @param  {Boolean} flat   [控制ajax是否运行,true为禁用状态,反之]
+     * @param  {String}  match  [正则规则]
+     * @param  {String}  status [错误类型状态码]
+     * @return {bool}           [全部验证通过返回ture,反之false]
+     */
+    function varildate (type, array, test=true, flat=true, match='', status='') {
+    	//获取焦点时
+    	//给出格式提示
+    	$('.my-'+type).html('<span>'+array[0]+'</span>');
+    	$('input[name="'+type+'"]').css('border','2px solid #E4E4E4');
+    	$('#'+type).css('display', 'none'); //清除成功时提示
+        $('input[name="'+type+'"]').on('blur', function () {
+        	//失去焦点时
+        	//获取用户输入数据
+        	var myname = $('input[name="'+type+'"]').val();
+        	$('#'+type).css('display','none');
+        	//清除格式提示
+        	$('.my-'+type).html('');
 
-        //手机验证码判断
-        $('input[name="phonecode"]').on('focus', function () {
-        	var type = 'phonecode';
-        	var match = /[0-9]/;
-        	var array = [
-        	    '请输入手机号',
-        	    '请输入4位有效数字',
-        	];
-        	var test = false;
-        	var flat = true;
-        	varildate (type, array, test, flat, match);
-        });
-
-        //获取手机验证码
-         function makePhoneCode() {
-         	phoneTime(60);
-        	var  uphone = $('input[name="uphone"]').val();
-        	if (uphone == '') {
-        		dotest('uphone', '请先输入手机号！', 'red');
-        	} else {
-        		$.ajax({
-        			type : 'post',
-        			url  : "{{url('/phonecode')}}",
-        			data : 'uphone='+uphone+'&_token={{csrf_token()}}',
-        			success:function(data) {
-        				if (data.status == 1200) {
-        					dotest('phonecode',data.msg,'red');
-        				}
-        			},
-        			dataType: 'json'
-        		});
-
-        	}
-        }
-
-        //验证码判断
-        $('input[name="ucode"]').on('focus', function () {
-        	var type = 'ucode';
-        	var match = /[0-9A-Za-z]/
-        	var array = [
-        	    '请输入验证码',
-        	    '看清楚？',
-        	]
-        	var test = false;
-        	var flat = true;
-        	varildate (type, array, test, flat, match);
-        });
-
-
-
-        //登录判断
-        //用户名是否存在
-        $('input[name="username"]').on('focus', function () {
-        	var type = 'username';
-        	var match = /^[a-zA-Z0-9\u4E00-\u9FA5]{2,20}$/;
-        	var array = [
-        	    '请输入用户名',
-        	    '非法名字',
-        	]
-        	var flat = false;
-        	var test = false;
-        	var status = 1002;
-        	varildate (type, array, test, flat, match, status);
-        });
-
-        //密碼判斷
-        $('input[name="userpass"]').on('focus', function () {
-        	var type = 'userpass';
-        	var match = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
-        	var array = [
-        	    '请输入密碼',
-        	    '密码格式错误',
-        	]
-        	var test = false;
-        	var flat = true;
-        	varildate (type, array, test, flat, match);
-        });
-
-        //注册提交时验证
-        $("#doregister").submit(function() {
-        	if(!uname) {
-        		dotest('uname', '请输入用户名！', 'red');
-        		return false;
-        	} else if (!upass) {
-        		dotest('upass', '请输入密码！', 'red');
-        		return false;
-        	} else if (!repeatpass) {
-        		dotest('repeatpass', '请输入密码！', 'red');
-        		return false;
-        	} else if (!uphone) {
-        		dotest('uphone', '请输入手机号！', 'red');
-        		return false;
-        	} else if (!phonecode) {
-        		dotest('phonecode', '请输入手机验证码！', 'red');
-        		return false;
-        	} else if (!ucode) {
-        		dotest('ucode', '请先输入验证码！', 'red');
-        		return false;
-        	} else {
-        		return true;
+        	if (myname == '') {
+        		//值为空把获取焦点时给出的格式提示和成功提示清除
+        		$('.my-'+type).html('');
+        		$('#'+type).css('display','none');
         	}
 
-		});
-
-
-        //登录时验证值
-        $("#dologin").submit(function(){
-        	if(!username) {
-        		dotest('username', '请先输入用户名！', 'red');
-        		return false;
-        	} else if (!userpass) {
-        		dotest('userpass', '请先输入密码！', 'red');
-        		return false;
-        	} else {
-        		return true;
+            //test=false并且字段值不为空执行正则判断
+        	if (!test && myname != '') {
+        	    //用户名正则判断
+        	    $('#'+type).css('display','none');
+        		//不符合正则判断，给出错误提示,红边框
+        		if ( !(match).test(myname) ) {
+        			$('.my-'+type).html('<span class="red glyphicon glyphicon-minus-sign">'+array[1]+'</span>');
+        			$('input[name="'+type+'"]').css('border','2px solid red');
+        			return;
+        		}
         	}
-		});
 
-        /**
-         * 提示封装
-         * @param  {string} name   [字段名]
-         * @param  {string} str    [提示内容]
-         * @param  {string} color  [颜色：定义一个red类为红色，默认为#E4E4E4]
-         */
-        function dotest(name, str, color='#E4E4E4') {
-
-        	//获得焦点给出格式提示
-            $('input[name="'+name+'"]').css('border','2px solid '+color);
-
-            //清除成功提示
-            $('#'+name).css('display', 'none');
-
-            //给边框颜色，三元运算符：ture为红色，false为#E4E4E4
-        	$('.my-'+name).html(color=='red'?'<span class="'+color+' glyphicon glyphicon-minus-sign">'+str+'</span>':'<span class="'+color+'">'+str+'</span>');
-
-            $('input[name="'+name+'"]').on('blur', function (){
-
-        	    //失去焦点获取字段值
-        	    value = $('input[name="'+name+'"]').val();
-                if (value == '') {
-
-                    //字段值为空清除提示
-                    $('.my-'+name).html('');
-                }
-            })
-        }
-
-        /**
-         * 注册登录，提示，正则，ajax封装
-         * @param  {string}  type   [字段名（input中name的名字）]
-         * @param  {array}   array  [0=>'格式提示内容',1=>'正则错误提示内容']
-         * @param  {Boolean} test   [控制正则判断是否运行,true为禁用状态,反之]
-         * @param  {Boolean} flat   [控制ajax是否运行,true为禁用状态,反之]
-         * @param  {String}  match  [正则规则]
-         * @param  {String}  status [错误类型状态码]
-         * @return {bool}           [全部验证通过返回ture,反之false]
-         */
-        function varildate (type, array, test=true, flat=true, match='', status='') {
-
-	        	//获取焦点时
-	        	//给出格式提示
-	        	$('.my-'+type).html('<span>'+array[0]+'</span>');
-
-	        	//默认input边框颜色
-	        	$('input[name="'+type+'"]').css('border','2px solid #E4E4E4');
-
-	        	//清除成功时提示
-	        	$('#'+type).css('display', 'none');
-
-	        $('input[name="'+type+'"]').on('blur', function () {
-
-	        	//失去焦点时
-	        	//获取用户输入数据
-	        	var myname = $('input[name="'+type+'"]').val();
-	        	$('#'+type).css('display','none');
-
-	        	//清除格式提示
-	        	$('.my-'+type).html('');
-
-	        	if (myname == '') {
-
-	        		//值为空把获取焦点时给出的格式提示和成功提示清除
-	        		$('.my-'+type).html('');
-	        		$('#'+type).css('display','none');
-	        	}
-
-                //test=false并且字段值不为空执行正则判断
-	        	if (!test && myname != '') {
-
-	        	    //用户名正则判断
-	        	    $('#'+type).css('display','none');
-
-	        		//不符合正则判断，给出错误提示,红边框
-	        		if ( !(match).test(myname) ) {
-	        			$('.my-'+type).html('<span class="red glyphicon glyphicon-minus-sign">'+array[1]+'</span>');
-	        			$('input[name="'+type+'"]').css('border','2px solid red');
-	        			return;
+            //flat=false并且字段值不为空执行ajax
+        	if(!flat && myname != ''){
+        		//清除样式
+        		$('#'+type).css('display','none');
+	        	$.ajax({
+	        		type : 'post',
+	        		url  : "{{url('/existence')}}",
+	        		data : type+'='+myname+'&_token={{csrf_token()}}',
+	        		success:function(data) {
+	        			//返回状态码
+	        			if (data.status == status) {
+	        				//根据状态码给出错误信息提示
+	        				$('.my-'+type).html('<span class="red glyphicon glyphicon-minus-sign">'+data.msg+'</span>');
+	        			    $('input[name="'+type+'"]').css('border','2px solid red');
+	        			} else {
+	        				//验证通过
+	        				$('#'+type).css('display','block');
+	        				//改变字段名初始化的值
+	        				eval(type +'='+ true);
+	        				return;
+	        			}
 	        		}
-	        	}
+	        	});
+        	}
 
-	            //flat=false并且字段值不为空执行ajax
-	        	if(!flat && myname != ''){
+        	//input 值不为空 同时禁用ajax才运行
+        	if (myname != '' && flat == true) {
+        		//验证通过，给出成功提示，同时清除格式提示和红边框
+        	    $('#'+type).css('display','block');
+                $('.my-'+type).html('');
+                $('input[name="'+type+'"]').css('border','2px solid #E4E4E4');
+                //改变字段名初始化的值
+                eval(type +'='+ true);
+                return;
+        	}
+        })
+    }
 
-	        		//清除样式
-	        		$('#'+type).css('display','none');
-		        	$.ajax({
-		        		type : 'post',
-		        		url  : "{{url('/existence')}}",
-		        		data : type+'='+myname+'&_token={{csrf_token()}}',
-		        		success:function(data) {
+    //获取手机验证码时定时器
+    function phoneTime (time) {
+    	//设置周期定时器
+    	var id = setInterval(function () {
+    		//自减
+    		time--;
+    		//倒计时提示
+    		$('#my-phonecode').html('<span style="font-size: 17px;line-height: 40px">稍等('+time+')秒</spna>');
+    		//禁用click事件
+    		$('#my-phonecode').removeAttr("onclick");
 
-		        			//返回状态码
-		        			if (data.status == status) {
-
-		        				//根据状态码给出错误信息提示
-		        				$('.my-'+type).html('<span class="red glyphicon glyphicon-minus-sign">'+data.msg+'</span>');
-		        			    $('input[name="'+type+'"]').css('border','2px solid red');
-
-		        			} else {
-
-		        				//验证通过
-		        				$('#'+type).css('display','block');
-
-		        				//改变字段名初始化的值
-		        				eval(type +'='+ true);
-		        				return;
-		        			}
-		        		}
-		        	});
-	        	}
-
-	        	//input 值不为空 同时禁用ajax才运行
-	        	if (myname != '' && flat == true) {
-
-	        		//验证通过，给出成功提示，同时清除格式提示和红边框
-	        	    $('#'+type).css('display','block');
-	                $('.my-'+type).html('');
-	                $('input[name="'+type+'"]').css('border','2px solid #E4E4E4');
-
-	                //改变字段名初始化的值
-	                eval(type +'='+ true);
-	                return;
-	        	}
-	        })
-        }
-
-
-        //获取手机验证码时定时器
-        function phoneTime (time) {
-
-        	//设置周期定时器
-        	var id = setInterval(function () {
-
-        		//自减
-        		time--;
-
-        		//倒计时提示
-        		$('#my-phonecode').html('<span style="font-size: 17px;line-height: 40px">稍等('+time+')秒</spna>');
-
-        		//禁用click事件
-        		$('#my-phonecode').removeAttr("onclick");
-        		    if(time <= 0) {
-
-        		    	//time = 0时清除定时器
-        		        clearInterval(id);
-
-        		        //还原样式和事件
-        		        $('#my-phonecode').html('<span style="font-size: 17px;line-height: 40px">获取验证码</spna>');
-        		        $('#my-phonecode').attr("onclick","makePhoneCode();");
-        	        }
-        	},1000);
-        }
+    		    if(time <= 0) {
+    		    	//time = 0时清除定时器
+    		        clearInterval(id);
+    		        //还原样式和事件
+    		        $('#my-phonecode').html('<span style="font-size: 17px;line-height: 40px">获取验证码</spna>');
+    		        $('#my-phonecode').attr("onclick","makePhoneCode();");
+    	        }
+    	},1000);
+    }
 	</script>
 </body>
 </html>

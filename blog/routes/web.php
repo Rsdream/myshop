@@ -244,7 +244,7 @@ Route::prefix('/cart')->group(function () {
 //订单资源路由
 Route::prefix('/order')->group(function () {
     //结算页面
-    Route::post('/', 'Home\OrderController@check');
+    Route::get('/', 'Home\OrderController@check');
 
     //提交订单
     Route::post('/add', 'Home\OrderController@add');

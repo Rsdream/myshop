@@ -35,6 +35,8 @@ class RegisterRequest extends FormRequest
             'phonecode' => 'bail|required',
 
             'ucode' => 'bail|required|alpha_num',
+
+            'check' => 'accepted',
         ];
     }
 
@@ -61,6 +63,8 @@ class RegisterRequest extends FormRequest
 
            'ucode.required' => '验证码不能为空',
            'ucode.alpha_num' => '字段必须完全是字母、数字',
+
+           'check.accepted' => '请同意条款',
         ];
     }
 }
