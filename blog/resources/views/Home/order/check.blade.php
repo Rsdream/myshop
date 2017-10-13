@@ -654,8 +654,7 @@
 												</li>
 												<li class="td td-info">
 													<div class="item-props">
-														<span class="sku-line">颜色：12#川南玛瑙</span>
-														<span class="sku-line">包装：裸装</span>
+														<span class="sku-line">配置:{{$v['setmeal']}}</span>
 													</div>
 												</li>
 												<li class="td td-price">
@@ -783,6 +782,7 @@
 				<div class="am-u-md-12" id="show">
 					<form class="am-form am-form-horizontal" id="add" action="{{url('/address/add')}}" method="post">
 					    {{csrf_field()}}
+					    <input type="hidden" id="test" name="id" >
 						<div class="am-form-group">
 							<label for="user-name" class="am-form-label">收货人</label>
 							<div class="am-form-content">
@@ -815,7 +815,7 @@
 						<div class="am-form-group">
 							<label for="user-intro" class="am-form-label">详细地址</label>
 							<div class="am-form-content">
-								<textarea class="" rows="3" id="user-intro" name="address" placeholder="输入详细地址" required=""></textarea>
+								<textarea class="" rows="3" id="user-comment" name="address" placeholder="输入详细地址" required=""></textarea>
 								<small>100字以内写出你的详细地址...</small>
 							</div>
 						</div>
@@ -1281,7 +1281,9 @@
 			</div>
 		</footer>
 	</div>
+	<script type="text/javascript">
 
+	</script>
 	<!-- DIALOGS -->
 	<div class="modal fade" id="search_form" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog block-popup-search-form">
@@ -1463,86 +1465,94 @@
    </script>
 
    <script type="text/javascript">
-
+   $('.tc-btn').click(function () {
+				$('#user-name').val('');
+				$('#user-phone').val('');
+				$('#user-comment').val('');
+				$('#pro').val('');
+				$('#city').val('');
+				$('#area').val('');
+				$('#test').val('');
+   })
 
     //初始化地址表单默认值
-    var uname = false;
-    var uphone = false;
-    var address = false;
-    var pro = false;
-    var city = false;
-    var area = false;
+    // var uname = false;
+    // var uphone = false;
+    // var address = false;
+    // var pro = false;
+    // var city = false;
+    // var area = false;
 
-    $('input[name="uname"]').blur(function () {
-    	var val = $('input[name="uname"]').val();
-    	if (val) {
-    		uname = true;
-    	}
-    })    
+    // $('input[name="uname"]').blur(function () {
+    // 	var val = $('input[name="uname"]').val();
+    // 	if (val) {
+    // 		uname = true;
+    // 	}
+    // })    
 
-    $('input[name="uphone"]').blur(function () {
-    	var val = $('input[name="uphone"]').val();
-    	if ( (/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/).test(val) ) {
-    		uphone = true;
-    	}
-    })
+    // $('input[name="uphone"]').blur(function () {
+    // 	var val = $('input[name="uphone"]').val();
+    // 	if ( (/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/).test(val) ) {
+    // 		uphone = true;
+    // 	}
+    // })
 
-    $('#pro').change(function () {
-    	var val = $('#pro').val();
-    	if (val) {
-    		pro = true;
-    	}
-    })     
+    // $('#pro').change(function () {
+    // 	var val = $('#pro').val();
+    // 	if (val) {
+    // 		pro = true;
+    // 	}
+    // })     
 
-    $('#city').change(function () {
-    	var val = $('#city').val();
-    	if (val) {
-    		city = true;
-    	}
-    })     
+    // $('#city').change(function () {
+    // 	var val = $('#city').val();
+    // 	if (val) {
+    // 		city = true;
+    // 	}
+    // })     
 
-    $('#area').change(function () {
-    	var val = $('#area').val();
-    	if (val) {
-    		area = true;
-    	}
-    })    
+    // $('#area').change(function () {
+    // 	var val = $('#area').val();
+    // 	if (val) {
+    // 		area = true;
+    // 	}
+    // })    
 
    
 
-    $('#user-intro').blur(function () {
-    	var val = $('#user-intro').val();
-    	if (val) {
-    		address = true;
-    	}
-    })   
+    // $('#user-intro').blur(function () {
+    // 	var val = $('#user-intro').val();
+    // 	if (val) {
+    // 		address = true;
+    // 	}
+    // })   
 
     $('#add').submit(function () {
-        if (!uname) {
-        	alert('收货人名字不能为空')
-        	return false;
-        } else if (!uphone) {
-        	alert('输入正确手机格式');
-        	return false;
-        } else if (!pro) {
-        	alert('省份不能为空');
-        	return false;        
-        } else if (!city) {
-        	alert('城市不能为空');
-        	return false;        
-        } else if (!area) {
-        	alert('区/县不能为空');
-        	return false;        
-        } else if (!address) {
-        	alert('详细地址不能为空');
-        	return false;
-        } else {
+        // if (!uname) {
+        // 	alert('收货人名字不能为空')
+        // 	return false;
+        // } else if (!uphone) {
+        // 	alert('输入正确手机格式');
+        // 	return false;
+        // } else if (!pro) {
+        // 	alert('省份不能为空');
+        // 	return false;        
+        // } else if (!city) {
+        // 	alert('城市不能为空');
+        // 	return false;        
+        // } else if (!area) {
+        // 	alert('区/县不能为空');
+        // 	return false;        
+        // } else if (!address) {
+        // 	alert('详细地址不能为空');
+        // 	return false;
+        // } else {
 	       	$('.theme-popover-mask').css('display', 'none');
 	       	$('.theme-popover').css('display', 'none');
 	       	$('body').css('overflow', 'visible');
 	       	$('.theme-popover').css('overflow', 'visible');
             return true;
-        }
+        // }
     })
 
     //三级联动地址选择
@@ -1610,8 +1620,21 @@
 			success:function(data) {
 				str = '';
 				for (var i = 0; i < data.length; i++) {
+					if (data[i].status == 0) {
+						var d = 'user-addresslist';
+						var span = 'display:block';
+					} else {
+						var span = 'display:none';
+
+					}
+					if (data[i].status == 1) {
+						var d = 'user-addresslist defaultAddr';
+						var box = 'display:black';
+					} else {
+						var box = 'display:none';
+					}
 					str += `<div class="per-border"></div>
-							<li class="user-addresslist mybox">
+							<li class="`+d+` mybox">
 
 								<div class="address-left">
 									<div class="user DefaultAddr">
@@ -1633,7 +1656,7 @@
 										</span>
 									</div>
 
-									<ins class="deftip" style="display:none">默认地址</ins>
+									<ins class="deftip" style="`+box+`">默认地址</ins>
 
 								</div>
 								<div class="address-right">
@@ -1643,9 +1666,9 @@
 								<div class="clear"></div>
 
 								<div class="new-addr-btn" atr="`+data[i].id+`">
-									<a href="javascript:;" onclick="change(this)" class="default" style="display:block">设为默认</a>
+									<a href="javascript:;" onclick="change(this, id=`+data[i].id+`)" class="default" style="`+span+`">设为默认</a>
 									<span class="new-addr-bar hidden">|</span>
-									<a href="javascript:;" onclick="update(this);">编辑</a>
+									<a href="javascript:;" onclick="update(this, id=`+data[i].id+`);">编辑</a>
 									<span class="new-addr-bar">|</span>
 									<a href="javascript:void(0);"  onclick="del(this);">删除</a>
 								</div>
@@ -1677,15 +1700,30 @@
 	}
 
 	//编辑地址
-	function update(obj) {
+	function update(obj, id) {
 	    $('.theme-popover-mask').css('display', 'block');
 	    $('.theme-popover').css('display', 'block');
 	    $('body').css('overflow', 'visible');
 	    $('.theme-popover').css('overflow', 'visible');
+		$.ajax({
+			type : 'post',
+			data : 'id='+id+'&_token={{csrf_token()}}',
+			url  : '{{url("address/update")}}',
+			success:function(data) {
+				$('#user-name').val(data.name);
+				$('#user-phone').val(data.phone);
+				$('#user-comment').val(data.comment);
+				$('#pro').val(data.pro);
+				$('#city').val(data.city);
+				$('#area').val(data.area);
+				$('#test').val(data.id);
+			},
+			dataType: 'json',
+		})
 
 	}
 
-	function change(obj) {
+	function change(obj, id) {
 		$('.default').css('display', 'block');
 		$('.deftip').css('display', 'none');
 		$('.mybox').removeClass('user-addresslist defaultAddr');
@@ -1693,23 +1731,38 @@
 
 		$(obj).css('display', 'none');
 		$(obj).parent().parent('li').addClass('user-addresslist defaultAddr');
-		$(obj).parent().parent().children().first().children(':last').css('display', 'block');
-		var name = $(obj).parent().parent().children().first('div').children().first().children().children().first('span').html();
-		var phone =$(obj).parent().parent().children().first('div').children().first().children().children().last('span').html();
-		var pro = $(obj).parent().parent().children().first('div').children().next().children().last('span').children(':first').html();
-		var city = $(obj).parent().parent().children().first('div').children().next().children().last('span').children().next(':first').html();
-		var dist = $(obj).parent().parent().children().first('div').children().next().children().last('span').children().next().next(':first').html();
-		var street = $(obj).parent().parent().children().first('div').children().next().children().last('span').children().last().html();
-		
-		$('.myprovince').html(pro);
-		$('.mycity').html(city);
-		$('.mydist').html(dist);
-		$('.mystreet').html(street);
-		$('.mybuy-user').html(name);
-		$('.mybuy-phone').html(phone);
+		$(obj).parent().parent().children().children('ins').css('display', 'block');
 
+		$.ajax({
+			type : 'post',
+			data : 'id='+id+'&_token={{csrf_token()}}',
+			url  : '{{url("address/change")}}',
+			success:function(data) {		
+				showChange(); 
+			},
+			dataType: 'json',
+		})
+		
 	}
 
+	//提交订单时默认地址
+	function showChange() {
+		$.ajax({
+			type : 'post',
+			data : '_token={{csrf_token()}}',
+			url  : '{{url("address/showChange")}}',
+			success:function(data) {	
+				$('.myprovince').html(data[0].pro);
+				$('.mycity').html(data[0].city);
+				$('.mydist').html(data[0].area);
+				$('.mystreet').html(data[0].comment);
+				$('.mybuy-user').html(data[0].name);
+				$('.mybuy-phone').html(data[0].phone);
+			},
+			dataType: 'json',
+		})	
+	}
+   showChange() 
 	//提交订单
 	$('.btn-go').click(function () {
 

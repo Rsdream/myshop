@@ -21,15 +21,30 @@ class AddressController extends Controller
         $city = $request->input('city');
         $area = $request->input('area');
         $uid = Session::get('user');
-
-        HomeAddress::insert(['uid' => $uid, 'name' => $name, 'phone' => $phone, 'comment' => $address, 'city' => $city, 'area' => $area, 'pro' => $pro]);
-        return back();
+        $id = $request->input('id');
+        if ($id == 0) {
+            HomeAddress::insert(['uid' => $uid, 'name' => $name, 'phone' => $phone, 'comment' => $address, 'city' => $city, 'area' => $area, 'pro' => $pro]);
+            return back();
+        } else {
+            HomeAddress::where('id', '=', $id)
+                ->update([
+                    'name' => $name,
+                    'phone' => $phone,
+                    'comment' => $address,
+                    'city' => $city,
+                    'area' => $area,
+                    'pro' => $pro,
+                ]);
+            return back();
+        }
+        
+        
     }
 
     //查询地址
     public function show()
     {
-    	$data = DB::table('orders_address')->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment')->where('uid', Session::get('user'))->orderBy('id', 'DESC')->get();
+    	$data = DB::table('orders_address')->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment', 'status')->where('uid', Session::get('user'))->orderBy('id', 'DESC')->get();
         $add = [];
     	foreach ($data as $v) {
 
@@ -37,13 +52,14 @@ class AddressController extends Controller
     		$city = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
     		$area = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
     		$add[] = [
-    		'id' => $v->id,
-    	    'pro' => $pro->name,
-    	    'city' => $city->name,
-    	    'area' => $area->name,
-    	    'name' => $v->name,
-    	    'phone' => $v->phone,
+    		'id'      => $v->id,
+    	    'pro'     => $pro->name,
+    	    'city'    => $city->name,
+    	    'area'    => $area->name,
+    	    'name'    => $v->name,
+    	    'phone'   => $v->phone,
     	    'comment' => $v->comment,
+            'status'  => $v->status,
     	    ];
     	}
 
@@ -68,5 +84,47 @@ class AddressController extends Controller
 
         echo json_encode($data);
         exit;
+    }
+
+    //选择默认地址
+    public function change(Request $request)
+    {
+        $id = $request->input('id');
+        DB::table('orders_address')->update(['status'=>0]);
+        DB::table('orders_address')->where('id', $id)->update(['status'=>1]);
+    }
+
+    public function showChange()
+    {
+        $v= DB::table('orders_address')
+            ->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment', 'status')
+            ->where('status', 1)
+            ->first();
+        $add = [];
+            $pro = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
+            $city = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
+            $area = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
+            $add[] = [
+            'id'      => $v->id,
+            'pro'     => $pro->name,
+            'city'    => $city->name,
+            'area'    => $area->name,
+            'name'    => $v->name,
+            'phone'   => $v->phone,
+            'comment' => $v->comment,
+            'status'  => $v->status,
+            ];
+
+        echo json_encode($add);
+    }
+
+    public function update(Request $request)
+    {
+        $id = $request->input('id');
+        $data= DB::table('orders_address')
+            ->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment', 'status')
+            ->where('id', $id)
+            ->first();
+        echo json_encode($data);    
     }
 }

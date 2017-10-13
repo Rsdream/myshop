@@ -14,18 +14,26 @@ use DB;
 
 class OrderController extends Controller
 {
-
     //订单页面
     public function check(Request $request)
     {
-        $id = $request->input('like');
+        //判断用户是否登录
+        if (Session::get('user') == '') {
 
+            return redirect('/login');
+        }
+        $number = $request->input('number');
+        $id     = $request->input('like');
     	//拿出购物车中数据
         foreach ($id as $v) {
+            //判断库存是否为0
+            $stock = DB::table('price')->select('stock')->where('id', $v)->first();
+            if (intval($number) > intval($stock->stock)) {
+                return redirect('/cart');
+            }
             $hashKey = 'cart:'.Session::get('user').':'.$v;
             $cartDatas[] =Redis::HGetAll($hashKey);
         }
-
     	//图片数据转化为数组
     	foreach ($cartDatas as $key => $value) {
     		$val = json_decode($value['gpic'], true);
@@ -37,7 +45,7 @@ class OrderController extends Controller
 
     //提交订单
     public function add(Request $request)
-    {dd(1);
+    {
         $name = $request->input('name');
         $phone = $request->input('phone');
         $address = $request->input('address');
@@ -83,7 +91,10 @@ class OrderController extends Controller
                 $gprice= $v['price'];
 
                 OrdersGood::insert(['oid' => $oid, 'gid' => $gid, 'gpic' => $gpic, 'gname' => $gname, 'gnum' => $gnum, 'gprice' => $gprice]);
+                $stock = DB::table('price')->select('stock')->where('id', '=', $gid)->first();
+                DB::table('price')->where('id', '=', $gid)->update(['stock' => $stock->stock-$gnum]);
         }
+
 
     }
 

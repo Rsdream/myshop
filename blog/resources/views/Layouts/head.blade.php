@@ -128,7 +128,7 @@
                       </a>
                     </li>
                     <li class="menu-checkout">
-                      <a class="item-link" href="{{url('/outlogin')}}">
+                      <a class="item-link" href="{{url('/queit')}}">
                         <span class="menu-title">退出</span>
                       </a>
                     </li>

@@ -194,13 +194,10 @@ Route::prefix('admin/product')->group(function () {
 
 //获取验证码
 Route::get('/makecode', 'Api\CommonApi@buildCode');
-
 //获取手机验证码
 Route::post('/phonecode', 'Api\CommonApi@phoneCode');
-
 //判断用户名是否存在
 Route::post('/existence', 'Home\RegisterController@isExistence');
-
 //处理登录
 Route::post('/dologin', 'Home\LoginController@doLogin');
 Route::get('/outlogin', 'Home\LoginController@outLogin');
@@ -218,26 +215,22 @@ Route::post('/doregister', 'Home\RegisterController@doregister');
 //搜索
 Route::get('/search', 'Home\SearchController@search');
 
-
 //购物车资源路由
 Route::prefix('/cart')->group(function () {
     //购物车首页
-    Route::get('/', 'Home\CartController@cart');
+    Route::get('/', 'Home\MyCartController@cart');
     //查看购物车商品
-    Route::get('/show', 'Home\CartController@showCart');
-
+    Route::get('/show', 'Home\MyCartController@showCart');
     //添加商品到购物车
-    Route::get('/add', 'Home\CartController@addCart');
-
+    Route::get('/add', 'Home\MyCartController@addCart');
     //移除商品
-    Route::post('/del', 'Home\CartController@delCart');
-
+    Route::post('/del', 'Home\MyCartController@delCart');
     //修改商品数量
-    Route::post('/change', 'Home\CartController@changeCart');
-
+    Route::post('/change', 'Home\MyCartController@changeCart');
     //选择购买商品
-    Route::post('/select', 'Home\CartController@select');
-
+    Route::post('/select', 'Home\MyCartController@select');
+    //查库存
+    Route::post('/stock', 'Home\MyCartController@getStock');
 });
 
 
@@ -300,6 +293,11 @@ Route::prefix('/address')->group(function () {
 
     //默认地址添加
     Route::post('/tacit', 'Home\AddressController@tacit');
+    //选择默认地址
+    Route::post('/change', 'Home\AddressController@change');
+    Route::post('/showChange', 'Home\AddressController@showChange');
+    //编辑
+    Route::post('/update', 'Home\AddressController@update');
 
 });
 

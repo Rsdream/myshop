@@ -13,20 +13,6 @@ class CreateOrderDetail extends Migration
      */
     public function up()
     {
-        //地址表
-        Schema::create('orders_address', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('uid')->unsigned();
-            $table->string('comment');
-            $table->string('pro', '11');
-            $table->string('city', '11');
-            $table->string('area', '11');
-            $table->string('name');
-            $table->string('phone', '11');
-            $table->timestamps();
-        });
-
-
         //订单表
         Schema::create('orders_detail', function (Blueprint $table) {
             $table->increments('id');
@@ -50,7 +36,6 @@ class CreateOrderDetail extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders_address');
         Schema::dropIfExists('orders_detail');
     }
 }

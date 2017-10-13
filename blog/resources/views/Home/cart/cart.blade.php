@@ -38,7 +38,6 @@
 	<style type="text/css">
 	    #clear{background-color: orange}
 	    #clear:hover{background-color: #E0C15F;cursor: pointer;}
-	    .tb4 a:hover{color: red}
 	</style>
 
 </head>
@@ -83,7 +82,7 @@
 
 								<div id="noshop" style="width: 100%;height: 100px;text-align: center;font-size: 15px;display: none">
 								    <span>购物车内暂时没有商品，登录后将显示您之前加入的商品</span><br>
-								    <span><a href="" style="color:red">登录</a></span>&nbsp;&nbsp;&nbsp;<span><a  href="" style="color:orange;">购物》</a></span>
+								    <span><a href="{{url('/login')}}" style="color:red">登录</a></span>&nbsp;&nbsp;&nbsp;<span><a  href="{{url('/')}}" style="color:orange;">购物》</a></span>
 								</div>
 									<form action="{{url('/order')}}" method="get" id="cart" style="display: none;">
 									    {{ csrf_field() }}
@@ -91,7 +90,7 @@
 											<thead>
 												<tr>
 													<th width="20">  </th>
-													<th class="product-name">商品名</th>
+													<th class="product-name">商品详情</th>
 													<th class="product-thumbnail">图片</th>
 													<th class="product-price">价格</th>
 													<th class="product-quantity">数量</th>
@@ -117,7 +116,6 @@
 													    合计(不含运费):<span>￥</span><span style=" color:#ff5500;"><label  style="color:#ff5500;font-size:14px; font-weight:bold;"></label></span><spna id="total" style="color:#FF5500;font-weight:bold">00.00</spna>
 													</td>
 													<td>
-													    <!-- <a style="padding-left: 20px;font-size: 18px" href="javascript:;"  id="settle">结算</a> -->
 													    <button  class="btn btn-danger">结算</button>
 													</td>
 												</tr>
@@ -274,8 +272,17 @@
     	    		for (var i = 0; i<data.length; i++) {
     	    			num = parseInt(data[i].num); //计算总数量
     	    			totals =data[i].num*data[i].price; //计算总金额
+    	    			//判断库存
+    	    			if (data[i].stock < 1) {
+    	    				var stock = '<span style="color:black">暂无库存</span>';
+    	    				var goods = '';
+    	    			} else {
+    	    				var stock = '<span style="color:#C9BFB4">库存（'+data[i].stock+'）</span>';
+    	    				var goods = '<div class="quantity buttons_added" style="width:110.2px;"><input type="button" value="-" class="minus"><input  type="number" id="'+data[i].id+'" step="1" onchange="change(this)" min="1" max="'+data[i].stock+'" name="number" value="'+data[i].num+'" title="购买数量" class="input-text qty text" size="4" pattern="[1-9]*" inputmode="numeric"><input type="button" value="+" class="plus"></div>';
+    	    			}
+
     	    			//是否选择了商品判断
-    	    			if (data[i].status == 0) {
+    	    			if (data[i].status == 0 ) {
     	    				var span = 'checked';
     	    			} else {
     	    				var span = '';
@@ -283,15 +290,23 @@
     	    				totals =0;
     	    			}
 
+    	    			//判断是否库存
+    	    			if (data[i].stock < 1) {
+    	    				var dis = 'display:none';
+    	    			} else {
+    	    				var dis = 'display:block';
+    	    			}
+
     	    			str += `<tr class="cart_item">
 		    	    			    <td  onChange="select(id=`+data[i].id+`, this)">
-		    	    			        <input   type="checkbox" name="like[]" `+span+` value="`+data[i].id+`"/>
+		    	    			        <input  style="`+dis+`"  type="checkbox" name="like[]" `+span+` value="`+data[i].id+`"/>
 		    	    			    </td>
 									<td class="product-name" data-title="Product">
-										<a href="simple_product.html">`+data[i].gname+`</a>
+										<a href="{{url('/goods/detail')}}`+'/'+data[i].id+`">`+data[i].gname+`</a><br>
+										<span style="color:#C9BFB4">`+data[i].setmeal+`</span>
 									</td>
 									<td class="product-thumbnail">
-										<a href="simple_product.html">
+										<a href="{{url('/goods/detail')}}`+'/'+data[i].id+`">
 		                              <img width="180" height="180" src="`+url+'/'+data[i].gpic[0]+`" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
 											srcset="`+url+'/'+data[i].gpic[0]+` 180w, `+url+'/'+data[i].gpic[1]+` 150w, `+url+'/'+data[i].gpic[2]+` 300w, `+url+'/'+data[i].gpic[3]+` 600w" sizes="(max-width: 180px) 100vw, 180px">
 											</a>
@@ -301,12 +316,9 @@
 										<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span>`+data[i].price+`</span>
 									</td>
 									<td class="product-quantity" data-title="Quantity">
-		                                <div class="quantity buttons_added" style="width:110.2px;">
-											<input type="button" value="-" class="minus">
-											<input  type="number" id="`+data[i].id+`" step="1" onchange="change(this)" min="1" max="`+data[i].stock+`" name="number" value="`+data[i].num+`" title="Qty" class="input-text qty text" size="4" pattern="[1-9]*" inputmode="numeric">
-											<input type="button" value="+" class="plus">
-									    </div>
-									</td>s
+		                                    `+goods+`
+									    <div>`+stock+`</div>
+									</td>
 									</td>
 
 									<td class="product-subtotal" data-title="Total">
@@ -426,13 +438,33 @@
     	//获取数据
     	var num = $(obj).val();
     	var id  = $(obj).attr('id');
+    	if (num < 0) {
+    		alert('商品数量不能为0');
+    		showcart();
+    		return;
+    	}
+    	//查看库存
     	$.ajax({
     		type : 'post',
-    		data : 'id='+id+'&num='+num+'&_token={{csrf_token()}}',
-    		url  : "{{url('/cart/change')}}",
-    		success:function(){
-    			//刷新
-    			showcart();
+    		data : 'id='+id+'&_token={{csrf_token()}}',
+    		url  : "{{url('/cart/stock')}}",
+    		success:function(data){
+    			if (parseInt(num) > parseInt(data[0].stock)) {
+    				alert('库存不足！');
+    				showcart();
+    			} else {
+			    	//修改数量
+			    	$.ajax({
+			    		type : 'post',
+			    		data : 'id='+id+'&num='+num+'&_token={{csrf_token()}}',
+			    		url  : "{{url('/cart/change')}}",
+			    		success:function(){
+			    			//刷新
+			    			showcart();
+			    		},
+			    		dataType: 'json',
+			    	});     				
+    			}
     		},
     		dataType: 'json',
     	});
@@ -456,7 +488,22 @@
     	$(obj).parent().parent().remove();
     }
 
-
+    //提交时判断是否购买了商品
+    $('#cart').submit(function () {
+    	var bool = false;
+       	$('input[name="like[]"]').each(function (i) {
+       		//选中清除
+       	    if ($(this).prop('checked')) {
+       	    	return bool = true;
+       	    } 
+       	});
+    	if (bool) {
+    		return true;
+    	} else {
+    		alert('请选择要购买商品！');
+    		return false;
+    	}
+    })
    </script>
 
 	<!-- OPEN LIBS JS -->
