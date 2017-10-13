@@ -1393,30 +1393,6 @@
     	$(obj).parent().parent().remove();
     }
 
-    //结算
-    // $('#settle').click(function () {
-    // 	var judge = true;
-    //    	$('input[name="like[]"]').each(function (i) {
-    //    		//选中清除
-    //    	    if ($(this).prop('checked')) {
-    //    	     var id= $(this).val();
-    //    	     settle(id);
-    //    	     judge = false;
-    //    	    }       	        
-    //    	});
-
-    //    	if (judge) {
-    //    		alert('请选择购买商品');
-    //    	}
-
-    //    	function settle(id) {
-	   //     	$.ajax({
-	   //  		type : 'get',
-	   //  		data : 'id='+id+'&_token={{csrf_token()}}',
-	   //  		url  : '{{url("/order")}}',
-	   //  	});
-    //    	}    
-    // });
 
    </script>
 	
