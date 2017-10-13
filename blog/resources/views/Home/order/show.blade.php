@@ -88,9 +88,10 @@
 
 									<div class="order-main">
 										<div class="order-list">
-											<?php $total=0 ?>
+
 											@if (isset($data))
 											@foreach ($data as $v)
+											<?php $sum=0 ?>
 											<!--交易成功-->
 											<div class="order-status5">
 												<div class="order-title">
@@ -100,19 +101,22 @@
 												</div>
 												<div class="order-content">
 													<div class="order-left">
-
+														@foreach($v->orderDetail as $val)
+														@php
+																$sum += $val->gprice*$val->gnum+10
+														@endphp
 														<ul class="item-list">
 															<li class="td td-item">
 																<div class="item-pic">
-																	<a href="#" class="J_MakePoint">
-																		<img src="{{url('/').'/'.json_decode($v->gpic, true)[0]}}" class="itempic J_ItemImg">
+																	<a href="{{url('goods/detail/'.$val->gid)}}" class="J_MakePoint">
+																		<img src="{{url('/').'/'.json_decode($val->gpic, true)[0]}}" class="itempic J_ItemImg">
 																	</a>
 																</div>
 																<div class="item-info">
 																	<div class="item-basic-info">
-																		<a href="#">
-																			<p>{{$v->gname}}</p>
-																			<p class="info-little">颜色：12#川南玛瑙
+																		<a href="{{url('goods/detail/'.$val->gid)}}">
+																			<p>{{$val->gname}}</p>
+																			<p class="info-little">配置：{{$val->ram}} + {{$val->rom}} + {{$val->color}}
 																				<br/>包装：裸装 </p>
 																		</a>
 																	</div>
@@ -120,12 +124,12 @@
 															</li>
 															<li class="td td-price">
 																<div class="item-price">
-																	{{$v->gprice}}
+																	{{$val->gprice}}
 																</div>
 															</li>
 															<li class="td td-number">
 																<div class="item-number">
-																	<span>×</span>{{$v->gnum}}
+																	<span>×</span>{{$val->gnum}}
 																</div>
 															</li>
 															<li class="td td-operation">
@@ -134,12 +138,12 @@
 																</div>
 															</li>
 														</ul>
-														<?php $total +=$v->gprice*$v->gnum ?>
+														@endforeach
 													</div>
 													<div class="order-right">
 														<li class="td td-amount">
 															<div class="item-amount">
-																合计：<?php echo $total ?>
+																合计：{{$sum}}
 																<p>含运费：<span>10.00</span></p>
 															</div>
 														</li>
@@ -162,7 +166,6 @@
 																<?php } else { ?>
 																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this, number={{$v->number}})">{{$arr[$v->status]}}</div>
 																<?php } ?>
-
 															</li>
 														</div>
 													</div>

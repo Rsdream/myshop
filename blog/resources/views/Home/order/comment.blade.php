@@ -6,6 +6,27 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
 
 		<title>评价管理</title>
+		<link rel="stylesheet" href="{{asset('Home/css/font-awesome.min.css')}}">
+
+		<!-- BOOTSTRAP 3.3.7 CSS -->
+		<link rel="stylesheet" href="{{asset('Home/css/bootstrap.min.css')}}" />
+
+		<!-- SLICK v1.6.0 CSS -->
+		<link rel="stylesheet" href="{{asset('Home/css/slick-1.6.0/slick.css')}}" />
+		<link rel="stylesheet" href="{{asset('Home/css/jquery.fancybox.css')}}" />
+		<link rel="stylesheet" href="{{asset('Home/css/yith-woocommerce-compare/colorbox.css')}}" />
+		<link rel="stylesheet" href="{{asset('Home/css/owl-carousel/owl.carousel.min.css')}}" />
+		<link rel="stylesheet" href="{{asset('Home/css/owl-carousel/owl.theme.default.min.css')}}" />
+		<link rel="stylesheet" href="{{asset('Home/css/js_composer/js_composer.min.css')}}" />
+		<link rel="stylesheet" href="{{asset('Home/css/woocommerce/woocommerce.css')}}" />
+		<link rel="stylesheet" href="{{asset('Home/css/yith-woocommerce-wishlist/style.css')}}" />
+
+
+		<link rel="stylesheet" href="{{asset('Home/css/yith-woocommerce-wishlist/style.css')}}" />
+		<link rel="stylesheet" href="{{asset('Home/css/custom.css')}}" />
+		<link rel="stylesheet" href="{{asset('Home/css/app-orange.css')}}" id="theme_color" />
+		<link rel="stylesheet" href="" id="rtl" />
+		<link rel="stylesheet" href="{{asset('Home/css/app-responsive.css')}}" />
 
 		<link href="{{asset('/Ui/AmazeUI-2.4.2/assets/css/admin.css')}}" rel="stylesheet" type="text/css">
 		<link href="{{asset('/Ui/AmazeUI-2.4.2/assets/css/amazeui.css')}}" rel="stylesheet" type="text/css">
@@ -20,55 +41,7 @@
 
 	<body>
 		<!--头 -->
-		<header>
-			<article>
-				<div class="mt-logo">
-					<!--顶部导航条 -->
-					<div class="am-container header">
-						<ul class="message-l">
-							<div class="topMessage">
-								<div class="menu-hd">
-									<a href="#" target="_top" class="h">亲，请登录</a>
-									<a href="#" target="_top">免费注册</a>
-								</div>
-							</div>
-						</ul>
-						<ul class="message-r">
-							<div class="topMessage home">
-								<div class="menu-hd"><a href="#" target="_top" class="h">商城首页</a></div>
-							</div>
-							<div class="topMessage my-shangcheng">
-								<div class="menu-hd MyShangcheng"><a href="#" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
-							</div>
-							<div class="topMessage mini-cart">
-								<div class="menu-hd"><a id="mc-menu-hd" href="#" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>
-							</div>
-							<div class="topMessage favorite">
-								<div class="menu-hd"><a href="#" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
-						</ul>
-						</div>
-
-						<!--悬浮搜索框-->
-
-						<div class="nav white">
-							<div class="logoBig">
-								<li><img src="{{asset('/Ui/images/logobig.png')}}" /></li>
-							</div>
-
-							<div class="search-bar pr">
-								<a name="index_none_header_sysc" href="#"></a>
-								<form>
-									<input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off">
-									<input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
-								</form>
-							</div>
-						</div>
-
-						<div class="clear"></div>
-					</div>
-				</div>
-			</article>
-		</header>
+		@include('Layouts/head')
 		<div class="nav-table">
 			<div class="long-title"><span class="all-goods">全部分类</span></div>
 			<div class="nav-cont">
@@ -118,7 +91,7 @@
 													</div>
 													<div class="th th-item">
 														<td class="td-inner">商品</td>
-													</div>													
+													</div>
 												</div>
 
 
@@ -130,40 +103,40 @@
 														</a>
 													</div>
 												</li>
-												
+
 												<li class="td td-comment">
 													<div class="item-title">
 														<div class="item-opinion">好评</div>
 														<div class="item-name">
-														
+
 															<a href="#">
 																<p class="item-basic-info">{{$v->gname}}</p>
 															</a>
-														
+
 														</div>
 													</div>
-													
-													<div class="item-comment">   
-												    {{$v->comment}}											    
+
+													<div class="item-comment">
+												    {{$v->comment}}
 													</div>
-													
+
 
 													<div class="item-info">
 														<div>
 															<p class="info-little"><span>颜色：12#玛瑙</span> <span>包装：裸装</span> </p>
-															
+
 															<p class="info-time">{{date('Y-m-d', $v->addtime)}}</p>
-															
+
 														</div>
 													</div>
-													
+
 												</li>
-												
-											</ul>										
-											@endforeach											
+
+											</ul>
+											@endforeach
 										</div>
-									</div>									
-								 	
+									</div>
+
 								</div>
 							</div>
 						</div>
