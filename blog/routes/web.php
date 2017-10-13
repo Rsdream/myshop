@@ -205,6 +205,11 @@ Route::post('/existence', 'Home\RegisterController@isExistence');
 Route::post('/dologin', 'Home\LoginController@doLogin');
 Route::get('/outlogin', 'Home\LoginController@outLogin');
 
+//找回密码
+Route::get('/forget', 'Home\ForgetController@forget');
+Route::post('/handle', 'Home\ForgetController@handle');
+Route::post('/send', 'Home\ForgetController@send');
+
 //处理注册
 Route::post('/doregister', 'Home\RegisterController@doregister');
 
@@ -230,13 +235,16 @@ Route::prefix('/cart')->group(function () {
     //修改商品数量
     Route::post('/change', 'Home\CartController@changeCart');
 
+    //选择购买商品
+    Route::post('/select', 'Home\CartController@select');
+
 });
 
 
 //订单资源路由
 Route::prefix('/order')->group(function () {
     //结算页面
-    Route::get('/', 'Home\OrderController@check');
+    Route::post('/', 'Home\OrderController@check');
 
     //提交订单
     Route::post('/add', 'Home\OrderController@add');

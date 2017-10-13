@@ -38,6 +38,7 @@
 	<style type="text/css">
 	    #clear{background-color: orange}
 	    #clear:hover{background-color: #E0C15F;cursor: pointer;}
+	    .tb4 a:hover{color: red}
 	</style>
 
 </head>
@@ -84,10 +85,12 @@
 								    <span>购物车内暂时没有商品，登录后将显示您之前加入的商品</span><br>
 								    <span><a href="" style="color:red">登录</a></span>&nbsp;&nbsp;&nbsp;<span><a  href="" style="color:orange;">购物》</a></span>
 								</div>
-									<form action="javascript:;" method="post" id="cart" style="display: none;">
+									<form action="{{url('/order')}}" method="post" id="cart" style="display: none;">
+									    {{ csrf_field() }}
 										<table class="shop_table shop_table_responsive cart" cellspacing="0">
 											<thead>
 												<tr>
+													<th width="20">  </th>
 													<th class="product-name">商品名</th>
 													<th class="product-thumbnail">图片</th>
 													<th class="product-price">价格</th>
@@ -95,42 +98,30 @@
 													<th class="product-subtotal">小计</th>
 													<th class="product-remove">操作</th>
 												</tr>
-
 											</thead>
 											<tbody>
 
 											</tbody>
-
-										</table>
-
-										<div class="cart-collaterals">
-											<div class="products-wrapper">
-												<div class="cart_totals ">
-													<h2>Cart Totals</h2>
-
-													<table cellspacing="0" border="1" class="shop_table shop_table_responsive" style="width: 300px;">
-														<tbody>
-															<tr class="cart-subtotal">
-																<td><strong> 购买商品数量：</strong> </td>
-																<td data-title="总价">
-																	<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol"></span ><span class="myavg"></span>件</span>
-																</td>
-															</tr>
-															<tr class="order-total">
-																<td><strong> 实付：</strong> </td>
-																<td data-title="实付">
-																	<strong style="color:orange"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span ><span class="mytotal" ></span></span></strong>
-																</td>
-															</tr>
-														</tbody>
-													</table>
-
-													<div class="wc-proceed-to-checkout" style="width: 300px">
-														<a href="{{url('/order')}}" class="checkout-button button alt wc-forward">结算</a>
-													</div>
-												</div>
-											</div>
-										</div>
+											<table class="shop_table shop_table_responsive cart" cellspacing="0" style="width: 100%;background: #EDEDED">
+												<tr>
+													<td width="3" class="tb1_td1" style="padding-right: 0px">
+													    <input id="allselect" class="allselect" type="checkbox"  checked/></td>
+													<td width="55" class="tb1_td1" style="padding-left: 0px">全选</td>
+													<td width="455" class="tb3_td1">
+														<a href="javascript:;" id="del">删除</a>
+													</td>
+													<td class="tb3_td2">
+													    已选商品 <label id="sum" style="color:#ff5500;font-size:14px; font-weight:bold;">0</label> 件
+													</td>
+													<td class="tb3_td3">
+													    合计(不含运费):<span>￥</span><span style=" color:#ff5500;"><label  style="color:#ff5500;font-size:14px; font-weight:bold;"></label></span><spna id="total" style="color:#FF5500;font-weight:bold">00.00</spna>
+													</td>
+													<td>
+													    <!-- <a style="padding-left: 20px;font-size: 18px" href="javascript:;"  id="settle">结算</a> -->
+													    <button  class="btn btn-danger">结算</button>
+													</td>
+												</tr>
+											</table>
 									</form>
 								</div>
 							</div>
@@ -261,23 +252,174 @@
 	</div>
    <script type="text/javascript">
 
-    //删除数据
-    function del(obj) {
+    //查看购物车商品
+    function showcart() {
+    	$.ajax({
+    	    type : 'get',
+    	    url  : "{{ url('cart/show')}}",
+    	    data : '_token={{csrf_token()}}',
+    	    success:function(data) {
+    	    	if (data == 'noshop') {
+    	    		//购物车内没有商品
+    	    		$("#noshop").css('display', 'block');
+    	    		$('#cart').css('display', 'none');
+    	    	} else {
+    	    		//显示商品
+    	    		$('#cart').css('display', 'block');
+    	    		$("#noshop").css('display', 'none');
+    	    		var str = '';
+    	    		var total = 0; //购买总金额
+    	    		var sum = 0; //购买总数量
+    	    		var url = "{{url('/')}}";
+    	    		for (var i = 0; i<data.length; i++) {
+    	    			num = parseInt(data[i].num); //计算总数量
+    	    			totals =data[i].num*data[i].price; //计算总金额
+    	    			//是否选择了商品判断
+    	    			if (data[i].status == 0) {
+    	    				var span = 'checked';
+    	    			} else {
+    	    				var span = '';
+    	    				num = 0;
+    	    				totals =0;
+    	    			}
 
-    	//获取id
-    	var id = $(obj).attr('id');
+    	    			str += `<tr class="cart_item">
+		    	    			    <td  onChange="select(id=`+data[i].id+`, this)">
+		    	    			        <input   type="checkbox" name="like[]" `+span+` value="`+data[i].id+`"/>
+		    	    			    </td>
+									<td class="product-name" data-title="Product">
+										<a href="simple_product.html">`+data[i].gname+`</a>
+									</td>
+									<td class="product-thumbnail">
+										<a href="simple_product.html">
+		                              <img width="180" height="180" src="`+url+'/'+data[i].gpic[0]+`" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
+											srcset="`+url+'/'+data[i].gpic[0]+` 180w, `+url+'/'+data[i].gpic[1]+` 150w, `+url+'/'+data[i].gpic[2]+` 300w, `+url+'/'+data[i].gpic[3]+` 600w" sizes="(max-width: 180px) 100vw, 180px">
+											</a>
+									</td>
+
+									<td class="product-price" data-title="Price">
+										<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span>`+data[i].price+`</span>
+									</td>
+									<td class="product-quantity" data-title="Quantity">
+		                                <div class="quantity buttons_added" style="width:110.2px;">
+											<input type="button" value="-" class="minus">
+											<input  type="number" id="`+data[i].id+`" step="1" onchange="change(this)" min="1" max="`+data[i].stock+`" name="number" value="`+data[i].num+`" title="Qty" class="input-text qty text" size="4" pattern="[1-9]*" inputmode="numeric">
+											<input type="button" value="+" class="plus">
+									    </div>
+									</td>s
+									</td>
+
+									<td class="product-subtotal" data-title="Total">
+										<span class="woocommerce-Price-amount amount" >
+
+									    <span class="woocommerce-Price-currencySymbol" >￥</span ><span class="total" style="margin-right:10px">`+data[i].num*data[i].price+`</span></span>
+									</td>
+									<td class="product-remove">
+										<a href="javascript:;" class="remove" onclick="del(this)" id="`+data[i].id+`" title="删除此商品"><i class="fa fa-times" aria-hidden="true"></i></a>
+									</td>
+
+								</tr>>`;
+
+								total += totals;
+								sum   += num;
+    	    		}
+    	    		//追加数据到购物车
+    	    		$('tbody:first').html(str);
+    	    		$('#sum').text(sum);
+    	    		$('#total').html(total);
+    	    	}
+    	    },
+    	    dataType: 'json',
+    	});
+    }
+
+    //调用
+    showcart();
+
+    //全选或反选
+    var check = true;
+    $('#allselect').click(function () {
+       	if (check) { //全选
+       	    $('input[name="like[]"]').each(function (i) {
+       	    	var originStatus = !$(this).prop('checked');
+       	        $(this).prop('checked', originStatus);
+       	        //判断是否选择了商品
+       	        if ($(this).prop('checked')) {
+       	        	var id= $(this).val();
+       	        	var status = 0;
+       	        	revise(id, status);
+       	        } else {
+       	        	var id= $(this).val();
+       	        	var status = 1;
+       	        	revise(id, status);
+       	        }
+       	    });
+       	    check = true;
+       	} else { //反选
+       	   $('input[name="like[]"]').prop('checked', true);
+       	   check = false;
+       	}
+
+	    function revise(id, status) {
+	    	$.ajax({
+	    		type : 'post',
+	    		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
+	    		url  : "{{url('/cart/select')}}",
+	    		success:function(){
+	    			//刷新
+	    			showcart();
+	    		},
+	    		dataType: 'json',
+	    	});
+	    }
+    });
+
+    //选择购买商品
+    function select(id, obj) {
+    	//判断是否选择商品
+    	if ($(obj).children().prop('checked')) {
+    		var status = 0;
+    	} else {
+    		var status = 1;
+    	}
+
     	$.ajax({
     		type : 'post',
-    		data : 'id='+id+'&_token={{csrf_token()}}',
-    		url  : '{{url("/cart/del")}}',
+    		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
+    		url  : "{{url('/cart/select')}}",
     		success:function(){
     			//刷新
     			showcart();
-    		}
-    	})
-    	//删除页面数据
-    	$(obj).parent().parent().remove();
+    		},
+    		dataType: 'json',
+    	});
     }
+
+
+    //清空购物车
+    $('#del').click(function () {
+
+       	$('input[name="like[]"]').each(function (i) {
+       		//选中清除
+       	    if ($(this).prop('checked')) {
+       	     var id= $(this).val();
+       	     out(id);
+       	    }
+       	});
+
+       	function out(id) {
+	       	$.ajax({
+	    		type : 'post',
+	    		data : 'id='+id+'&_token={{csrf_token()}}',
+	    		url  : '{{url("/cart/del")}}',
+	    		success:function(){
+	    			//刷新
+	    			showcart();
+	    		}
+	    	})
+       	}
+
+    })
 
     //修改商品数量
     function change(obj) {
@@ -296,82 +438,48 @@
     	});
     }
 
+    //删除数据
+    function del(obj) {
 
-    //查看购物车商品
-    function showcart() {
+    	//获取id
+    	var id = $(obj).attr('id');
     	$.ajax({
-    	    type : 'get',
-    	    url  : "{{ url('cart/show')}}",
-    	    data : '_token={{csrf_token()}}',
-    	    success:function(data) {
-    	    	if (data == 'noshop') {
-    	    		//购物车内没有商品
-    	    		$("#noshop").css('display', 'block');
-    	    		$('#cart').css('display', 'none');
-    	    	} else {
-    	    		//显示商品
-    	    		$('#cart').css('display', 'block');
-    	    		$("#noshop").css('display', 'none');
-    	    		var str = '';
-    	    		var total = 0;
-    	    		var sum = 0;
-    	    		var url = "{{url('/')}}";
-    	    		for (var i = 0; i<data.length; i++) {
-    	    			str += `<tr class="cart_item">
-							<td class="product-name" data-title="Product">
-								<a href="simple_product.html">`+data[i].gname+`</a>
-							</td>
-							<td class="product-thumbnail">
-								<a href="simple_product.html">
-                              <img width="180" height="180" src="`+url+`/`+data[i].gpic[0]+`" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt=""
-									srcset="`+url+`/`+data[i].gpic[0]+` 180w, `+url+`/`+data[i].gpic[1]+` 150w, `+url+`/`+data[i].gpic[2]+` 300w, `+url+`/`+data[i].gpic[3]+` 600w" sizes="(max-width: 180px) 100vw, 180px">
-									</a>
-							</td>
-
-							<td class="product-price" data-title="Price">
-								<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span>`+data[i].price+`</span>
-							</td>
-							<td class="product-quantity" data-title="Quantity">
-                                <div class="quantity buttons_added" style="width:110.2px;">
-									<input type="button" value="-" class="minus">
-									<input  type="number" id="`+data[i].id+`" step="1" onchange="change(this)" min="1" max="`+data[i].stock+`" name="number" value="`+data[i].num+`" title="Qty" class="input-text qty text" size="4" pattern="[1-9]*" inputmode="numeric">
-									<input type="button" value="+" class="plus">
-							    </div>
-							</td>s
-							</td>
-
-							<td class="product-subtotal" data-title="Total">
-								<span class="woocommerce-Price-amount amount" >
-
-							    <span class="woocommerce-Price-currencySymbol" >￥</span ><span class="total" style="margin-right:10px">`+data[i].num*data[i].price+`</span></span>
-							</td>
-							<td class="product-remove">
-								<a href="javascript:;" class="remove" onclick="del(this)" id="`+data[i].id+`" title="删除此商品"><i class="fa fa-times" aria-hidden="true"></i></a>
-							</td>
-
-						</tr>
-						<hr>`;
-
-					//统计总价
-                    total += data[i].num*data[i].price;
-                    sum   += parseInt(data[i].num);
-    	    		}
-
-    	    		//追加数据到购物车
-    	    		$('tbody:first').html(str);
-    	    		$('.myavg').html(sum);
-    	    		$('.mytotal').html(total);
-
-    	    	}
-
-    	    },
-    	    dataType: 'json',
-    	});
+    		type : 'post',
+    		data : 'id='+id+'&_token={{csrf_token()}}',
+    		url  : '{{url("/cart/del")}}',
+    		success:function(){
+    			//刷新
+    			showcart();
+    		}
+    	})
+    	//删除页面数据
+    	$(obj).parent().parent().remove();
     }
 
-    //调用
-    showcart();
+    //结算
+    // $('#settle').click(function () {
+    // 	var judge = true;
+    //    	$('input[name="like[]"]').each(function (i) {
+    //    		//选中清除
+    //    	    if ($(this).prop('checked')) {
+    //    	     var id= $(this).val();
+    //    	     settle(id);
+    //    	     judge = false;
+    //    	    }
+    //    	});
 
+    //    	if (judge) {
+    //    		alert('请选择购买商品');
+    //    	}
+
+    //    	function settle(id) {
+	   //     	$.ajax({
+	   //  		type : 'get',
+	   //  		data : 'id='+id+'&_token={{csrf_token()}}',
+	   //  		url  : '{{url("/order")}}',
+	   //  	});
+    //    	}
+    // });
 
    </script>
 
@@ -418,6 +526,10 @@
 				});
 			});
 		});
+   </script>
+
+   <script type="text/javascript">
+
    </script>
 
    <!--[if gte IE 9]><!-->

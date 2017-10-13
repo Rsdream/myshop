@@ -123,63 +123,23 @@
 							<div class="form-wrap" >
 								<div class="tab">
 									<ul class="tab-menu">
-										<li class="active gtco-first"><a href="#" data-tab="signup">登录</a></li>
-										<li class="gtco-second"><a href="#" data-tab="login">注册</a></li>
+										<li class="active " style="width:100%"><a href="#" data-tab="signup">修改密码</a></li>
 									</ul>
 									<div class="tab-content form-horizontal" >
 										<div  class="tab-content-inner active " data-content="signup">
-										    
-											<form action="{{url('/dologin')}}" id="dologin" method="post">
+										   
+											<form action="{{url('/send')}}" id="doregister" method="post">
 											    {{csrf_field()}}
 
-												<div class="form-group has-feedback" >
-
+												<div class="form-group has-feedback">
 													    <div class="col-md-3">
-													        <label for="inputEmail3" class=" control-label">用户名</label>
+													        <label for="inputEmail3" class=" control-label">手机号</label>
 													    </div>
 													    <div class="col-md-9 ">
-													        <input type="text" name="username" class="form-control" id="inputEmail3" placeholder="请输入你的用户名"  aria-describedby="inputSuccess2Status">
-													        <span id="username" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="color: green;display: none"></span>
+													        <input type="num" name="uphone" class="form-control" id="inputEmail3" placeholder="请输入手机号">
+													        <span id="uphone" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="color: green;display: none"></span>
 													    </div>
-													    <div class="my-username col-md-12" >
-														   <span></span>
-														</div>
-												</div>
-												<div class="form-group has-feedback" >
-													    <div class="col-md-3">
-													        <label for="inputEmail3" class=" control-label">密码</label>
-													    </div>
-													    <div class="col-md-9 ">
-													        <input type="password" name="userpass" class="form-control" id="inputEmail3" placeholder="请输入你的用户名"  aria-describedby="inputSuccess2Status">
-													        <span id="userpass" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="color: green;display: none"></span>
-													    </div>
-													    <div class="my-userpass col-md-12" >
-														   <span></span>
-														</div>
-												</div>
-												<div id="forget" sclass="col-md-12" style="float:right;color:orange;cursor: pointer;"><a href="{{url('/forget')}}">?忘记密码</a></div>
-												<div class="row form-group">
-													<div class="col-md-12">
-														<input type="submit" class="btn btn-primary col-md-12" value="登录">
-													</div>
-												</div>
-											</form>
-
-										</div>
-
-										<div class="tab-content-inner form-horizontal" data-content="login">
-											<form action="{{url('/doregister')}}" id="doregister" method="post">
-											    {{csrf_field()}}
-												<div class="form-group has-feedback" >
-
-													    <div class="col-md-3">
-													        <label for="inputEmail3" class=" control-label">用户名</label>
-													    </div>
-													    <div class="col-md-9 ">
-													        <input type="text" name="uname" class="form-control" id="inputEmail3" placeholder="请输入你的用户名"  aria-describedby="inputSuccess2Status">
-													        <span id="uname" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="color: green;display: none"></span>
-													    </div>
-													    <div class="my-uname col-md-12" >
+													    <div class="my-uphone col-md-12" >
 														   <span></span>
 														</div>
 												</div>
@@ -207,18 +167,6 @@
 														   <span></span>
 														</div>
 												</div>
-												<div class="form-group has-feedback">
-													    <div class="col-md-3">
-													        <label for="inputEmail3" class=" control-label">手机号</label>
-													    </div>
-													    <div class="col-md-9 ">
-													        <input type="num" name="uphone" class="form-control" id="inputEmail3" placeholder="建议使用常用手机">
-													        <span id="uphone" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="color: green;display: none"></span>
-													    </div>
-													    <div class="my-uphone col-md-12" >
-														   <span></span>
-														</div>
-												</div>
 												<div class="form-group">
 													    <div class="col-md-3">
 													        <label for="inputEmail3" class=" control-label">手机验证</label>
@@ -233,23 +181,10 @@
 														   <span></span>
 														</div>
 												</div>
-												<div class="form-group">
-													    <div class="col-md-3">
-													        <label for="inputEmail3" class=" control-label">验证码</label>
-													    </div>
-													    <div class="col-md-5 ">
-													        <input type="num" name="ucode" class="form-control" id="inputEmail3" placeholder="请输入验证码">
-													    </div>
-												        <div class="form-group col-md-4 ">
-												            <img src="{{url('/makecode')}}" alt="" onclick="this.src=this.src+'?'+Math.random()" style="cursor: pointer;width: 120px;height: 40px">
-												        </div>
-													    <div class="my-ucode col-md-12" >
-														   <span></span>
-														</div>
-												</div>
+
 												<div class="row form-group">
 													<div class="col-md-12">
-														<input type="submit"  class="btn btn-primary col-md-12" value="注册">
+														<input type="submit"  class="btn btn-primary col-md-12" value="发送">
 													</div>
 												</div>
 											</form>
@@ -633,31 +568,23 @@
 	<script type="text/javascript">
 
 	    //初始化字段值
-	    var username = false;
-	    var userpass = false
-	    var uname = false;
-	    var upass = false;
-	    var repeatpass = false;
 	    var uphone = false;
 	    var phonecode = false;
-	    var ucode = false;
+	    var upass = false;
+	    var repeatpass = false;
 
-
-
-        //用户名判断
-        $('input[name="uname"]').on('focus', function () {
-        	var type = 'uname';
-        	var match = /^[a-zA-Z0-9\u4E00-\u9FA5]{2,20}$/;
+        //手机号判断
+        $('input[name="uphone"]').on('focus', function () {
+        	var type = 'uphone';
+        	var match = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
         	var array = [
-        	    '支持中文、字母、数字、"_"组合，2-20个字符',
-        	    '必须是中文、字母、数字、"_"组合，2-20个字符',
+        	    '请输入手机号',
+        	    '手机号格式不正确',
         	]
         	var test = false;
         	var flat = false;
-        	var status = 1000;
-
+        	var status = 1001;
         	varildate (type, array, test, flat, match, status);
-
         });
 
         //密码判断
@@ -704,21 +631,7 @@
              	$('.my-repeatpass').html('');
              	$('#repeatpass').css('display','block');
             }
-        })
-
-        //手机号判断
-        $('input[name="uphone"]').on('focus', function () {
-        	var type = 'uphone';
-        	var match = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
-        	var array = [
-        	    '请输入手机号',
-        	    '手机号格式不正确',
-        	]
-        	var test = false;
-        	var flat = false;
-        	var status = 1001;
-        	varildate (type, array, test, flat, match, status);
-        });
+        }) 
 
         //手机验证码判断
         $('input[name="phonecode"]').on('focus', function () {
@@ -755,88 +668,26 @@
         	}
         }
 
-        //验证码判断
-        $('input[name="ucode"]').on('focus', function () {
-        	var type = 'ucode';
-        	var match = /[0-9A-Za-z]/
-        	var array = [
-        	    '请输入验证码',
-        	    '看清楚？',
-        	]
-        	var test = false;
-        	var flat = true;
-        	varildate (type, array, test, flat, match);
-        });
-
-
-
-        //登录判断
-        //用户名是否存在
-        $('input[name="username"]').on('focus', function () {
-        	var type = 'username';
-        	var match = /^[a-zA-Z0-9\u4E00-\u9FA5]{2,20}$/;
-        	var array = [
-        	    '请输入用户名',
-        	    '非法名字',
-        	]
-        	var flat = false;
-        	var test = false;
-        	var status = 1002;
-        	varildate (type, array, test, flat, match, status);
-        });
-
-        //密碼判斷
-        $('input[name="userpass"]').on('focus', function () {
-        	var type = 'userpass';
-        	var match = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
-        	var array = [
-        	    '请输入密碼',
-        	    '密码格式错误',
-        	]
-        	var test = false;
-        	var flat = true;
-        	varildate (type, array, test, flat, match);
-        });
-
         //注册提交时验证
         $("#doregister").submit(function() {
-        	if(!uname) {
-        		dotest('uname', '请输入用户名！', 'red');
-        		return false;
-        	} else if (!upass) {
-        		dotest('upass', '请输入密码！', 'red');
-        		return false;
-        	} else if (!repeatpass) {
-        		dotest('repeatpass', '请输入密码！', 'red');
-        		return false;
-        	} else if (!uphone) {
+        	if (!uphone) {
         		dotest('uphone', '请输入手机号！', 'red');
         		return false;
-        	} else if (!phonecode) {
+        	} else if (!pass) {
+        		dotest('pass', '请输入密码！', 'red');
+        		return false;
+        	} else if (!repeatpass) {
+        		dotest('phonecode', '请再次输入密码！', 'red');
+        		return false;
+        	} else if (!repeatpass) {
         		dotest('phonecode', '请输入手机验证码！', 'red');
         		return false;
-        	} else if (!ucode) {
-        		dotest('ucode', '请先输入验证码！', 'red');
-        		return false;
-        	} else {
+        	} else{
         		return true;
         	}
 
 		});
 
-
-        //登录时验证值
-        $("#dologin").submit(function(){
-        	if(!username) {
-        		dotest('username', '请先输入用户名！', 'red');
-        		return false;
-        	} else if (!userpass) {
-        		dotest('userpass', '请先输入密码！', 'red');
-        		return false;
-        	} else {
-        		return true;
-        	}
-		});
 
         /**
          * 提示封装
@@ -927,7 +778,7 @@
 	        		$('#'+type).css('display','none');
 		        	$.ajax({
 		        		type : 'post',
-		        		url  : "{{url('/existence')}}",
+		        		url  : "{{url('/handle')}}",
 		        		data : type+'='+myname+'&_token={{csrf_token()}}',
 		        		success:function(data) {
 
