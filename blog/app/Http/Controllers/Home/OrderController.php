@@ -53,16 +53,25 @@ class OrderController extends Controller
         $number = rand(111111,999999);
         $sum = $request->input('sum');
         $data = time();
-
-
+        //拿出购物车中数据
+        $cartDatas = [];
+        foreach ($idsArr as $k) {
+            $hashKey = 'cart:'.Session::get('user').':'.$k;
+            $cartDatas[] =Redis::HGetAll($hashKey);
+        }
+        $tPeice = 0;
+        foreach ($cartDatas as $v) {
+            $tPeice += $v['num']*$v['price'];
+        }
         //如果提交订单失败
         //事务回滚
-        DB::transaction(function () use($name, $phone, $address, $uid, $number, $sum, $data){
+        DB::transaction(function () use($name, $phone, $address, $uid, $number, $sum, $data, $tPeice){
             DB::table('orders_detail')->insert([
                 'uid' => $uid,
                 'number' => $number,
                 'name' => $name,
                 'phone' => $phone,
+                'tpeicr' => $tPeice,
                 'address' => $address,
                 'addtime' => $data
                 ]);
@@ -74,12 +83,7 @@ class OrderController extends Controller
         //拿出商品ID
         $idsArr = Redis::sMembers($key);
 
-        //拿出购物车中数据
-        $cartDatas = [];
-        foreach ($idsArr as $k) {
-            $hashKey = 'cart:'.Session::get('user').':'.$k;
-            $cartDatas[] =Redis::HGetAll($hashKey);
-        }
+
 
         //添加到商品订单
         foreach ($cartDatas as $v) {
@@ -122,18 +126,24 @@ class OrderController extends Controller
     public function show()
     {
         $uid = Session::get('user');
-        $data = DB::table('orders_detail as d')
-            ->leftJoin('orders_goods as g', 'd.number', '=', 'g.oid')
-            ->select('d.id', 'd.addtime', 'd.status', 'd.number', 'g.gpic', 'g.gid', 'g.gname', 'g.gprice', 'g.gnum')
-            ->where('d.uid', '=', $uid)
+        $data = DB::table('orders_detail')
+            ->select('id', 'addtime', 'status', 'number')
+            ->where('uid', '=', $uid)
             ->get()
             ->toArray();
         if ($data) {
+            foreach ($data as $k => $v) {
+                $data[$k]->orderDetail = DB::table('orders_goods as o')
+                    ->leftJoin('price', 'price.id', 'o.gid')
+                    ->select('o.id', 'o.oid', 'o.gid', 'o.gname', 'o.gpic', 'o.gnum', 'o.gprice', 'ram', 'rom', 'color')
+                    ->where('oid', $v->number)
+                    ->get();
+            }
             return view('Home/order/show', ['data' => $data]);
         } else {
             return view('Home/order/show', [$v = '']);
         }
-        
+
     }
 
     //修改订单状态
@@ -155,11 +165,14 @@ class OrderController extends Controller
             echo json_encode('订单完成');
             exit;
         }
-
+        $uid = 
         //如果确认收货失败
         //回滚事务
         DB::transaction(function () use($id, $status) {
             $data = DB::table('orders_detail')->where('id', $id)->update(['status' => $status]);
+            $price = DB::table('orders_detail')->select('tprice')->where('id', $id);
+
+            DB::table('home_users')->where('id')->increment('votes', $price);
         });
 
     }

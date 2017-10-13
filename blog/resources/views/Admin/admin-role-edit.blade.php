@@ -31,7 +31,7 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="{{url('admin/role', ['id' => $role->id])}}" method="post" class="form form-horizontal" >
+	<form action="{{url('admin/rbac/role', ['id' => $role->id])}}" method="post" class="form form-horizontal" >
 	{{csrf_field()}}
 	{{ method_field('PATCH') }}
 		<div class="row cl">

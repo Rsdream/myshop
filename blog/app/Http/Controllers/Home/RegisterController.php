@@ -66,10 +66,7 @@ class RegisterController extends Controller
         $uphone    = $request->input('uphone'); 
         $ucode     = $request->input('ucode'); 
         $phonecode = $request->input('phonecode');
-
-
-        //注册时间
-        $time = time();
+        $time      = time();//注册时间
         //验证码判断
         $bool = CommonApi::checkCode($request, 'ucode');
         //验证码有误

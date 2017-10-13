@@ -192,6 +192,10 @@
 		var bool;
 		$("input[type='text']").each(function(){
         if ($(this).val() == '') {
+        	var title = $(this).attr('title')
+        			if (title == undefined) {
+        				return;
+        			}
 					layer.msg($(this).attr('title')+'没有填写',{icon:0,time:1500});
 					return bool = false;
 				}

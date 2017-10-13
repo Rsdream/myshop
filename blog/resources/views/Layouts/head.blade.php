@@ -297,13 +297,13 @@
                 <ul id="menu-wishlist" class="menu">
                   <li class="menu-wishlist">
                     <a class="item-link" title="我的收藏" href="#">
-                      <span class="menu-title">我的收藏</span>
+                      <span class="menu-title"></span>
                     </a>
                   </li>
 
                   <li class="yith-woocompare-open menu-compare">
                     <a class="item-link" title="我的订单" href="{{url('/order/show')}}">
-                      <span class="menu-title">Compare</span>
+                      <span class="menu-title"></span>
                     </a>
                   </li>
                 </ul>

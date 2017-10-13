@@ -21,7 +21,7 @@ Route::get('/login', 'Home\LoginController@login');
 // Route::post('doLogin','Api\LoginController@signIn');
 
 //后台路由组
-Route::prefix('/admin')->group(function () {
+Route::prefix('/admin')->group( function () {
 
     //后台中间键，判断是否登录
     Route::middleware(['admin_user'])->group(function () {
@@ -53,32 +53,35 @@ Route::prefix('/admin')->group(function () {
         //显示我的桌面路由
         Route::get('/welcome', 'Admin\IndexController@welCome');
 
-        //角色管理
-        // Route::resource('/role', 'Admin\Administrator\Role');
-        Route::get('/role', 'Admin\Administrator\RoleController@index');
-        Route::get('/role/create', 'Admin\Administrator\RoleController@create');
-        Route::post('/role/create', 'Admin\Administrator\RoleController@store');
-        Route::get('/role/{id}', 'Admin\Administrator\RoleController@show');
-        Route::patch('/role/{id}', 'Admin\Administrator\RoleController@update');
-        Route::get('/role/details/{id}', 'Admin\Administrator\RoleController@details');
+        //后台用户管理组
+        Route::group(['prefix' => 'rbac', 'middleware' => 'rbac.role:superadmin,admin,guest'], function () {
+            //角色管理
+            Route::get('/role', 'Admin\Administrator\RoleController@index')->middleware('rbac.permission:role-list,role-create,role-show,role-details,role-delete,role-update');
+            Route::get('/role/create', 'Admin\Administrator\RoleController@create')->middleware('rbac.permission:role-create');
+            Route::post('/role/create', 'Admin\Administrator\RoleController@store')->middleware('rbac.permission:role-create');
+            Route::get('/role/{id}', 'Admin\Administrator\RoleController@show')->middleware('rbac.permission:role-show');
+            Route::patch('/role/{id}', 'Admin\Administrator\RoleController@update')->middleware('rbac.permission:role-update');
+            Route::get('/role/details/{id}', 'Admin\Administrator\RoleController@details')->middleware('rbac.permission:role-details');
+            Route::get('role/delete/{id}', 'Admin\Administrator\RoleController@delete')->middleware('rbac.permission:role-delete');
 
-        //权限管理
-        // Route::resource('/permission', 'Admin\Administrator\Permission');
-        Route::get('/permission', 'Admin\Administrator\PermissionController@index');
-        Route::get('/permission/create', 'Admin\Administrator\PermissionController@create');
-        Route::post('/permission/create', 'Admin\Administrator\PermissionController@store');
-        Route::get('/permission/{id}', 'Admin\Administrator\PermissionController@show');
-        Route::patch('/permission/{id}', 'Admin\Administrator\PermissionController@update');
+            //权限管理
+            Route::get('/permission', 'Admin\Administrator\PermissionController@index');
+            Route::get('/permission/create', 'Admin\Administrator\PermissionController@create');
+            Route::post('/permission/create', 'Admin\Administrator\PermissionController@store');
+            Route::get('/permission/{id}', 'Admin\Administrator\PermissionController@show');
+            Route::patch('/permission/{id}', 'Admin\Administrator\PermissionController@update');
 
-
-        //管理员列表
-        // Route::resource('/adminlist', 'Admin\Administrator\AdminList');
-        // Route::post('/update/{id}', 'Admin\Administrator\AdminList@update')->where('id','\d+');
-        Route::get('/user', 'Admin\Administrator\UserController@index');
-        Route::get('/user/create', 'Admin\Administrator\UserController@create');
-        Route::post('/user/create', 'Admin\Administrator\UserController@store');
-        Route::get('/user/{id}', 'Admin\Administrator\UserController@show');
-        Route::patch('/user/{id}', 'Admin\Administrator\UserController@update');
+            //管理员列表
+            Route::get('/user','Admin\Administrator\UserController@index')->middleware('rbac.permission:user-list,user-create,user-show,user-details,user-delete,user-update,user-disable,user-stop');
+            Route::get('/user/create','Admin\Administrator\UserController@create')->middleware('rbac.permission:user-create');
+            Route::post('/user/create', 'Admin\Administrator\UserController@store')->middleware('rbac.permission:user-create');
+            Route::get('/user/{id}', 'Admin\Administrator\UserController@show')->middleware('rbac.permission:user-show,user-update');
+            Route::post('/user/aa/{id}', 'Admin\Administrator\UserController@update')->middleware('rbac.permission:user-update,user-show');
+            Route::get('/user/details/{id}', 'Admin\Administrator\UserController@details')->middleware('rbac.permission:user-details');
+            Route::get('/user/disable/{id}', 'Admin\Administrator\UserController@disable')->middleware('rbac.permission:user-disable');
+            Route::get('/user/desc/stop', 'Admin\Administrator\UserController@showDisable')->middleware('rbac.permission:user-stop');
+        });
+        
 
         //后台系统管理->友情链接
         Route::resource('/url', 'Admin\Systron\Url');
@@ -86,6 +89,8 @@ Route::prefix('/admin')->group(function () {
 
         //网站logo的路由
         Route::get('logo', 'Admin\Systron\Logo@index');
+        Route::get('addlogo', 'Admin\Systron\Logo@add');
+        Route::post('insertlogo', 'Admin\Systron\Logo@insert');
         Route::get('editlogo/{id}', 'Admin\Systron\Logo@edit');
         Route::post('update', 'Admin\Systron\Logo@update');
 
@@ -122,12 +127,6 @@ Route::prefix('/admin')->group(function () {
     Route::get('/makecode', 'Admin\Api\CommonController@buildCode');
     //提交用户登陆信息
     Route::post('dologin','Admin\Api\LoginController@dologin');
-
-
-
-
-
-
 
 
    	// Route::get('product/delete/{gayquan}', 'Admin\ProductController@destroy')
@@ -326,9 +325,13 @@ Route::get('/goods/detail/{id}', 'Home\GoodsListController@goodsDetail')->where(
 //home用户退出
 Route::get('/queit', 'Home\LoginController@queit');
 
+//热销商品路由
+Route::post('/hotsale', 'Home\IndexController@hotsale');
+
 //异步加载二级菜单
 Route::get('/menu/{id}', 'Home\IndexController@menu')->where('id', '\d+');
 //加载商品详情页第二章路由
 Route::get('/goods/detailtwo/{id}', 'Home\GoodsListController@goodsDetailTwo')->where('id', '\d+');
 //请求图片
 Route::get('/img/{id}', 'Home\GoodsImgApi@getImg')->where('id', '\d+');
+

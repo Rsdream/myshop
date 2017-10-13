@@ -44,7 +44,7 @@
 	<script type="text/javascript" src="{{asset('/Ui/js/address.js')}}"></script>
 	<script type="text/javascript" src="{{asset('/Ui/jq/jq.js')}}"></script>
 	<script type="text/javascript" src="{{asset('/Ui/jq/js/ui.js')}}"></script>
-	
+
 </head>
 
 <body class="page page-id-6 home-style1">
@@ -175,7 +175,7 @@
 												<a class="item-link" href="checkout.html">
 													<span class="menu-title">收藏夹</span>
 												</a>
-											</li>											
+											</li>
 											<li class="menu-checkout">
 												<a class="item-link" href="{{url('/outlogin')}}">
 													<span class="menu-title">退出</span>
@@ -641,10 +641,10 @@
 											<div class="pay-phone">
 												<li class="td td-item">
 													<div class="item-pic">
-													
+
 														<a href="#" class="J_MakePoint">
-														
-															<img style="width: 80px;height: 80px" src="{{$v['gpic'][0]}}" class="itempic J_ItemImg"></a>															
+
+															<img style="width: 80px;height: 80px" src="{{$v['gpic'][0]}}" class="itempic J_ItemImg"></a>
 													</div>
 													<div class="item-info">
 														<div class="item-basic-info">
@@ -699,7 +699,7 @@
 							@endforeach
 							</div>
 
-							
+
 						<!--留言-->
 							<div class="order-extra">
 								<div class="order-user-info">
@@ -716,7 +716,7 @@
 
 							<div class="clear"></div>
 							</div>
-							
+
 
 
 							<!--信息 -->
@@ -743,7 +743,7 @@
 											</p>
 											<p class="buy-footer-address">
 												<span class="buy-line-title">收货人：</span>
-												<span class="buy-address-detail">   
+												<span class="buy-address-detail">
                                          <span class="buy-user mybuy-user"></span>
 												<span class="buy-phone mybuy-phone"></span>
 												</span>
@@ -1461,98 +1461,98 @@
        	    $('.theme-popover').css('display', 'none');
        	    $('body').css('overflow', 'visible');
        	    $('.theme-popover').css('overflow', 'visible');
-       })       
+       })
    </script>
 
    <script type="text/javascript">
    $('.tc-btn').click(function () {
-				$('#user-name').val('');
-				$('#user-phone').val('');
-				$('#user-comment').val('');
-				$('#pro').val('');
-				$('#city').val('');
-				$('#area').val('');
-				$('#test').val('');
+		$('#user-name').val('');
+		$('#user-phone').val('');
+		$('#user-comment').val('');
+		$('#pro').val('');
+		$('#city').val('');
+		$('#area').val('');
+		$('#test').val('');
    })
 
     //初始化地址表单默认值
-    // var uname = false;
-    // var uphone = false;
-    // var address = false;
-    // var pro = false;
-    // var city = false;
-    // var area = false;
+    var uname = false;
+    var uphone = false;
+    var address = false;
+    var pro = false;
+    var city = false;
+    var area = false;
 
-    // $('input[name="uname"]').blur(function () {
-    // 	var val = $('input[name="uname"]').val();
-    // 	if (val) {
-    // 		uname = true;
-    // 	}
-    // })    
+    $('input[name="uname"]').blur(function () {
+    	var val = $('input[name="uname"]').val();
+    	if (val) {
+    		uname = true;
+    	}
+    })
 
-    // $('input[name="uphone"]').blur(function () {
-    // 	var val = $('input[name="uphone"]').val();
-    // 	if ( (/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/).test(val) ) {
-    // 		uphone = true;
-    // 	}
-    // })
+    $('input[name="uphone"]').blur(function () {
+    	var val = $('input[name="uphone"]').val();
+    	if ( (/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/).test(val) ) {
+    		uphone = true;
+    	}
+    })
 
-    // $('#pro').change(function () {
-    // 	var val = $('#pro').val();
-    // 	if (val) {
-    // 		pro = true;
-    // 	}
-    // })     
+    $('#pro').change(function () {
+    	var val = $('#pro').val();
+    	if (val) {
+    		pro = true;
+    	}
+    })
 
-    // $('#city').change(function () {
-    // 	var val = $('#city').val();
-    // 	if (val) {
-    // 		city = true;
-    // 	}
-    // })     
+    $('#city').change(function () {
+    	var val = $('#city').val();
+    	if (val) {
+    		city = true;
+    	}
+    })
 
-    // $('#area').change(function () {
-    // 	var val = $('#area').val();
-    // 	if (val) {
-    // 		area = true;
-    // 	}
-    // })    
+    $('#area').change(function () {
+    	var val = $('#area').val();
+    	if (val) {
+    		area = true;
+    	}
+    })
 
-   
 
-    // $('#user-intro').blur(function () {
-    // 	var val = $('#user-intro').val();
-    // 	if (val) {
-    // 		address = true;
-    // 	}
-    // })   
+    $('#user-intro').blur(function () {
+    	var val = $('#user-intro').val();
+    	if (val) {
+    		address = true;
+    	}
+    })
 
     $('#add').submit(function () {
-        // if (!uname) {
-        // 	alert('收货人名字不能为空')
-        // 	return false;
-        // } else if (!uphone) {
-        // 	alert('输入正确手机格式');
-        // 	return false;
-        // } else if (!pro) {
-        // 	alert('省份不能为空');
-        // 	return false;        
-        // } else if (!city) {
-        // 	alert('城市不能为空');
-        // 	return false;        
-        // } else if (!area) {
-        // 	alert('区/县不能为空');
-        // 	return false;        
-        // } else if (!address) {
-        // 	alert('详细地址不能为空');
-        // 	return false;
-        // } else {
+        if (!uname) {
+        	alert('收货人名字不能为空')
+        	return false;
+        } else if (!uphone) {
+        	alert('输入正确手机格式');
+        	return false;
+        } else if (!pro) {
+        	alert('省份不能为空');
+        	return false;
+        } else if (!city) {
+        	alert('城市不能为空');
+        	return false;
+        } else if (!area) {
+        	alert('区/县不能为空');
+        	return false;
+        } else if (!address) {
+        	alert('详细地址不能为空');
+        	return false;
+        } else {
+
 	       	$('.theme-popover-mask').css('display', 'none');
 	       	$('.theme-popover').css('display', 'none');
 	       	$('body').css('overflow', 'visible');
 	       	$('.theme-popover').css('overflow', 'visible');
             return true;
-        // }
+        }
     })
 
     //三级联动地址选择
@@ -1573,7 +1573,7 @@
 	//当select标签中的内容发生改变时，应该再触发ajax拿到省份对应的市的数据
 	$('div#show').on('change', 'select', function () {
 
-	 
+
 		//当前用户点击那个select
 		var that = $(this);
 
@@ -1605,7 +1605,7 @@
 
 				//将拿到数据放到下一个select标签中
 				that.next('select').append(str);
-					
+
 			},
 			dataType:'json',
 
@@ -1639,7 +1639,7 @@
 								<div class="address-left">
 									<div class="user DefaultAddr">
 
-										<span class="buy-address-detail">   
+										<span class="buy-address-detail">
                                        <span class="buy-user" name="name">`+data[i].name+` </span>
 										<span class="buy-phone" name="phone">`+data[i].phone+`</span>
 										</span>
@@ -1666,6 +1666,7 @@
 								<div class="clear"></div>
 
 								<div class="new-addr-btn" atr="`+data[i].id+`">
+
 									<a href="javascript:;" onclick="change(this, id=`+data[i].id+`)" class="default" style="`+span+`">设为默认</a>
 									<span class="new-addr-bar hidden">|</span>
 									<a href="javascript:;" onclick="update(this, id=`+data[i].id+`);">编辑</a>
@@ -1730,9 +1731,7 @@
 		$('.mybox').addClass('user-addresslist');
 
 		$(obj).css('display', 'none');
-		$(obj).parent().parent('li').addClass('user-addresslist defaultAddr');
 		$(obj).parent().parent().children().children('ins').css('display', 'block');
-
 		$.ajax({
 			type : 'post',
 			data : 'id='+id+'&_token={{csrf_token()}}',

@@ -51,10 +51,21 @@
     @endif
 
 
-    <div id="errorTip" class="alert alert-danger" style="display:none">无法禁用老大</div>
-    <div id="die" class="alert alert-danger" style="display:none">您没有权限</div>
 
-    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a href="{{url('admin/user/create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span>  </div>
+
+    
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+    @permission ('user-create')
+    <span class="l"> <a href="{{url('admin/rbac/user/create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a></span>&nbsp;&nbsp;&nbsp;&nbsp;
+    @endpermission
+    
+    @permission ('user-stop')
+    <span class="l"> <a href="{{url('admin/rbac/user/desc/stop')}}"  class="btn btn-primary radius"><i class="Hui-iconfont"></i> 禁用的用户</a></span>
+    @endpermission
+
+    </div>
+
+    
     <table class="table table-border table-bordered table-bg">
         <thead>
             <tr>
@@ -73,9 +84,7 @@
         <tbody>
 
             @foreach($users as $v)
-
-            
-
+          
             <tr class="text-c">
                 <!-- <td><input type="checkbox" value="1" name=""></td> -->
                 <td>{{$v->id}}</td>
@@ -88,31 +97,33 @@
                         男
                     @endif
                 </td>
-                <td>{{$v->phone}}</td>
-
-                
-                
+                <td>{{$v->phone}}</td>  
                 <td>
                 @foreach($v->roles as $role)
                 {{$role->name}}
                 @endforeach
                 </td>
-                
-
                 <td class="td-manage">
 
-                    <!-- <a style="text-decoration:none" id="stop"  title="禁用" href="javascript:;"><i class="Hui-iconfont">&#xe631;</i></a>
+                    @permission ('user-show')
+                    <a title="编辑" href="{{url('admin/rbac/user', ['id' => $v->id])}}"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                    @endpermission
 
-                    <a href="javascript:;" id="start" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a> -->
+                    @permission ('user-disable')
+                    <a title="禁用" id="stop" href="javascript:;"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>
+                    @endpermission
 
-                    <a title="编辑" href="{{url('admin/user', ['id' => $v->id])}}"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                    @permission ('user-details')
+                    <a title="详情" href="{{url('admin/rbac/user/details', ['id' => $v->id])}}"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">详情</i></a>
+                    @endpermission
+
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
 
-
+{{$users->links()}}
 </div>
 
 <!--_footer 作为公共模版分离出去-->
@@ -137,39 +148,21 @@ $('td.td-manage').on('click', '#stop', function () {
     var id = $(this).parent().parent().children().eq(0).html();
     // alert(id);
 
-    var url = '{{url("/admin/adminlist/")}}';
+    var url = '{{url("/admin/rbac/user/")}}';
+
+    console.log(that, title, id, url);
 
     $.get(
 
-        url+'/'+id+'/edit/',
+        url+'/disable/'+id,
         {status:1},
         function (data) {
             // console.log(data);
 
             if (data == 1) {
 
-                that.parent().prev().children().html('禁用').css('color','red');
+                that.parent().parent().remove();
 
-            }
-            if (data == 66) {
-
-                $('#errorTip').css('display','block');
-
-                setTimeout(function () {
-
-                    $('#errorTip').css('display','none');
-                },2000);
-
-            }
-
-            if (data == '4') {
-
-                $('#die').css('display','block');
-
-                setTimeout(function () {
-
-                    $('#die').css('display','none');
-                },2000);
             }
         },
         'json'

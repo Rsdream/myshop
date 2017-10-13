@@ -9,24 +9,27 @@ class ShareUserDataProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
-     *
+     * @author rong <[<871513137@qq.com>]>
      * @return void
      */
     public function boot()
     {
         View::composer(
             [
-              'index',
-              'Home/goods/shop',
-              'Home/search',
-              'Home/cart/cart',
-              'Home/goods/simple_product',
-              'Home/user/information',
-              'Home/user/my_account',
-              'Home/user/address',
-              'Home/user/edit',
-              'Home/user/add',
-              'Home/collection/collection',
+                'index',
+                'Home/goods/shop',
+                'Home/search',
+                'Home/cart/cart',
+                'Home/goods/simple_product',
+                'Home/user/information',
+                'Home/user/my_account',
+                'Home/user/address',
+                'Home/user/edit',
+                'Home/user/add',
+                'Home/collection/collection',
+                'Home/order/show',
+                'Home/order/commentlist',
+                'Home/order/comment',
             ],
             'App\Http\ViewComposers\ProfileComposer'
         );

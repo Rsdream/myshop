@@ -90,6 +90,7 @@
                             setTimeout(function () {
                                 $('.alter-register-tip').remove();
                             }, 5000);
+                            $('#123').prepend(tip);
                         }
                         if (data.status == 1404) {
                             var tip = '<div class="alert alert-danger alter-register-tip">'+data.msg+'</div>';    

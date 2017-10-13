@@ -31,7 +31,17 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="{{url('admin/role/create')}}" method="post" class="form form-horizontal" >
+	
+	@if (count($errors) > 0)
+	    <div class="alert alert-danger" id="time">
+	        <ul>
+	            @foreach ($errors->all() as $error)
+	                <li>{{ $error }}</li>
+	            @endforeach
+	        </ul>
+	    </div>
+	@endif
+	<form action="{{url('admin/rbac/role/create')}}" method="post" class="form form-horizontal" >
 		{{csrf_field()}}
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
@@ -72,6 +82,11 @@
 <script type="text/javascript" src="{{asset('/Admin/lib/jquery.validation/1.14.0/validate-methods.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/lib/jquery.validation/1.14.0/messages_zh.js')}}"></script>
 <script type="text/javascript">
+
+setTimeout(function () {
+
+    $('#time').removeClass().html('');
+},2000);
 $(function(){
 	$(".permission-list dt input:checkbox").click(function(){
 		$(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));

@@ -15,6 +15,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/lib/Hui-iconfont/1.0.8/iconfont.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui.admin/skin/default/skin.css')}}" id="skin" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui.admin/css/style.css')}}" />
+<link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
 <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -26,8 +27,16 @@
 <body>
 <article class="page-container">
     
-    
-    <form class="form form-horizontal" id="form-admin-add" action="{{url('admin/user/create')}}" method="post">
+    @if (count($errors) > 0)
+        <div class="alert alert-danger" id="time">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <form class="form form-horizontal" id="form-admin-add" action="{{url('admin/rbac/user/create')}}" method="post">
 
 
     {{csrf_field()}}
@@ -114,6 +123,11 @@
 <script type="text/javascript" src="{{asset('/Admin/lib/jquery.validation/1.14.0/validate-methods.js')}}"></script> 
 <script type="text/javascript" src="{{asset('/Admin/lib/jquery.validation/1.14.0/messages_zh.js')}}"></script> 
 <script type="text/javascript">
+
+setTimeout(function () {
+
+    $('#time').removeClass().html('');
+},2000);
 // $(function(){
 //  $('.skin-minimal input').iCheck({
 //      checkboxClass: 'icheckbox-blue',

@@ -28,6 +28,7 @@
 
 
 	<!-- Animate.css -->
+	<link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
 	<link rel="stylesheet" href="{{asset('/Home/login/css/animate.css')}}">
 	<!-- Icomoon Icon Fonts-->
 	<link rel="stylesheet" href="{{asset('/Home/login/css/icomoon.css')}}">
@@ -64,15 +65,17 @@
 
 	<div class="page-inner" style="">
 	<nav class="gtco-nav" role="navigation"  >
-		<div class="gtco-container" >
+		<div class="gtco-container">
 
-			<div class="row" style="position:absolute; z-index:1">
+			<div class="row" style="position:absolute; z-index:1;">
 
 					<div id="gtco-logo"><a href="{{url('')}}">商 城 首 页 <em>.</em></a></div>
 
 			</div>
 
 		</div>
+
+		
 	</nav>
 	<header id="gtco-header" class="gtco-cover" role="banner" style="background-image: url('{{asset('/Home/login/images/img_4.jpg')}}');">
 

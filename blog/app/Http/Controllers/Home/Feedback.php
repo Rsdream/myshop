@@ -8,21 +8,44 @@ use DB;
 
 class Feedback extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
-    	//先判断是否登录
-    	
-
+    	if (!$request->session()->get('userinfo')) {
+            return redirect('/login');
+        }
     	return view('Home/feedback');
     }
 
     public function insert(Request $request)
     {
 
+        
+
+        $user = $request->session()->get("userinfo");
+
+        //根据用户限制他1小时只能反馈1条
+        
+        //查出最近的1条
+        $num = DB::table('feedback')->select('addtime')->where('uid', $user['id'])->orderBy('addtime', 'desc')->first();
+
+        if (time() - $num->addtime < 60*60) {
+            return redirect('/')->with('err', '请稍后再来');
+        }
+
+        $this->validate($request, [
+            'contact' => 'bail|required|',
+            'name' => 'required',
+            'content' => 'required',
+        ],[
+
+            'name.required' => '称呼不能为空',
+            'contact.required' => '联系方式不能为空',
+            'content.required' => '反馈信息不能为空',
+        ]);
+
     	$data = DB::table('feedback')->insert([
 
-    		'uid' => $request->input('uid'),
+    		'uid' => $user['id'],
     		'contact' => $request->input('contact'),
     		'name' => $request->input('name'),
     		'content' => $request->input('content'),

@@ -177,7 +177,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\RbacServiceProcider::class,
         App\Providers\ShareUserDataProvider::class,
+
 
     ],
 

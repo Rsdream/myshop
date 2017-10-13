@@ -17,10 +17,10 @@ class AdminUsers extends Seeder
 
         	'uid'   => '123456',
         	'pass'  => '123456',
-        	'name'  => str_random(10),
+        	'name'  => '华哥',
         	'sex'   => '1',
-        	'phone' => 186896864,
-        	'email' => str_random(10).'@163.com',
+        	'phone' => 18689486416,
+        	'email' => '2563654031@qq.com',
         	'address' => '江西',
         	'status' => '0'
  
