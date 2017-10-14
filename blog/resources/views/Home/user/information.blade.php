@@ -145,7 +145,7 @@
 
 												<p class="form-row form-row-first validate-required validate-email" id="billing_email_field">
 													<label for="billing_email" class="">
-														邮箱 <span style='color:red;'>(邮箱用于修改密码，请务必填写此项)</span>
+														邮箱
 														<abbr class="required" title="required">*</abbr>
 													</label>
 													<input title="邮箱" value="{{$userInfo->email}}" type="text" class="input-text " name="email" id="billing_email" placeholder="" autocomplete="email" value="" />

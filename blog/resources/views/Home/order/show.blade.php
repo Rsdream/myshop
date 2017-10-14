@@ -91,7 +91,7 @@
 
 											@if (!empty($data))
 											@foreach ($data as $v)
-											<?php $sum=0 ?>
+											<?php $sum=10 ?>
 											<!--交易成功-->
 											<div class="order-status5">
 												<div class="order-title">
@@ -103,7 +103,7 @@
 													<div class="order-left">
 														@foreach($v->orderDetail as $val)
 														@php
-																$sum += $val->gprice*$val->gnum+10
+																$sum += $val->gprice*$val->gnum
 														@endphp
 														<ul class="item-list">
 															<li class="td td-item">
@@ -141,9 +141,16 @@
 														@endforeach
 													</div>
 													<div class="order-right">
-														<li class="td td-amount">
-															<div class="item-amount">
-																合计：{{$sum}}
+														<li class="td td-amount" style="margin-top:-10px;">
+															<div class="item-amount" >
+
+																合计：{{$v->tprice}}
+																<p><span>
+																	@if($v->oscore != 0 )
+																		积分抵现：{{$v->oscore}}元
+																	@endif
+																</span>
+																</p>
 																<p>含运费：<span>10.00</span></p>
 															</div>
 														</li>
@@ -162,7 +169,7 @@
 															<?php $arr=[0=>'等待发货', 1=>'确认收货', 2=>'等待评价', 3=>'订单完成'] ?>
 															<li class="td td-change">
 															    <?php if($v->status == 2) { ?>
-																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'><spna>{{$arr[$v->status]}}</spna></a></div>
+																<div class="am-btn am-btn-danger anniu change"  onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'><spna style="color:white;">{{$arr[$v->status]}}</spna></a></div>
 																<?php } else { ?>
 																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this, number={{$v->number}})">{{$arr[$v->status]}}</div>
 																<?php } ?>
@@ -259,11 +266,6 @@
     		url  : '{{url("order/change")}}',
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
     		success:function(data) {
-
-    			} else if (data == '等待评价') {
-    				window.location.reload();
-    				return;
-    			}
     			$(obj).html(data);
     		},
     		dataType : 'json',

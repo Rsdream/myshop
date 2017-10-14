@@ -334,3 +334,5 @@ Route::get('/menu/{id}', 'Home\IndexController@menu')->where('id', '\d+');
 Route::get('/goods/detailtwo/{id}', 'Home\GoodsListController@goodsDetailTwo')->where('id', '\d+');
 //请求图片
 Route::get('/img/{id}', 'Home\GoodsImgApi@getImg')->where('id', '\d+');
+//查看商品评论
+Route::get('/goods/comment/{id}', 'Home\GoodsListController@getGoodsComment')->where('id', '\d+');

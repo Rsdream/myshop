@@ -91,7 +91,7 @@
 														收件人
 														<abbr class="required" title="required">*</abbr>
 													</label>
-													<input type="text" title="收件人" class="input-text " name="name" id="billing_first_name" placeholder="{{$address->name}}" autocomplete="given-name" >
+													<input type="text" title="收件人" class="input-text " name="name" id="billing_first_name" placeholder="{{$address->name}}" value="{{$address->name}}" autocomplete="given-name" >
 												</p>
 
 												<p class="form-row form-row form-row-last validate-required" id="billing_last_name_field">
@@ -99,7 +99,7 @@
 														联系电话
 														<abbr class="required" title="required">*</abbr>
 													</label>
-													<input placeholder="{{$address->phone}}" title="联系电话" type="text" class="input-text " name="phone" id="billing_last_name" autocomplete="family-name" >
+													<input placeholder="{{$address->phone}}" value="{{$address->phone}}" title="联系电话" type="text" class="input-text " name="phone" id="billing_last_name"  autocomplete="family-name" >
 												</p>
 
 												<div class="clear"></div>
@@ -116,7 +116,7 @@
 													<select title='省份' class="select" name="province">
 														<option value="">-请选择-</option>
 														@foreach($region as $v)
-														<option data-id='{{$v->REGION_ID}}' value="{{$v->REGION_NAME}}">{{$v->REGION_NAME}}</option>
+														<option data-id='{{$v->id}}' value="{{$v->id}}">{{$v->name}}</option>
 														@endforeach
 													</select>
 													<select title='城市' class="select" name="city">
@@ -135,7 +135,7 @@
 														<abbr class="required" title="required">*</abbr>
 													</label>
 
-													<input title="详细地址" type="text" class="input-text " name="detail" id="billing_address_1" placeholder="{{$address->detail}}" autocomplete="address-line1" >
+													<input title="详细地址" type="text" class="input-text " name="detail" id="billing_address_1" placeholder="{{$address->comment}}" value="{{$address->comment}}" autocomplete="address-line1" >
 												</p>
 
 
@@ -276,7 +276,7 @@
 				success: function (msg) {
 					var str = '';
 					for (var i = 0; i<msg.length; i++) {
-						str += '<option value='+msg[i].REGION_NAME+' data-id="'+msg[i].REGION_ID+'">'+msg[i].REGION_NAME+'</option>';
+						str += '<option value='+msg[i].id+' data-id="'+msg[i].id+'">'+msg[i].name+'</option>';
 					}
 					that.next('select').append(str);
 				}

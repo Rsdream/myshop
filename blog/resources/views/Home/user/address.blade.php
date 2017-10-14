@@ -94,8 +94,8 @@
 												</header>
 
 												<address>
-													省市区　：　{{$v->province}}　{{$v->city}}　{{$v->district}}<br>
-													详细地址：　{{$v->detail}}<br>
+													省市区　：　{{$v->pro}}　{{$v->city}}　{{$v->area}}<br>
+													详细地址：　{{$v->comment}}<br>
 													联系电话：　{{$v->phone}}<br>
 
 												</address>

@@ -47,7 +47,6 @@ class AddressController extends Controller
     	$data = DB::table('orders_address')->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment', 'status')->where('uid', Session::get('user'))->orderBy('id', 'DESC')->get();
         $add = [];
     	foreach ($data as $v) {
-
     		$pro = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
     		$city = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
     		$area = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();

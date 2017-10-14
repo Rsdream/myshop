@@ -701,14 +701,14 @@
 
 
 						<!--留言-->
-							<div class="order-extra">
+							<div class="order-extra" style="float:right;">
 								<div class="order-user-info">
-									<div id="holyshit257" class="memo">
-										<label>买家留言：</label>
-										<input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close" name="text">
-										<div class="msg hidden J-msg">
-											<p class="error">最多输入500个字符</p>
-										</div>
+									<div id="holyshit257" class="memo" style="float:right;">
+										积分说明：只能使<br>
+										用100倍数的积分<br>
+										你有：<label>{{$score}}</label>积分<br>
+										<label id="score"></label>
+										<input type="checkbox" name="score" value='1'>
 									</div>
 								</div>
 
@@ -1729,5 +1729,22 @@
 		}
 	})
    </script>
+	 <script type="text/javascript">
+	 	function s() {
+			var sum = parseInt({{$score}} / 100) * 100;
+			$('#score').html('使用' + sum + '积分抵现' + parseInt({{$score}} / 100) + '元')
+		}
+		s();
+	 	$('input[name="score"]').on('click', function () {
+			var score = parseInt({{$score}} / 100)
+			if ($("input[name='score']").is(':checked')) {
+				$('#J_ActualFee').html($('#J_ActualFee').html() - score)
+			} else {
+				var num = $('#J_ActualFee').html();
+				num = parseInt(num) + parseInt(score)
+			  $('#J_ActualFee').html(num)
+			}
+		})
+	 </script>
    </body>
 </html>

@@ -150,7 +150,7 @@
 											<br>
 											@if($goodsDetail[0]->stock != 0)
 											<button type="button" onclick="addCollection({{$goodsDetail[0]->pid}})" class="btn btn-danger">　收藏此商品　</button>　
-											<button type="button" sub='{{$goodsDetail[0]->pid}}' class="btn btn-success sub">　加入购物车　</button>　
+											<button type="button" sub='{{$goodsDetail[0]->pid}}' onclick="addcart({{$goodsDetail[0]->pid}})" class="btn btn-success sub">　加入购物车　</button>　
 											@else
 											<button type="button" onclick="addCollection({{$goodsDetail[0]->pid}})" class="btn btn-danger">　收藏此商品　</button>　
 											<button type="button" class="btn btn-success" disabled>商品暂无存货</button>
@@ -163,11 +163,11 @@
 									<div class="tabbable">
 										<ul class="nav nav-tabs">
 											<li class="description_tab active">
-												<a href="#tab-description" data-toggle="tab">Description</a>
+												<a href="#tab-description" data-toggle="tab">商品详情</a>
 											</li>
 
 											<li class="reviews_tab ">
-												<a href="#tab-reviews" data-toggle="tab">Reviews (0)</a>
+												<a href="#tab-reviews" id="goods" data-toggle="tab">商品评价 (0)</a>
 											</li>
 										</ul>
 
@@ -181,44 +181,21 @@
 												<p>In jerky minim chicken duis ground round nostrud pork belly occaecat pastrami commodo adipisicing tongue doner short loin. Officia est do, filet mignon shank pork loin anim esse quis kevin corned beef enim. Magna sint sirloin ham hock cupidatat laboris. Boudin spare ribs kevin meatloaf id short loin swine flank brisket aute. Reprehenderit turkey qui, boudin swine voluptate ipsum fugiat.</p>
 												<p>Salami in ball tip pig eiusmod occaecat pork chop, consequat excepteur incididunt. Ground round picanha ut boudin exercitation jerky meatball strip steak ipsum labore spare ribs turducken ribeye ut aliquip. Id ipsum esse nisi ball tip chuck adipisicing sint culpa t-bone brisket bresaola mollit. Enim eu kevin, tail in nisi nulla sirloin adipisicing veniam dolore.</p>
 											</div>
-
 											<div class="tab-pane " id="tab-reviews">
 												<div id="reviews">
-													<div id="comments">
-														<h2>Reviews</h2>
-														<p class="woocommerce-noreviews">There are no reviews yet.</p>
-													</div>
-
 													<div id="review_form_wrapper">
 														<div id="review_form">
 															<div id="respond" class="comment-respond">
-																<h3 id="reply-title" class="comment-reply-title">
-																	Be the first to review "turkey qui"
+																<h3 id="reply-title" class="comment-reply">
+																	用户名：
 																	<small><a rel="nofollow" id="cancel-comment-reply-link" href="#" style="display:none;">Cancel reply</a></small>
 																</h3>
-
-																<form action="" method="post" id="commentform" class="comment-form">
-																	<p class="comment-form-rating">
-																		<label for="rating">Your Rating</label>
-																		<select name="rating" id="rating">
-																			<option value="">Rate ...</option>
-																			<option value="5">Perfect</option>
-																			<option value="4">Good</option>
-																			<option value="3">Average</option>
-																			<option value="2">Not that bad</option>
-																			<option value="1">Very Poor</option>
-																		</select>
-																	</p>
-
-																	<p class="comment-form-comment">
-																		<label for="comment">Your Review</label>
-																		<textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea>
-																	</p>
-
-																	<p class="form-submit">
-																		<input name="submit" type="submit" id="submit" class="submit" value="Submit">
-																	</p>
-																</form>
+																<p class="comment-form-comment">
+																	<label for="comment">内容：</label>
+																	<span disabled id="comment" name="comment" cols="45" rows="8" aria-required="true">asdads</span><br>
+																	<label for="comment">客服回复：</label>
+																	<span disabled id="comment" name="comment" cols="45" rows="8" aria-required="true">asdads</span>
+																</p>
 															</div>
 														</div>
 													</div>
@@ -786,6 +763,17 @@
       	// The customizer requires postMessage and CORS (if the site is cross domain)
       	b[c] += ( window.postMessage && request ? ' ' : ' no-' ) + cs;
    </script>
+	 <script type="text/javascript">
+	 	$('#goods').on('click', function () {
+			$.ajax({
+				type: 'get',
+				url: '{{url("goods/comment/".$goodsDetail[0]->id)}}',
+				success: function (msg) {
+					console.log(msg);
+				}
+			})
+		})
+	 </script>
    <!--<![endif]-->
 	 @include('Layouts/addcart')
    </body>

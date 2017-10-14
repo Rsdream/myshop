@@ -62,8 +62,8 @@ class OrderController extends Controller
             'status'  => $v->status,
             ];
         }
-
-    	return view('Home/order/check', ['orders'=>$cartDatas, 'address' => $add]);
+        $score = DB::table('home_users')->select('score')->where('id', session('userinfo')['id'])->first();
+    	  return view('Home/order/check', ['orders'=>$cartDatas, 'address' => $add, 'score' => $score->score]);
     }
 
     //提交订单
@@ -76,6 +76,7 @@ class OrderController extends Controller
         $address=$request->input('address');
         $text=$request->input('text');
         $uid = Session::get('user');
+        $score = $request->input('score');
         $number = rand(111111,999999);
         $time = time();
 
@@ -97,13 +98,23 @@ class OrderController extends Controller
 
         //如果提交订单失败
         //事务回滚
-        DB::transaction(function () use($name, $phone, $address, $uid, $number, $tPrice, $text, $time){
+        if (!empty($score)) {
+            $score = DB::table('home_users')->select('score')->where('id', session('userinfo')['id'])->first();
+            $score = floor($score->score / 100);
+            $tPrice -= $score;
+            $uid = session('userinfo')['id'];
+            DB::table('home_users')->where('id', $uid)->decrement('score', $score * 100);
+        } else {
+            $score = 0;
+        }
+        DB::transaction(function () use($name, $phone, $address, $uid, $number, $tPrice, $text, $time, $score){
             DB::table('orders_detail')->insert([
                 'uid' => $uid,
                 'number' => $number,
                 'name' => $name,
                 'phone' => $phone,
-                'tprice' => $tPrice,
+                'tprice' => $tPrice + 10,
+                'oscore' => $score,
                 'address' => $address,
                 'addtime' => $time,
                 'text' => $text,
@@ -155,7 +166,7 @@ class OrderController extends Controller
       }
         $uid = Session::get('user');
         $data = DB::table('orders_detail')
-            ->select('id', 'addtime', 'status', 'number')
+            ->select('id', 'addtime', 'status', 'number' , 'tprice', 'oscore')
             ->where('uid', '=', $uid)
             ->get()
             ->toArray();

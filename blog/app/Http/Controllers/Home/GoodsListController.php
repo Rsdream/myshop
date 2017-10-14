@@ -324,4 +324,27 @@ class GoodsListController extends Controller
            'detail' => $detail,
         ]);
     }
+
+    /**
+    * 商品的评论
+    * @author $id   商品的id
+    * @return array $goodsDetail 指定id商品信息
+    */
+    public function getGoodsComment($id) {
+        $commentInfo = DB::table('orders_comment as c')
+            ->leftJoin('price as p', 'c.gid', '=', 'p.gid')
+            ->leftJoin('home_users as u', 'u.id', '=', 'c.uid')
+            ->select(
+                'c.comment',
+                'c.addtime',
+                'p.ram',
+                'p.rom',
+                'p.color',
+                'u.name',
+                'u.uid'
+            )
+            ->where('p.gid', $id)
+            ->get();
+        return $commentInfo;
+    }
 }
