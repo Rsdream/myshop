@@ -751,22 +751,6 @@
 	<script type="text/javascript" src="{{asset('Home/js/woocommerce/cart.min.js')}}"></script>
 
 	<script type="text/javascript">
-		$('.sub').on('click', function (){
-			var id = $(this).attr('sub');
-			var num = $('input[name="num"]').val();
-			if (num <= 0) {
-				return ;
-			}
-			$.ajax({
-				type: 'get',
-				url: '{{url("cart/add")}}'+'?id='+id+'&num='+num,
-				success: function (msg){
-					alert('‘添加成功’')
-				}
-			})
-		})
-	</script>
-	<script type="text/javascript">
 		var sticky_navigation_offset_top = $("#header .header-bottom").offset().top;
 		var sticky_navigation = function(){
 									var scroll_top = $(window).scrollTop();

@@ -14,57 +14,90 @@ use DB;
 
 class OrderController extends Controller
 {
-
     //订单页面
     public function check(Request $request)
     {
-        $id = $request->input('like');
+        //判断用户是否登录
+        if (Session::get('user') == '') {
 
+            return redirect('/login');
+        }
+        $number = $request->input('number');
+        $id     = $request->input('like');
     	//拿出购物车中数据
         foreach ($id as $v) {
+            //判断库存是否为0
+            $stock = DB::table('price')->select('stock')->where('id', $v)->first();
+            if (intval($number) > intval($stock->stock)) {
+                return redirect('/cart');
+            }
             $hashKey = 'cart:'.Session::get('user').':'.$v;
             $cartDatas[] =Redis::HGetAll($hashKey);
         }
-
     	//图片数据转化为数组
     	foreach ($cartDatas as $key => $value) {
     		$val = json_decode($value['gpic'], true);
     		$cartDatas[$key]['gpic'] = $val;
     	}
 
-    	return view('Home/order/check', ['orders'=>$cartDatas]);
+        $data = DB::table('orders_address')
+            ->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment', 'status')
+            ->where('uid', Session::get('user'))
+            ->where('status', 1)
+            ->get();
+        $add = [];
+        foreach ($data as $v) {
+
+            $pro = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
+            $city = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
+            $area = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
+            $add[] = [
+            'id'      => $v->id,
+            'pro'     => $pro->name,
+            'city'    => $city->name,
+            'area'    => $area->name,
+            'name'    => $v->name,
+            'phone'   => $v->phone,
+            'comment' => $v->comment,
+            'status'  => $v->status,
+            ];
+        }
+
+    	return view('Home/order/check', ['orders'=>$cartDatas, 'address' => $add]);
     }
 
     //提交订单
     public function add(Request $request)
     {
-        $name = $request->input('name');
-        $phone = $request->input('phone');
-        $address = $request->input('address');
+        $text = '';
+        $id=$request->input('like');
+        $name=$request->input('uname');
+        $phone=$request->input('uphone');
+        $address=$request->input('address');
+        $text=$request->input('text');
         $uid = Session::get('user');
         $number = rand(111111,999999);
-        $sum = $request->input('sum');
-        $data = time();
+        $time = time();
 
         //用户登录
         $key = 'cart:ids:'.Session::get('user');
-        //拿出商品ID
-        $idsArr = Redis::sMembers($key);
-        //拿出购物车中数据
         $cartDatas = [];
-        foreach ($idsArr as $k) {
+        foreach ($id as $k) {
             $hashKey = 'cart:'.Session::get('user').':'.$k;
             $cartDatas[] =Redis::HGetAll($hashKey);
         }
 
         $tPrice = 0;
+        if (!$cartDatas) {
+            return redirect('cart');
+        }
         foreach ($cartDatas as $v) {
             $tPrice += $v['num'] * $v['price'];
         }
 
         //如果提交订单失败
         //事务回滚
-        DB::transaction(function () use($name, $phone, $address, $uid, $number, $sum, $data, $tPrice){
+        DB::transaction(function () use($name, $phone, $address, $uid, $number, $tPrice, $text, $time){
             DB::table('orders_detail')->insert([
                 'uid' => $uid,
                 'number' => $number,
@@ -72,69 +105,69 @@ class OrderController extends Controller
                 'phone' => $phone,
                 'tprice' => $tPrice,
                 'address' => $address,
-                'addtime' => $data
+                'addtime' => $time,
+                'text' => $text,
                 ]);
         });
 
-
+        //删除
+        $setKey = 'cart:ids:'.Session::get('user');
+        //拿出购物车中数据
+        $datas = [];
+        foreach ($id as $k) {
+            $hashKey = 'cart:'.Session::get('user').':'.$k;
+            Redis::del($hashKey);
+            Redis::sRem($setKey, $id);
+        }
 
 
         //添加到商品订单
         foreach ($cartDatas as $v) {
                 $oid = $number;
                 $gid = $v['id'];
+                $setmeal = $v['setmeal'];
                 $gpic = $v['gpic'];
                 $gname = $v['gname'];
                 $gnum = $v['num'];
                 $gprice= $v['price'];
 
-                OrdersGood::insert(['oid' => $oid, 'gid' => $gid, 'gpic' => $gpic, 'gname' => $gname, 'gnum' => $gnum, 'gprice' => $gprice]);
+                OrdersGood::insert(['oid' => $oid, 'gid' => $gid, 'gpic' => $gpic, 'gname' => $gname, 'gnum' => $gnum, 'gprice' => $gprice, 'setmeal' => $setmeal]);
+                $stock = DB::table('price')->select('stock')->where('id', '=', $gid)->first();
+                DB::table('price')->where('id', '=', $gid)->update(['stock' => $stock->stock-$gnum]);
         }
 
+        return redirect('order/success');
     }
 
     //成功下单
     public function success()
     {
-
-        //用户登录
-        $key = 'cart:ids:'.Session::get('user');
-        //拿出商品ID
-        $idsArr = Redis::sMembers($key);
-
-        //拿出购物车中数据
-        $cartDatas = [];
-        foreach ($idsArr as $k) {
-            $hashKey = 'cart:'.Session::get('user').':'.$k;
-            Redis::del($hashKey);
-        }
-        Redis::del($key);
-
         return view('Home/success/success');
     }
 
     //查看订单
     public function show()
     {
+      //判断用户是否登录
+      if (Session::get('user') == '') {
+
+          return redirect('/login');
+      }
         $uid = Session::get('user');
         $data = DB::table('orders_detail')
             ->select('id', 'addtime', 'status', 'number')
             ->where('uid', '=', $uid)
             ->get()
             ->toArray();
-        if ($data) {
             foreach ($data as $k => $v) {
                 $data[$k]->orderDetail = DB::table('orders_goods as o')
                     ->leftJoin('price', 'price.id', 'o.gid')
                     ->select('o.id', 'o.oid', 'o.gid', 'o.gname', 'o.gpic', 'o.gnum', 'o.gprice', 'ram', 'rom', 'color')
                     ->where('oid', $v->number)
-                    ->get();
+                    ->get()
+                    ->toArray();
             }
-            return view('Home/order/show', ['data' => $data]);
-        } else {
-            return view('Home/order/show', [$v = '']);
-        }
-
+        return view('Home/order/show', ['data' => $data]);
     }
 
     //修改订单状态
@@ -175,9 +208,8 @@ class OrderController extends Controller
     public function commentlist(Request $request)
     {
         $number = $request->input('number');
-
         $data = DB::table('orders_goods')
-                ->select('id', 'gname', 'gpic', 'gprice')
+                ->select('gid', 'gname', 'gpic', 'gprice', 'oid', 'id')
                 ->where('oid', '=', $number)
                 ->where('status', '=', '0')
                 ->get()
@@ -189,7 +221,8 @@ class OrderController extends Controller
     //处理订单评论
     public function comment(Request $request)
     {
-        $gid = $request->input('id');
+        $gid = $request->input('gid');
+        $oid = $request->input('oid');
         $comment = $request->input('comment');
         $addtime = time();
         $uid = Session::get('user');
@@ -243,7 +276,7 @@ class OrderController extends Controller
                 }
             }
 
-        return redirect('order/showComment');
+        return redirect('order/commentlist?number=$oid');
     }
 
     //查看订单评论
@@ -253,23 +286,17 @@ class OrderController extends Controller
 
         $data = [];
         //查询出当前用户订单
-        $data = DB::table('orders_comment')
-            ->select('addtime', 'gid', 'comment')
-            ->where('uid', '=', $uid)
-            ->get()
-            ->toArray();
 
-        $data = DB::table('orders_comment')
-            ->join('orders_goods', function($join)
-            {
-                $join->on('orders_goods.gid', '=', 'orders_comment.gid');
-            })->select('orders_comment.addtime', 'orders_comment.comment',
-                'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.status')
-                ->where('orders_goods.status', '=', 1)
-                ->orderBy('orders_comment.addtime', 'desc')
-                ->get()
-                ->toArray();
-
+                $users = DB::table('orders_comment')
+                            ->join('orders_goods', 'orders_comment.gid', '=', 'orders_goods.gid')
+                            ->select('orders_comment.addtime', 'orders_comment.comment',
+                                'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.status')
+                                ->where('orders_goods.status', '=', 1)
+                                ->where('orders_comment.uid', '=', $uid)
+                                ->orderBy('orders_comment.addtime', 'desc')
+                                ->get()
+                                ->toArray();
+dd($data);
         return view('Home/order/comment', ['data' => $data]);
 
     }

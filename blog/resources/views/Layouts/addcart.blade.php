@@ -1,3 +1,4 @@
+<script type="text/javascript" src="{{asset('layer/layer.js')}}"></script>
 <script type="text/javascript">
  function addcart (id) {
    if (id != '') {
@@ -6,7 +7,7 @@
        url: '{{url("cart/add")}}',
        data: 'id='+id+'&num=1',
        success: function (msg) {
-         alert('加入成功');
+         layer.msg('加入成功');
        }
      })
    }
@@ -19,9 +20,12 @@
        data: 'id='+id,
        success: function (msg) {
          if (msg == 0) {
-           alert('请登录')
+            layer.confirm('请登录?', {icon: 3, title:'提示'}, function(index){
+            window.location.replace("{{url('/login')}}");
+            layer.close(index);
+            });
          } else {
-           alert('收藏成功')
+           layer.msg('收藏成功');
          }
        }
      })

@@ -54,10 +54,6 @@
                       @if (!session()->has('userinfo'))
                       <a href="{{url('/login')}}" class="">会员注册</a>
                       @endif
-<!-- 												<ul class="currency_switcher">
-                        <li><a href="#" class="reset default active" data-currencycode="USD">USD</a></li>
-                        <li><a href="#" class="" data-currencycode="EUR">EUR</a></li>
-                      </ul> -->
                     </li>
                   </ul>
                 </form>
@@ -79,20 +75,19 @@
                       </li>
 
                       <li class="menu-cart">
-                        <a class="item-link" href="cart.html">
+                        <a class="item-link" href="{{url('/cart')}}">
                           <span class="menu-title">购物车</span>
                         </a>
                       </li>
 
                       <li class="menu-checkout">
-                        <a class="item-link" href="checkout.html">
+                        <a class="item-link" href="{{url('order/show')}}">
                           <span class="menu-title">我的订单</span>
                         </a>
                       </li>
-
-                      <li class="menu-wishlist">
-                        <a class="item-link" href="#">
-                          <span class="menu-title">我的评价</span>
+                      <li class="menu-checkout">
+                        <a class="item-link" href="{{url('order/showComment')}}">
+                          <span class="menu-title">我的评论</span>
                         </a>
                       </li>
                     </ul>
@@ -123,12 +118,12 @@
                 <div class="widget-inner">
                   <ul id="menu-checkout" class="menu">
                     <li class="menu-checkout">
-                      <a class="item-link" href="checkout.html">
+                      <a class="item-link" href="{{url('/collection')}}">
                         <span class="menu-title">收藏夹</span>
                       </a>
                     </li>
                     <li class="menu-checkout">
-                      <a class="item-link" href="{{url('/outlogin')}}">
+                      <a class="item-link" href="{{url('/queit')}}">
                         <span class="menu-title">退出</span>
                       </a>
                     </li>

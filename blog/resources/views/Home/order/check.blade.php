@@ -566,8 +566,6 @@
 				</div>
 			</div>
 		</header>
-
-
 		<div class="container">
 			<div class="row">
 				<div id="contents" role="main" class="main-page  col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -605,6 +603,8 @@
 					</div>
 					<div class="clear"></div>
 
+				<form method="post" action="{{url('order/add')}}" id="add">
+                {{ csrf_field() }}
 					<!--订单 -->
 					<div class="concent">
 						<div id="payTable">
@@ -635,7 +635,7 @@
 							@foreach ($orders as $v)
 							<tr class="item-list">
 								<div class="bundle  bundle-last">
-
+								<input type="hidden" name="like[]" value="{{$v['id']}}">
 									<div class="bundle-main">
 										<ul class="item-content clearfix">
 											<div class="pay-phone">
@@ -654,8 +654,7 @@
 												</li>
 												<li class="td td-info">
 													<div class="item-props">
-														<span class="sku-line">颜色：12#川南玛瑙</span>
-														<span class="sku-line">包装：裸装</span>
+														<span class="sku-line">配置:{{$v['setmeal']}}</span>
 													</div>
 												</li>
 												<li class="td td-price">
@@ -706,7 +705,7 @@
 								<div class="order-user-info">
 									<div id="holyshit257" class="memo">
 										<label>买家留言：</label>
-										<input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close">
+										<input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close" name="text">
 										<div class="msg hidden J-msg">
 											<p class="error">最多输入500个字符</p>
 										</div>
@@ -734,28 +733,39 @@
 
 											<p class="buy-footer-address">
 												<span class="buy-line-title buy-line-title-type">寄送至：</span>
+
 												<span class="buy--address-detail">
-								               <span class="province myprovince"></span>
-												<span class="city mycity"></span>
-												<span class="dist mydist"></span>
-												<span class="street mystreet"></span>
+								               <span class="province myprovince">@foreach ($address as $v){{$v['pro']}}@endforeach</span>
+
+												<span class="city mycity">@foreach ($address as $v){{$v['city']}}@endforeach</span>
+												<span class="dist mydist">@foreach ($address as $v){{$v['area']}}@endforeach</span>
+												<span class="street mystreet">@foreach ($address as $v){{$v['comment']}}@endforeach</span>
 												</span>
 												</span>
 											</p>
 											<p class="buy-footer-address">
 												<span class="buy-line-title">收货人：</span>
+
 												<span class="buy-address-detail">
-                                         <span class="buy-user mybuy-user"></span>
-												<span class="buy-phone mybuy-phone"></span>
+
+		                                        <span class="buy-user mybuy-user">@foreach ($address as $v){{$v['name']}}@endforeach</span>
+
+												<span class="buy-phone mybuy-phone">@foreach ($address as $v){{$v['phone']}}@endforeach</span>
 												</span>
+
 											</p>
 										</div>
-									</div>
 
+									</div>
+									@foreach ($address as $v)
+									 <input type="hidden" name="address" value="{{$v['pro']}}{{$v['city']}}{{$v['area']}}{{$v['comment']}}">
+									     <input type="hidden" name="uphone" value="{{$v['phone']}}">
+											 <input type="hidden" name="uname" value="{{$v['name']}}">
+									@endforeach
 									<div id="holyshit269" class="submitOrder">
 										<div class="go-btn-wrap">
 										<div class="button">
-											<a id="J_Go" href="javascript:;" class="btn-go" tabindex="0" title="点击此按钮，提交订单">提交订单</a>
+										    <button type="submit" class="btn btn-warning" style="font-size: 18px">提交订单</butto>
 										<div>
 										</div>
 									</div>
@@ -769,6 +779,7 @@
 				</div>
 				<div class="footer">
 
+			</form>
 				</div>
 			</div>
 			<div class="theme-popover-mask"></div>
@@ -783,6 +794,7 @@
 				<div class="am-u-md-12" id="show">
 					<form class="am-form am-form-horizontal" id="add" action="{{url('/address/add')}}" method="post">
 					    {{csrf_field()}}
+					    <input type="hidden" id="test" name="id" >
 						<div class="am-form-group">
 							<label for="user-name" class="am-form-label">收货人</label>
 							<div class="am-form-content">
@@ -815,7 +827,7 @@
 						<div class="am-form-group">
 							<label for="user-intro" class="am-form-label">详细地址</label>
 							<div class="am-form-content">
-								<textarea class="" rows="3" id="user-intro" name="address" placeholder="输入详细地址" required=""></textarea>
+								<textarea class="" rows="3" id="user-comment" name="address" placeholder="输入详细地址" required=""></textarea>
 								<small>100字以内写出你的详细地址...</small>
 							</div>
 						</div>
@@ -1281,7 +1293,9 @@
 			</div>
 		</footer>
 	</div>
+	<script type="text/javascript">
 
+	</script>
 	<!-- DIALOGS -->
 	<div class="modal fade" id="search_form" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog block-popup-search-form">
@@ -1413,6 +1427,7 @@
 	<script type="text/javascript" src="{{asset('Home/js/js_composer/js_composer_front.min.js')}}"></script>
 
 	<script type="text/javascript" src="{{asset('Home/js/plugins.js')}}"></script>
+	<script type="text/javascript" src="{{asset('layer/layer.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/megamenu.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/main.min.js')}}"></script>
 
@@ -1463,86 +1478,22 @@
    </script>
 
    <script type="text/javascript">
-
-
-    //初始化地址表单默认值
-    var uname = false;
-    var uphone = false;
-    var address = false;
-    var pro = false;
-    var city = false;
-    var area = false;
-
-    $('input[name="uname"]').blur(function () {
-    	var val = $('input[name="uname"]').val();
-    	if (val) {
-    		uname = true;
-    	}
-    })
-
-    $('input[name="uphone"]').blur(function () {
-    	var val = $('input[name="uphone"]').val();
-    	if ( (/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/).test(val) ) {
-    		uphone = true;
-    	}
-    })
-
-    $('#pro').change(function () {
-    	var val = $('#pro').val();
-    	if (val) {
-    		pro = true;
-    	}
-    })
-
-    $('#city').change(function () {
-    	var val = $('#city').val();
-    	if (val) {
-    		city = true;
-    	}
-    })
-
-    $('#area').change(function () {
-    	var val = $('#area').val();
-    	if (val) {
-    		area = true;
-    	}
-    })
-
-
-
-    $('#user-intro').blur(function () {
-    	var val = $('#user-intro').val();
-    	if (val) {
-    		address = true;
-    	}
-    })
+   $('.tc-btn').click(function () {
+		$('#user-name').val('');
+		$('#user-phone').val('');
+		$('#user-comment').val('');
+		$('#pro').val('省份');
+		$('#city').val('城市');
+		$('#area').val('区');
+		$('#test').val('');
+   })
 
     $('#add').submit(function () {
-        if (!uname) {
-        	alert('收货人名字不能为空')
-        	return false;
-        } else if (!uphone) {
-        	alert('输入正确手机格式');
-        	return false;
-        } else if (!pro) {
-        	alert('省份不能为空');
-        	return false;
-        } else if (!city) {
-        	alert('城市不能为空');
-        	return false;
-        } else if (!area) {
-        	alert('区/县不能为空');
-        	return false;
-        } else if (!address) {
-        	alert('详细地址不能为空');
-        	return false;
-        } else {
 	       	$('.theme-popover-mask').css('display', 'none');
 	       	$('.theme-popover').css('display', 'none');
 	       	$('body').css('overflow', 'visible');
 	       	$('.theme-popover').css('overflow', 'visible');
             return true;
-        }
     })
 
     //三级联动地址选择
@@ -1584,7 +1535,7 @@
 			type: 'post',
 			url: '{{url("/address/select")}}',
 			data: 'upid='+currentId+'&_token={{csrf_token()}}',
-			success: function (msg) {console.log(msg);
+			success: function (msg) {
 
 				var str = '';
 
@@ -1610,8 +1561,21 @@
 			success:function(data) {
 				str = '';
 				for (var i = 0; i < data.length; i++) {
+					if (data[i].status == 0) {
+						var d = 'user-addresslist';
+						var span = 'display:block';
+					} else {
+						var span = 'display:none';
+
+					}
+					if (data[i].status == 1) {
+						var d = 'user-addresslist defaultAddr';
+						var box = 'display:black';
+					} else {
+						var box = 'display:none';
+					}
 					str += `<div class="per-border"></div>
-							<li class="user-addresslist mybox">
+							<li class="`+d+` mybox">
 
 								<div class="address-left">
 									<div class="user DefaultAddr">
@@ -1633,7 +1597,7 @@
 										</span>
 									</div>
 
-									<ins class="deftip" style="display:none">默认地址</ins>
+									<ins class="deftip" style="`+box+`">默认地址</ins>
 
 								</div>
 								<div class="address-right">
@@ -1643,9 +1607,10 @@
 								<div class="clear"></div>
 
 								<div class="new-addr-btn" atr="`+data[i].id+`">
-									<a href="javascript:;" onclick="change(this)" class="default" style="display:block">使用该地址</a>
+
+									<a href="javascript:;" onclick="change(this, id=`+data[i].id+`)" class="default" style="`+span+`">设为默认</a>
 									<span class="new-addr-bar hidden">|</span>
-									<a href="javascript:;" onclick="update(this);">编辑</a>
+									<a href="javascript:;" onclick="update(this, id=`+data[i].id+`);">编辑</a>
 									<span class="new-addr-bar">|</span>
 									<a href="javascript:void(0);"  onclick="del(this);">删除</a>
 								</div>
@@ -1660,7 +1625,7 @@
 	}
 
 	show();
-
+  showChange();
 	//删除地址
 	function del(obj) {
 		var id = $(obj).parent().attr('atr');
@@ -1670,6 +1635,7 @@
 			url  : '{{url("/address/del")}}',
 			success:function(data) {
 				show();
+				showChange();
 			},
 			dataType:'json',
 		})
@@ -1677,66 +1643,90 @@
 	}
 
 	//编辑地址
-	function update(obj) {
+	function update(obj, id) {
 	    $('.theme-popover-mask').css('display', 'block');
 	    $('.theme-popover').css('display', 'block');
 	    $('body').css('overflow', 'visible');
 	    $('.theme-popover').css('overflow', 'visible');
+		$.ajax({
+			type : 'post',
+			data : 'id='+id+'&_token={{csrf_token()}}',
+			url  : '{{url("address/update")}}',
+			success:function(data) {
+				$('#user-name').val(data.name);
+				$('#user-phone').val(data.phone);
+				$('#user-comment').val(data.comment);
+				$('#pro').val(data.pro);
+				$('#city').val(data.city);
+				$('#area').val(data.area);
+				$('#test').val(data.id);
+				showChange();
+			},
+			dataType: 'json',
+		})
 
 	}
 
-	function change(obj) {
+	function change(obj, id) {
 		$('.default').css('display', 'block');
 		$('.deftip').css('display', 'none');
 		$('.mybox').removeClass('user-addresslist defaultAddr');
 		$('.mybox').addClass('user-addresslist');
 
 		$(obj).css('display', 'none');
-		$(obj).parent().parent('li').addClass('user-addresslist defaultAddr');
-		$(obj).parent().parent().children().first().children(':last').css('display', 'block');
-		var name = $(obj).parent().parent().children().first('div').children().first().children().children().first('span').html();
-		var phone =$(obj).parent().parent().children().first('div').children().first().children().children().last('span').html();
-		var pro = $(obj).parent().parent().children().first('div').children().next().children().last('span').children(':first').html();
-		var city = $(obj).parent().parent().children().first('div').children().next().children().last('span').children().next(':first').html();
-		var dist = $(obj).parent().parent().children().first('div').children().next().children().last('span').children().next().next(':first').html();
-		var street = $(obj).parent().parent().children().first('div').children().next().children().last('span').children().last().html();
+		$(obj).parent().parent().children().children('ins').css('display', 'block');
+		$.ajax({
+			type : 'post',
+			data : 'id='+id+'&_token={{csrf_token()}}',
+			url  : '{{url("address/change")}}',
+			success:function(data) {
+				show();
+				showChange();
 
-		$('.myprovince').html(pro);
-		$('.mycity').html(city);
-		$('.mydist').html(dist);
-		$('.mystreet').html(street);
-		$('.mybuy-user').html(name);
-		$('.mybuy-phone').html(phone);
+			},
+			dataType: 'json',
+		})
 
 	}
 
-	//提交订单
-	$('.btn-go').click(function () {
-
-		var pro = $('.province').html();
-		var city = $('.city').html();
-		var dist = $('.dist').html();
-		var street = $('.street').html();
-		var name = $('.buy-user').html();
-		var phone = $('.buy-phone').html();
-		var sum = $('#J_ActualFee').html();
-
-		var address = pro+city+dist+street;
-
-		if(pro == '') {
-			alert('请选择地址');
-			return;
-		}
-
+	//提交订单时默认地址
+	function showChange() {
 		$.ajax({
 			type : 'post',
-			data : 'sum='+sum+'&name='+name+'&phone='+phone+'&address='+address+'&_token={{csrf_token()}}',
-			url  : '{{url("/order/add")}}',
+			data : '_token={{csrf_token()}}',
+			url  : '{{url("address/showChange")}}',
 			success:function(data) {
-				 window.location.href = '{{url("/order/success")}}';
+				if (data != 'no') {
+					$('.myprovince').html(data[0].pro);
+					$('.mycity').html(data[0].city);
+					$('.mydist').html(data[0].area);
+					$('.mystreet').html(data[0].comment);
+					$('.mybuy-user').html(data[0].name);
+					$('.mybuy-phone').html(data[0].phone);
+				} else {
+					$('.myprovince').html('省份');
+					$('.mycity').html('城市');
+					$('.mydist').html('区');
+					$('.mystreet').html('');
+					$('.mybuy-user').html('');
+					$('.mybuy-phone').html('');
+				}
 			},
-			dataType:'json',
-		});
+			dataType: 'json',
+		})
+	}
+
+
+	//提交订单
+	$('#add').submit(function () {
+
+		var pro = $('.myprovince').html();
+		if(pro == '' || !pro) {
+			layer.alert('请选择地址！');
+			return false;
+		} else {
+			return true;
+		}
 	})
    </script>
    </body>

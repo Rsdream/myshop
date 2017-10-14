@@ -78,9 +78,9 @@
 						<td>{{$v->oid}}</td>
 						<td>{{$v->gname}}</td>
 						<td>{{$v->gnum}}</td>
-						<td >{{$v->gprice}}1</td>
+						<td >{{$v->gprice}}</td>
 						<td >{{$v->gprice*$v->gnum}}</td>
-						<td >套餐</td>
+						<td >{{$v->setmeal}}</td>
 					</tr>
 				@endforeach
 				@endif

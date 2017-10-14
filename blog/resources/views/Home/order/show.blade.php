@@ -89,7 +89,7 @@
 									<div class="order-main">
 										<div class="order-list">
 
-											@if (isset($data))
+											@if (!empty($data))
 											@foreach ($data as $v)
 											<?php $sum=0 ?>
 											<!--交易成功-->
@@ -117,7 +117,7 @@
 																		<a href="{{url('goods/detail/'.$val->gid)}}">
 																			<p>{{$val->gname}}</p>
 																			<p class="info-little">配置：{{$val->ram}} + {{$val->rom}} + {{$val->color}}
-																				<br/>包装：裸装 </p>
+																			</p>
 																		</a>
 																	</div>
 																</div>
@@ -172,6 +172,10 @@
 												</div>
 											</div>
 											@endforeach
+											@else
+											<div style="margin-top:100px">
+												<center><h2 style="font-size:20px">暂无订单信息</h2></center>
+											</div>
 											@endif
 										</div>
 									</div>
@@ -191,6 +195,7 @@
 	<script type="text/javascript" src="{{asset('Home/js/jquery/jquery-migrate.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/bootstrap.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/jquery/js.cookie.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('/layer/layer.js')}}"></script>
 
 	<!-- OPEN LIBS JS -->
 	<script type="text/javascript" src="{{asset('Home/js/owl-carousel/owl.carousel.min.js')}}"></script>
@@ -255,11 +260,8 @@
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
     		success:function(data) {
 
-    			if (data == '修改失败') {
-    				alert(data);
-    				return;
     			} else if (data == '等待评价') {
-    				$(obj).html("<a href='{{url("/order/commentlist/?number=num")}}'>"+data+"</a>");
+    				window.location.reload();
     				return;
     			}
     			$(obj).html(data);
