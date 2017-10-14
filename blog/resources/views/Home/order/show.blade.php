@@ -171,7 +171,7 @@
 															    <?php if($v->status == 2) { ?>
 																<div class="am-btn am-btn-danger anniu change"  onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'><spna style="color:white;">{{$arr[$v->status]}}</spna></a></div>
 																<?php } else { ?>
-																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this, number={{$v->number}})">{{$arr[$v->status]}}</div>
+																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this, num={{$v->number}})">{{$arr[$v->status]}}</div>
 																<?php } ?>
 															</li>
 														</div>
@@ -261,11 +261,16 @@
     //订单状态修改
     function change(id, obj, num) {
     	var status = $(obj).html();
+    	var url = '{{url("/")}}';
     	$.ajax({
     		type : 'post',
     		url  : '{{url("order/change")}}',
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
     		success:function(data) {
+    			if (data == '等待评价') {
+    				$('.td-change').html("<div class='am-btn am-btn-danger anniu change'><a href='"+url+"/order/commentlist/?number="+num+"'><spna>等待评价</spna></a></div>");
+    				return;
+    			}
     			$(obj).html(data);
     		},
     		dataType : 'json',

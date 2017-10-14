@@ -18,7 +18,7 @@ Route::get('/', 'Home\IndexController@index');
 //登录，注册页面
 Route::get('/login', 'Home\LoginController@login');
 //处理登录，注册
-// Route::post('doLogin','Api\LoginController@signIn');
+
 
 //后台路由组
 Route::prefix('/admin')->group( function () {
@@ -119,6 +119,8 @@ Route::prefix('/admin')->group( function () {
         Route::get('/back', 'Admin\Order\OrderController@back');
         //修改退款状态
         Route::post('/drawBack', 'Admin\Order\OrderController@drawBack');
+        //订单评论
+        Route::get('/feedback', 'Admin\Order\OrderController@feedBack');
     });
 
 
@@ -271,7 +273,7 @@ Route::prefix('/order')->group(function () {
     //处理订单评论
     Route::post('/back', 'Home\OrderController@back');
 
-    //处理订单评论
+    //展示订单退款列表
     Route::get('/showBack', 'Home\OrderController@showBack');
 
 });
@@ -336,3 +338,5 @@ Route::get('/goods/detailtwo/{id}', 'Home\GoodsListController@goodsDetailTwo')->
 Route::get('/img/{id}', 'Home\GoodsImgApi@getImg')->where('id', '\d+');
 //查看商品评论
 Route::get('/goods/comment/{id}', 'Home\GoodsListController@getGoodsComment')->where('id', '\d+');
+//商品评论的分页
+Route::get('/goods/commentpage/{id}', 'Home\GoodsListController@commentPage')->where('id', '\d+');

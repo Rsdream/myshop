@@ -332,7 +332,7 @@ class GoodsListController extends Controller
     */
     public function getGoodsComment($id) {
         $commentInfo = DB::table('orders_comment as c')
-            ->leftJoin('price as p', 'c.gid', '=', 'p.gid')
+            ->leftJoin('price as p', 'c.gid', '=', 'p.id')
             ->leftJoin('home_users as u', 'u.id', '=', 'c.uid')
             ->select(
                 'c.comment',
@@ -341,10 +341,26 @@ class GoodsListController extends Controller
                 'p.rom',
                 'p.color',
                 'u.name',
-                'u.uid'
+                'u.uid',
+                'c.text'
             )
             ->where('p.gid', $id)
             ->get();
         return $commentInfo;
     }
+
+    /**
+     * 评论的分页
+     */
+     public function commentPage($id) {
+         $commentPage = DB::table('orders_comment as c')
+             ->leftJoin('price as p', 'c.gid', '=', 'p.id')
+             ->leftJoin('home_users as u', 'u.id', '=', 'c.uid')
+             ->select(
+                 'c.id'
+             )
+             ->where('p.gid', $id)
+             ->paginate(1);
+        return $commentPage->links();
+     }
 }

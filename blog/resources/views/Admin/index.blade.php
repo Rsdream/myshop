@@ -87,7 +87,8 @@
 			<dt><i class="Hui-iconfont">&#xe622;</i> 评论管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="http://h-ui.duoshuo.com/admin/" data-title="评论列表" href="javascript:;">评论列表</a></li>
+					<li><a data-href="" data-title="评论列表" href="javascript:;">意见反馈</a></li>
+					<li><a data-href="{{url('admin/order/feedback')}}" data-title="评论列表" href="javascript:;">评论列表</a></li>
 
 				</ul>
 			</dd>

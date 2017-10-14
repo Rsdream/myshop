@@ -66,7 +66,7 @@
 					<th width="70">退款编号</th>
 					<th width="100">退款人</th>
 					<th >商品详情</th>
-					<th width="100">联系电话</th>
+					<th width="110">联系电话</th>
 					<th>退款原因</th>
 					<th>退款金额</th>
 					<th width="80">交易状态</th>
@@ -84,7 +84,9 @@
 						
 						<td class="text-l">
 						    
-						    商品名：<span>{{$v->gname}} 套餐：<span></span></span><br>
+						    商品名：<span>{{$v->gname}}</span><br>
+						    商品数量：<span>{{$v->gnum}}</span><br>
+						    套餐：<span>{{$v->setmeal}}</span><br>
 						     
 						</td>
 						<td class="text-l">{{$v->phone}}1</td>
@@ -132,14 +134,20 @@
     			if (data == '同意退款') {
     				layer.close(index);
     				layer.alert('同意退款', {icon: 1});
-    				$(obj).parent().prev().html(data); 
-    			} else {
+    				$(obj).parent().prev().html(data);
+    				$(obj).parent().html('<span>退款完成</span>'); 
+    			} else if(data == '退款驳回'){
     				layer.close(index);
     				layer.alert('退款驳回', {icon: 2});
-    				$(obj).parent().prev().html(data);     				
+    				$(obj).parent().prev().html(data);
+    				$(obj).parent().html('<span>退款完成</span>');     				
+    			} else if (data == '退款关闭'){
+	    			layer.close(index);
+	    			layer.alert('用户已取消退款', {icon: 6});
+	    			$(obj).parent().prev().html(data);
+	    			$(obj).parent().html('<span>退款完成</span>');
     			}
-    			$(obj).parent().prev().html(data);
-    			$(obj).parent().html('<span>退款完成</span>');
+
     			
     		},
     		dataType : 'json',

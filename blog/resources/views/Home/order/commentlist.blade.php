@@ -52,7 +52,7 @@
 
 						<div class="comment-main">
 						<!--多个商品评论-->
-
+						    @if (!empty($data))
 						    @foreach ($data as $v)
 						    <form action="{{url('order/comment')}}" method="post" onSubmit="return check(this)" >
 						    {{ csrf_field() }}
@@ -102,7 +102,14 @@
 							</div>
 							</form>
 							@endforeach
-
+							@else
+							<div>
+							    <center>
+							        <h2>暂无可评论订单</h2><a style="color:red" href="{{url('order/showComment')}}">查看我的评论</a>
+							    </center>
+							    
+							</div>
+							@endif
 					<script type="text/javascript">
 						$(document).ready(function() {
 							$(".comment-list .item-opinion li").click(function() {
