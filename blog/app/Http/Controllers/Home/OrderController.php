@@ -45,35 +45,37 @@ class OrderController extends Controller
         $number = rand(111111,999999);
         $sum = $request->input('sum');
         $data = time();
+
+        //用户登录
+        $key = 'cart:ids:'.Session::get('user');
+        //拿出商品ID
+        $idsArr = Redis::sMembers($key);
         //拿出购物车中数据
         $cartDatas = [];
         foreach ($idsArr as $k) {
             $hashKey = 'cart:'.Session::get('user').':'.$k;
             $cartDatas[] =Redis::HGetAll($hashKey);
         }
-        $tPeice = 0;
+
+        $tPrice = 0;
         foreach ($cartDatas as $v) {
-            $tPeice += $v['num']*$v['price'];
+            $tPrice += $v['num'] * $v['price'];
         }
+
         //如果提交订单失败
         //事务回滚
-        DB::transaction(function () use($name, $phone, $address, $uid, $number, $sum, $data, $tPeice){
+        DB::transaction(function () use($name, $phone, $address, $uid, $number, $sum, $data, $tPrice){
             DB::table('orders_detail')->insert([
                 'uid' => $uid,
                 'number' => $number,
                 'name' => $name,
                 'phone' => $phone,
-                'tpeicr' => $tPeice,
+                'tprice' => $tPrice,
                 'address' => $address,
                 'addtime' => $data
                 ]);
         });
 
-        //用户登录
-        $key = 'cart:ids:'.Session::get('user');
-
-        //拿出商品ID
-        $idsArr = Redis::sMembers($key);
 
 
 
@@ -154,14 +156,17 @@ class OrderController extends Controller
             echo json_encode('订单完成');
             exit;
         }
-        $uid = 
+        $uid = session('userinfo')['id'];
+
         //如果确认收货失败
         //回滚事务
-        DB::transaction(function () use($id, $status) {
+        DB::transaction(function () use($id, $status, $uid) {
             $data = DB::table('orders_detail')->where('id', $id)->update(['status' => $status]);
-            $price = DB::table('orders_detail')->select('tprice')->where('id', $id);
-
-            DB::table('home_users')->where('id')->increment('votes', $price);
+            $price = DB::table('orders_detail')->select('tprice')->where('id', $id)->first();
+            $score = $price->tprice / 10;
+            $score = floor($score);
+            DB::table('home_users')->where('id', $uid)->increment('score', $score);
+            DB::table('home_users')->where('id', $uid)->increment('growth', $price->tprice);
         });
 
     }
