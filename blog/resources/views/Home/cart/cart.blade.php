@@ -439,7 +439,7 @@
     	var num = $(obj).val();
     	var id  = $(obj).attr('id');
     	if (num < 0) {
-    		alert('商品数量不能为0');
+    		layer.alert('商品数量不能小于0', {icon: 2});
     		showcart();
     		return;
     	}
@@ -450,7 +450,7 @@
     		url  : "{{url('/cart/stock')}}",
     		success:function(data){
     			if (parseInt(num) > parseInt(data[0].stock)) {
-    				alert('库存不足！');
+    				layer.alert('库存不足！', {icon: 2});
     				showcart();
     			} else {
 			    	//修改数量
@@ -500,7 +500,7 @@
     	if (bool) {
     		return true;
     	} else {
-    		alert('请选择要购买商品！');
+    		layer.alert('请选择要购买商品');
     		return false;
     	}
     })
@@ -509,7 +509,7 @@
 	<!-- OPEN LIBS JS -->
 	<script type="text/javascript" src="{{asset('Home/js/owl-carousel/owl.carousel.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/slick-1.6.0/slick.min.js')}}"></script>
-
+	<script type="text/javascript" src="{{asset('/layer/layer.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/yith-woocommerce-compare/jquery.colorbox-min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/sw_core/isotope.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/sw_core/jquery.fancybox.pack.js')}}"></script>

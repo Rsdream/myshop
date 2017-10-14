@@ -191,6 +191,7 @@
 	<script type="text/javascript" src="{{asset('Home/js/jquery/jquery-migrate.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/bootstrap.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/jquery/js.cookie.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('/layer/layer.js')}}"></script>
 
 	<!-- OPEN LIBS JS -->
 	<script type="text/javascript" src="{{asset('Home/js/owl-carousel/owl.carousel.min.js')}}"></script>

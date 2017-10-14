@@ -621,7 +621,6 @@
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 	</div>
-
 	<!-- jQuery -->
 	<script src="{{asset('/Home/login/js/jquery.min.js')}}"></script>
 	<!-- jQuery Easing -->
@@ -636,7 +635,7 @@
 	<script src="{{asset('/Home/login/js/jquery.countTo.js')}}"></script>
 	<!-- Magnific Popup -->
 	<script src="{{asset('/Home/login/js/jquery.magnific-popup.min.js')}}"></script>
-
+    <script type="text/javascript" src="{{asset('/layer/layer.js')}}"></script>
 	<script src="{{asset('/Home/login/js/magnific-popup-options.js')}}"></script>
 	<!-- Main -->
 	<script src="{{asset('/Home/login/js/main.js')}}"></script>
@@ -667,9 +666,7 @@
     var test = false;
     var flat = false;
     var status = 1000;
-
     varildate (type, array, test, flat, match, status);
-
    });
 
     //密码判断
@@ -687,27 +684,22 @@
 
     //确认密码判断
     $('input[name="repeatpass"]').on('focus', function () {
-
     //获取焦点时给出提示
     $('.my-repeatpass').html('<span>请再次输入密码</span>');
         $('#repeatpass').css('display','none');
         $('input[name="repeatpass"]').css('border','2px solid #E4E4E4');
     }).on('blur', function (){
-
 		//失去焦点时判断
 		repeatpass = $('input[name="repeatpass"]').val();
 		upass = $('input[name="upass"]').val();console.log()
 	    if (repeatpass == '') {
-
 	    	//值为空时隐藏提示
 	    	$('.my-repeatpass').html('');
 	    } else if (repeatpass != upass) {
-
 	    	//判断密码是否一致
 	    	$('.my-repeatpass').html('<span style="color:red">请输入一致的密码</span>');
 	    	$('input[name="repeatpass"]').css('border','2px solid red')
 	    } else {
-
 	    	//验证通过
 	     	$('.my-repeatpass').html('');
 	     	$('#repeatpass').css('display','block');
@@ -805,12 +797,12 @@
 
     //验证是否同意服务条款
     $('input[name="check"]').change(function () {
-    	if ($('input[name="check"]').prop('checked')) {
-    		check = false;
-    	} else {
-    		check = true;
-    	}
-    });
+	    if ($('input[name="check"]').prop('checked')) {
+	    		check = false;
+	    	} else {
+	    		check = true;
+	    }
+    });	  
 
     //注册提交时验证
     $("#doregister").submit(function() {
@@ -860,22 +852,16 @@
      * @param  {string} color  [颜色：定义一个red类为红色，默认为#E4E4E4]
      */
     function dotest(name, str, color='#E4E4E4') {
-
     	//获得焦点给出格式提示
         $('input[name="'+name+'"]').css('border','2px solid '+color);
-
         //清除成功提示
         $('#'+name).css('display', 'none');
-
         //给边框颜色，三元运算符：ture为红色，false为#E4E4E4
     	$('.my-'+name).html(color=='red'?'<span class="'+color+' glyphicon glyphicon-minus-sign">'+str+'</span>':'<span class="'+color+'">'+str+'</span>');
-
         $('input[name="'+name+'"]').on('blur', function (){
-
     	    //失去焦点获取字段值
     	    value = $('input[name="'+name+'"]').val();
             if (value == '') {
-
                 //字段值为空清除提示
                 $('.my-'+name).html('');
             }
@@ -911,7 +897,6 @@
         		$('.my-'+type).html('');
         		$('#'+type).css('display','none');
         	}
-
             //test=false并且字段值不为空执行正则判断
         	if (!test && myname != '') {
         	    //用户名正则判断
@@ -923,7 +908,6 @@
         			return;
         		}
         	}
-
             //flat=false并且字段值不为空执行ajax
         	if(!flat && myname != ''){
         		//清除样式
@@ -948,7 +932,6 @@
 	        		}
 	        	});
         	}
-
         	//input 值不为空 同时禁用ajax才运行
         	if (myname != '' && flat == true) {
         		//验证通过，给出成功提示，同时清除格式提示和红边框
@@ -972,8 +955,7 @@
     		$('#my-phonecode').html('<span style="font-size: 17px;line-height: 40px">稍等('+time+')秒</spna>');
     		//禁用click事件
     		$('#my-phonecode').removeAttr("onclick");
-
-    		    if(time <= 0) {
+    		    if (time <= 0) {
     		    	//time = 0时清除定时器
     		        clearInterval(id);
     		        //还原样式和事件

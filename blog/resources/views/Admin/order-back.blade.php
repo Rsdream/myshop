@@ -125,7 +125,19 @@
     		type : 'post',
     		url  : '{{url("admin/order/drawBack")}}',
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
+    		beforeSend:function(){ 
+                index = layer.load(3);
+            }, 
     		success:function(data) {
+    			if (data == '同意退款') {
+    				layer.close(index);
+    				layer.alert('同意退款', {icon: 1});
+    				$(obj).parent().prev().html(data); 
+    			} else {
+    				layer.close(index);
+    				layer.alert('退款驳回', {icon: 2});
+    				$(obj).parent().prev().html(data);     				
+    			}
     			$(obj).parent().prev().html(data);
     			$(obj).parent().html('<span>退款完成</span>');
     			
