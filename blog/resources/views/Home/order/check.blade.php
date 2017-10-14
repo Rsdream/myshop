@@ -728,33 +728,40 @@
                                     <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee"><?php echo $total+10 ?></em>
 											</span>
 										</div>
-										@foreach ($address as $v)
+
 										<div id="holyshit268" class="pay-address">
 
 											<p class="buy-footer-address">
 												<span class="buy-line-title buy-line-title-type">寄送至：</span>
+
 												<span class="buy--address-detail">
-								               <span class="province myprovince">{{$v['pro']}}</span>
-								               <input type="hidden" name="address" value="{{$v['pro']}}{{$v['city']}}{{$v['area']}}{{$v['comment']}}">
-												<span class="city mycity">{{$v['city']}}</span>
-												<span class="dist mydist">{{$v['area']}}</span>
-												<span class="street mystreet">{{$v['comment']}}</span>
+								               <span class="province myprovince">@foreach ($address as $v){{$v['pro']}}@endforeach</span>
+
+												<span class="city mycity">@foreach ($address as $v){{$v['city']}}@endforeach</span>
+												<span class="dist mydist">@foreach ($address as $v){{$v['area']}}@endforeach</span>
+												<span class="street mystreet">@foreach ($address as $v){{$v['comment']}}@endforeach</span>
 												</span>
 												</span>
 											</p>
 											<p class="buy-footer-address">
 												<span class="buy-line-title">收货人：</span>
+
 												<span class="buy-address-detail">
-												<input type="hidden" name="uname" value="{{$v['name']}}">
-		                                        <span class="buy-user mybuy-user">{{$v['name']}}</span>
-		                                        <input type="hidden" name="uphone" value="{{$v['phone']}}">
-												<span class="buy-phone mybuy-phone">{{$v['phone']}}</span>
+
+		                                        <span class="buy-user mybuy-user">@foreach ($address as $v){{$v['name']}}@endforeach</span>
+
+												<span class="buy-phone mybuy-phone">@foreach ($address as $v){{$v['phone']}}@endforeach</span>
 												</span>
+
 											</p>
 										</div>
-										@endforeach
-									</div>
 
+									</div>
+									@foreach ($address as $v)
+									 <input type="hidden" name="address" value="{{$v['pro']}}{{$v['city']}}{{$v['area']}}{{$v['comment']}}">
+									     <input type="hidden" name="uphone" value="{{$v['phone']}}">
+											 <input type="hidden" name="uname" value="{{$v['name']}}">
+									@endforeach
 									<div id="holyshit269" class="submitOrder">
 										<div class="go-btn-wrap">
 										<div class="button">
@@ -1420,6 +1427,7 @@
 	<script type="text/javascript" src="{{asset('Home/js/js_composer/js_composer_front.min.js')}}"></script>
 
 	<script type="text/javascript" src="{{asset('Home/js/plugins.js')}}"></script>
+	<script type="text/javascript" src="{{asset('layer/layer.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/megamenu.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/main.min.js')}}"></script>
 
@@ -1474,9 +1482,9 @@
 		$('#user-name').val('');
 		$('#user-phone').val('');
 		$('#user-comment').val('');
-		$('#pro').val('');
-		$('#city').val('');
-		$('#area').val('');
+		$('#pro').val('省份');
+		$('#city').val('城市');
+		$('#area').val('区');
 		$('#test').val('');
    })
 
@@ -1527,7 +1535,7 @@
 			type: 'post',
 			url: '{{url("/address/select")}}',
 			data: 'upid='+currentId+'&_token={{csrf_token()}}',
-			success: function (msg) {console.log(msg);
+			success: function (msg) {
 
 				var str = '';
 
@@ -1617,7 +1625,7 @@
 	}
 
 	show();
-
+  showChange();
 	//删除地址
 	function del(obj) {
 		var id = $(obj).parent().attr('atr');
@@ -1627,6 +1635,7 @@
 			url  : '{{url("/address/del")}}',
 			success:function(data) {
 				show();
+				showChange();
 			},
 			dataType:'json',
 		})
@@ -1651,6 +1660,7 @@
 				$('#city').val(data.city);
 				$('#area').val(data.area);
 				$('#test').val(data.id);
+				showChange();
 			},
 			dataType: 'json',
 		})
@@ -1669,12 +1679,14 @@
 			type : 'post',
 			data : 'id='+id+'&_token={{csrf_token()}}',
 			url  : '{{url("address/change")}}',
-			success:function(data) {		
-				showChange(); 
+			success:function(data) {
+				show();
+				showChange();
+
 			},
 			dataType: 'json',
 		})
-		
+
 	}
 
 	//提交订单时默认地址
@@ -1683,25 +1695,34 @@
 			type : 'post',
 			data : '_token={{csrf_token()}}',
 			url  : '{{url("address/showChange")}}',
-			success:function(data) {	
-				$('.myprovince').html(data[0].pro);
-				$('.mycity').html(data[0].city);
-				$('.mydist').html(data[0].area);
-				$('.mystreet').html(data[0].comment);
-				$('.mybuy-user').html(data[0].name);
-				$('.mybuy-phone').html(data[0].phone);
+			success:function(data) {
+				if (data != 'no') {
+					$('.myprovince').html(data[0].pro);
+					$('.mycity').html(data[0].city);
+					$('.mydist').html(data[0].area);
+					$('.mystreet').html(data[0].comment);
+					$('.mybuy-user').html(data[0].name);
+					$('.mybuy-phone').html(data[0].phone);
+				} else {
+					$('.myprovince').html('省份');
+					$('.mycity').html('城市');
+					$('.mydist').html('区');
+					$('.mystreet').html('');
+					$('.mybuy-user').html('');
+					$('.mybuy-phone').html('');
+				}
 			},
 			dataType: 'json',
-		})	
+		})
 	}
-   showChange()
+
 
 	//提交订单
 	$('#add').submit(function () {
 
 		var pro = $('.myprovince').html();
-		if(pro == '') {
-			alert('请选择地址');
+		if(pro == '' || !pro) {
+			layer.alert('请选择地址！');
 			return false;
 		} else {
 			return true;

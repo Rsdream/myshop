@@ -37,8 +37,8 @@ class AddressController extends Controller
                 ]);
             return back();
         }
-        
-        
+
+
     }
 
     //查询地址
@@ -63,7 +63,9 @@ class AddressController extends Controller
     	    ];
     	}
 
-    	echo json_encode($add);
+        echo json_encode($add);
+
+
     }
 
     public function del(Request $request)
@@ -100,22 +102,27 @@ class AddressController extends Controller
             ->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment', 'status')
             ->where('status', 1)
             ->first();
-        $add = [];
-            $pro = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
-            $city = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
-            $area = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
-            $add[] = [
-            'id'      => $v->id,
-            'pro'     => $pro->name,
-            'city'    => $city->name,
-            'area'    => $area->name,
-            'name'    => $v->name,
-            'phone'   => $v->phone,
-            'comment' => $v->comment,
-            'status'  => $v->status,
-            ];
+        if ($v) {
+          $add = [];
+          $pro = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
+          $city = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
+          $area = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
+          $add[] = [
+          'id'      => $v->id,
+          'pro'     => $pro->name,
+          'city'    => $city->name,
+          'area'    => $area->name,
+          'name'    => $v->name,
+          'phone'   => $v->phone,
+          'comment' => $v->comment,
+          'status'  => $v->status,
+        ];
+              echo json_encode($add);
+        } else {
+            echo json_encode('no');
+        }
 
-        echo json_encode($add);
+
     }
 
     public function update(Request $request)
@@ -125,6 +132,6 @@ class AddressController extends Controller
             ->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment', 'status')
             ->where('id', $id)
             ->first();
-        echo json_encode($data);    
+        echo json_encode($data);
     }
 }

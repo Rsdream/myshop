@@ -79,36 +79,37 @@ class OrderController extends Controller
         $number = rand(111111,999999);
         $time = time();
 
-        //拿出购物车中数据
-
+        //用户登录
         $key = 'cart:ids:'.Session::get('user');
         $cartDatas = [];
         foreach ($id as $k) {
             $hashKey = 'cart:'.Session::get('user').':'.$k;
             $cartDatas[] =Redis::HGetAll($hashKey);
         }
+
+        $tPrice = 0;
         if (!$cartDatas) {
             return redirect('cart');
         }
-        $tPeice = 0;
         foreach ($cartDatas as $v) {
-            $tPeice += $v['num']*$v['price'];
+            $tPrice += $v['num'] * $v['price'];
         }
+
         //如果提交订单失败
         //事务回滚
-        DB::transaction(function () use($name, $phone, $address, $uid, $number, $time, $tPeice, $text){
+        DB::transaction(function () use($name, $phone, $address, $uid, $number, $tPrice, $text, $time){
             DB::table('orders_detail')->insert([
                 'uid' => $uid,
                 'number' => $number,
                 'name' => $name,
                 'phone' => $phone,
-                'tpeicr' => $tPeice,
+                'tprice' => $tPrice,
                 'address' => $address,
                 'addtime' => $time,
                 'text' => $text,
                 ]);
         });
-            
+
         //删除
         $setKey = 'cart:ids:'.Session::get('user');
         //拿出购物车中数据
@@ -147,13 +148,17 @@ class OrderController extends Controller
     //查看订单
     public function show()
     {
+      //判断用户是否登录
+      if (Session::get('user') == '') {
+
+          return redirect('/login');
+      }
         $uid = Session::get('user');
         $data = DB::table('orders_detail')
             ->select('id', 'addtime', 'status', 'number')
             ->where('uid', '=', $uid)
             ->get()
             ->toArray();
-        if ($data) {
             foreach ($data as $k => $v) {
                 $data[$k]->orderDetail = DB::table('orders_goods as o')
                     ->leftJoin('price', 'price.id', 'o.gid')
@@ -162,8 +167,7 @@ class OrderController extends Controller
                     ->get()
                     ->toArray();
             }
-            return view('Home/order/show', ['data' => $data]);
-        } 
+        return view('Home/order/show', ['data' => $data]);
     }
 
     //修改订单状态
@@ -185,14 +189,17 @@ class OrderController extends Controller
             echo json_encode('订单完成');
             exit;
         }
-        $uid = 
+        $uid = session('userinfo')['id'];
+
         //如果确认收货失败
         //回滚事务
-        DB::transaction(function () use($id, $status) {
+        DB::transaction(function () use($id, $status, $uid) {
             $data = DB::table('orders_detail')->where('id', $id)->update(['status' => $status]);
-            $price = DB::table('orders_detail')->select('tprice')->where('id', $id);
-
-            DB::table('home_users')->where('id')->increment('votes', $price);
+            $price = DB::table('orders_detail')->select('tprice')->where('id', $id)->first();
+            $score = $price->tprice / 10;
+            $score = floor($score);
+            DB::table('home_users')->where('id', $uid)->increment('score', $score);
+            DB::table('home_users')->where('id', $uid)->increment('growth', $price->tprice);
         });
 
     }
@@ -201,9 +208,8 @@ class OrderController extends Controller
     public function commentlist(Request $request)
     {
         $number = $request->input('number');
-
         $data = DB::table('orders_goods')
-                ->select('id', 'gname', 'gpic', 'gprice')
+                ->select('gid', 'gname', 'gpic', 'gprice', 'oid', 'id')
                 ->where('oid', '=', $number)
                 ->where('status', '=', '0')
                 ->get()
@@ -215,7 +221,8 @@ class OrderController extends Controller
     //处理订单评论
     public function comment(Request $request)
     {
-        $gid = $request->input('id');
+        $gid = $request->input('gid');
+        $oid = $request->input('oid');
         $comment = $request->input('comment');
         $addtime = time();
         $uid = Session::get('user');
@@ -269,7 +276,7 @@ class OrderController extends Controller
                 }
             }
 
-        return redirect('order/showComment');
+        return redirect('order/commentlist?number=$oid');
     }
 
     //查看订单评论
@@ -279,23 +286,17 @@ class OrderController extends Controller
 
         $data = [];
         //查询出当前用户订单
-        $data = DB::table('orders_comment')
-            ->select('addtime', 'gid', 'comment')
-            ->where('uid', '=', $uid)
-            ->get()
-            ->toArray();
 
-        $data = DB::table('orders_comment')
-            ->join('orders_goods', function($join)
-            {
-                $join->on('orders_goods.gid', '=', 'orders_comment.gid');
-            })->select('orders_comment.addtime', 'orders_comment.comment',
-                'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.status')
-                ->where('orders_goods.status', '=', 1)
-                ->orderBy('orders_comment.addtime', 'desc')
-                ->get()
-                ->toArray();
-
+                $users = DB::table('orders_comment')
+                            ->join('orders_goods', 'orders_comment.gid', '=', 'orders_goods.gid')
+                            ->select('orders_comment.addtime', 'orders_comment.comment',
+                                'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.status')
+                                ->where('orders_goods.status', '=', 1)
+                                ->where('orders_comment.uid', '=', $uid)
+                                ->orderBy('orders_comment.addtime', 'desc')
+                                ->get()
+                                ->toArray();
+dd($data);
         return view('Home/order/comment', ['data' => $data]);
 
     }

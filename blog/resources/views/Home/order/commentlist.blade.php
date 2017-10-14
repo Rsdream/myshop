@@ -56,7 +56,8 @@
 						    @foreach ($data as $v)
 						    <form action="{{url('order/comment')}}" method="post" onSubmit="return check(this)" >
 						    {{ csrf_field() }}
-						    <input type="hidden" name="id" value="{{$v->id}}">
+						    <input type="hidden" name="gid" value="{{$v->gid}}">
+								<input type="hidden" name="oid" value="{{$v->oid}}">
 							<div class="comment-list">
 								<div class="item-pic">
 									<a href="" class="J_MakePoint">
@@ -83,7 +84,7 @@
 								</div>
 								<div class="clear"></div>
 								<div class="item-comment">
-									<textarea placeholder="请写下对宝贝的感受吧，对他人帮助很大哦！" name="comment" class="comment{{$v->id}}"></textarea>
+									<textarea placeholder="请写下对宝贝的感受吧，对他人帮助很大哦！" name="comment" class="comment{{$v->id}}" id="text"></textarea>
 								</div>
 								<div class="filePic">
 									<input type="file" class="inputPic" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*" >
@@ -129,7 +130,7 @@
 	    var text = false;
 	    function check(obj){
 	    	var key = $(obj).children().first().next().val();
-	    	var text = $('.comment'+key).parent().children().val();console.log(text);
+	    	var text = $('#text').parent().children().val();
 	    	if (!text) {
 	    		alert('评论内容不能为空！');
 	    		return false;

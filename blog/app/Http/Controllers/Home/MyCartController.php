@@ -36,8 +36,8 @@ class MyCartController extends Controller
     		        $hashKey   = 'cart:'.Session::getId().':'.$k;
     		        $cartDatas = Redis::HGetAll($hashKey);
     		        $newKey    = 'cart:'.Session::get('user').':'.$k;
-			    	$bool      = Redis::exists($newKey);
-			    	//判断商品ID是否存在
+			    	    $bool    = Redis::exists($newKey);
+			    	  //判断商品ID是否存在
 			        if (!$bool) {
 			        	//把用户没有登录时购物车中数据放入登录时以商品ID为的键中
 			            Redis::hMSet($newKey, $cartDatas);
@@ -67,7 +67,6 @@ class MyCartController extends Controller
                  $key = 'cart:'.Session::get('user').':'.$k->id;
                 Redis::hSet($key, 'stock', $k->stock);
     		}
-
     		//拿出购物车数据
     		$cartDatas = [];
     		foreach ($idsArr as $k) {
@@ -90,20 +89,18 @@ class MyCartController extends Controller
     	//没有用户登录
     	$key    = 'cart:ids:'.Session::getId();
     	$idsArr = Redis::sMembers($key); //获取商品ID
-		//查询数据库中库存
-		$priceDatas = [];
-		foreach ($idsArr as $k) {
-			$priceDatas[] = DB::table('price')
-	    	    ->select('stock')
+		  //查询数据库中库存
+		 $priceDatas = [];
+		 foreach ($idsArr as $k) {
+		 $priceDatas[] = DB::table('price')
+	    	    ->select('stock', 'id')
 	            ->where('id', '=', $k)
 	            ->first();
 		}
 		//更新库存
 		foreach ($priceDatas as $k) {
-			foreach ($idsArr as $v) {
-				$key = 'cart:'.Session::getId().':'.$v;
-				$bool = Redis::hSet($key, 'stock', $k->stock);;
-			} 
+						 $key = 'cart:'.Session::getId().':'.$k->id;
+						  Redis::hSet($key, 'stock', $k->stock);
 		}
     	//拿出购物车数据
     	$cartDatas = [];

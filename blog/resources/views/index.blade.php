@@ -664,7 +664,7 @@
 																	</div>
 																</div>
 
-															@endforeach	
+															@endforeach
 															@endif
 															</div>
 														</div>
@@ -1818,6 +1818,7 @@
 	<script type="text/javascript" src="{{asset('Home/js/sw_woocommerce/category-ajax.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/sw_woocommerce/jquery.countdown.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/js_composer/js_composer_front.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('layer/layer.js')}}"></script>
 
 	<script type="text/javascript" src="{{asset('Home/js/plugins.js')}}"></script>
 	<script type="text/javascript" src="{{asset('Home/js/megamenu.min.js')}}"></script>
@@ -2002,7 +2003,7 @@
    <!-- 热销商品的js -->
 	<script>
 
-		
+
 		$('#relagood').on('click', 'a', function () {
 
 
@@ -2039,7 +2040,7 @@
 
 
 	        				str += `<div id='block' cnm='`+id+`' style="border:1px solid #ccc;padding:3px;float:left;width: 33.33333%;" >
-											
+
 										<div class="item product" >
 											<div class="item-wrap">
 												<div class="item-detail">
@@ -2050,7 +2051,7 @@
 														</h4>
 
 														<!-- Price -->
-														
+
 														<div class="item-price">
 															<span>
 																<ins>
@@ -2060,8 +2061,8 @@
 																</ins>
 															</span>
 														</div>
-														
-														
+
+
 														<div class="sale-off">-10%</div>
 													</div>
 
@@ -2110,9 +2111,9 @@
 											</div>
 										</div>
 
-									</div>`;	
+									</div>`;
 	        			}
-	        			
+
 						that.attr('haverequested', 1);
 		        		$('#old').append(str);
 
@@ -2124,7 +2125,7 @@
 	        		dataType:'json'
 	        	});
 			}
-        	
+
 		});
 
 

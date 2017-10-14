@@ -81,7 +81,7 @@ Route::prefix('/admin')->group( function () {
             Route::get('/user/disable/{id}', 'Admin\Administrator\UserController@disable')->middleware('rbac.permission:user-disable');
             Route::get('/user/desc/stop', 'Admin\Administrator\UserController@showDisable')->middleware('rbac.permission:user-stop');
         });
-        
+
 
         //后台系统管理->友情链接
         Route::resource('/url', 'Admin\Systron\Url');
@@ -334,4 +334,3 @@ Route::get('/menu/{id}', 'Home\IndexController@menu')->where('id', '\d+');
 Route::get('/goods/detailtwo/{id}', 'Home\GoodsListController@goodsDetailTwo')->where('id', '\d+');
 //请求图片
 Route::get('/img/{id}', 'Home\GoodsImgApi@getImg')->where('id', '\d+');
-

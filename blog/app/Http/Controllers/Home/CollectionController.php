@@ -13,6 +13,11 @@ class CollectionController extends Controller
 	//加载收藏首页
     public function collection()
     {
+      //判断用户是否登录
+      if (Session::get('user') == '') {
+
+          return redirect('/login');
+      }
     	return view('Home/collection/collection');
     }
 
