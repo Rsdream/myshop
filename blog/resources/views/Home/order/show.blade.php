@@ -164,7 +164,7 @@
 															    <?php if($v->status == 2) { ?>
 																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'><spna>{{$arr[$v->status]}}</spna></a></div>
 																<?php } else { ?>
-																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this, number={{$v->number}})">{{$arr[$v->status]}}</div>
+																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this, num={{$v->number}})">{{$arr[$v->status]}}</div>
 																<?php } ?>
 															</li>
 														</div>
