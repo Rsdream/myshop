@@ -15,6 +15,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/lib/Hui-iconfont/1.0.8/iconfont.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui.admin/skin/default/skin.css')}}" id="skin" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui.admin/css/style.css')}}" />
+<script type="text/javascript" src="{{asset('bootstrap-3.3.7/js/bootstrap.min.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('/bootstrap-3.3.7/css/bootstrap.min.css')}}" />
 <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -54,7 +56,10 @@
 		<table class="table table-border table-bordered table-bg table-sort">
 			<thead>
 				<tr class="text-c">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 263f1f2c42aca3d2d5d94a3b896393c094ede5b3
 					<th width="70">ID</th>
 					<th width="70">编号</th>
 					<th width="100">收货人</th>
@@ -88,6 +93,7 @@
 				@endif
 			</tbody>
 		</table>
+		{{ $orders->links() }}
 	</div>
 </div>
 

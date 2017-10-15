@@ -66,7 +66,8 @@ class MyCartController extends Controller
 		    	    ->select('stock', 'id')
 		            ->where('id', '=', $k)
 		            ->first();
-    		}
+            }
+    		
     		//更新库存
     		foreach ($priceDatas as $k) {
                  $key = 'cart:'.Session::get('user').':'.$k->id;

@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/css/H-ui.admin.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('Admin/lib/Hui-iconfont/1.0.8/iconfont.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/skin/default/skin.css')}}" id="skin" />
-<link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/css/style.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('/bootstrap-3.3.7/css/bootstrap.min.css')}}" />
 <!--[if IE 6]>
 <script type="text/javascript" src="{{asset('Admin/lib/DD_belatedPNG_0.0.8a-min.js')}}" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -61,11 +61,11 @@
 				@endif
 			</tbody>
 		</table>
+		{{ $data->links() }}
 	</div>
-</div>
-
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="{{asset('Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bootstrap-3.3.7/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('Admin/lib/layer/2.4/layer.js')}}"></script>
 <script type="text/javascript" src="{{asset('Admin/static/h-ui/js/H-ui.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('Admin/static/h-ui.admin/js/H-ui.admin.js')}}"></script> <!--/_footer /作为公共模版分离出去-->

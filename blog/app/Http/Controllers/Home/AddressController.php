@@ -110,19 +110,19 @@ class AddressController extends Controller
             ->where('uid', $uid)
             ->first();
         if ($v) {
-          $add   = [];
-          $pro   = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
-          $city  = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
-          $area  = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
-          $add[] = [
-          'id'      => $v->id,
-          'pro'     => $pro->name,
-          'city'    => $city->name,
-          'area'    => $area->name,
-          'name'    => $v->name,
-          'phone'   => $v->phone,
-          'comment' => $v->comment,
-          'status'  => $v->status,
+            $add   = [];
+            $pro   = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
+            $city  = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
+            $area  = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
+            $add[] = [
+            'id'      => $v->id,
+            'pro'     => $pro->name,
+            'city'    => $city->name,
+            'area'    => $area->name,
+            'name'    => $v->name,
+            'phone'   => $v->phone,
+            'comment' => $v->comment,
+            'status'  => $v->status,
         ];
             echo json_encode($add);
         } else {
