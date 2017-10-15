@@ -95,25 +95,31 @@ class OrderController extends Controller
         foreach ($cartDatas as $v) {
             $tPrice += $v['num'] * $v['price'];
         }
-
+        $tPrice += 10;
         //如果提交订单失败
         //事务回滚
         if (!empty($score)) {
             $score = DB::table('home_users')->select('score')->where('id', session('userinfo')['id'])->first();
             $score = floor($score->score / 100);
-            $tPrice -= $score;
-            $uid = session('userinfo')['id'];
-            DB::table('home_users')->where('id', $uid)->decrement('score', $score * 100);
+            if ($score > $tPrice) {
+                DB::table('home_users')->where('id', $uid)->decrement('score', $tPrice * 100);
+                $score = $tPrice;
+                $tPrice = 0;
+            } else {
+                $tPrice -= $score;
+                DB::table('home_users')->where('id', $uid)->decrement('score', $score * 100);
+            }
         } else {
             $score = 0;
         }
+
         DB::transaction(function () use($name, $phone, $address, $uid, $number, $tPrice, $text, $time, $score){
             DB::table('orders_detail')->insert([
                 'uid' => $uid,
                 'number' => $number,
                 'name' => $name,
                 'phone' => $phone,
-                'tprice' => $tPrice + 10,
+                'tprice' => $tPrice,
                 'oscore' => $score,
                 'address' => $address,
                 'addtime' => $time,
@@ -206,11 +212,20 @@ class OrderController extends Controller
         //回滚事务
         DB::transaction(function () use($id, $status, $uid) {
             $data = DB::table('orders_detail')->where('id', $id)->update(['status' => $status]);
-            $price = DB::table('orders_detail')->select('tprice')->where('id', $id)->first();
-            $score = $price->tprice / 10;
+            $price = DB::table('orders_detail')->select('tprice', 'oscore')->where('id', $id)->first();
+            $score = ($price->tprice + $price->oscore) / 10;
             $score = floor($score);
+            $order = DB::table('orders_detail as o')
+                ->leftJoin('orders_goods as g', 'o.number', '=', 'oid')
+                ->leftJoin('price as p', 'g.gid', '=', 'p.id')
+                ->select('p.gid', 'g.gnum')
+                ->where('o.id', $id)
+                ->get();
+            foreach ($order as $v) {
+                DB::table('goods')->where('id', $v->gid)->increment('workoff', $v->gnum);
+            }
             DB::table('home_users')->where('id', $uid)->increment('score', $score);
-            DB::table('home_users')->where('id', $uid)->increment('growth', $price->tprice);
+            DB::table('home_users')->where('id', $uid)->increment('growth', $price->tprice + $price->oscore);
         });
 
     }

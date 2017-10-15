@@ -58,19 +58,16 @@ class IndexController extends Controller
   	}
 
 
-	// 热销商品 接收ajax传过来的id，查出对应类别的商品
-	public function hotSale()
-	{
-		// var_dump($_POST);
-		$id = $_POST['id'];
-		// var_dump($id);
-
-		//得到类别
-		$class = DB::table('home_category')->select('id', 'name')->where('id', '=', $id)->first();
-
-
+  	// 热销商品 接收ajax传过来的id，查出对应类别的商品
+  	public function hotSale()
+  	{
+    		// var_dump($_POST);
+    		$id = $_POST['id'];
+    		// var_dump($id);
+    		//得到类别
+    		$class = DB::table('home_category')->select('id', 'name')->where('id', '=', $id)->first();
         //先查缓存中有无商品
-    	$hotProduct = Cache::get('Hgoods'.$id);
+        $hotProduct = Cache::get('Hgoods'.$id);
         if (!$hotProduct) {
             // echo '没有缓存';
             //根据类别得到对应的商品
@@ -84,22 +81,21 @@ class IndexController extends Controller
                 ->toArray();
             //将商品放入缓存中
             Cache::put('Hgoods'.$id, $hotProduct, 1);
-
         }
-
-		if ($hotProduct) {
-			echo json_encode($hotProduct);
-		} else {
+    		if ($hotProduct) {
+    			  echo json_encode($hotProduct);
+    		} else {
             echo '404';
         }
-
-	}
+  	}
 
 
 
     /**
-     * 新商品加载
+     * 新商品的加载
      * @author rong <[<871513137@qq.com>]>
+     * @param  int    类别的id
+     * @return object 新添加商品数据
      */
     public function newGoods(Request $request, $id)
     {
@@ -189,7 +185,7 @@ class IndexController extends Controller
     */
     public function logoShareData()
     {
-       //网站Logo
-       return $logo = DB::table('logo')->select('id', 'name', 'logo')->where('id', '=', '1')->first();
+        //网站Logo
+        return $logo = DB::table('logo')->select('id', 'name', 'logo')->where('id', '=', '1')->first();
     }
 }

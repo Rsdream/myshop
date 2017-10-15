@@ -180,41 +180,13 @@
             <div class="vc_wp_custommenu wpb_content_element wrap-cus">
               <div class="widget widget_nav_menu">
                 <ul id="menu-infomation" class="menu">
+                  @foreach($url as $v)
                   <li class="menu-about-us">
-                    <a class="item-link" href="about_us.html">
-                      <span class="menu-title">About Us</span>
+                    <a class="item-link" href="http://{{$v->url}}">
+                      <span class="menu-title">{{$v->name}}</span>
                     </a>
                   </li>
-
-                  <li class="menu-customer-service">
-                    <a class="item-link" href="#">
-                      <span class="menu-title">Customer Service</span>
-                    </a>
-                  </li>
-
-                  <li class="menu-privacy-policy">
-                    <a class="item-link" href="#">
-                      <span class="menu-title">Privacy Policy</span>
-                    </a>
-                  </li>
-
-                  <li class="menu-site-map">
-                    <a class="item-link" href="#">
-                      <span class="menu-title">Site Map</span>
-                    </a>
-                  </li>
-
-                  <li class="menu-orders-and-returns">
-                    <a class="item-link" href="#">
-                      <span class="menu-title">Orders and Returns</span>
-                    </a>
-                  </li>
-
-                  <li class="menu-contact-us">
-                    <a class="item-link" href="contact_us.html">
-                      <span class="menu-title">Contact Us</span>
-                    </a>
-                  </li>
+                  @endforeach
                 </ul>
               </div>
             </div>
@@ -229,7 +201,7 @@
     <div class="container">
       <!-- Copyright text -->
       <div class="copyright-text pull-left">
-        <p>Copyright &copy; 2017.Company name All rights reserved.<a target="_blank" href="http://www.htmlsucai.com/">&#72;&#84;&#77;&#76;&#32032;&#26448;&#32593;</a></p>
+        <p>Copyright &copy; 2017.Company name All rights reserved</p>
       </div>
 
       <div class="sidebar-copyright pull-right">
@@ -250,8 +222,6 @@
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
 </footer>
