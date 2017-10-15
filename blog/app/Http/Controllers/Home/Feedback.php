@@ -17,12 +17,12 @@ class Feedback extends Controller
     //后台订单评论列表
     public function index(Request $request)
     {
-    	if (!$request->session()->get('userinfo')) {
+      	if (!$request->session()->get('userinfo')) {
 
-            return redirect('/login');
-        }
+              return redirect('/login');
+          }
 
-    	return view('Home/feedback');
+      	return view('Home/feedback');
     }
 
     public function insert(Request $request)
@@ -36,9 +36,9 @@ class Feedback extends Controller
             ->orderBy('addtime', 'desc')
             ->first();
         if ($num) {
-          if (time() - $num->addtime < 60*60) {
-              return redirect('/')->with('err', '不能频繁反馈！');
-           }
+            if (time() - $num->addtime < 60*60) {
+                return redirect('/')->with('err', '不能频繁反馈！');
+            }
         }
 
         $this->validate($request, [
@@ -52,17 +52,17 @@ class Feedback extends Controller
             'content.required' => '反馈信息不能为空',
         ]);
 
-    	$data = DB::table('feedback')->insert([
+      	$data = DB::table('feedback')->insert([
 
-    		'uid' => $user['id'],
-    		'contact' => $request->input('contact'),
-    		'name' => $request->input('name'),
-    		'content' => $request->input('content'),
-    		'addtime' => time()
-    	]);
+        		'uid' => $user['id'],
+        		'contact' => $request->input('contact'),
+        		'name' => $request->input('name'),
+        		'content' => $request->input('content'),
+        		'addtime' => time()
+      	]);
 
-    	if ($data > 0) {
-    		return redirect('/')->with('msg', '反馈成功');
-    	}
+      	if ($data > 0) {
+      		  return redirect('/')->with('msg', '反馈成功');
+      	}
     }
 }

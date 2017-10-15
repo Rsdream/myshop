@@ -39,7 +39,7 @@
 
 <div class="page-container">
 	@permission ('role-create')
-	<div class="cl pd-5 bg-1 bk-gray"> <span class="l">  <a class="btn btn-primary radius" href="{{url('/admin/rbac/role/create')}}" <i class="Hui-iconfont">&#xe600;</i> 添加角色</a> </span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray"> <span class="l">  <a class="btn btn-primary radius" href="{{url('/admin/rbac/role/create')}}" <i class="Hui-iconfont">&#xe600;</i> 添加角色</a> </span> </div>
 	@endpermission
 	<table class="table table-border table-bordered table-hover table-bg">
 		<thead>
@@ -56,7 +56,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($roles as $role) 
+			@foreach ($roles as $role)
 				<tr class="text-c">
 
 					<td>{{$role->id}}</td>
@@ -67,7 +67,7 @@
 					@permission ('role-show')
 					<a title="编辑" href="{{url('/admin/rbac/role', ['id' => $role->id])}}" ><i class="Hui-iconfont">&#xe6df;</i></a>
 					@endpermission
-					
+
 					@permission ('role-details')
 					<a title="详情" href="{{url('/admin/rbac/role/details', ['id' => $role->id])}}" ><i class="Hui-iconfont">详情</i></a>
 					@endpermission
@@ -85,9 +85,9 @@
 	{{ $roles->links() }}
 </div>
 <!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="{{asset('/Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('/Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/lib/layer/2.4/layer.js')}}"></script>
-<script type="text/javascript" src="{{asset('/Admin/static/h-ui/js/H-ui.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('/Admin/static/h-ui/js/H-ui.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/static/h-ui.admin/js/H-ui.admin.js')}}"></script> <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->

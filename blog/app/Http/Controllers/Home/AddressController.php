@@ -48,28 +48,28 @@ class AddressController extends Controller
     public function show()
     {
         //查询当前用户地址
-    	$data = DB::table('orders_address')
-            ->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment', 'status')
-            ->where('uid', Session::get('user'))
-            ->orderBy('id', 'DESC')
-            ->get();
-        $add = [];
+      	$data = DB::table('orders_address')
+              ->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment', 'status')
+              ->where('uid', Session::get('user'))
+              ->orderBy('id', 'DESC')
+              ->get();
+          $add = [];
         //把数字地址转换为中文
-    	foreach ($data as $v) {
-    		$pro   = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
-    		$city  = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
-    		$area  = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
-    		$add[] = [
-    		'id'      => $v->id,
-    	    'pro'     => $pro->name,
-    	    'city'    => $city->name,
-    	    'area'    => $area->name,
-    	    'name'    => $v->name,
-    	    'phone'   => $v->phone,
-    	    'comment' => $v->comment,
+      	foreach ($data as $v) {
+      		$pro   = HomeDistrict::select(['id', 'name'])->where('id', $v->pro)->first();
+      		$city  = HomeDistrict::select(['id', 'name'])->where('id', $v->city)->first();
+      		$area  = HomeDistrict::select(['id', 'name'])->where('id', $v->area)->first();
+      		$add [] = [
+      		  'id'      => $v->id,
+      	    'pro'     => $pro->name,
+      	    'city'    => $city->name,
+      	    'area'    => $area->name,
+      	    'name'    => $v->name,
+      	    'phone'   => $v->phone,
+      	    'comment' => $v->comment,
             'status'  => $v->status,
-    	    ];
-    	}
+      	    ];
+      	}
         echo json_encode($add);
     }
 

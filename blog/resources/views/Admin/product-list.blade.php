@@ -26,14 +26,8 @@
 <div>
 	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 商品列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
-		<div class="text-c"> 日期范围：
-			<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
-			-
-			<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
-			<input type="text" name="" id="" placeholder=" 产品名称" style="width:250px" class="input-text">
-			<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜商品</button>
-		</div>
-		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <button class="btn radius" onclick="product_add('添加产品','{{url('/admin/product/goods/create')}}')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</button></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+
+		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <button class="btn radius" onclick="product_add('添加产品','{{url('/admin/product/goods/create')}}')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</button></span> <span class="r"><strong></strong></span> </div>
 		<div class="mt-20">
 			<table class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
@@ -58,7 +52,7 @@
 							<td class="text-l">{{$v->gdetail}}</td>
 							<td><span class="price">{{$v->price}}</span></td>
 							<td class="td-status"><span class="{{$v->status==0?'label label-defaunt radius':'label label-success radius'}}">{{$v->status==0?'未上架':'已上架'}}</span></td>
-							<td class="td-manage"><a style="text-decoration:none" status='{{$v->status}}' data-id='{{$v->id}}' onClick="{{$v->status==0?'product_start(this,id)':'product_stop(this,\'10001\')'}}" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_edit('产品编辑','{{url('/admin/product/goods', ['id' => $v->id])}}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+							<td class="td-manage"><a style="text-decoration:none" status='{{$v->status}}' data-id='{{$v->id}}' onClick="{{$v->status==0?'product_start(this,id)':'product_stop(this,\'10001\')'}}" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_edit('产品编辑','{{url('/admin/product/goods', ['id' => $v->id])}}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a></td>
 						</tr>
 					@endforeach
 				</tbody>

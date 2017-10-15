@@ -56,10 +56,6 @@
 		<table class="table table-border table-bordered table-bg table-sort">
 			<thead>
 				<tr class="text-c">
-<<<<<<< HEAD
-
-=======
->>>>>>> 263f1f2c42aca3d2d5d94a3b896393c094ede5b3
 					<th width="70">ID</th>
 					<th width="70">编号</th>
 					<th width="100">收货人</th>

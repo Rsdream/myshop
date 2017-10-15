@@ -47,6 +47,10 @@
 		#yin{
 			display: none;
 		}
+		#w{
+			height:500px;
+			width:350px;
+		}
 	</style>
 </head>
 
@@ -1279,7 +1283,7 @@
 				return;
 			}
 			var id = $(this).attr('link-id');
-			var str = '<ul class="dropdown-menu nav-level1 column-4">';
+			var str = '<ul id="w" class="dropdown-menu nav-level1 column-4">';
 			$.ajax({
 				type: 'get',
 				url: '{{url("menu")}}'+'/'+id,

@@ -37,7 +37,7 @@
 				<th width="200">邮箱</th>
 				<th width="120">成长值</th>
 				<th width="130">积分</th>
-				<th width="100">操作</th>
+				<th style="display:none;" width="100">操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -52,7 +52,7 @@
 					<td>{{$v->email}}</td>
 					<td>{{$v->growth}}</td>
 					<td>{{$v->score}}</td>
-					<td></td>
+					<td style="display:none;"></td>
 				</tr>
 			@endforeach
 		</tbody>

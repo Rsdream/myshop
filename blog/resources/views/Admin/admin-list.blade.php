@@ -25,24 +25,14 @@
 <title>管理员列表</title>
 </head>
 <body>
-        
+
 
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 管理员管理 <span class="c-gray en">&gt;</span> 管理员列表 </nav>
 
 <div class="page-container">
-    
-    <div class="text-c"> 日期
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
-        -
-        <input type="hidden" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;">
-        <form action="{{url('admin/adminlist')}}" method="get">
 
-            <input type="text" class="input-text" style="width:250px" placeholder="输入管理员名称" value="" name="name">
-            <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
 
-        </form>
-    </div>
-    
+
 
     @if (session('msg'))
         <div id="time" class="alert alert-success">
@@ -53,19 +43,19 @@
 
 
 
-    
+
     <div class="cl pd-5 bg-1 bk-gray mt-20">
     @permission ('user-create')
     <span class="l"> <a href="{{url('admin/rbac/user/create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a></span>&nbsp;&nbsp;&nbsp;&nbsp;
     @endpermission
-    
+
     @permission ('user-stop')
     <span class="l"> <a href="{{url('admin/rbac/user/desc/stop')}}"  class="btn btn-primary radius"><i class="Hui-iconfont"></i> 禁用的用户</a></span>
     @endpermission
 
     </div>
 
-    
+
     <table class="table table-border table-bordered table-bg">
         <thead>
             <tr>
@@ -84,7 +74,7 @@
         <tbody>
 
             @foreach($users as $v)
-          
+
             <tr class="text-c">
                 <!-- <td><input type="checkbox" value="1" name=""></td> -->
                 <td>{{$v->id}}</td>
@@ -97,7 +87,7 @@
                         男
                     @endif
                 </td>
-                <td>{{$v->phone}}</td>  
+                <td>{{$v->phone}}</td>
                 <td>
                 @foreach($v->roles as $role)
                 {{$role->name}}
@@ -127,14 +117,14 @@
 </div>
 
 <!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="{{asset('/Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('/Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/lib/layer/2.4/layer.js')}}"></script>
-<script type="text/javascript" src="{{asset('/Admin/static/h-ui/js/H-ui.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('/Admin/static/h-ui/js/H-ui.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/static/h-ui.admin/js/H-ui.admin.js')}}"></script> <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="{{asset('/Admin/lib/My97DatePicker/4.8/WdatePicker.js')}}"></script> 
-<script type="text/javascript" src="{{asset('/Admin/lib/datatables/1.10.0/jquery.dataTables.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('/Admin/lib/My97DatePicker/4.8/WdatePicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('/Admin/lib/datatables/1.10.0/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/lib/laypage/1.2/laypage.js')}}"></script>
 <script type="text/javascript">
 
@@ -243,7 +233,7 @@ setTimeout(function () {
 //          error:function(data) {
 //              console.log(data.msg);
 //          },
-//      });     
+//      });
 //  });
 // }
 
@@ -256,7 +246,7 @@ setTimeout(function () {
 
 //  layer.confirm('确认要停用吗？',function(index){
 // //       //此处请求后台程序，下方是成功后的前台处理……
-        
+
 //      $(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_start(this,id)" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
 //      $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">已禁用</span>');
 //      $(obj).remove();
@@ -269,8 +259,8 @@ setTimeout(function () {
 
 //  layer.confirm('确认要启用吗？',function(index){
 //      //此处请求后台程序，下方是成功后的前台处理……
-        
-        
+
+
 //      $(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_stop(this,id)" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
 //      $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
 //      $(obj).remove();
