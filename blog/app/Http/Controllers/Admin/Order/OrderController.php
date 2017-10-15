@@ -14,6 +14,7 @@ class OrderController extends Controller
 
         $orders = DB::table('orders_detail')
             ->select('id', 'addtime', 'status', 'number', 'name', 'phone', 'address', 'text')
+            ->orderBy('addtime', 'desc')
             ->paginate(10);
 		return view('Admin/order-detail', ['orders' => $orders]);
 	}
@@ -63,9 +64,10 @@ class OrderController extends Controller
         $data = DB::table('orders_goods')
             ->join('orders_back', 'orders_back.bid', '=', 'orders_goods.id')
             ->join('orders_detail', 'orders_goods.oid', '=', 'orders_detail.number')
-            ->select('orders_detail.phone', 'orders_detail.name',
+            ->select('orders_detail.phone', 'orders_detail.name', 'orders_back.id',
                     'orders_goods.gname', 'orders_goods.gnum', 'orders_goods.gprice', 'orders_goods.setmeal',
                     'orders_back.addtime', 'orders_back.number', 'orders_back.status', 'orders_back.id', 'orders_back.comment')
+            ->orderBy('orders_back.id', 'desc')
             ->get()
             ->toArray();
             
@@ -106,6 +108,7 @@ class OrderController extends Controller
             ->join('orders_detail', 'orders_comment.number', '=', 'orders_detail.number')
             ->join('orders_goods', 'orders_comment.gid', '=', 'orders_goods.id')
             ->select('orders_comment.addtime', 'orders_comment.comment', 'orders_detail.name', 'orders_detail.phone', 'orders_comment.text', 'orders_comment.id', 'orders_goods.gname', 'orders_goods.setmeal')
+            ->orderBy('orders_comment.addtime', 'desc')
             ->paginate(10);
 
         return view('Admin/feed-list', ['data' => $data]);

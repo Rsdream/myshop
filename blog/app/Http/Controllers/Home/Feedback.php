@@ -11,10 +11,6 @@ use DB;
  */
 class Feedback extends Controller
 {
-    /**
-    * @author kjw <[kjwlaravel@163.com]>
-    */
-    //后台订单评论列表
     public function index(Request $request)
     {
       	if (!$request->session()->get('userinfo')) {
@@ -30,6 +26,7 @@ class Feedback extends Controller
         $user = $request->session()->get("userinfo");
         //根据用户限制他1小时只能反馈1条
         //查出最近的1条
+
         $num = DB::table('feedback')
             ->select('addtime')
             ->where('uid', $user['id'])

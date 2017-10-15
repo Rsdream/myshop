@@ -180,13 +180,7 @@
             <div class="vc_wp_custommenu wpb_content_element wrap-cus">
               <div class="widget widget_nav_menu">
                 <ul id="menu-infomation" class="menu">
-                  @foreach($url as $v)
-                  <li class="menu-about-us">
-                    <a class="item-link" href="http://{{$v->url}}">
-                      <span class="menu-title">{{$v->name}}</span>
-                    </a>
-                  </li>
-                  @endforeach
+                 
                 </ul>
               </div>
             </div>
@@ -212,8 +206,8 @@
               <div class="payment" id="tiaozhuan">
               @foreach($url as $v)
 
-                <a href="javascript:;" type-url="{{$v->url}}" style="display:block;float:left;margin-left:5px" target="_black">
-                  <img src="{{(asset($v->logo))}}" alt="payment" title="payment" style="width:50px;height:30px"/>
+                <a href="javascript:;" type-url="{{$v->url}}" style="display:block;float:left;margin-left:5px" target="_black" >
+                  <img src="{{(asset($v->logo))}}" alt="payment" title="{{$v->name}}" style="width:50px;height:30px"/>
                 </a>
               @endforeach
               </div>

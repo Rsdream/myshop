@@ -65,7 +65,9 @@
 					<td>{{$role->description}}</td>
 					<td class="f-14" >
 					@permission ('role-show')
+					@if ($role->name !== 'superadmin')
 					<a title="编辑" href="{{url('/admin/rbac/role', ['id' => $role->id])}}" ><i class="Hui-iconfont">&#xe6df;</i></a>
+					@endif
 					@endpermission
 
 					@permission ('role-details')
@@ -73,7 +75,9 @@
 					@endpermission
 
 					@permission ('role-delete')
+					@if ($role->name !== 'superadmin')
 					<a title="删除" id="delete" href="javascript:;" ><i class="Hui-iconfont">删除</i></a>
+					@endif
 					</td>
 					@endpermission
 				</tr>

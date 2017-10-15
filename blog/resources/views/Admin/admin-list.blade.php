@@ -31,9 +31,6 @@
 
 <div class="page-container">
 
-
-
-
     @if (session('msg'))
         <div id="time" class="alert alert-success">
             {{ session('msg') }}
@@ -100,7 +97,9 @@
                     @endpermission
 
                     @permission ('user-disable')
+                    @if($v->id !== $session->id)
                     <a title="禁用" id="stop" href="javascript:;"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>
+                    @endif
                     @endpermission
 
                     @permission ('user-details')
