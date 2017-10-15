@@ -96,6 +96,11 @@
                           <span class="menu-title">我的评论</span>
                         </a>
                       </li>
+                      <li class="menu-checkout">
+                        <a class="item-link" href="{{url('order/showBack')}}">
+                          <span class="menu-title">我的退款</span>
+                        </a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -209,7 +214,7 @@
                   <div id="ResMenuprimary_menu" class="collapse menu-responsive-wrapper">
                     <ul id="menu-primary-menu" class="etrostore_resmenu">
                       <li><a href="{{url('/')}}">商城</a></li>
-                      <li><a href="{{url('/user/myaccount')}}">我的信息</a></li>
+                      <li><a href="{{url('/user/myaccount')}}">个人中心</a></li>
                       <li><a href="{{url('/order/show')}}">我的订单</a></li>
                       <li><a href="{{url('/cart')}}">我的购物车</a></li>
                       <li><a href="{{url('/collection')}}">我的收藏</a></li>
@@ -225,7 +230,7 @@
 
                 <ul id="menu-primary-menu-1" class="nav nav-pills nav-mega etrostore-mega etrostore-menures">
                   <li><a href="{{url('/')}}">商城</a></li>
-                  <li><a href="{{url('/user/myaccount')}}">我的信息</a></li>
+                  <li><a href="{{url('/user/myaccount')}}">个人中心</a></li>
                   <li><a href="{{url('/order/show')}}">我的订单</a></li>
                   <li><a href="{{url('/cart')}}">我的购物车</a></li>
                   <li><a href="{{url('/collection')}}">我的收藏</a></li>

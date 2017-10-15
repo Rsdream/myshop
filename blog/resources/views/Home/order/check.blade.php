@@ -205,7 +205,11 @@
 							<div class="clear"></div>
 							</div>
 
-
+							@foreach ($address as $v)
+							 <input type="hidden" name="address" value="{{$v['pro']}}{{$v['city']}}{{$v['area']}}{{$v['comment']}}">
+							 <input type="hidden" name="uphone" value="{{$v['phone']}}">
+							 <input type="hidden" name="uname" value="{{$v['name']}}">
+							@endforeach
 
 							<!--信息 -->
 							<div class="order-go clearfix">
@@ -236,20 +240,14 @@
 
 												<span class="buy-address-detail">
 
-		                                        <span class="buy-user mybuy-user">@foreach ($address as $v){{$v['name']}}@endforeach</span>
+		                    <span class="buy-user mybuy-user">@foreach ($address as $v){{$v['name']}}@endforeach</span>
 
 												<span class="buy-phone mybuy-phone">@foreach ($address as $v){{$v['phone']}}@endforeach</span>
 												</span>
-
 											</p>
 										</div>
 
 									</div>
-									@foreach ($address as $v)
-									 <input type="hidden" name="address" value="{{$v['pro']}}{{$v['city']}}{{$v['area']}}{{$v['comment']}}">
-									     <input type="hidden" name="uphone" value="{{$v['phone']}}">
-											 <input type="hidden" name="uname" value="{{$v['name']}}">
-									@endforeach
 									<div id="holyshit269" class="submitOrder">
 										<div class="go-btn-wrap">
 										<div class="button">

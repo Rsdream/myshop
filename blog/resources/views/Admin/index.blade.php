@@ -33,7 +33,7 @@
 			<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
 			<nav class="nav navbar-nav">
 				<ul class="cl">
-					
+
 			</ul>
 		</nav>
 		<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
@@ -87,7 +87,6 @@
 			<dt><i class="Hui-iconfont">&#xe622;</i> 评论管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="" data-title="评论列表" href="javascript:;">意见反馈</a></li>
 					<li><a data-href="{{url('admin/order/feedback')}}" data-title="评论列表" href="javascript:;">评论列表</a></li>
 
 				</ul>

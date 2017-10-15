@@ -84,7 +84,7 @@ class OrderController extends Controller
         $number  = rand(111111,999999);
         $time    = time();
         //未知错误！出现过$name值无法获取（1）;
-        if ($name == 'null') {
+        if (!$name) {
             return back();
         }
         //用户登录
@@ -191,8 +191,7 @@ class OrderController extends Controller
             ->select('id', 'addtime', 'status', 'number' , 'tprice', 'oscore')
             ->where('uid', '=', $uid)
             ->orderBy('addtime', 'desc')
-            ->get()
-            ->toArray();
+            ->paginate(6);
         foreach ($data as $k => $v) {
             $data[$k]->orderDetail = DB::table('orders_goods as o')
                 ->leftJoin('price', 'price.id', 'o.gid')
@@ -337,6 +336,7 @@ class OrderController extends Controller
         $data   = DB::table('orders_goods')
             ->select('id', 'oid', 'gname', 'gpic', 'gnum', 'gprice', 'gid', 'setmeal')
             ->where('back_status', '=', 0)
+            ->where('oid', '=', $number)
             ->get()
             ->toArray();
 
@@ -360,11 +360,11 @@ class OrderController extends Controller
             'bid'     => $bid,
         ]);
         //修改退款商品状态
-        $a = DB::table('orders_goods')
+        DB::table('orders_goods')
             ->where('id', $bid)
             ->update(['back_status' => 1]);
 
-         return redirect('order/backlist?number='.$oid.'')->with('backlist', '申请退款成功!');;
+         return redirect('order/backlist?id='.$oid.'')->with('backlist', '申请退款成功!');;
     }
 
     //删除订单

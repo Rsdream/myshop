@@ -53,15 +53,12 @@
 </head>
 <body>
 	<div id="loading" class="loading">上传图片中...</div>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 订单详情 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-<div class="page-container">
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 退款详情 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
-	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-sort">
 			<thead>
 				<tr class="text-c">
-					<th width="25"><input type="checkbox" name="" value=""></th>
+
 					<th width="70">ID</th>
 					<th width="70">退款编号</th>
 					<th width="100">退款人</th>
@@ -77,14 +74,14 @@
 			    @if (isset($data))
 				@foreach($data as $v)
 					<tr class="text-c">
-						<td><input name="" type="checkbox" value=""></td>
+
 						<td>{{$v->id}}</td>
 						<td>{{$v->number}}</td>
 						<td>{{$v->name}}</td>
 						<td class="text-l">
 						    商品名：<span>{{$v->gname}}</span><br>
 						    商品数量：<span>{{$v->gnum}}</span><br>
-						    套餐：<span>{{$v->setmeal}}</span><br>   
+						    套餐：<span>{{$v->setmeal}}</span><br>
 						</td>
 						<td class="text-l">{{$v->phone}}1</td>
 						<td class="text-l">{{$v->comment}}</td>
@@ -115,34 +112,34 @@
 <script type="text/javascript" src="{{asset('/Admin/lib/laypage/1.2/laypage.js')}}"></script>
 @include('Admin/Common/tip')
 <script type="text/javascript">
-    
-    
+
+
     //订单状态修改
     function change(id, status, obj) {
     	$.ajax({
     		type : 'post',
     		url  : '{{url("admin/order/drawBack")}}',
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
-    		beforeSend:function(){ 
+    		beforeSend:function(){
                 index = layer.load(3);
-            }, 
+            },
     		success:function(data) {
     			if (data == '同意退款') {
     				layer.close(index);
     				layer.alert('同意退款', {icon: 1});
     				$(obj).parent().prev().html(data);
-    				$(obj).parent().html('<span>退款完成</span>'); 
+    				$(obj).parent().html('<span>退款完成</span>');
     			} else if(data == '退款驳回'){
     				layer.close(index);
     				layer.alert('退款驳回', {icon: 2});
     				$(obj).parent().prev().html(data);
-    				$(obj).parent().html('<span>退款完成</span>');     				
+    				$(obj).parent().html('<span>退款完成</span>');
     			} else if (data == '退款关闭'){
 	    			layer.close(index);
 	    			layer.alert('用户已取消退款', {icon: 6});
 	    			$(obj).parent().prev().html(data);
 	    			$(obj).parent().html('<span>退款完成</span>');
-    			}	
+    			}
     		},
     		dataType : 'json',
     	})
