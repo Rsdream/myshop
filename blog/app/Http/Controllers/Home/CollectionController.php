@@ -9,16 +9,20 @@ use DB;
 
 class CollectionController extends Controller
 {
-
+    /**
+    * @author kjw <[kjwlaravel@163.com]>
+    */
 	//加载收藏首页
     public function collection()
     {
-      //判断用户是否登录
-      if (Session::get('user') == '') {
+        //判断用户是否登录
+        //没有登录回到登录页
+        if (Session::get('user') == '') {
 
-          return redirect('/login');
-      }
-    	return view('Home/collection/collection');
+            return redirect('/login');
+        }
+
+        return view('Home/collection/collection');
     }
 
     //展示收藏
@@ -52,56 +56,47 @@ class CollectionController extends Controller
             		    'price' => $k->price,
             		];
             }
-
       	}
-      		echo json_encode($data);
-
-
+      	echo json_encode($data);
     }
 
     //添加收藏
     public function add(Request $request)
     {
         //判断是否登录
-    	if (Session::get('user') == '') {
-    		  return 0;
-    	}
-
+    	  if (Session::get('user') == '') {
+    		    return 0;
+    	  }
     	$gid = $request->input('id');
     	$uid = Session::get('user');
-
-
     	//查询商品是否已收藏
     	$check = DB::table('collection_detail')
     	    ->select('id')
     	    ->where([['gid', '=', $gid], ['uid', $uid]])
     	    ->get();
-
     	if(!$check->isEmpty()) {
       		$data = DB::table('collection_detail')->where([['gid', '=', $gid], ['uid', $uid]])->delete();
       		echo json_encode($data);
       		exit;
     	}
-
         $data = DB::table('goods')
-            ->join('price', function($join)
-            {$join->on('goods.id', '=', 'price.gid');})
-                ->select('goods.id', 'goods.gpic','goods.workoff', 'goods.status', 'goods.gname', 'price.price')
-                    ->where('price.id', '=', $gid)
-                    ->get()
-                    ->toArray();
-
+            ->join('price', function($join){$join->on('goods.id', '=', 'price.gid');})
+            ->select('goods.id', 'goods.gpic','goods.workoff', 'goods.status', 'goods.gname', 'price.price')
+            ->where('price.id', '=', $gid)
+            ->get()
+            ->toArray();
     	foreach ($data as $v) {
-    		$bool = DB::table('collection_detail')->insert([
-    			'gid'     => $gid,
-    			'uid'     => $uid,
-    			'gname'   => $v->gname,
-    			'gpic'    => $v->gpic,
-    			'workoff' => $v->workoff,
-    			'status'  => $v->status,
-    			'price'   => $v->price,
-    		]);
+    		  $bool = DB::table('collection_detail')->insert([
+    			   'gid'     => $gid,
+    			   'uid'     => $uid,
+    			   'gname'   => $v->gname,
+    			   'gpic'    => $v->gpic,
+    			   'workoff' => $v->workoff,
+    			   'status'  => $v->status,
+    			   'price'   => $v->price,
+    		  ]);
     	}
+      //已收藏
       return 1;
     }
 }

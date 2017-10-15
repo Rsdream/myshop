@@ -81,13 +81,10 @@
 						<td>{{$v->id}}</td>
 						<td>{{$v->number}}</td>
 						<td>{{$v->name}}</td>
-						
 						<td class="text-l">
-						    
 						    商品名：<span>{{$v->gname}}</span><br>
 						    商品数量：<span>{{$v->gnum}}</span><br>
-						    套餐：<span>{{$v->setmeal}}</span><br>
-						     
+						    套餐：<span>{{$v->setmeal}}</span><br>   
 						</td>
 						<td class="text-l">{{$v->phone}}1</td>
 						<td class="text-l">{{$v->comment}}</td>
@@ -122,7 +119,6 @@
     
     //订单状态修改
     function change(id, status, obj) {
-
     	$.ajax({
     		type : 'post',
     		url  : '{{url("admin/order/drawBack")}}',
@@ -146,9 +142,7 @@
 	    			layer.alert('用户已取消退款', {icon: 6});
 	    			$(obj).parent().prev().html(data);
 	    			$(obj).parent().html('<span>退款完成</span>');
-    			}
-
-    			
+    			}	
     		},
     		dataType : 'json',
     	})

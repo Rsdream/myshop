@@ -12,6 +12,9 @@ use DB;
 
 class MyCartController extends Controller
 {
+    /**
+    * @author kjw <[kjwlaravel@163.com]>
+    */
     //购物车页面
 	public function cart()
 	{
@@ -99,8 +102,8 @@ class MyCartController extends Controller
 		}
 		//更新库存
 		foreach ($priceDatas as $k) {
-						 $key = 'cart:'.Session::getId().':'.$k->id;
-						  Redis::hSet($key, 'stock', $k->stock);
+			$key = 'cart:'.Session::getId().':'.$k->id;
+			Redis::hSet($key, 'stock', $k->stock);
 		}
     	//拿出购物车数据
     	$cartDatas = [];
