@@ -26,21 +26,50 @@ class IndexController extends Controller
         }
         if ( !empty($id) ) {
             //根据类别查询出手机的销量排行
-           	$phone = DB::table('goods')
+            $phone = Cache::get('Hgoods'.$id);
+            // dd($phone);
+            if (!$phone) {
+                $phone = DB::table('goods')
+                ->leftJoin('price', 'goods.id', 'price.gid')
                 ->leftJoin('brands', 'brands.id', '=', 'goods.brandid')
-                ->select('goods.id', 'goods.brandid', 'goods.gname', 'goods.gpic', 'goods.workoff', 'brands.categoryid', 'bname')
-                ->where('brands.categoryid', '=', $id)
+                ->select('goods.id', 'goods.price', 'goods.brandid', 'goods.gname', 'goods.gpic', 'goods.workoff', 'brands.categoryid', 'bname', 'goods.status', 'price.gid')
+                ->where([['goods.status', '>', 0],['brands.categoryid', '=', $id] ])
                 ->orderBy('workoff', 'desc')
                 ->limit(6)
                 ->get()
                 ->toArray();
+                foreach ($phone as $k=>$v) {
+                  $pid = DB::table('price')->select('id')->where('gid', $v->id)->first();
+                  $phone[$k]->pid = $pid->id;
+                }
+
+                //放入缓存
+                Cache::put('Hgoods'.$id, $phone, 24*60);
+                
+            }
+
         } else {
             $phone = [];
         }
 
         //查询商品总销量排行
-        $salesVolume = DB::table('goods')->select('brandid', 'gname', 'id', 'gpic', 'workoff')->orderBy('workoff', 'desc')->limit(5)->get();
-
+        $salesVolume = Cache::get('goodsdata');
+        if (!$salesVolume) {
+            $salesVolume = DB::table('goods')
+            ->leftJoin('price', 'goods.id', 'price.gid')
+            ->select('goods.brandid', 'goods.price', 'goods.gname', 'goods.status', 'goods.id', 'goods.gpic', 'goods.workoff', 'price.gid', 'price.price')
+            ->where('status', 1)
+            ->orderBy('workoff', 'desc')
+            ->limit(5)
+            ->get()
+            ->toArray();
+            foreach ($salesVolume as $k=>$v) {
+              $pid = DB::table('price')->select('id')->where('gid', $v->id)->first();
+              $salesVolume[$k]->pid = $pid->id;
+            }
+            Cache::put('goodsdata', $salesVolume, 24*60);
+        }
+        
 
         $seckillList = DB::table('goods')
             ->leftJoin('price', 'goods.id', '=', 'price.gid')
@@ -58,7 +87,11 @@ class IndexController extends Controller
   	}
 
 
-	// 热销商品 接收ajax传过来的id，查出对应类别的商品
+
+	/**
+     * 热销商品加载
+     * @author Dengjihua <[<2563654031@qq.com>]>
+     */
 	public function hotSale()
 	{
 		// var_dump($_POST);
@@ -70,36 +103,43 @@ class IndexController extends Controller
 
 
         //先查缓存中有无商品
-    	$hotProduct = Cache::get('Hgoods'.$id);
+        $hotProduct = Cache::get('Hgoods'.$id);
         if (!$hotProduct) {
             // echo '没有缓存';
-            //根据类别得到对应的商品
+            // 根据类别得到对应的商品
             $hotProduct = DB::table('goods')
+                ->leftJoin('price', 'goods.id', 'price.gid')
                 ->leftJoin('brands', 'brands.id', '=', 'goods.brandid')
-                ->select('goods.id', 'goods.brandid', 'goods.gname', 'goods.gpic', 'goods.workoff', 'brands.categoryid', 'bname')
-                ->where('brands.categoryid', '=', $class->id)
+                ->select('goods.brandid', 'goods.price', 'goods.gname', 'goods.status', 'goods.id', 'goods.gpic', 'goods.workoff', 'price.gid', 'price.price')
+                ->where([['goods.status', '>', 0],['brands.categoryid', '=', $class->id]])
                 ->orderBy('workoff', 'desc')
                 ->limit(6)
                 ->get()
                 ->toArray();
-            //将商品放入缓存中
-            Cache::put('Hgoods'.$id, $hotProduct, 1);
+
+                foreach ($hotProduct as $k=>$v) {
+                    $pid = DB::table('price')->select('id')->where('gid', $v->id)->first();
+                    $hotProduct[$k]->pid = $pid->id;
+                }
+
+            // 将商品放入缓存中
+            Cache::put('Hgoods'.$id, $hotProduct, 24*60);
 
         }
-
-		if ($hotProduct) {
-			echo json_encode($hotProduct);
-		} else {
+    		if ($hotProduct) {
+    			  echo json_encode($hotProduct);
+    		} else {
             echo '404';
         }
-
-	}
+  	}
 
 
 
     /**
-     * 新商品加载
+     * 新商品的加载
      * @author rong <[<871513137@qq.com>]>
+     * @param  int    类别的id
+     * @return object 新添加商品数据
      */
     public function newGoods(Request $request, $id)
     {
@@ -189,7 +229,10 @@ class IndexController extends Controller
     */
     public function logoShareData()
     {
+
        //网站Logo
-       return $logo = DB::table('logo')->select('id', 'name', 'logo')->where('id', '=', '1')->first();
+       return $logo = DB::table('logo')->select('id', 'name', 'logo')->first();
+
+
     }
 }

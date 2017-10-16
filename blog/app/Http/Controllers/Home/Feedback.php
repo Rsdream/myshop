@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 
+/**
+ * @author [Dengjihua] <[<2563654031@qq.com>]>
+ */
 class Feedback extends Controller
 {
     /**

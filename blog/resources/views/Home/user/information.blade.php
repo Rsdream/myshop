@@ -40,18 +40,18 @@
 		<div class="listings-title">
 			<div class="container">
 				<div class="wrap-title">
-					<h1>Checkout</h1>
+					<h1>我的信息&积分&等级</h1>
 					<div class="bread">
 						<div class="breadcrumbs theme-clearfix">
 							<div class="container">
 								<ul class="breadcrumb">
 									<li>
-										<a href="#">Home</a>
+										<a href="{{url('/')}}">首页</a>
 										<span class="go-page"></span>
 									</li>
 
 									<li class="active">
-										<span>Checkout</span>
+										<span>个人信息</span>
 									</li>
 								</ul>
 							</div>

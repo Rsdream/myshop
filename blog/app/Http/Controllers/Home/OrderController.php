@@ -101,24 +101,31 @@ class OrderController extends Controller
         foreach ($cartDatas as $v) {
             $tPrice += $v['num'] * $v['price'];
         }
+        $tPrice += 10;
         //如果提交订单失败
         //事务回滚
         if (!empty($score)) {
             $score = DB::table('home_users')->select('score')->where('id', session('userinfo')['id'])->first();
             $score = floor($score->score / 100);
-            $tPrice -= $score;
-            $uid = session('userinfo')['id'];
-            DB::table('home_users')->where('id', $uid)->decrement('score', $score * 100);
+            if ($score > $tPrice) {
+                DB::table('home_users')->where('id', $uid)->decrement('score', $tPrice * 100);
+                $score = $tPrice;
+                $tPrice = 0;
+            } else {
+                $tPrice -= $score;
+                DB::table('home_users')->where('id', $uid)->decrement('score', $score * 100);
+            }
         } else {
             $score = 0;
         }
+
         DB::transaction(function () use($name, $phone, $address, $uid, $number, $tPrice, $text, $time, $score){
             DB::table('orders_detail')->insert([
                 'uid' => $uid,
                 'number' => $number,
                 'name' => $name,
                 'phone' => $phone,
-                'tprice' => $tPrice + 10,
+                'tprice' => $tPrice,
                 'oscore' => $score,
                 'address' => $address,
                 'addtime' => $time,
@@ -145,12 +152,12 @@ class OrderController extends Controller
             $gnum    = $v['num'];
             $gprice  = $v['price'];
             OrdersGood::insert([
-                'oid'     => $oid, 
-                'gid'     => $gid, 
-                'gpic'    => $gpic, 
-                'gname'   => $gname, 
-                'gnum'    => $gnum, 
-                'gprice'  => $gprice, 
+                'oid'     => $oid,
+                'gid'     => $gid,
+                'gpic'    => $gpic,
+                'gname'   => $gname,
+                'gnum'    => $gnum,
+                'gprice'  => $gprice,
                 'setmeal' => $setmeal
             ]);
             $stock = DB::table('price')
@@ -221,21 +228,21 @@ class OrderController extends Controller
         //如果确认收货失败
         //回滚事务
         DB::transaction(function () use($id, $status, $uid) {
-            $data  = DB::table('orders_detail') //修改订单状态
-                ->where('id', $id)
-                ->update(['status' => $status]);
-            $price = DB::table('orders_detail') //查出对应商品价格
-                ->select('tprice')
-                ->where('id', $id)
-                ->first();
-            $score = $price->tprice / 10; //金额/10 转换成积分
+            $data = DB::table('orders_detail')->where('id', $id)->update(['status' => $status]);
+            $price = DB::table('orders_detail')->select('tprice', 'oscore')->where('id', $id)->first();
+            $score = ($price->tprice + $price->oscore) / 10;
             $score = floor($score);
-            DB::table('home_users') //添加对应用户积分
-                ->where('id', $uid)
-                ->increment('score', $score);
-            DB::table('home_users') 
-                ->where('id', $uid)
-                ->increment('growth', $price->tprice);
+            $order = DB::table('orders_detail as o')
+                ->leftJoin('orders_goods as g', 'o.number', '=', 'oid')
+                ->leftJoin('price as p', 'g.gid', '=', 'p.id')
+                ->select('p.gid', 'g.gnum')
+                ->where('o.id', $id)
+                ->get();
+            foreach ($order as $v) {
+                DB::table('goods')->where('id', $v->gid)->increment('workoff', $v->gnum);
+            }
+            DB::table('home_users')->where('id', $uid)->increment('score', $score);
+            DB::table('home_users')->where('id', $uid)->increment('growth', $price->tprice + $price->oscore);
         });
 
     }
@@ -267,19 +274,19 @@ class OrderController extends Controller
 
         //添加数据到订单评论表
         DB::table('orders_comment')->insert([
-            'gid' => $gid, 
-            'comment' => $comment, 
-            'addtime' => $addtime, 
-            'uid' => $uid, 
+            'gid' => $gid,
+            'comment' => $comment,
+            'addtime' => $addtime,
+            'uid' => $uid,
             'number' => $oid]
         );
 
         //修改商品评论状态
         $a = DB::table('orders_goods')
             ->where('gid', $id)
-            ->update(['status' => 1]); 
+            ->update(['status' => 1]);
         //查出对应评论商品状态
-        $status = DB::table('orders_goods') 
+        $status = DB::table('orders_goods')
             ->where('oid', '=', $oid)
             ->select('status')
             ->get()
@@ -289,7 +296,7 @@ class OrderController extends Controller
         foreach ($status as $v) {
             if($v->status == '0') {
                 $val = true;
-                break;  
+                break;
             }
         }
         //订单中所有商品已经评论完成
@@ -308,12 +315,12 @@ class OrderController extends Controller
         //查询出当前用户订单
         $data = DB::table('orders_comment')
             ->join('orders_goods', 'orders_goods.id', '=', 'orders_comment.gid')
-            ->select('orders_comment.id', 
-                'orders_comment.addtime', 
-                'orders_comment.comment', 
-                'orders_comment.text', 
-                'orders_goods.gname', 
-                'orders_goods.setmeal', 
+            ->select('orders_comment.id',
+                'orders_comment.addtime',
+                'orders_comment.comment',
+                'orders_comment.text',
+                'orders_goods.gname',
+                'orders_goods.setmeal',
                 'orders_goods.gpic')
             ->where('uid', '=', $uid)
             ->get();
@@ -369,7 +376,7 @@ class OrderController extends Controller
         $data = DB::table('orders_detail')->where('number', '=', $number)->delete();
         if (!$goods && !$data) {
             echo json_encode(1);
-        } 
+        }
     }
 
     //查看退款订单
@@ -379,14 +386,14 @@ class OrderController extends Controller
         //查出当前用户退款订单
         $data = DB::table('orders_back')
             ->join('orders_goods', function($join){$join->on('orders_goods.id', '=', 'orders_back.bid');})
-                ->select('orders_back.addtime', 
-                    'orders_back.number', 
-                    'orders_back.status', 
+                ->select('orders_back.addtime',
+                    'orders_back.number',
+                    'orders_back.status',
                     'orders_back.id',
-                    'orders_goods.gname', 
-                    'orders_goods.gpic', 
-                    'orders_goods.gnum', 
-                    'orders_goods.gprice', 
+                    'orders_goods.gname',
+                    'orders_goods.gpic',
+                    'orders_goods.gnum',
+                    'orders_goods.gprice',
                     'orders_goods.setmeal')
                 ->where('orders_goods.back_status', '=', 1)
                 ->orderBy('orders_back.addtime', 'desc')

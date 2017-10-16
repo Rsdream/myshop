@@ -115,7 +115,7 @@
 
 												<div class="reviews-content">
 													<div class="star"></div>
-													<a href="#reviews" class="woocommerce-review-link" rel="nofollow"><span class="count">0</span> Review(s)</a>
+													<a href="#reviews" class="woocommerce-review-link" rel="nofollow"><br><span class="count">{{$goodsDetail[0]->workoff}}</span> 人已购买</a>
 												</div>
 
 												<div>
@@ -167,7 +167,7 @@
 											</li>
 
 											<li class="reviews_tab ">
-												<a href="#tab-reviews" id="goods" data-toggle="tab">商品评价 (0)</a>
+												<a href="#tab-reviews" id="goods" data-toggle="tab">商品评价 </a>
 											</li>
 										</ul>
 

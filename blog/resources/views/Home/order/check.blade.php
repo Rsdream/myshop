@@ -774,19 +774,28 @@
 	})
    </script>
 	 <script type="text/javascript">
-	    //积分的转换
+	 	var num = $('#J_ActualFee').html();
+	 </script>
+	 <script type="text/javascript">
 	 	function s() {
 			var sum = parseInt({{$score}} / 100) * 100;
-			$('#score').html('使用' + sum + '积分抵现' + parseInt({{$score}} / 100) + '元')
+			var money = $('#J_ActualFee').html()
+			if (sum / 100 > money) {
+				$('#score').html('使用' + money * 100 + '积分抵现' + money + '元')
+			} else {
+				$('#score').html('使用' + sum + '积分抵现' + parseInt({{$score}} / 100) + '元')
+			}
 		}
 		s();
 	 	$('input[name="score"]').on('click', function () {
 			var score = parseInt({{$score}} / 100)
 			if ($("input[name='score']").is(':checked')) {
-				$('#J_ActualFee').html($('#J_ActualFee').html() - score)
+				if (score > $('#J_ActualFee').html()) {
+					$('#J_ActualFee').html('0');
+				} else {
+					$('#J_ActualFee').html($('#J_ActualFee').html() - score)
+				}
 			} else {
-				var num = $('#J_ActualFee').html();
-				num = parseInt(num) + parseInt(score)
 			  $('#J_ActualFee').html(num)
 			}
 		})

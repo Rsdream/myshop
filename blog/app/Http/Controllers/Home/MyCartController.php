@@ -31,6 +31,7 @@ class MyCartController extends Controller
     		    //获取用户没有登录时商品id
     			$oldKey = 'cart:ids:'.Session::getId();
     	        $oldIdsArr = Redis::sMembers($oldKey);
+
     	        //放入到sessionID新键中
     	        $setKey = 'cart:ids:'.Session::get('user');
     	        Redis::sAdd($setKey,  $oldIdsArr);
@@ -57,12 +58,13 @@ class MyCartController extends Controller
     		//用户登录
     		$key = 'cart:ids:'.Session::get('user');
     		$idsArr = Redis::sMembers($key);//拿出商品ID
+
     		//查询数据库中库存
     		$priceDatas = [];
     		foreach ($idsArr as $k) {
     			$priceDatas[] = DB::table('price')
 		    	    ->select('stock', 'id')
-		            ->where('id', '=', $k)
+		            ->where('gid', '=', $k)
 		            ->first();
     		}
     		//更新库存
@@ -76,6 +78,7 @@ class MyCartController extends Controller
     			$hashKey = 'cart:'.Session::get('user').':'.$k;
     			$cartDatas[] =Redis::HGetAll($hashKey);
     		}
+            var_dump($hashKey);die;
             //图片数据转化为数组
             foreach ($cartDatas as $key => $value) {
                 $val = json_decode($value['gpic'], true);
@@ -92,6 +95,7 @@ class MyCartController extends Controller
     	//没有用户登录
     	$key    = 'cart:ids:'.Session::getId();
     	$idsArr = Redis::sMembers($key); //获取商品ID
+
 		  //查询数据库中库存
 		 $priceDatas = [];
 		 foreach ($idsArr as $k) {
@@ -130,6 +134,7 @@ class MyCartController extends Controller
     	$id  = $request->input('id');
     	$num = $request->input('num');
     	$gid = intval($id);
+
     	//判断商品是否存在
     	if ($gid <=0 ) {
 
@@ -166,6 +171,7 @@ class MyCartController extends Controller
     	}
         //用户没有登录时
     	$goodDatas = $this->getGoodData($gid);
+
     	//判断数据库中是否有该商品信息存在
     	if (!$goodDatas) {
 
@@ -173,6 +179,7 @@ class MyCartController extends Controller
     	}
     	$key = 'cart:'.Session::getId().':'.$gid;
     	$bool = Redis::exists($key);
+
     	//判断商品是否存在
     	if (!$bool) {
     		$goodDatas->num = $num;
@@ -251,6 +258,7 @@ class MyCartController extends Controller
     //查询商品数据
     public function getGoodData($gid)
     {
+
     	$goods = '';
     	$goods = DB::table('goods')
     	    ->select('price.id', 'goods.gname', 'goods.gpic', 'price.price', 'ram', 'rom', 'color', 'price.stock')
