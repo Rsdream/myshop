@@ -229,7 +229,7 @@ class OrderController extends Controller
 
         //添加数据到订单评论表
         DB::table('orders_comment')->insert(
-            ['gid' => $gid, 'comment' => $comment, 'addtime' => $addtime, 'uid' => $uid]
+            ['gid' => $gid, 'comment' => $comment, 'addtime' => $addtime, 'uid' => $uid, 'number' => $oid]
         );
 
         //修改商品评论状态
@@ -276,7 +276,7 @@ class OrderController extends Controller
                 }
             }
 
-        return redirect('order/commentlist?number=$oid');
+        return redirect('order/commentlist?number='.$oid.'');
     }
 
     //查看订单评论
@@ -287,16 +287,16 @@ class OrderController extends Controller
         $data = [];
         //查询出当前用户订单
 
-                $users = DB::table('orders_comment')
+                $data = DB::table('orders_comment')
                             ->join('orders_goods', 'orders_comment.gid', '=', 'orders_goods.gid')
                             ->select('orders_comment.addtime', 'orders_comment.comment',
-                                'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.status')
+                                'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.status', 'orders_goods.setmeal')
                                 ->where('orders_goods.status', '=', 1)
                                 ->where('orders_comment.uid', '=', $uid)
                                 ->orderBy('orders_comment.addtime', 'desc')
                                 ->get()
                                 ->toArray();
-dd($data);
+
         return view('Home/order/comment', ['data' => $data]);
 
     }
@@ -320,6 +320,7 @@ dd($data);
     public function back(Request $request)
     {
         $bid = $request->input('id');
+        $oid = $request->input('oid');
         $comment = $request->input('comment');
         $addtime = time();
         $number = rand(111111,999999);
@@ -377,7 +378,7 @@ dd($data);
                 }
             }
 
-        return redirect('order/showBack');
+         return redirect('order/backlist?number='.$oid.'');
     }
 
     //查看退款订单
@@ -391,7 +392,7 @@ dd($data);
             {
                 $join->on('orders_goods.id', '=', 'orders_back.bid');
             })->select('orders_back.addtime', 'orders_back.number', 'orders_back.status', 'orders_back.id',
-                      'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.gnum', 'orders_goods.gprice')
+                      'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.gnum', 'orders_goods.gprice', 'orders_goods.setmeal')
                 ->where('orders_goods.back_status', '=', 1)
                 ->orderBy('orders_back.addtime', 'desc')
                 ->get()
@@ -405,12 +406,28 @@ dd($data);
     {
         $id     = $request->input('id');
         $status = $request->input('status');
+        //是否取消退款
+        $check = DB::table('orders_back')->select('id')->where('id', '=', $id)->where('status', '=', 1)->get(); 
+        if ($check->first()) {
+                echo json_encode(1);
+               exit;
+        } 
+        $back = DB::table('orders_back')->select('id')->where('id', '=', $id)->where('status', '=', 2)->get();
+        if ($back->first()) {
+                echo json_encode(2);
+               exit;
+        } 
 
         //如果‘取消退款’状态修改失败
         //事务回滚
         DB::transaction(function () use($id, $status) {
             $data = DB::table('orders_back')->where('id', $id)->update(['status' => $status]);
-            echo json_encode($data);
+            if ($data) {
+            	echo json_encode(3);
+            } else {
+            	echo json_encode(4);
+            }
+            
         });
     }
 

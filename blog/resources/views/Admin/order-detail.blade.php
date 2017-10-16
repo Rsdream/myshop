@@ -63,6 +63,7 @@
 					<th width="100">收货人</th>
 					<th width="100">联系电话</th>
 					<th>联系地址</th>
+					<th>留言</th>
 					<th width="60">交易状态</th>
 					<th width="80">操作</th>
 				</tr>
@@ -77,8 +78,14 @@
 						<td>{{$v->name}}</td>					
 						<td class="text-l">{{$v->phone}}</td>
 						<td class="text-l">{{$v->address}}</td>
+						@if ($v->text == '')
+						<td class="status">无留言信息</td>
+						@else
+						<td class="status">{{$v->text}}</td>
+						@endif
 						<?php $data = [0=>'等待发货', 1=>'等待收货', 2=>'等待评价', 3=>'订单完成'] ?>
 						<th class="status">{{$data[$v->status]}}</th>
+						
 						<td class="f-14 product-brand-manage"><a style="text-decoration:none"   href='{{url("admin/order/show?number=$v->number")}}' title="查看订单商品详情"><i class="Hui-iconfont">&#xe6de;</i></a><a style="text-decoration:none" onClick="change(id={{$v->id}}, this)" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> </td>
 					</tr>
 				@endforeach

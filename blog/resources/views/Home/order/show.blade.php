@@ -254,14 +254,14 @@
     //订单状态修改
     function change(id, obj, num) {
     	var status = $(obj).html();
+    	var url = '{{url("/")}}';
     	$.ajax({
     		type : 'post',
     		url  : '{{url("order/change")}}',
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
     		success:function(data) {
-
-    			} else if (data == '等待评价') {
-    				window.location.reload();
+    			if (data == '等待评价') {
+    				$('.td-change').html("<div class='am-btn am-btn-danger anniu change'><a href='"+url+"/order/commentlist/?number="+num+"'><spna>等待评价</spna></a></div>");
     				return;
     			}
     			$(obj).html(data);

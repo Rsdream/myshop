@@ -123,7 +123,7 @@
 
 													<div class="item-info">
 														<div>
-															<p class="info-little"><span>颜色：12#玛瑙</span> <span>包装：裸装</span> </p>
+															<p class="info-little"><span>{{$v->setmeal}}</span> </p>
 
 															<p class="info-time">{{date('Y-m-d', $v->addtime)}}</p>
 

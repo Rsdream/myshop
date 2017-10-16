@@ -147,8 +147,7 @@
 																<div class="item-basic-info">
 																	<a href="#">
 																		<p>{{$v->gname}}</p>
-																		<p class="info-little">颜色：12#川南玛瑙
-																			<br/>包装：裸装 </p>
+																		<p class="info-little">{{$v->setmeal}}</p>
 																	</a>
 																</div>
 															</div>
@@ -175,9 +174,9 @@
 															    <?php if($v->status == 0) { ?>
 																<p class="Mystatus">退款中</p>
 																<?php } else if ($v->status == 1) {  ?>
-																<p class="Mystatus">退款成功</p>
+																<p class="Mystatus">同意退款</p>
 																<?php } else if ($v->status == 2) { ?>
-																<p class="Mystatus">退款失败</p>
+																<p class="Mystatus">驳回退款</p>
 																<?php } else {?>
 																<p class="Mystatus">退款关闭</p>
 																<?php } ?>
@@ -189,7 +188,7 @@
 														@if ($v->status == 1 || $v->status == 2 || $v->status == 3)
 														<div class="am-btn am-btn-danger anniu">退款完成</div>
 														@else
-														<div class="am-btn am-btn-danger anniu" onClick='drawback(id="{{$v->id}}", this, status=3)'>取消退款</div>
+														<div class="am-btn am-btn-danger anniu" onClick="drawback({{$v->id}}, this)">取消退款</div>
 														@endif
 														</a>
 													</li>
@@ -289,16 +288,36 @@
 
 			</aside>
 		</div>
+		<script src="{{asset('/layer/layer.js')}}"></script>
 		<script type="text/javascript">
-		    function drawback(id, obj, status) {
+		    function drawback(id, obj) {
+		    	var status =3;
 		    	$.ajax({
 		    		type : 'post',
 		    		url  : '{{url("/order/drawBack")}}',
 		    		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
+				    beforeSend:function(){ 
+		                index = layer.load(3);
+		            }, 
 		    		success:function(data) {console.log(data);
-		    			if (data == 1) {
+		    			if (data == 3) {
+		    				layer.close(index);
+		    				layer.alert('取消退款成功', {icon: 1});
 		    				$(obj).parent().parent().prev().children().children().html('<span style="position:relative;top:30px;color:#EA4846">退款关闭</span>');
 		    				$(obj).html('订单完成');
+		    			} else if (data == 1){
+		    				layer.close(index);
+		    				layer.alert('店家已同意退款', {icon: 1});
+		    				$(obj).parent().parent().prev().children().children().html('<span style="position:relative;top:30px;color:#EA4846">同意退款</span>');
+		    				$(obj).html('订单完成');
+		    			} else if (data == 2) {
+		    				layer.close(index);
+		    				layer.alert('店家已驳回退款', {icon: 2});
+		    				$(obj).parent().parent().prev().children().children().html('<span style="position:relative;top:30px;color:#EA4846">驳回退款</span>');
+		    				$(obj).html('订单完成');
+		    			} else if (data ==4) {
+		    				layer.close(index);
+		    				layeralert('退款失败', {icon: 2});
 		    			}
 		    		},
 		    		dataType : 'json',

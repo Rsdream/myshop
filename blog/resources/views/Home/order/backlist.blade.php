@@ -96,7 +96,7 @@
 
 						<div class="comment-main">
 						<!--多个商品评论-->
-
+						    @if (!empty($data))
 						    @foreach ($data as $v)
 						    <form action="{{url('order/back')}}" method="post" onSubmit="return check(this)" >
 						    {{ csrf_field() }}
@@ -141,8 +141,15 @@
 								<button type="submit"><div class="am-btn am-btn-danger" >申请退款</div></button>
 							</div>
 							</form>	
-							@endforeach												
-						
+							@endforeach
+							@else
+							<div>
+							    <center>
+							        <h2>暂无可退款商品</h2><a style="color:red" href="{{url('order/showBack')}}">查看我的退款信息</a>
+							    </center>
+							    
+							</div>
+							@endif
 					<script type="text/javascript">
 						$(document).ready(function() {
 							$(".comment-list .item-opinion li").click(function() {	
