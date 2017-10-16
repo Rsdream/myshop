@@ -279,7 +279,7 @@
 				<hr/>
 
 				<div class="am-u-md-12" id="show">
-					<form class="am-form am-form-horizontal" id="add" action="{{url('/address/add')}}" method="post">
+					<form class="am-form am-form-horizontal" id="address" action="{{url('/address/add')}}" method="post">
 					    {{csrf_field()}}
 					    <input type="hidden" id="test" name="id" >
 						<div class="am-form-group">
@@ -321,7 +321,7 @@
 
 						<div class="am-form-group theme-poptit">
 							<div class="am-u-sm-9 am-u-sm-push-3">
-								<button style="background: white;border:hidden;position: relative;top: 5px"><div class="am-btn am-btn-danger" id="save">保存</div></button>
+								<button style="background: white;border:hidden;position: relative;top: 5px" type="submit"><div class="am-btn am-btn-danger" id="save">保存</div></button>
 								<div class="am-btn am-btn-danger" id="close" >取消</div>
 							</div>
 						</div>
@@ -801,6 +801,25 @@
 			  $('#J_ActualFee').html(num)
 			}
 		})
+
+	//提交地址时验证
+	$('#address').submit(function () {
+		var pro = $("#pro").val();
+		var city = $('#city').val();
+		var area = $('#area').val();
+		if (pro == '-1') {
+			layer.msg('省份不能为空')
+			return false;
+		} else if (city == '-1') {
+			layer.msg('城市不能为空')
+			return false;
+		} else if (area == '-1') {
+			layer.msg('区/县不能为空')
+			return false;		
+		} else {
+			return true;
+		}
+	});
 	 </script>
    </body>
 </html>
