@@ -631,12 +631,12 @@
 
 																						<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
 																							<div class="yith-wcwl-add-button show" style="display:block">
-																								<a href="javscript:;" onclick=addCollection('{{$good->pid}}') rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+																								<a href="javscript:;" onclick=addCollection('{{$good->pid}}') rel="nofollow" class="">Add to Wishlist</a>
 																								<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
 																							</div>
 
 																							<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-																								<span class="feedback">Product added!</span>
+																								<span class="feedback"></span>
 																								<a href="#" rel="nofollow">Browse Wishlist</a>
 																							</div>
 																							<div style="clear:both"></div>
@@ -712,47 +712,6 @@
 										</div>
 									</div>
 								</div>
-
-
-
-
-
-
-
-
-
-
-								<!-- <div class="vc_row wpb_row vc_row-fluid margin-bottom-60">
-									<div class="wpb_column vc_column_container vc_col-sm-6">
-										<div class="vc_column-inner ">
-											<div class="wpb_wrapper">
-												<div class="wpb_single_image wpb_content_element vc_align_center">
-													<figure class="wpb_wrapper vc_figure">
-														<a href="#" target="_self" class="vc_single_image-wrapper vc_box_border_grey">
-															<img class="vc_single_image-img" src="{{asset('Home/images/1903/banner6-1.jpg')}}" width="570" height="220" alt="banner6" title="banner6" />
-														</a>
-													</figure>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="wpb_column vc_column_container vc_col-sm-6">
-										<div class="vc_column-inner ">
-											<div class="wpb_wrapper">
-												<div class="wpb_single_image wpb_content_element vc_align_center banner-none">
-													<figure class="wpb_wrapper vc_figure">
-														<a href="#" target="_self" class="vc_single_image-wrapper vc_box_border_grey">
-															<img class="vc_single_image-img" src="{{asset('Home/images/1903/banner7-1.jpg')}}" width="570" height="220" alt="banner7" title="banner7" />
-														</a>
-													</figure>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div> -->
-
-
 
 								<div class="vc_row wpb_row vc_row-fluid margin-bottom-60">
 									<div class="wpb_column vc_column_container vc_col-sm-12">
@@ -850,38 +809,6 @@
 										</div>
 									</div>
 								</div>
-
-								<!-- <div class="vc_row wpb_row vc_row-fluid margin-bottom-60">
-									<div class="wpb_column vc_column_container vc_col-sm-6">
-										<div class="vc_column-inner ">
-											<div class="wpb_wrapper">
-												<div class="wpb_single_image wpb_content_element vc_align_center">
-													<figure class="wpb_wrapper vc_figure">
-														<a href="#" target="_self" class="vc_single_image-wrapper vc_box_border_grey">
-															<img class="vc_single_image-img" src="{{asset('Home/images/1903/banner8-1.jpg')}}" width="570" height="220" alt="banner8" title="banner8" />
-														</a>
-													</figure>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="wpb_column vc_column_container vc_col-sm-6">
-										<div class="vc_column-inner ">
-											<div class="wpb_wrapper">
-												<div class="wpb_single_image wpb_content_element vc_align_center banner-none">
-													<figure class="wpb_wrapper vc_figure">
-														<a href="#" target="_self" class="vc_single_image-wrapper vc_box_border_grey">
-															<img class="vc_single_image-img" src="{{asset('Home/images/1903/banner9-1.jpg')}}" width="570" height="220" alt="banner9" title="banner9" />
-														</a>
-													</figure>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div> -->
-
-
 
 								<div class="vc_row wpb_row vc_row-fluid">
 									<div class="wpb_column vc_column_container vc_col-sm-12">
@@ -1296,7 +1223,7 @@
 
 															<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
 																<div class="yith-wcwl-add-button show" style="display:block">
-																	<a href="javascript:;" onclick='addCollection(`+data[i].pid+`)' rel="nofollow" class="add_to_wishlist" title="收藏商品">收藏商品</a>
+																	<a href="javascript:;" onclick='addCollection(`+data[i].pid+`)' rel="nofollow" class="" title="收藏商品">收藏商品</a>
 																	<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
 																</div>
 
@@ -1305,10 +1232,6 @@
 																	<a href="#" rel="nofollow">Browse Wishlist</a>
 																</div>
 
-																<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-																	<span class="feedback">The product is already in the wishlist!</span>
-																	<a href="#" rel="nofollow">Browse Wishlist</a>
-																</div>
 
 																<div style="clear:both"></div>
 																<div class="yith-wcwl-wishlistaddresponse"></div>

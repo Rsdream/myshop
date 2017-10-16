@@ -24,11 +24,8 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 会员管理 <span class="c-gray en">&gt;</span> 会员列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<div class="text-c">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="" name="">
-		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜会员</button>
-	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> </span> <span class="r">共有数据：<strong>{{count($userlist)}}</strong></span> </div>
+
+
 	<div class="mt-20">
 	<table class="table table-border table-bordered table-hover table-bg table-sort">
 		<thead>
@@ -40,7 +37,6 @@
 				<th width="40">性别</th>
 				<th width="90">手机</th>
 				<th width="150">邮箱</th>
-				<th width="">收货地址</th>
 				<th width="130">加入时间</th>
 				<th width="70">状态</th>
 				<th width="100">操作</th>
@@ -56,7 +52,6 @@
 					<td>{{$v->sex==1?'男':'女'}}</td>
 					<td>{{$v->phone}}</td>
 					<td>{{$v->email}}</td>
-					<td class="text-l">{{$v->address}}</td>
 					<td>{{$v->addtime}}</td>
 					<td class="td-status"><span class="{{$v->status==1?'label label-success radius':'label label-defaunt radius'}}">{{$v->status==1?'已启用':'已禁用'}}</span></td>
 					<td class="td-manage"><a style="text-decoration:none" status='{{$v->status}}' data-id='{{$v->id}}' onClick="{{$v->status==0?'member_start(this,id)':'member_stop(this,\'10001\')'}}" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> </td>

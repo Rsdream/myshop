@@ -102,10 +102,12 @@ class AddressController extends Controller
     //查询默认地址
     public function showChange()
     {
+        $uid = Session::get('user');
         //查询状态伪1默认地址
         $v= DB::table('orders_address')
             ->select('id', 'name', 'phone', 'pro', 'city', 'area', 'comment', 'status')
             ->where('status', 1)
+            ->where('uid', $uid)
             ->first();
         if ($v) {
             $add   = [];

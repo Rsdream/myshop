@@ -40,7 +40,7 @@ class MyCartController extends Controller
     		        $hashKey   = 'cart:'.Session::getId().':'.$k;
     		        $cartDatas = Redis::HGetAll($hashKey);
     		        $newKey    = 'cart:'.Session::get('user').':'.$k;
-			    	    $bool    = Redis::exists($newKey);
+			    	    $bool      = Redis::exists($newKey);
 			    	  //判断商品ID是否存在
 			        if (!$bool) {
 			        	//把用户没有登录时购物车中数据放入登录时以商品ID为的键中
@@ -66,12 +66,14 @@ class MyCartController extends Controller
 		    	    ->select('stock', 'id')
 		            ->where('id', '=', $k)
 		            ->first();
+
             }
     		
+
     		//更新库存
     		foreach ($priceDatas as $k) {
                  $key = 'cart:'.Session::get('user').':'.$k->id;
-                Redis::hSet($key, 'stock', $k->stock);
+                 Redis::hSet($key, 'stock', $k->stock);
     		}
     		//拿出购物车数据
     		$cartDatas = [];
@@ -79,6 +81,7 @@ class MyCartController extends Controller
     			$hashKey = 'cart:'.Session::get('user').':'.$k;
     			$cartDatas[] =Redis::HGetAll($hashKey);
     		}
+
             //图片数据转化为数组
             foreach ($cartDatas as $key => $value) {
                 $val = json_decode($value['gpic'], true);
@@ -101,8 +104,8 @@ class MyCartController extends Controller
 		 foreach ($idsArr as $k) {
 		 $priceDatas[] = DB::table('price')
 	    	    ->select('stock', 'id')
-	            ->where('id', '=', $k)
-	            ->first();
+	          ->where('id', '=', $k)
+	          ->first();
 		}
 		//更新库存
 		foreach ($priceDatas as $k) {

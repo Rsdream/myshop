@@ -48,8 +48,8 @@ class LoginController extends Controller
 				'uid'  => $user->uid,
 				'name' => $user->name,
 		        ]);
-		    $request->session()->flash('success', '登录成功!');
-		    
+		    $request->session()->flash('login', '登录成功!');
+
 			return back();
 		} else {
 			if (Redis::exists('user:'.$name)) {

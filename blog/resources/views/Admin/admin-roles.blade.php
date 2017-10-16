@@ -39,7 +39,7 @@
 
 <div class="page-container">
 	@permission ('role-create')
-	<div class="cl pd-5 bg-1 bk-gray"> <span class="l">  <a class="btn btn-primary radius" href="{{url('/admin/rbac/role/create')}}" <i class="Hui-iconfont">&#xe600;</i> 添加角色</a> </span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray"> <span class="l">  <a class="btn btn-primary radius" href="{{url('/admin/rbac/role/create')}}" <i class="Hui-iconfont">&#xe600;</i> 添加角色</a> </span> </div>
 	@endpermission
 	<table class="table table-border table-bordered table-hover table-bg">
 		<thead>
@@ -65,7 +65,9 @@
 					<td>{{$role->description}}</td>
 					<td class="f-14" >
 					@permission ('role-show')
+					@if ($role->name !== 'superadmin')
 					<a title="编辑" href="{{url('/admin/rbac/role', ['id' => $role->id])}}" ><i class="Hui-iconfont">&#xe6df;</i></a>
+					@endif
 					@endpermission
 					
 					@permission ('role-details')
@@ -73,7 +75,9 @@
 					@endpermission
 
 					@permission ('role-delete')
+					@if ($role->name !== 'superadmin')
 					<a title="删除" id="delete" href="javascript:;" ><i class="Hui-iconfont">删除</i></a>
+					@endif
 					</td>
 					@endpermission
 				</tr>

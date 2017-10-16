@@ -16,7 +16,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui.admin/skin/default/skin.css')}}" id="skin" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui.admin/css/style.css')}}" />
 <script type="text/javascript" src="{{asset('bootstrap-3.3.7/js/bootstrap.min.js')}}"></script>
-<link rel="stylesheet" type="text/css" href="{{asset('/bootstrap-3.3.7/css/bootstrap.min.css')}}" /> 
+<link rel="stylesheet" type="text/css" href="{{asset('/bootstrap-3.3.7/css/bootstrap.min.css')}}" />
 <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -56,6 +56,10 @@
 		<table class="table table-border table-bordered table-bg table-sort">
 			<thead>
 				<tr class="text-c">
+<<<<<<< HEAD
+
+=======
+>>>>>>> 263f1f2c42aca3d2d5d94a3b896393c094ede5b3
 					<th width="70">ID</th>
 					<th width="70">编号</th>
 					<th width="100">收货人</th>
@@ -70,9 +74,10 @@
 			    @if (isset($orders))
 				@foreach($orders as $v)
 					<tr class="text-c">
+
 						<td>{{$v->id}}</td>
 						<td>{{$v->number}}</td>
-						<td>{{$v->name}}</td>					
+						<td>{{$v->name}}</td>
 						<td class="text-l">{{$v->phone}}</td>
 						<td class="text-l">{{$v->address}}</td>
 						@if ($v->text == '')
@@ -91,6 +96,7 @@
 		{{ $orders->links() }}
 	</div>
 </div>
+
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="{{asset('/Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/layer/layer.js')}}"></script>
@@ -118,9 +124,9 @@
     		type : 'post',
     		url  : '{{url("admin/order/change")}}',
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
-    		beforeSend:function(){ 
+    		beforeSend:function(){
                 index = layer.load(3); //加载缓存动画
-            }, 
+            },
     		success:function(data) {
     			if (data == '修改失败') {
     				layer.alert(data, {icon: 2});
@@ -128,7 +134,7 @@
     			}
     			if (data == '等待收货') {
     				layer.close(index);
-    				layer.alert('发货成功', {icon: 6}); 
+    				layer.alert('发货成功', {icon: 6});
     			}
     			$(obj).parent().parent().children('th').html(data);
     		},

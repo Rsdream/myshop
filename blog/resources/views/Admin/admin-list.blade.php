@@ -31,17 +31,7 @@
 
 <div class="page-container">
     
-    <div class="text-c"> 日期
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
-        -
-        <input type="hidden" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;">
-        <form action="{{url('admin/adminlist')}}" method="get">
-
-            <input type="text" class="input-text" style="width:250px" placeholder="输入管理员名称" value="" name="name">
-            <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
-
-        </form>
-    </div>
+    
     
 
     @if (session('msg'))
@@ -110,7 +100,9 @@
                     @endpermission
 
                     @permission ('user-disable')
+                    @if($v->id !== $session->id)
                     <a title="禁用" id="stop" href="javascript:;"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>
+                    @endif
                     @endpermission
 
                     @permission ('user-details')

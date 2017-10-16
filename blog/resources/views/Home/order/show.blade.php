@@ -170,9 +170,9 @@
 															<li class="td td-change">
 															    <?php if($v->status == 2) { ?>
 
-																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'><spna>{{$arr[$v->status]}}</spna></a></div>
+																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'><span style="color:white;">{{$arr[$v->status]}}</span></a></div>
 																<?php } else if($v->status ==3){ ?>
-																<div class="am-btn am-btn-danger anniu change" onClick="del({{$v->number}})"><a href='javascript:;'><spna style="color:white;">{{$arr[$v->status]}}</spna></a></div>
+																<div class="am-btn am-btn-danger anniu change" onClick="del({{$v->number}})"><a href='javascript:;'><span style="color:white;">{{$arr[$v->status]}}</span></a></div>
 
 																<?php } else { ?>
 																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this, num={{$v->number}})">{{$arr[$v->status]}}</div>
@@ -188,6 +188,9 @@
 												<center><h2 style="font-size:20px">暂无订单信息</h2></center>
 											</div>
 											@endif
+											<div style="float:right;">
+												{{$data->links()}}
+											</div>
 										</div>
 									</div>
 								</div>
@@ -273,7 +276,7 @@
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
     		success:function(data) {
     			if (data == '等待评价') {
-    				$(obj).parent().html("<div class='am-btn am-btn-danger anniu change'><a href='"+url+"/order/commentlist/?number="+num+"'><spna>等待评价</spna></a></div>");
+    				$(obj).parent().html("<div class='am-btn am-btn-danger anniu change'><a href='"+url+"/order/commentlist/?number="+num+"'><span style='color:white;'>等待评价</span></a></div>");
     				return;
     			}
     			layer.alert(data, {icon: 1});
@@ -289,8 +292,8 @@
     		type : 'post',
     		url  : '{{url("order/del")}}',
     		data : 'number='+num+'&_token={{csrf_token()}}',
-    		beforeSend:function(){ 
-                index = layer.load(3);;//显示加载动画 
+    		beforeSend:function(){
+                index = layer.load(3);;//显示加载动画
             },
     		success:function(data) {
     			layer.close(index);

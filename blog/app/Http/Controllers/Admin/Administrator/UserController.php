@@ -19,8 +19,11 @@ class UserController extends Controller
     public function index()
     {
     	$user = AdminUser::where('status', 0)->paginate(6);
-
-    	return view('Admin/admin-list', ['users' => $user]);
+        $data = session('admin_users');
+        foreach ($data as $v) {
+            $session = $v;
+        }
+    	return view('Admin/admin-list', ['users' => $user, 'session' => $session]);
     }
 
     //加载添加页面
