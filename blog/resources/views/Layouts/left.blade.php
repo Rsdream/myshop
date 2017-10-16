@@ -1,10 +1,10 @@
 <nav class="woocommerce-MyAccount-navigation">
   <ul>
-    <li class="is-active">
+    <li >
       <a>用户中心</a>
     </li>
 
-    <li >
+    <li>
        <a href="{{url('/order/show')}}">我的订单</a>
     </li>
 
@@ -17,7 +17,7 @@
     </li>
 
     <li >
-       <a href="http://demo.smartaddons.com/templates/html/etrostore/order.html">我的收藏</a>
+       <a href="{{url('/collection')}}">我的收藏</a>
     </li>
 
     <li>

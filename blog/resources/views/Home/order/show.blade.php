@@ -91,7 +91,7 @@
 
 											@if (!empty($data))
 											@foreach ($data as $v)
-											<?php $sum=0 ?>
+											<?php $sum=10 ?>
 											<!--交易成功-->
 											<div class="order-status5">
 												<div class="order-title">
@@ -103,7 +103,7 @@
 													<div class="order-left">
 														@foreach($v->orderDetail as $val)
 														@php
-																$sum += $val->gprice*$val->gnum+10
+																$sum += $val->gprice*$val->gnum
 														@endphp
 														<ul class="item-list">
 															<li class="td td-item">
@@ -141,9 +141,16 @@
 														@endforeach
 													</div>
 													<div class="order-right">
-														<li class="td td-amount">
-															<div class="item-amount">
-																合计：{{$sum}}
+														<li class="td td-amount" style="margin-top:-10px;">
+															<div class="item-amount" >
+
+																合计：{{$v->tprice}}
+																<p><span>
+																	@if($v->oscore != 0 )
+																		积分抵现：{{$v->oscore}}元
+																	@endif
+																</span>
+																</p>
 																<p>含运费：<span>10.00</span></p>
 															</div>
 														</li>
@@ -162,9 +169,11 @@
 															<?php $arr=[0=>'等待发货', 1=>'确认收货', 2=>'等待评价', 3=>'删除订单'] ?>
 															<li class="td td-change">
 															    <?php if($v->status == 2) { ?>
+
 																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this)"><a href='{{url("/order/commentlist/?number=$v->number")}}'><spna>{{$arr[$v->status]}}</spna></a></div>
 																<?php } else if($v->status ==3){ ?>
-																<div class="am-btn am-btn-danger anniu change" onClick="del({{$v->number}})"><a href='javascript:;'><spna>{{$arr[$v->status]}}</spna></a></div>
+																<div class="am-btn am-btn-danger anniu change" onClick="del({{$v->number}})"><a href='javascript:;'><spna style="color:white;">{{$arr[$v->status]}}</spna></a></div>
+
 																<?php } else { ?>
 																<div class="am-btn am-btn-danger anniu change" onClick="change(id={{$v->id}}, this, num={{$v->number}})">{{$arr[$v->status]}}</div>
 																<?php } ?>
@@ -267,12 +276,14 @@
     				$(obj).parent().html("<div class='am-btn am-btn-danger anniu change'><a href='"+url+"/order/commentlist/?number="+num+"'><spna>等待评价</spna></a></div>");
     				return;
     			}
+    			layer.alert(data, {icon: 1});
     			$(obj).html(data);
     		},
     		dataType : 'json',
     	})
     }
 
+    //删除订单
     function del(num) {
     	$.ajax({
     		type : 'post',
@@ -283,8 +294,8 @@
             },
     		success:function(data) {
     			layer.close(index);
+    			window.location.reload();
     			layer.alert('删除成功！', {icon: 1});
-    			window.location.reload(); 
     		},
     		dataType : 'json',
     	})

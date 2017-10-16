@@ -85,7 +85,6 @@
 						@endif
 						<?php $data = [0=>'等待发货', 1=>'等待收货', 2=>'等待评价', 3=>'订单完成'] ?>
 						<th class="status">{{$data[$v->status]}}</th>
-						
 						<td class="f-14 product-brand-manage"><a style="text-decoration:none"   href='{{url("admin/order/show?number=$v->number")}}' title="查看订单商品详情"><i class="Hui-iconfont">&#xe6de;</i></a><a style="text-decoration:none" onClick="change(id={{$v->id}}, this)" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> </td>
 					</tr>
 				@endforeach
@@ -111,7 +110,6 @@
     //订单状态修改
     function change(id, obj) {
     	var status = $(obj).parent().parent().children('th').html();
-
     	if (status == '订单完成') {
     		return $(obj).parent().parent().children('th').html('订单完成');
     	}
@@ -123,10 +121,9 @@
     		url  : '{{url("admin/order/change")}}',
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
     		beforeSend:function(){ 
-                index = layer.load(3);
+                index = layer.load(3); //加载缓存动画
             }, 
     		success:function(data) {
-
     			if (data == '修改失败') {
     				layer.alert(data, {icon: 2});
     				return;

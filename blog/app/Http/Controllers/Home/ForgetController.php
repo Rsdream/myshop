@@ -11,6 +11,9 @@ use Lixunguan\Yuntongxun\Sdk as Yuntongxun;
 
 class ForgetController extends Controller
 {
+    /**
+    * @author kjw <[kjwlaravel@163.com]>
+    */
 	//加载找回密码首页
 	public function forget(Request $request)
 	{

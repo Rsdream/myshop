@@ -39,9 +39,22 @@
 	<body>
 		<!--头 -->
 			@include('Layouts/head')
-		<div class="center">
-			<div class="col-main">
+		<div class="center" >
+			<div class="col-main" >
 				<div >
+@if (session('commentlist'))
+    <center>
+    <div class="alert alert-success" style="width: 100px">
+        <span style="text-align: center;">{{ session('commentlist') }}</span>
+    </div>
+    </center>
+	    <script type="text/javascript">
+                //3秒后清除提示样式
+                setTimeout(function () {
+        	        $('.alert-success').remove();
+                    },3000);
+        </script>
+@endif
 
 					<div class="user-comment">
 						<!--标题 -->
@@ -50,7 +63,7 @@
 						</div>
 						<hr/>
 
-						<div class="comment-main">
+						<div class="comment-main" >
 						<!--多个商品评论-->
 						    @if (!empty($data))
 						    @foreach ($data as $v)
@@ -75,8 +88,8 @@
 									</div>
 									<div class="item-info">
 										<div class="info-little">
-											<span>颜色：洛阳牡丹</span>
-											<span>包装：裸装</span>
+											<span>{{$v->setmeal}}</span>
+											
 										</div>
 										<div class="item-price">
 											价格：<strong>{{$v->gprice}}</strong>
@@ -87,16 +100,7 @@
 								<div class="item-comment">
 									<textarea placeholder="请写下对宝贝的感受吧，对他人帮助很大哦！" name="comment" class="comment{{$v->id}}" id="text"></textarea>
 								</div>
-								<div class="filePic">
-									<input type="file" class="inputPic" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*" >
-									<span>晒照片(0/5)</span>
-									<img src="" alt="">
-								</div>
-								<div class="item-opinion">
-									<li><i class="op1"></i>好评</li>
-									<li><i class="op2"></i>中评</li>
-									<li><i class="op3"></i>差评</li>
-								</div>
+
 							</div>
 							<div class="info-btn">
 								<button type="submit"><div class="am-btn am-btn-danger" >发表评论</div></button>
@@ -130,22 +134,24 @@
 
 				</div>
 				<!--底部-->
-
+                @include('Layouts/footer')
 			</div>
 
 		</div>
+	<script type="text/javascript" src="{{asset('/layer/layer.js')}}"></script>
 	<script type="text/javascript">
 	    var text = false;
 	    function check(obj){
 	    	var key = $(obj).children().first().next().val();
 	    	var text = $('#text').parent().children().val();
 	    	if (!text) {
-	    		alert('评论内容不能为空！');
+	    		layer.alert('评论内容不能为空！');
 	    		return false;
 	    	}else {
 	    		return true;
 	    	}
 	    }
+
 	</script>
 
 	</body>

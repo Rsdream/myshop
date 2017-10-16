@@ -99,12 +99,7 @@
                     <div class="top-login">
                       <div class="div-logined">
                         <ul>
-                          <li>
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#login_form">
-                              <span>我的积分</span>
-                            </a>
-                            <span class="wg">Welcome Guest</span>
-                          </li>
+
                         </ul>
                       </div>
                     </div>
@@ -120,11 +115,6 @@
                     <li class="menu-checkout">
                       <a class="item-link" href="{{url('/collection')}}">
                         <span class="menu-title">收藏夹</span>
-                      </a>
-                    </li>
-                    <li class="menu-checkout">
-                      <a class="item-link" href="{{url('/queit')}}">
-                        <span class="menu-title">退出</span>
                       </a>
                     </li>
                   </ul>
@@ -174,115 +164,7 @@
 
                   </div>
 
-                  <!-- <div class="wrapp-minicart">
-                    <div class="minicart-padding">
-                      <div class="number-item">
-                        购物车有 <span>2</span> 件商品
-                      </div>
 
-                      <ul class="minicart-content">
-                        <li>
-                          <a href="simple_product.html" class="product-image">
-                            <img 	width="100" height="100" src="{{asset('Home/images/1903/45-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
-                                srcset="{{asset('Home/images/1903/45-150x150.jpg')}} 150w, {{asset('Home/images/1903/45-300x300.jpg')}} 300w, {{asset('Home/images/1903/45-180x180.jpg')}} 180w, {{asset('Home/images/1903/45.jpg')}} 600w"
-                                sizes="(max-width: 100px) 100vw, 100px" />
-                          </a>
-
-                          <div class="detail-item">
-                            <div class="product-details">
-                              <h4>
-                                <a class="title-item" href="simple_product.html">Veniam Dolore</a>
-                              </h4>
-
-                              <div class="product-price">
-                                <span class="price">
-                                  <span class="woocommerce-Price-amount amount">
-                                    <span class="woocommerce-Price-currencySymbol">$</span>190.00
-                                  </span>
-                                </span>
-
-                                <div class="qty">
-                                  <span class="qty-number">1</span>
-                                </div>
-                              </div>
-
-                              <div class="product-action clearfix">
-                                <a href="#" class="btn-remove" title="Remove this item">
-                                  <span class="fa fa-trash-o"></span>
-                                </a>
-
-                                <a class="btn-edit" href="cart.html" title="View your shopping cart">
-                                  <span class="fa fa-pencil"></span>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-
-                        <li>
-                          <a href="simple_product.html" class="product-image">
-                            <img 	width="100" height="100" src="{{asset('Home/images/1903/22-150x150.jpg')}}" class="attachment-100x100 size-100x100 wp-post-image" alt=""
-                                srcset="{{asset('Home/images/1903/22-150x150.jpg')}} 150w, {{asset('Home/images/1903/22-300x300.jpg')}} 300w, {{asset('Home/images/1903/22-180x180.jpg')}} 180w, {{asset('Home/images/1903/22.jpg')}} 600w"
-                                sizes="(max-width: 100px) 100vw, 100px" />
-                          </a>
-
-                          <div class="detail-item">
-                            <div class="product-details">
-                              <h4>
-                                <a class="title-item" href="simple_product.html">Cleaner with bag</a>
-                              </h4>
-
-                              <div class="product-price">
-                                <span class="price">
-                                  <span class="woocommerce-Price-amount amount">
-                                    <span class="woocommerce-Price-currencySymbol">$</span>350.00
-                                  </span>
-                                </span>
-
-                                <div class="qty">
-                                  <span class="qty-number">1</span>
-                                </div>
-                              </div>
-
-                              <div class="product-action clearfix">
-                                <a href="#" class="btn-remove" title="Remove this item">
-                                  <span class="fa fa-trash-o"></span>
-                                </a>
-
-                                <a class="btn-edit" href="cart.html" title="View your shopping cart">
-                                  <span class="fa fa-pencil"></span>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-
-                      <div class="cart-checkout">
-                        <div class="price-total">
-                          <span class="label-price-total">总金额</span>
-
-                          <span class="price-total-w">
-                            <span class="price">
-                              <span class="woocommerce-Price-amount amount">
-                                <span class="woocommerce-Price-currencySymbol">$</span>540.00
-                              </span>
-                            </span>
-                          </span>
-                        </div>
-
-                        <div class="cart-links clearfix">
-                          <div class="cart-link">
-                            <a href="cart.html" title="Cart">继续购物</a>
-                          </div>
-
-                          <div class="checkout-link">
-                            <a href="checkout.html" title="Check Out">结算</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
                 </div>
               </div>
             </div>
@@ -291,13 +173,7 @@
               <div class="widget-inner">
                 <ul id="menu-wishlist" class="menu">
                   <li class="menu-wishlist">
-                    <a class="item-link" title="我的收藏" href="#">
-                      <span class="menu-title"></span>
-                    </a>
-                  </li>
-
-                  <li class="yith-woocompare-open menu-compare">
-                    <a class="item-link" title="我的订单" href="{{url('/order/show')}}">
+                    <a class="item-link" title="我的收藏" href="{{url('/collection')}}">
                       <span class="menu-title"></span>
                     </a>
                   </li>
@@ -331,7 +207,7 @@
                       <li><a href="{{url('/order/show')}}">我的订单</a></li>
                       <li><a href="{{url('/cart')}}">我的购物车</a></li>
                       <li><a href="{{url('/collection')}}">我的收藏</a></li>
-                      <li><a href="shop.html">意见反馈</a></li>
+                      <li><a href="{{url('/feedback')}}">意见反馈</a></li>
                       <!-- <li><a href="simple_product.html">Simple Product</a></li>
                       <li><a href="about_us.html">About Us</a></li>
                       <li><a href="contact_us.html">Contact Us</a></li> -->
@@ -345,7 +221,7 @@
                   <li><a href="{{url('/order/show')}}">我的订单</a></li>
                   <li><a href="{{url('/cart')}}">我的购物车</a></li>
                   <li><a href="{{url('/collection')}}">我的收藏</a></li>
-                  <li><a href="shop.html">意见反馈</a></li>
+                  <li><a href="{{url('/feedback')}}">意见反馈</a></li>
 
                   <!-- <li><a href="about_us.html">About Us</a></li>
                   <li><a href="contact_us.html">Contact Us</a></li> -->

@@ -653,8 +653,6 @@
 	var ucode = false;
 	var check = false;
 
-
-
    //用户名判断
    $('input[name="uname"]').on('focus', function () {
     var type = 'uname';

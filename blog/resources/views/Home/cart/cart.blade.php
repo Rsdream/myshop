@@ -280,7 +280,6 @@
     	    				var stock = '<span style="color:#C9BFB4">库存（'+data[i].stock+'）</span>';
     	    				var goods = '<div class="quantity buttons_added" style="width:110.2px;"><input type="button" value="-" class="minus"><input  type="number" id="'+data[i].id+'" step="1" onchange="change(this)" min="1" max="'+data[i].stock+'" name="number" value="'+data[i].num+'" title="购买数量" class="input-text qty text" size="4" pattern="[1-9]*" inputmode="numeric"><input type="button" value="+" class="plus"></div>';
     	    			}
-
     	    			//是否选择了商品判断
     	    			if (data[i].status == 0 ) {
     	    				var span = 'checked';
@@ -289,7 +288,6 @@
     	    				num = 0;
     	    				totals =0;
     	    			}
-
     	    			//判断是否库存
     	    			if (data[i].stock < 1) {
     	    				var dis = 'display:none';
@@ -297,7 +295,6 @@
     	    			} else {
     	    				var dis = 'display:block';
     	    			}
-
     	    			str += `<tr class="cart_item">
 		    	    			    <td  onChange="select(id=`+data[i].id+`, this)">
 		    	    			        <input  style="`+dis+`"  type="checkbox" name="like[]" `+span+` value="`+data[i].id+`"/>
@@ -372,7 +369,7 @@
        	   $('input[name="like[]"]').prop('checked', true);
        	   check = false;
        	}
-
+       	//函数封装
 	    function revise(id, status) {
 	    	$.ajax({
 	    		type : 'post',
@@ -395,7 +392,6 @@
     	} else {
     		var status = 1;
     	}
-
     	$.ajax({
     		type : 'post',
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
@@ -419,7 +415,7 @@
        	     out(id);
        	    }
        	});
-
+       	//函数封装
        	function out(id) {
 	       	$.ajax({
 	    		type : 'post',
@@ -473,7 +469,6 @@
 
     //删除数据
     function del(obj) {
-
     	//获取id
     	var id = $(obj).attr('id');
     	$.ajax({
@@ -493,7 +488,7 @@
     $('#cart').submit(function () {
     	var bool = false;
        	$('input[name="like[]"]').each(function (i) {
-       		//选中清除
+       		//有商品
        	    if ($(this).prop('checked')) {
        	    	return bool = true;
        	    } 

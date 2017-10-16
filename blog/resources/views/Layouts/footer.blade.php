@@ -1,185 +1,13 @@
 <footer id="footer" class="footer default theme-clearfix">
   <!-- Content footer -->
   <div class="container">
-    <div class="vc_row wpb_row vc_row-fluid">
-      <div class="wpb_column vc_column_container vc_col-sm-12">
-        <div class="vc_column-inner ">
-          <div class="wpb_wrapper">
-            <div id="sw_testimonial01" class="testimonial-slider client-wrapper-b carousel slide " data-interval="0">
-              <div class="carousel-cl nav-custom">
-                <a class="prev-test fa fa-angle-left" href="#sw_testimonial01" role="button" data-slide="prev"><span></span></a>
-                <a class="next-test fa fa-angle-right" href="#sw_testimonial01" role="button" data-slide="next"><span></span></a>
-              </div>
 
-              <div class="carousel-inner">
-                <div class="item active">
-                  <div class="item-inner">
-                    <div class="image-client pull-left">
-                      <a href="#" title="">
-                        <img width="127" height="127" src="{{asset('Home/images/1903/tm3.jpg')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
-                      </a>
-                    </div>
-
-                    <div class="client-say-info">
-                      <div class="client-comment">
-                        In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit....
-                      </div>
-
-                      <div class="name-client">
-                        <h2><a href="#" title="">Jerry</a></h2>
-                        <p>Web Developer</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="item-inner">
-                    <div class="image-client pull-left">
-                      <a href="#" title="">
-                        <img width="127" height="127" src="{{asset('Home/images/1903/tm1.png')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
-                      </a>
-                    </div>
-
-                    <div class="client-say-info">
-                      <div class="client-comment">
-                        In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit....
-                      </div>
-
-                      <div class="name-client">
-                        <h2>
-                          <a href="#" title="">David Gand</a>
-                        </h2>
-
-                        <p>Designer</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="item ">
-                  <div class="item-inner">
-                    <div class="image-client pull-left">
-                      <a href="#" title="">
-                        <img width="127" height="127" src="{{asset('Home/images/1903/tm2.png')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
-                      </a>
-                    </div>
-
-                    <div class="client-say-info">
-                      <div class="client-comment">
-                        In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit....
-                      </div>
-
-                      <div class="name-client">
-                        <h2>
-                          <a href="#" title="">Taylor Hill</a>
-                        </h2>
-
-                        <p>Developer</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="item-inner">
-                    <div class="image-client pull-left">
-                      <a href="#" title="">
-                        <img width="127" height="127" src="{{asset('Home/images/1903/tm3.jpg')}}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" />
-                      </a>
-                    </div>
-
-                    <div class="client-say-info">
-                      <div class="client-comment">
-                        In auctor ex id urna faucibus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit....
-                      </div>
-
-                      <div class="name-client">
-                        <h2>
-                          <a href="#" title="">JOHN DOE</a>
-                        </h2>
-
-                        <p>Designer</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div data-vc-full-width="true" data-vc-full-width-init="false" data-vc-stretch-content="true" class="vc_row wpb_row vc_row-fluid footer-style1 vc_row-no-padding">
       <div class="container float wpb_column vc_column_container vc_col-sm-12">
         <div class="vc_column-inner ">
           <div class="wpb_wrapper">
-            <div class="vc_row wpb_row vc_inner vc_row-fluid footer-top">
-              <div class="wpb_column vc_column_container vc_col-sm-8">
-                <div class="vc_column-inner ">
-                  <div class="wpb_wrapper">
-                    <div class="wpb_text_column wpb_content_element ">
-                      <div class="wpb_wrapper">
-                        <div class="wrap-newletter">
-                          <h3>NEWSLETTER SIGNUP</h3>
 
-                          <form id="mc4wp-form-1" class="mc4wp-form mc4wp-form-275" method="post" data-id="275" data-name="">
-                            <div class="mc4wp-form-fields">
-                              <div class="newsletter-content">
-                                <input type="email" class="newsletter-email" name="EMAIL" placeholder="Your email" required="" />
-                                <input class="newsletter-submit" type="submit" value="Subscribe" />
-                              </div>
-                            </div>
-                            <div class="mc4wp-response"></div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="wpb_column vc_column_container vc_col-sm-4">
-                <div class="vc_column-inner ">
-                  <div class="wpb_wrapper">
-                    <div class="wpb_raw_code wpb_content_element wpb_raw_html">
-                      <div class="wpb_wrapper">
-                        <div class="shop-social">
-                          <ul>
-                            <li>
-                              <a href="#">
-                                <i class="fa fa-facebook"></i>
-                              </a>
-                            </li>
-
-                            <li>
-                              <a href="#">
-                                <i class="fa fa-twitter"></i>
-                              </a>
-                            </li>
-
-                            <li>
-                              <a href="#">
-                                <i class="fa fa-google-plus"></i>
-                              </a>
-                            </li>
-
-                            <li>
-                              <a href="#">
-                                <i class="fa fa-linkedin"></i>
-                              </a>
-                            </li>
-
-                            <li>
-                              <a href="#">
-                                <i class="fa fa-pinterest-p"></i>
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <div class="vc_row wpb_row vc_inner vc_row-fluid footer-bottom">
               <div class="item-res wpb_column vc_column_container vc_col-sm-6 vc_col-lg-4 vc_col-md-4 vc_col-xs-12">
@@ -208,16 +36,6 @@
                                <li>(801) 2345 - 6788 / (801) 2345 - 6789</li>
                                <li><a href="mailto:contact@etrostore.com">support@etrostore.com</a></li>
                             </ul>
-                          </div>
-
-                          <div class="store">
-                            <a href="#">
-                              <img src="{{asset('Home/images/1903/app-store.png')}}" alt="store" title="store" />
-                            </a>
-
-                            <a href="#">
-                              <img src="{{asset('Home/images/1903/google-store.png')}}" alt="store" title="store" />
-                            </a>
                           </div>
                         </div>
                       </div>

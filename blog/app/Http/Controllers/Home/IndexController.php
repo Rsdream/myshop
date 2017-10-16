@@ -44,7 +44,7 @@ class IndexController extends Controller
 
         $seckillList = DB::table('goods')
             ->leftJoin('price', 'goods.id', '=', 'price.gid')
-            ->select('price.id', 'brandid', 'gname', 'workoff', 'goods.price', 'gpic', 'workoff')
+            ->select('price.id', 'gid', 'brandid', 'gname', 'workoff', 'goods.price', 'gpic', 'workoff')
             ->where('attr', 2)
             ->get()
             ->toArray();

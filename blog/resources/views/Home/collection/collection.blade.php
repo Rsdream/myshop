@@ -168,7 +168,7 @@
 												</div>
 											</div>
 											<div class="s-tp">
-												<span class="ui-btn-loading-before">找相似</span>
+												<span onClick='addcart(`+data[i].gid+`)' class="ui-btn-loading-before">加入购物车</span>
 												<i class="am-icon-trash"></i>
 												<span class="ui-btn-loading-before buy" onClick="cancel(id=`+data[i].gid+`, this)">取消收藏</span>
 												<p>
@@ -188,20 +188,19 @@
 		</script>
 
 		<script type="text/javascript">
-		    //取消收藏
-		    function cancel(id, obj) {
-		    	$.ajax({
-		    		type : 'get',
-		    		data : 'id='+id+'&_token={{csrf_token()}}',
-		    		url  : '{{url("collection/add")}}',
-		    		success:function(data) {
-		    			console.log(data);
-		    		},
-		    		dataType: 'json',
-		    	});
-
-		    	$(obj).parent().parent().parent().remove();
-		    }
+		//取消收藏
+		function cancel(id, obj) {
+		    $.ajax({
+		    	type : 'get',
+		    	data : 'id='+id+'&_token={{csrf_token()}}',
+		    	url  : '{{url("collection/add")}}',
+		    	success:function(data) {
+		    		console.log(data);
+		    	},
+		    	dataType: 'json',
+		    });
+		    $(obj).parent().parent().parent().remove();
+		}
 		</script>
 		<script type="text/javascript">
 			var sticky_navigation_offset_top = $("#header .header-bottom").offset().top;
@@ -231,7 +230,7 @@
 				$('#billing_country').select2();
 			});
 	   </script>
-
+		 @include('Layouts/addcart')
 
 
 </html>

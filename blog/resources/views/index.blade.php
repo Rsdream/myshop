@@ -441,7 +441,7 @@
 												<div id="_sw_countdown_01" class="sw-woo-container-slider responsive-slider countdown-slider" data-lg="5" data-md="4" data-sm="2" data-xs="1" data-mobile="1" data-speed="1000" data-scroll="1" data-interval="5000" data-autoplay="false" data-circle="false">
 													<div class="resp-slider-container">
 														<div class="box-title clearfix">
-															<h3>秒杀 商品</h3>
+															<h3>秒杀商品</h3>
 															<a href="deals.html">See all</a>
 														</div>
 
@@ -465,7 +465,7 @@
 																				<!-- end rating  -->
 
 																				<h4>
-																					<a href="simple_product.html" title="MacBook Air">{{$v->gname}}</a>
+																					<a href="{{url('goods/detail/'.$v->id)}}" title="MacBook Air">{{$v->gname}}</a>
 																				</h4>
 
 																				<!-- Price -->
@@ -479,13 +479,13 @@
 
 																						<ins>
 																							<span class="woocommerce-Price-amount amount">
-																								<span class="woocommerce-Price-currencySymbol">$</span>1
+																								<span class="woocommerce-Price-currencySymbol">$</span>{{$v->price}}
 																							</span>
 																						</ins>
 																					</span>
 																				</div>
 
-																				<div class="sale-off">一元</div>
+																				<div class="sale-off">{{$v->price}}</div>
 
 																				<div class="product-countdown" data-date="1517356800" data-price="$800" data-starttime="1483747200" data-cdtime="1517356800" data-id="product_sw_countdown_07"></div>
 																			</div>
@@ -493,7 +493,7 @@
 																			<div class="item-image-countdown">
 																				<span class="onsale">Sale!</span>
 
-																				<a href="simple_product.html">
+																				<a href="{{url('goods/detail/'.$v->id)}}">
 																					<div class="product-thumb-hover">
 																						<img 	width="300" height="300" src="{{asset(json_decode($v->gpic, true)[0])}}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""
 																								srcset="{{asset(json_decode($v->gpic, true)[2])}} 300w, {{asset(json_decode($v->gpic, true)[0])}} 150w, {{asset(json_decode($v->gpic, true)[1])}} 180w, {{asset('Home/images/1903/50.jpg')}} 600w"
@@ -503,19 +503,16 @@
 
 																				<!-- add to cart, wishlist, compare -->
 																				<div class="item-bottom clearfix">
-																					<a rel="nofollow" href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
-
-																					<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
-
+																					<a style="margin-left:15px;" onclick="addcart({{$v->id}})" rel="nofollow" href="javascript:;" class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="Add to Cart">Add to cart</a>
 																					<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
 																						<div class="yith-wcwl-add-button show" style="display:block">
-																							<a href="#" rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+																							<a href="javascript:;" onclick="addCollection({{$v->id}})" rel="nofollow" class="">Add to Wishlist</a>
 																							<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
 																						</div>
 
 																						<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
 																							<span class="feedback">Product added!</span>
-																							<a href="#" rel="nofollow">Browse Wishlist</a>
+																							<a href="javascript:;"  rel="nofollow">Browse Wishlist</a>
 																						</div>
 
 																						<div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
@@ -529,7 +526,7 @@
 
 																					<div class="clear"></div>
 
-																					<a href="#" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
+																					<a href="{{url('img/'.$v->gid)}}" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">Quick View </a>
 																				</div>
 																			</div>
 																		</div>
@@ -1930,7 +1927,7 @@
 										</div>
 
 										<div class="clear"></div>
-										<a href="{{url('img')}}`+'/'+goods[i].pid+`" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">商品大图</a>
+										<a href="{{url('img')}}`+'/'+goods[i].id+`" data-fancybox-type="ajax" class="sm_quickview_handler-list fancybox fancybox.ajax">商品大图</a>
 									</div>
 								</div>
 							</div>

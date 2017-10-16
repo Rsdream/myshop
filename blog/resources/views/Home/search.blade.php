@@ -142,13 +142,12 @@
 
 														<!-- add to cart, wishlist, compare -->
 														<div class="item-bottom clearfix">
-															<a rel="nofollow" onclick='addcart({{$v['id']}})' class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="加入购物车">加入购物车</a>
+															<a style='margin-left:15px;' rel="nofollow" onclick='addcart({{$v['id']}})' class="button product_type_simple add_to_cart_button ajax_add_to_cart" title="加入购物车">加入购物车</a>
 
-															<a href="javascript:void(0)" class="compare button" rel="nofollow" title="Add to Compare">Compare</a>
 
 															<div class="yith-wcwl-add-to-wishlist add-to-wishlist-248">
 																<div class="yith-wcwl-add-button show" style="display:block">
-																	<a href="javascript:;" onclick='addCollection({{$v['id']}})' rel="nofollow" class="add_to_wishlist">Add to Wishlist</a>
+																	<a href="javascript:;" onclick='addCollection({{$v['id']}})' rel="nofollow" class="">Add to Wishlist</a>
 																	<img src="{{asset('Home/images/wpspin_light.gif')}}" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
 																</div>
 
