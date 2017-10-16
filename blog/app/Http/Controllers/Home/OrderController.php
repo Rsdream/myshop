@@ -209,9 +209,9 @@ class OrderController extends Controller
     {
         $number = $request->input('number');
         $data = DB::table('orders_goods')
-                ->select('gid', 'gname', 'gpic', 'gprice', 'oid', 'id')
+                ->select('id', 'gid', 'gname', 'gpic', 'gprice', 'oid', 'id')
                 ->where('oid', '=', $number)
-                ->where('status', '=', '0')
+                ->where('status', '=', 0)
                 ->get()
                 ->toArray();
 
@@ -223,6 +223,7 @@ class OrderController extends Controller
     {
         $gid = $request->input('gid');
         $oid = $request->input('oid');
+        $id = $request->input('id');
         $comment = $request->input('comment');
         $addtime = time();
         $uid = Session::get('user');
@@ -234,47 +235,28 @@ class OrderController extends Controller
 
         //修改商品评论状态
         $a = DB::table('orders_goods')
-            ->where('id', $gid)
+            ->where('gid', $id)
             ->update(['status' => 1]);
 
-        //订单评论完成，订单就完成
-        //修改订单状态
-        //查出订单编号
-        $data = DB::table('orders_goods')
-            ->where('gid', '=', $gid)
-            ->select('oid')
+           
+        $status = DB::table('orders_goods')
+            ->where('oid', '=', $oid)
+            ->select('status')
             ->get()
             ->toArray();
 
-            //根据订单编号查出商品评论状态
-            foreach ($data as $v) {
-                $status = DB::table('orders_goods')
-                    ->where('oid', '=', $v->oid)
-                    ->select('status')
-                    ->get()
-                    ->toArray();
-
-                $val = false;
-                foreach ($status as $v) {
-                    if($v->status == 0) {
-                        $val = true;
-                        break;
-                    }
-                        if ($val) {
-                            echo '';
-                        } else {
-                            foreach ($data as $v) {
-
-                                //如果‘订单完成’修改失败
-                                //事务回滚
-                                DB::transaction(function () use($v) {
-                                    DB::table('orders_detail')->where('number', '=', $v->oid)->update(['status' => 3]);
-                                });
-
-                        }
-                    }
-                }
+        $val = false;
+        foreach ($status as $v) {
+            if($v->status == '0') {
+                $val = true;
+                break;
+                
             }
+        }
+
+        if (!$val) {
+            DB::table('orders_detail')->where('number', '=', $oid)->update(['status' => 3]);
+        }
 
         return redirect('order/commentlist?number='.$oid.'');
     }
@@ -286,16 +268,12 @@ class OrderController extends Controller
 
         $data = [];
         //查询出当前用户订单
-
-                $data = DB::table('orders_comment')
-                            ->join('orders_goods', 'orders_comment.gid', '=', 'orders_goods.gid')
-                            ->select('orders_comment.addtime', 'orders_comment.comment',
-                                'orders_goods.gname', 'orders_goods.gpic', 'orders_goods.status', 'orders_goods.setmeal')
-                                ->where('orders_goods.status', '=', 1)
-                                ->where('orders_comment.uid', '=', $uid)
-                                ->orderBy('orders_comment.addtime', 'desc')
-                                ->get()
-                                ->toArray();
+               $data = DB::table('orders_comment')
+               ->join('orders_goods', 'orders_goods.id', '=', 'orders_comment.gid')
+               ->select('orders_comment.id', 'orders_comment.addtime', 'orders_comment.comment', 'orders_comment.text', 
+                'orders_goods.gname', 'orders_goods.setmeal', 'orders_goods.gpic')
+               ->where('uid', '=', $uid)
+               ->get();
 
         return view('Home/order/comment', ['data' => $data]);
 
@@ -379,6 +357,17 @@ class OrderController extends Controller
             }
 
          return redirect('order/backlist?number='.$oid.'');
+    }
+
+    //删除订单
+    public function del(Request $request)
+    {
+        $number = $request->input('number');
+        $goods = DB::table('orders_goods')->where('oid', '=', $number)->delete();
+        $data = DB::table('orders_detail')->where('number', '=', $number)->delete();
+        if (!$goods && !$data) {
+            echo json_encode(1);
+        } 
     }
 
     //查看退款订单

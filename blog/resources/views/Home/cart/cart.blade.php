@@ -293,6 +293,7 @@
     	    			//判断是否库存
     	    			if (data[i].stock < 1) {
     	    				var dis = 'display:none';
+    	    				var span = '';
     	    			} else {
     	    				var dis = 'display:block';
     	    			}

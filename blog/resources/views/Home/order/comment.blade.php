@@ -73,7 +73,7 @@
 						<div class="am-tabs am-tabs-d2 am-margin" data-am-tabs>
 
 							<ul class="am-avg-sm-2 am-tabs-nav am-nav am-nav-tabs">
-								<li class="am-active"><a href="#tab1">所有评价</a></li>
+								<li class="am-active"><a href="#tab1">我的评价</a></li>
 								<li><a href="#tab2"></a></li>
 
 							</ul>
@@ -91,9 +91,8 @@
 													</div>
 													<div class="th th-item">
 														<td class="td-inner">商品</td>
-													</div>
+													</div>													
 												</div>
-
 
 												<li class="td td-item">
 
@@ -119,7 +118,7 @@
 													<div class="item-comment">
 												    {{$v->comment}}
 													</div>
-
+													
 
 													<div class="item-info">
 														<div>
@@ -133,6 +132,9 @@
 												</li>
 
 											</ul>
+											@if ($v->text != null)
+											<div>店家回复：{{$v->text}}</div>
+											@endif
 											@endforeach
 										</div>
 									</div>

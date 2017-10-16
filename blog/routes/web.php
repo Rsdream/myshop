@@ -121,6 +121,8 @@ Route::prefix('/admin')->group( function () {
         Route::post('/drawBack', 'Admin\Order\OrderController@drawBack');
         //订单评论
         Route::get('/feedback', 'Admin\Order\OrderController@feedBack');
+        //订单回复
+        Route::post('/reply', 'Admin\Order\OrderController@reply');
     });
 
 
@@ -263,6 +265,9 @@ Route::prefix('/order')->group(function () {
 
     //查看订单评论
     Route::get('/showComment', 'Home\OrderController@showComment');
+
+    //删除订单
+    Route::post('/del', 'Home\OrderController@del');
 
     //申请退款
     Route::get('/backlist', 'Home\OrderController@backlist');

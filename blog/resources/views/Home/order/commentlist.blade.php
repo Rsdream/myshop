@@ -56,7 +56,8 @@
 						    @foreach ($data as $v)
 						    <form action="{{url('order/comment')}}" method="post" onSubmit="return check(this)" >
 						    {{ csrf_field() }}
-						    <input type="hidden" name="gid" value="{{$v->gid}}">
+						    <input type="hidden" name="gid" value="{{$v->id}}">
+						    <input type="hidden" name="id" value="{{$v->gid}}">
 								<input type="hidden" name="oid" value="{{$v->oid}}">
 							<div class="comment-list">
 								<div class="item-pic">

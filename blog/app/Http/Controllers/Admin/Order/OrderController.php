@@ -111,4 +111,15 @@ class OrderController extends Controller
            
         return view('Admin/feed-list', ['data' => $data]);
     }
+
+    //订单评论回复
+    public function reply(Request $request)
+    {
+        $id = $request->input('id');
+        $text = $request->input('value');
+        $data = DB::table('orders_comment')
+            ->where('id', $id)
+            ->update(['text' => $text]);
+        echo json_encode($data);
+    }
 }
