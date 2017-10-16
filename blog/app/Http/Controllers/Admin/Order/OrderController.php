@@ -14,8 +14,7 @@ class OrderController extends Controller
 
         $orders = DB::table('orders_detail')
             ->select('id', 'addtime', 'status', 'number', 'name', 'phone', 'address', 'text')
-            ->get()
-            ->toArray();
+            ->paginate(10);
 		return view('Admin/order-detail', ['orders' => $orders]);
 	}
 
@@ -69,7 +68,7 @@ class OrderController extends Controller
                     'orders_back.addtime', 'orders_back.number', 'orders_back.status', 'orders_back.id', 'orders_back.comment')
             ->get()
             ->toArray();
-
+            
         return view('Admin/order-back', ['data' => $data]);
     }
     

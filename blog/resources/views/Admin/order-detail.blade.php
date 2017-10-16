@@ -15,6 +15,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/lib/Hui-iconfont/1.0.8/iconfont.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui.admin/skin/default/skin.css')}}" id="skin" />
 <link rel="stylesheet" type="text/css" href="{{asset('/Admin/static/h-ui.admin/css/style.css')}}" />
+<script type="text/javascript" src="{{asset('bootstrap-3.3.7/js/bootstrap.min.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('/bootstrap-3.3.7/css/bootstrap.min.css')}}" /> 
 <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -50,14 +52,10 @@
 <body>
 	<div id="loading" class="loading">上传图片中...</div>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 订单详情 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-<div class="page-container">
 
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
-	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-sort">
 			<thead>
 				<tr class="text-c">
-					<th width="25"><input type="checkbox" name="" value=""></th>
 					<th width="70">ID</th>
 					<th width="70">编号</th>
 					<th width="100">收货人</th>
@@ -72,7 +70,6 @@
 			    @if (isset($orders))
 				@foreach($orders as $v)
 					<tr class="text-c">
-						<td><input name="" type="checkbox" value=""></td>
 						<td>{{$v->id}}</td>
 						<td>{{$v->number}}</td>
 						<td>{{$v->name}}</td>					
@@ -91,6 +88,7 @@
 				@endif
 			</tbody>
 		</table>
+		{{ $orders->links() }}
 	</div>
 </div>
 <!--_footer 作为公共模版分离出去-->

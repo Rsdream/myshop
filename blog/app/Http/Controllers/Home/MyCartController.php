@@ -64,9 +64,10 @@ class MyCartController extends Controller
     		foreach ($idsArr as $k) {
     			$priceDatas[] = DB::table('price')
 		    	    ->select('stock', 'id')
-		            ->where('gid', '=', $k)
+		            ->where('id', '=', $k)
 		            ->first();
-    		}
+            }
+    		
     		//更新库存
     		foreach ($priceDatas as $k) {
                  $key = 'cart:'.Session::get('user').':'.$k->id;
@@ -78,7 +79,6 @@ class MyCartController extends Controller
     			$hashKey = 'cart:'.Session::get('user').':'.$k;
     			$cartDatas[] =Redis::HGetAll($hashKey);
     		}
-            var_dump($hashKey);die;
             //图片数据转化为数组
             foreach ($cartDatas as $key => $value) {
                 $val = json_decode($value['gpic'], true);

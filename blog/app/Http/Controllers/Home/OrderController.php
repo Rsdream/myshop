@@ -75,16 +75,16 @@ class OrderController extends Controller
     {
         $text    = '';
         $id      = $request->input('like');
-        $name    = $request->input('uname');
-        $phone   = $request->input('uphone');
-        $address = $request->input('address');
+        $name    = $request->input('myname');
+        $phone   = $request->input('myphone');
+        $address = $request->input('myaddress');
         $text    = $request->input('text');
         $uid     = Session::get('user');
         $score   = $request->input('score');
         $number  = rand(111111,999999);
         $time    = time();
-        //未知错误！出现过$name值无法获取（1）;
-        if ($name == 'null') {
+        //未知错误！出现过$name值无法获取;
+        if ($name == null) {
             return back();
         }
         //用户登录

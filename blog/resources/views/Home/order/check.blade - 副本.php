@@ -216,7 +216,7 @@
                                     <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee"><?php echo $total+10 ?></em>
 											</span>
 										</div>
-										
+
 										<div id="holyshit268" class="pay-address">
 
 											<p class="buy-footer-address">
@@ -243,12 +243,13 @@
 
 											</p>
 										</div>
-									 <input type="hidden" name="myaddress" value="@foreach ($address as $v){{$v['pro']}}{{$v['city']}}{{$v['area']}}{{$v['comment']}}@endforeach">
-									<input type="hidden" name="myphone" value="@foreach ($address as $v){{$v['phone']}}@endforeach">
-									<input type="hidden" name="myname" value="@foreach ($address as $v){{$v['name']}}@endforeach">
 
 									</div>
-									
+									@foreach ($address as $v)
+									 <input type="hidden" name="myaddress" value="{{$v['pro']}}{{$v['city']}}{{$v['area']}}{{$v['comment']}}">
+									<input type="hidden" name="myphone" value="{{$v['phone']}}">
+									<input type="hidden" name="myname" value="{{$v['name']}}">
+									@endforeach
 									<div id="holyshit269" class="submitOrder">
 										<div class="go-btn-wrap">
 										<div class="button">
@@ -725,8 +726,8 @@
 			url  : '{{url("address/change")}}',
 			success:function(data) {
 				//刷新
-				showChange();
 				show();
+				showChange();
 			},
 			dataType: 'json',
 		})
@@ -741,14 +742,11 @@
 			success:function(data) {
 				if (data != 'no') {
 					$('.myprovince').html(data[0].pro);
-					$('.mycity').html(data[0].pro);
+					$('.mycity').html(data[0].city);
 					$('.mydist').html(data[0].area);
 					$('.mystreet').html(data[0].comment);
 					$('.mybuy-user').html(data[0].name);
 					$('.mybuy-phone').html(data[0].phone);
-					$('input[name="myname"]').val(data[0].name);
-					$('input[name="myphone"]').val(data[0].phone);
-					$('input[name="myaddress"]').val(data[0].pro+data[0].pro+data[0].area);
 				} else {
 					$('.myprovince').html('');
 					$('.mycity').html('');

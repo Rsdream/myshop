@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/css/H-ui.admin.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('Admin/lib/Hui-iconfont/1.0.8/iconfont.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/skin/default/skin.css')}}" id="skin" />
-<link rel="stylesheet" type="text/css" href="{{asset('Admin/static/h-ui.admin/css/style.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('/bootstrap-3.3.7/css/bootstrap.min.css')}}" />
 <!--[if IE 6]>
 <script type="text/javascript" src="{{asset('Admin/lib/DD_belatedPNG_0.0.8a-min.js')}}" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -24,16 +24,6 @@
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 评论管理 <span class="c-gray en">&gt;</span> 意见反馈 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-<div class="page-container">
-	<div class="text-c"> 日期范围：
-		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
-		-
-		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入关键词" id="" name="">
-		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜意见</button>
-	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> </span> <span class="r">共有数据：<strong>88</strong> 条</span> </div>
-	<div class="mt-20">
 		<table class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 				<tr class="text-c">
@@ -70,11 +60,11 @@
 				@endif
 			</tbody>
 		</table>
+		{{ $data->links() }}
 	</div>
-</div>
-
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="{{asset('Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('bootstrap-3.3.7/js/bootstrap.min.js')}}"></script> 
 <script type="text/javascript" src="{{asset('Admin/lib/layer/2.4/layer.js')}}"></script>  
 <script type="text/javascript" src="{{asset('Admin/static/h-ui/js/H-ui.min.js')}}"></script> 
 <script type="text/javascript" src="{{asset('Admin/static/h-ui.admin/js/H-ui.admin.js')}}"></script> <!--/_footer /作为公共模版分离出去-->
@@ -85,17 +75,7 @@
 <script type="text/javascript" src="{{asset('Admin/lib/laypage/1.2/laypage.js')}}"></script>
 <script type="text/javascript" src="{{asset('layer/layer.js')}}"></script>
 <script type="text/javascript">
-$(function(){
-	$('.table-sort').dataTable({
-		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-		"bStateSave": true,//状态保存
-		"aoColumnDefs": [
-		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-		  {"orderable":false,"aTargets":[0,2,4]}// 制定列不参与排序
-		]
-	});
 
-});
 /*用户-添加*/
 function member_add(title,url,w,h){
 	layer_show(title,url,w,h);
