@@ -83,7 +83,10 @@ class OrderController extends Controller
         $score   = $request->input('score');
         $number  = rand(111111,999999);
         $time    = time();
-
+        //未知错误！出现过$name值无法获取（1）;
+        if ($name == 'null') {
+            return back();
+        }
         //用户登录
         $key       = 'cart:ids:'.Session::get('user');
         $cartDatas = [];
@@ -180,16 +183,17 @@ class OrderController extends Controller
         $data = DB::table('orders_detail')
             ->select('id', 'addtime', 'status', 'number' , 'tprice', 'oscore')
             ->where('uid', '=', $uid)
+            ->orderBy('addtime', 'desc')
             ->get()
             ->toArray();
-            foreach ($data as $k => $v) {
-                $data[$k]->orderDetail = DB::table('orders_goods as o')
-                    ->leftJoin('price', 'price.id', 'o.gid')
-                    ->select('o.id', 'o.oid', 'o.gid', 'o.gname', 'o.gpic', 'o.gnum', 'o.gprice', 'ram', 'rom', 'color')
-                    ->where('oid', $v->number)
-                    ->get()
-                    ->toArray();
-            }
+        foreach ($data as $k => $v) {
+            $data[$k]->orderDetail = DB::table('orders_goods as o')
+                ->leftJoin('price', 'price.id', 'o.gid')
+                ->select('o.id', 'o.oid', 'o.gid', 'o.gname', 'o.gpic', 'o.gnum', 'o.gprice', 'ram', 'rom', 'color')
+                ->where('oid', $v->number)
+                ->get()
+                ->toArray();
+        }
 
         return view('Home/order/show', ['data' => $data]);
     }
