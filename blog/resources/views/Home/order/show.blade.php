@@ -275,12 +275,19 @@
     		url  : '{{url("order/change")}}',
     		data : 'id='+id+'&status='+status+'&_token={{csrf_token()}}',
     		success:function(data) {
-    			if (data == '等待评价') {
+    			if (data == '0') {
+    				$(obj).html('等待发货');
+    				layer.alert('亲，请耐心等待！', {icon: 6});
+    			} else if (data == '1') {
+    				$(obj).html('确认收货');
+    				layer.alert('亲！已发货，请确认收货', {icon: 1});
+    			} else if (data == '2') {
     				$(obj).parent().html("<div class='am-btn am-btn-danger anniu change'><a href='"+url+"/order/commentlist/?number="+num+"'><span style='color:white;'>等待评价</span></a></div>");
-    				return;
+    				layer.alert('亲！收货成功', {icon: 1});
+    			} else if (data == '3') {
+	    			layer.alert(data, {icon: 1});
+	    			$(obj).html(data);    				
     			}
-    			layer.alert(data, {icon: 1});
-    			$(obj).html(data);
     		},
     		dataType : 'json',
     	})

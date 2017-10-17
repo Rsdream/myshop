@@ -31,8 +31,6 @@ class LoginController extends Controller
 		$pass = $request->input('userpass');
 		//判断密码错误3次以上
 		if(Redis::get('user:'.$name) == '3') {
-			//查询数据库
-			$user = HomeUsers::select(['id', 'pass', 'uid', 'name'])->where('uid',$name)->first();
 			//等候10秒后再登录
 			$request->session()->flash('erro', '密码错误次数过多，请在60秒后再次登录！');
 			return back();

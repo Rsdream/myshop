@@ -209,25 +209,26 @@ class OrderController extends Controller
     {
         $id     = $request->input('id');
         $status = $request->input('status');
-        //判断订单状态
-        if ($status == '等待发货') {
-            echo json_encode('等待发货');
-            exit;
-        } else if ($status == '确认收货') {
-            $status = 2;
-            echo json_encode('等待评价');
-        } else if ($status == '等待评价') {
-            echo json_encode('等待评价');
-            exit;
-        } else if ($status == '订单完成') {
-            echo json_encode('订单完成');
-            exit;
+        $status = DB::table('orders_detail')->select('status')->where('id', '=', $id)->first();
+        if ($status->status == '0') {
+            echo json_encode('0');
+        } else if ($status->status == '1') {
+            echo json_encode('1');
+            DB::transaction(function () use($id) {
+                $data = DB::table('orders_detail')->where('id', $id)->update(['status' => 2]);
+            });
+        } else if ($status->status == '2') {
+            echo json_encode('2');
+            DB::transaction(function () use($id) {
+                $data = DB::table('orders_detail')->where('id', $id)->update(['status' => 3]);
+            });
+        } else if ($status->status == '3') {
+            echo json_encode('3');
         }
         $uid = session('userinfo')['id'];
         //如果确认收货失败
         //回滚事务
         DB::transaction(function () use($id, $status, $uid) {
-            $data = DB::table('orders_detail')->where('id', $id)->update(['status' => $status]);
             $price = DB::table('orders_detail')->select('tprice', 'oscore')->where('id', $id)->first();
             $score = ($price->tprice + $price->oscore) / 10;
             $score = floor($score);
@@ -322,6 +323,7 @@ class OrderController extends Controller
                 'orders_goods.setmeal',
                 'orders_goods.gpic')
             ->where('uid', '=', $uid)
+            ->orderBy('orders_comment.addtime', 'desc')
             ->get();
 
         return view('Home/order/comment', ['data' => $data]);
@@ -364,7 +366,7 @@ class OrderController extends Controller
             ->where('id', $bid)
             ->update(['back_status' => 1]);
 
-         return redirect('order/backlist?id='.$oid.'')->with('backlist', '申请退款成功!');;
+         return redirect('order/backlist?id='.$oid.'')->with('backlist', '申请提交成功!');;
     }
 
     //删除订单
