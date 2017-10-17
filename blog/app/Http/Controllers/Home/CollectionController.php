@@ -67,36 +67,36 @@ class CollectionController extends Controller
     	  if (Session::get('user') == '') {
     		    return 0;
     	  }
-    	$gid = $request->input('id');
-    	$uid = Session::get('user');
-    	//查询商品是否已收藏
-    	$check = DB::table('collection_detail')
-    	    ->select('id')
-    	    ->where([['gid', '=', $gid], ['uid', $uid]])
-    	    ->get();
-    	if(!$check->isEmpty()) {
-      		$data = DB::table('collection_detail')->where([['gid', '=', $gid], ['uid', $uid]])->delete();
-      		echo json_encode($data);
-      		exit;
-    	}
+      	$gid = $request->input('id');
+      	$uid = Session::get('user');
+      	//查询商品是否已收藏
+      	$check = DB::table('collection_detail')
+      	    ->select('id')
+      	    ->where([['gid', '=', $gid], ['uid', $uid]])
+      	    ->get();
+      	if(!$check->isEmpty()) {
+        		$data = DB::table('collection_detail')->where([['gid', '=', $gid], ['uid', $uid]])->delete();
+        		echo json_encode($data);
+        		exit;
+      	}
         $data = DB::table('goods')
-            ->join('price', function($join){$join->on('goods.id', '=', 'price.gid');})
-            ->select('goods.id', 'goods.gpic','goods.workoff', 'goods.status', 'goods.gname', 'price.price')
-            ->where('price.id', '=', $gid)
-            ->get()
-            ->toArray();
-    	foreach ($data as $v) {
-    		  $bool = DB::table('collection_detail')->insert([
-    			   'gid'     => $gid,
-    			   'uid'     => $uid,
-    			   'gname'   => $v->gname,
-    			   'gpic'    => $v->gpic,
-    			   'workoff' => $v->workoff,
-    			   'status'  => $v->status,
-    			   'price'   => $v->price,
-    		  ]);
-    	}
-      //已收藏
-      return 1;
+              ->join('price', function($join){$join->on('goods.id', '=', 'price.gid');})
+              ->select('goods.id', 'goods.gpic','goods.workoff', 'goods.status', 'goods.gname', 'price.price')
+              ->where('price.id', '=', $gid)
+              ->get()
+              ->toArray();
+      	foreach ($data as $v) {
+      		  $bool = DB::table('collection_detail')->insert([
+      			   'gid'     => $gid,
+      			   'uid'     => $uid,
+      			   'gname'   => $v->gname,
+      			   'gpic'    => $v->gpic,
+      			   'workoff' => $v->workoff,
+      			   'status'  => $v->status,
+      			   'price'   => $v->price,
+      		  ]);
+      	}
+        //已收藏
+        return 1;
     }
 }

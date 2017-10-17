@@ -94,7 +94,7 @@
 						<td><img src="{{asset('upload/image/'.$v->blogo)}}"></td>
 						<td class="text-l"> {{$v->bname}}</td>
 						<td class="text-l">{{$v->depict}}</td>
-						<td class="f-14 product-brand-manage"><a style="text-decoration:none" onClick="product_edit('编辑品牌','{{url('admin/product/brand', ['id' => $v->id])}}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="active_del(this,{{$v->id}})" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+						<td class="f-14 product-brand-manage"><a style="text-decoration:none" onClick="product_edit('编辑品牌','{{url('admin/product/brand', ['id' => $v->id])}}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> </td>
 					</tr>
 				@endforeach
 			</tbody>

@@ -38,10 +38,7 @@
 			<div class="col-9 col-offset-2">
 				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;修改&nbsp;&nbsp;">
 	</form>
-				<form style="float:left;" class="" onsubmit="return delete_confirm()" action="{{url('/admin/product/category', ['id' => $typeinfo->id])}}" method="post">
-					{{ method_field('DELETE') }}
-					<input class="btn btn-danger radius" type="submit" value="&nbsp;&nbsp;删除&nbsp;&nbsp;">
-				</form>
+				
 			</div>
 		</div>
 		<script type="text/javascript">

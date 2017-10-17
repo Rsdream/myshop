@@ -56,7 +56,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($roles as $role) 
+			@foreach ($roles as $role)
 				<tr class="text-c">
 
 					<td>{{$role->id}}</td>
@@ -69,7 +69,7 @@
 					<a title="编辑" href="{{url('/admin/rbac/role', ['id' => $role->id])}}" ><i class="Hui-iconfont">&#xe6df;</i></a>
 					@endif
 					@endpermission
-					
+
 					@permission ('role-details')
 					<a title="详情" href="{{url('/admin/rbac/role/details', ['id' => $role->id])}}" ><i class="Hui-iconfont">详情</i></a>
 					@endpermission
@@ -89,9 +89,9 @@
 	{{ $roles->links() }}
 </div>
 <!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="{{asset('/Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('/Admin/lib/jquery/1.9.1/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/lib/layer/2.4/layer.js')}}"></script>
-<script type="text/javascript" src="{{asset('/Admin/static/h-ui/js/H-ui.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('/Admin/static/h-ui/js/H-ui.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/Admin/static/h-ui.admin/js/H-ui.admin.js')}}"></script> <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
